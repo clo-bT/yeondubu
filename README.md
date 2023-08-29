@@ -56,3 +56,14 @@
   - account
   - fin_book
   - recommend
+
+# 20230829
+
+## 이성원
+
+- figma 메인페이지 제작
+
+## 박승희
+
+- figma 달력페이지 제작
+
