@@ -12,3 +12,5 @@ filtering by products cost
 
 automating crawling vs. loading it into DB
 
+python crawling code is neaded. todo through weekend.
+loaded DB needs representation and clustering of products
