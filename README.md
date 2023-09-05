@@ -68,3 +68,9 @@
 
 ![ERD.gif](src/ERD.png)
 
+### 2023. 09. 05.
+
+## API Document
+| API Document 작성중
+
+![API_Document.gif](src/API%20Document.png)
