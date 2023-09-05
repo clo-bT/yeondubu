@@ -123,3 +123,8 @@
 
 - figma 제작 마무리
 - figma wireframe 설정
+
+## 박승희
+
+- figma 제작 찐 진짜 마무리
+- figma wireframe 설정
