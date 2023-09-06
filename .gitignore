@@ -20,3 +20,8 @@ sketch
 *.csv
 *.ipynb
 # End of https://www.toptal.com/developers/gitignore/api/react
+
+*.jpg
+*.jpeg
+
+.env
