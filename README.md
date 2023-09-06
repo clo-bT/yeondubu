@@ -133,6 +133,10 @@
 
 ## 이성원
 
+- figma wireframe 설정
+- figma 그룹화 설정 및 컴포넌트 회의
+- 리액트 pwa 프로젝트 생성
+
 ## 박승희
 
 - figma wireframe 설정
