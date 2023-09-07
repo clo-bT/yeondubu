@@ -148,3 +148,8 @@
 ## 이성원
 
 - components 구조 짜기
+
+## 박승희
+
+- FIGMA components 구조 짜기
+- REACT 캘린더 개인공부
