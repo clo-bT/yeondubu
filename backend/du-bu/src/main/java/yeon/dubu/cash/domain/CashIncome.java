@@ -1,31 +1,30 @@
-package yeon.dubu.member.domain;
+package yeon.dubu.cash.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import yeon.dubu.BaseTimeEntity;
-import yeon.dubu.cash.domain.Cash;
 import yeon.dubu.member.enumeration.Role;
 
-import java.io.Serializable;
+import java.time.LocalDate;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
-public class Member extends BaseTimeEntity implements Serializable {
+public class CashIncome extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long Id;
 
+    private LocalDate date;
     @Enumerated(EnumType.STRING)
     private Role role;
+    private String memo;
 
-    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Cash cash;
 
 }

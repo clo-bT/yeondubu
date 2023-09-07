@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import yeon.dubu.BaseTimeEntity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-public class DepositAccount {
+public class DepositAccount extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,10 +35,5 @@ public class DepositAccount {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Account account;
-
-    @CreationTimestamp
-    private LocalDateTime createdAt = LocalDateTime.now();
-    @UpdateTimestamp
-    private LocalDateTime updatedAt = LocalDateTime.now();
 
 }

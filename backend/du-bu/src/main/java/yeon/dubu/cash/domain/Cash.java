@@ -1,34 +1,34 @@
-package yeon.dubu.account.domain;
+package yeon.dubu.cash.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.antlr.v4.runtime.misc.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import yeon.dubu.BaseTimeEntity;
+import yeon.dubu.cash.enumeration.CashType;
+import yeon.dubu.member.domain.Member;
+import yeon.dubu.member.enumeration.Role;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class SavingsAccount extends BaseTimeEntity {
+public class Cash extends BaseTimeEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    private LocalDate maturityDate;
-    @NotNull
+    @Enumerated(EnumType.STRING)
+    private CashType cashType;
     private Long currentAmount;
-    @NotNull
-    private Long maturityAmount;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Account account;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private Member member;
 
 }
