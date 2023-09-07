@@ -25,3 +25,7 @@ sketch
 *.jpeg
 
 .env
+
+*practice*
+*.txt
+*.bin*
