@@ -10,14 +10,19 @@ import yeon.dubu.BaseTimeEntity;
 @Getter
 @Setter
 @NoArgsConstructor
-public class StuffSecondTag extends BaseTimeEntity {
+public class Stuff extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long secondTagId;
+    private Long id;
 
-    private String secondTagName;
+    private String title;
+    private String link;
+    private String image;
+    private String lowPrice;
+    private String imageVector;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private StuffFirstTag stuffFirstTag;
+    private Brand brand;
+
 }

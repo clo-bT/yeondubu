@@ -20,5 +20,5 @@ public class Likes extends BaseTimeEntity {
     private Couple couple;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private MarriageStuff marriageStuff;
+    private Stuff stuff;
 }

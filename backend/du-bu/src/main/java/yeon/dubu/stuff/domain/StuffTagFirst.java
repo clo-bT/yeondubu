@@ -1,4 +1,4 @@
-package yeon.dubu.policy.domain;
+package yeon.dubu.stuff.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,16 +13,11 @@ import yeon.dubu.BaseTimeEntity;
 @Getter
 @Setter
 @NoArgsConstructor
-public class MarriagePolicy extends BaseTimeEntity {
+public class StuffTagFirst extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long firstTagId;
 
-    private String policy;
-    private String shortSummary;
-    private String firstTag;
-    private String secondTag;
-    private String url;
-
+    private String firstTagName;
 }
