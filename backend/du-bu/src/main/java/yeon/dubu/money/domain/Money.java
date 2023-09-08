@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import yeon.dubu.BaseTimeEntity;
-import yeon.dubu.money.enumeration.CashType;
 import yeon.dubu.member.domain.Member;
 
 @Entity
