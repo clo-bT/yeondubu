@@ -1,14 +1,17 @@
 package yeon.dubu.money.domain;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import java.time.LocalDate;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import yeon.dubu.BaseTimeEntity;
-import yeon.dubu.member.enumeration.Role;
 import yeon.dubu.tag.domain.TagThird;
-
-import java.time.LocalDate;
 
 @Entity
 @Getter
