@@ -19,5 +19,5 @@ public class Brand extends BaseTimeEntity {
     private String brandName;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private StuffSecondTag stuffSecondTag;
+    private StuffTagSecond stuffTagSecond;
 }
