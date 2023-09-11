@@ -13,7 +13,7 @@ spring:
   datasource:
     username: root
     password: root
-    url: jdbc:mariadb://localhost:3306/dubu
+    url: jdbc:mariadb://j9a306.p.ssafy.io:3306/dubu
     driver-class-name: org.mariadb.jdbc.Driver
 
 #  sql:
@@ -21,4 +21,4 @@ spring:
 #      mode: never
 
 server:
-  port: 8081
+  port: 8080
