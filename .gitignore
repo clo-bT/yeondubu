@@ -23,6 +23,7 @@ sketch
 
 *.jpg
 *.jpeg
+*.png
 
 .env
 
