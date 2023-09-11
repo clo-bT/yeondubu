@@ -1,0 +1,85 @@
+/* calendar.css */
+.calendar {
+    font-family: Arial, sans-serif;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: #fff;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #f0f0f0;
+  }
+  
+  .header .text {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .days {
+    display: flex;
+    background-color: #f0f0f0;
+    padding: 5px;
+    font-weight: bold;
+  }
+  
+  .days .col {
+    flex: 1;
+    text-align: center;
+    padding: 5px;
+  }
+  
+  .body {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .body .row {
+    display: flex;
+  }
+  
+  .body .row .col {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .body .row .col.selected {
+    background-color: #FFD0D0;
+    font-weight: bold;
+    border-radius: 10%;
+  }
+  
+  .body .row .col.not-valid {
+    color: #ccc;
+  }
+  
+  .body .row .col.disabled {
+    color: #ccc;
+    pointer-events: none;
+  }
+
+  .expendituretext{
+    color: #2663FF;
+    font-size: smaller;
+  }
+  .incometext{
+    color: #FF6565;
+    font-size: smaller;
+
+  }
+
+.todaydot {
+    width: 30px;
+    height: 30px;
+    background-color: #FF6565; 
+    color: #fff;
+    border-radius: 50%;
+    z-index: 1;
+    margin: 0 auto; 
+}
