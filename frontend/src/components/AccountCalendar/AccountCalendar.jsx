@@ -278,7 +278,7 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
 
 
 
-const AccountCalendar = () => {
+const AccountCalendar = ({ onDateClick : handleClick }) => {
     const [currentMonth, setCurrentMonth] = useState(new Date());
     const [selectedDate, setSelectedDate] = useState(new Date());
 
@@ -290,10 +290,12 @@ const AccountCalendar = () => {
     };
     const onDateClick = (day) => {
         // console.log(day)
+        setSelectedDate(day);
         const formatday = format(day, 'yyyy-MM-dd');
         console.log(formatday)
-        setSelectedDate(day);
+        handleClick(formatday);
     };
+
     return (
         <div className="calendar">
             <RenderHeader
