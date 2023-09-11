@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import yeon.dubu.BaseTimeEntity;
-import yeon.dubu.money.domain.Money;
 import yeon.dubu.member.enumeration.Role;
 
 import java.io.Serializable;
@@ -26,9 +25,6 @@ public class Member extends BaseTimeEntity implements Serializable {
     private Role role;
 
     private float credit_score;  // 신용점수
-
-    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Money money;
 
 
 }
