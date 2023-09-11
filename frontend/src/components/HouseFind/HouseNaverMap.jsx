@@ -24,7 +24,7 @@ const HouseNaverMap = () => {
   
     return (
       <>
-        <h1>Naver Map - Default</h1>
+        <h1>Naver Map</h1>
         <div ref={mapElement} style={{ minHeight: '400px' }} />
       </>
     );
