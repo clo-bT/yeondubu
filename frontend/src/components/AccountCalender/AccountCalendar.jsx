@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Icon } from '@iconify/react';
 import { format, addMonths, subMonths } from 'date-fns';
 import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from 'date-fns';
 import { isSameMonth, isSameDay, addDays } from 'date-fns';
-import '../style/AccountCalendar.css'
+import './AccountCalendar.css'
 
 const responsedata = [
     
@@ -172,11 +171,11 @@ const RenderHeader = ({ currentMonth, prevMonth, nextMonth }) => {
                 </span>
             </div>
             <div className="col">
-                <Icon icon="bi:arrow-left-circle-fill" onClick={prevMonth} />
+                <span onClick={prevMonth}>←</span>
                 <span className="text month">
                         {format(currentMonth, 'M')}월
                     </span>
-                <Icon icon="bi:arrow-right-circle-fill" onClick={nextMonth} />
+                <span onClick={nextMonth}>→</span>
             </div>
         </div>
     );
