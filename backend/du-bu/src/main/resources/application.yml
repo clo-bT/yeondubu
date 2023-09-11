@@ -28,11 +28,11 @@ server:
     oauth2.client:
       registration:
         kakao:
-          clientId: '{카카오 client-id}'
-          clientSecret: '{카카오 client-secret}'
+          clientId: '995b853d363b375b49707e2b7a258f34'
+          clientSecret: '- QZJGoxrgVg3ctIhGiZ6GoWCdJWNArput'
           clientAuthenticationMethod: post
           authorizationGrantType: authorization_code
-          redirectUri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
+          redirectUri: "http://localhost:8080/login/oauth2/code/kakao"
           scope:
             - profile_nickname
             - profile_image
