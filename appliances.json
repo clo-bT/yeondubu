@@ -1,0 +1,14 @@
+{
+    "refrigerator": "냉장고",
+    "dryer":"건조기",
+    "air_cleaner":"공기청정기",
+    "rice_cooker":"밥솥",
+    "microwave":"전자레인지",
+    "air_conditioner":"에어컨",
+    "styler":"스타일러",
+    "fan":"선풍기",
+    "washing_machine":"세탁기",
+    "robot_vacuum_cleaner":"로봇청소기",
+    "vacuum_cleaner":"청소기",
+    "air_fryer":"에어프라이어"
+}
