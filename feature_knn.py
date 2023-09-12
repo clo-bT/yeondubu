@@ -3,21 +3,25 @@ from PIL import Image
 from feature_extractor import FeatureExtractor
 from pathlib import Path
 
-# Read image features
-fe = FeatureExtractor()
-features = []
-img_paths = []
+# image를 input.png, 비교할 DB||hdf5, 최대 출력 입력 구간
+INPUT_IMAGE = './tmp/input.png'
+COMPARE_DB = 'desk'
+MX = 30
 
-for feature_path in Path("./static/feature").glob("*.npy"):
-    features.append(np.load(feature_path))
-    img_paths.append(Path("./static/img") / (feature_path.stem + ".jpg"))
-    
+features = []
+
+# 현재 L2 dist 기반으로 검색을 하고 있음.
+# 확장성을 위해서 faiss indexing으로 전환할 예정임.
+features_path = Path("./static/feature") / (COMPARE_DB + ".npy")
+features = np.load(features_path)
 features = np.array(features)
-print(features)
-img = Image.open('./static/img/goguma.jpg') 
-# Run search
+
+fe = FeatureExtractor()
+img = Image.open(INPUT_IMAGE)
 query = fe.extract(img)
-dists = np.linalg.norm(features-query, axis=1)  # L2 distances to features
-ids = np.argsort(dists)[:5]  # Top 30 results
-scores = [(dists[id], img_paths[id]) for id in ids]
+dists = np.linalg.norm(features-query, axis=1)
+
+ids = np.argsort(dists)[:]
+scores = [(id, dists[id]) for id in ids]
+
 print(scores)
