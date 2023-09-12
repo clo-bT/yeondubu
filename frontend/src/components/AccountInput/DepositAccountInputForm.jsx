@@ -5,7 +5,14 @@ import { BsFill1CircleFill,BsFill2CircleFill,BsFill3CircleFill,
 
 
 const Container = styled.div`
-margin-left: 50px;
+// display: flex;
+// flex-direction: column; 
+
+align-items: center;
+// width: 331px;
+// height: 515px;
+// flex-shrink: 0;
+
 `
 
 const Text = styled.p`
@@ -76,6 +83,8 @@ flex-shrink: 0;
 
 const InputButton = styled.button`
 display: inline-flex;
+width: 150px;
+height: 44px;
 padding: 12px 34px;
 justify-content: center;
 align-items: center;
@@ -107,6 +116,13 @@ const InfoInput = styled.input`
   width: 166.003px;
   height: 20px;
   text-align: center;
+`
+
+const DepositContainer = styled.div`
+  display: flex;
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: center;
 `
 const DepositAccountInputForm = () => {
     const [selectedAccountType, setSelectedAccountType] = useState('');
@@ -200,6 +216,7 @@ const DepositAccountInputForm = () => {
             <Text>이체금액</Text>
             <InfoInput />
           </IconWithText>
+          <InputButton>입력하기</InputButton>
     </>
       )}
 
@@ -228,6 +245,7 @@ const DepositAccountInputForm = () => {
             <Text>만기예상금액</Text>
             <InfoInput />
           </IconWithText>
+          <InputButton>입력하기</InputButton>
         </>
       )}
 
@@ -238,12 +256,13 @@ const DepositAccountInputForm = () => {
             <Text>현재금액</Text>
             <InfoInput />
           </IconWithText>
+          <InputButton>입력하기</InputButton>
         </>
       )}
    
     
     </Container>
-        <InputButton>입력하기</InputButton>
+        {/* <InputButton>입력하기</InputButton> */}
     </>
       );
     };
