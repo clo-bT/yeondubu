@@ -109,7 +109,7 @@ const WeddingDayInput = () => {
             customCloseIcon={
                 <FontAwesomeIcon icon={faAlignCenter} onClick={clearDate} />}
             />
-            <StyledCalendarIcon src={Calender} onClick={openCalendar} />
+            {/* <StyledCalendarIcon src={Calender} onClick={openCalendar} /> */}
             </DateInputContainer>
             
             <InputButton>입력하기</InputButton>

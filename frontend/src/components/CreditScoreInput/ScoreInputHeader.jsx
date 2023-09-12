@@ -37,22 +37,22 @@ margin-top: 50px;
 const InputAccount = styled.p`
 color: #000;
 text-align: center;
-font-size: 18px;
+font-size: 16px;
 font-style: normal;
 font-weight: 400;
 line-height: normal;
 `
-const AccountInputHeader = () => {
-    return (
-        <Container>
-            <NextLink href="/">다음</NextLink>
-            <InfoBox>
-            <WifeImg src={wife}/>
-            <InputAccount>손예진님의 자산을 입력해주세요</InputAccount>
 
-            </InfoBox>
-        </Container>
+const ScoreInputHeader = () => {
+    return (
+    <Container>
+        <InfoBox>
+        <WifeImg src={wife}/>
+        <InputAccount>손예진님의 신용점수를 입력해주세요</InputAccount>
+
+        </InfoBox>
+    </Container>
     );
 };
 
-export default AccountInputHeader;
+export default ScoreInputHeader;
