@@ -7,6 +7,11 @@ import CoupleImage from './components/Common/CoupleImage';
 import AccountInputMessage from './components/AccountInputStart/AccountInputMessage';
 import AccountInputHeader from './components/Common/AccountInputHeader';
 import DepositAccountInputForm from './components/AccountInput/DepositAccountInputForm';
+import WeddingDayInput from './components/WeddingDay/WeddingDayInput';
+import styled from 'styled-components';
+import ScoreInputHeader from './components/CreditScoreInput/ScoreInputHeader';
+import ScoreInput from './components/CreditScoreInput/ScoreInput';
+
 
 function App() {
   function setScreenSize() {
@@ -19,8 +24,11 @@ function App() {
     
     <div className="App">
       <GlobalStyle />
-      <AccountInputHeader/>
-      <DepositAccountInputForm/>
+
+
+      <ScoreInputHeader/>
+      <ScoreInput/>
+ 
 
       
     </div>
