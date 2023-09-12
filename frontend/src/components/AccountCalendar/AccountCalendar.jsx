@@ -326,6 +326,11 @@ const AccountCalendar = ({ onDateClick : handleClick }) => {
                 selectedDate={selectedDate}
                 onDateClick={onDateClick}
             />
+            <RenderCells
+                currentMonth={currentMonth}
+                selectedDate={selectedDate}
+                onDateClick={onDateClick}
+            />
         </div>
     );
 };
