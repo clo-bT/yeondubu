@@ -6,6 +6,8 @@ import styled from 'styled-components';
 
 const CoupleContainer = styled.div`
     margin-top: 100px;
+    height: 182px;
+    flex-shrink: 0;
 `
 
 
@@ -44,8 +46,8 @@ width: 41px;
 height: 37px;
 flex-shrink: 0;
 margin-bottom: 50px;
-margin-left:15px;
-margin-right:15px;
+margin-left:10px;
+margin-right:10px;
 `
 
 
