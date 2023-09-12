@@ -1,4 +1,5 @@
-import {React, useEffect} from 'react';
+import { React, useEffect } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import GlobalStyle from "./styles/GlobalStyle";
 import FirstMain from './components/Login/FirstMain';
@@ -11,6 +12,7 @@ import WeddingDayInput from './components/WeddingDay/WeddingDayInput';
 import styled from 'styled-components';
 import ScoreInputHeader from './components/CreditScoreInput/ScoreInputHeader';
 import ScoreInput from './components/CreditScoreInput/ScoreInput';
+import LoginAuth from './components/KakaoLogin/LoginAuth';
 
 
 function App() {
@@ -21,17 +23,16 @@ function App() {
 
   window.addEventListener('resize', () => setScreenSize());
   return (
-    
-    <div className="App">
-      <GlobalStyle />
-
-
-      <ScoreInputHeader/>
-      <ScoreInput/>
- 
-
+    <BrowserRouter>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<FirstMain />} />
+          <Route path="/auth" element={<LoginAuth />} />
+            
+        </Routes>
+      </div>
+    </BrowserRouter>
       
-    </div>
   );
 }
 
