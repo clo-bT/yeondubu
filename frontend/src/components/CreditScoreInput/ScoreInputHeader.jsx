@@ -9,22 +9,11 @@ flex-direction: column;
 align-items: center;
 
 `
-const NextLink = styled.a`
-  color: #FF5A5A;
-  text-align: right;
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  display: block;
-  margin-left: 280px;
-  margin-top: -50px;
-  text-decoration: none;
-`
+
 const InfoBox = styled.div`
 width: 254px;
 height: 205px;
-margin-bottom: 100px;
+margin-bottom: 90px;
 
 `
 const WifeImg = styled.img`
@@ -37,7 +26,7 @@ margin-top: 50px;
 const InputAccount = styled.p`
 color: #000;
 text-align: center;
-font-size: 16px;
+font-size: 17px;
 font-style: normal;
 font-weight: 400;
 line-height: normal;

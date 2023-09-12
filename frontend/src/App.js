@@ -11,6 +11,8 @@ import WeddingDayInput from './components/WeddingDay/WeddingDayInput';
 import styled from 'styled-components';
 import ScoreInputHeader from './components/CreditScoreInput/ScoreInputHeader';
 import ScoreInput from './components/CreditScoreInput/ScoreInput';
+import Menubar from './components/Common/Menubar';
+import MyAccountProfile from './components/Common/MyAccountProfile';
 
 
 function App() {
@@ -24,10 +26,7 @@ function App() {
     
     <div className="App">
       <GlobalStyle />
-
-
-      <ScoreInputHeader/>
-      <ScoreInput/>
+      <MyAccountProfile/>
  
 
       
@@ -36,3 +35,4 @@ function App() {
 }
 
 export default App;
+
