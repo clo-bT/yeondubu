@@ -3,8 +3,10 @@ import { format, addMonths, subMonths } from 'date-fns';
 import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from 'date-fns';
 import { isSameMonth, isSameDay, addDays } from 'date-fns';
 import './AccountCalendar.css'
+// import React, { useEffect, useState } from 'react';
+// import axios from 'axios'; 
 
-const responsedata = [
+const responseData = [
     
     {
         "date": "2023-09-01",
@@ -200,14 +202,14 @@ const RenderDays = () => {
 const today = new Date();
 
 
-
 const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
     const monthStart = startOfMonth(currentMonth);
     const monthEnd = endOfMonth(monthStart);
     const startDate = startOfWeek(monthStart);
     const endDate = endOfWeek(monthEnd);
 
-    const dataMap = responsedata.reduce((map, item) => {
+
+    const dataMap = responseData.reduce((map, item) => {
         map[item.date] = item;
         return map;
     }, {});
@@ -292,10 +294,25 @@ const AccountCalendar = ({ onDateClick : handleClick }) => {
         // console.log(day)
         setSelectedDate(day);
         const formatday = format(day, 'yyyy-MM-dd');
-        console.log(formatday)
+        // console.log(formatday);
         handleClick(formatday);
     };
-
+        // console.log(currentMonth)
+        // const requestData = format(currentMonth, 'yyyy-MM')
+        // console.log('currentYear',requestData)
+        
+        // const [responseData, setResponseData] = useState([]);
+        // useEffect(() => {
+        //     // 백틱으로 바꾸기
+        //     axios.get($`/api/v1/cash?yearMonth={yyyy-MM}`)
+        //     .then(response => {
+        //         setResponseData(response.data);
+        //     })
+        //     .catch(error => {
+        //         console.error('Error fetching data:', error);
+        //     });
+        // }, []);
+        
     return (
         <div className="calendar">
             <RenderHeader

@@ -1,14 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import CalendarInput from '../CalendarInputCreate/CalendarInput';
+// import React, { useEffect, useState } from 'react';
+// import axios from 'axios'; 
 
-const ModalPage = styled.div``
+const ModalPage = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+`
 const IncomeExpenditure = styled.div``
-const IncomeList = styled.ul``
-const IncomeItem = styled.li``
-const IncomeItemData = styled.div``
-const ExpenditureList = styled.ul``
-const ExpenditureItem = styled.li``
-const ExpenditureItemData = styled.div``
+const Table = styled.table``
+const TableHeader = styled.thead``;
+const TableBody = styled.tbody``;
+const TableRow = styled.tr``;
+const TableCell = styled.td`
+  color: black;
+`;
+
+const IncomeTableCell = styled(TableCell)`
+  color: red; 
+  cursor: pointer;
+`;
+
+const ExpenditureTableCell = styled(TableCell)`
+  color: blue;
+  cursor: pointer;
+`;
 
 
 const responseData =
@@ -56,37 +75,70 @@ const responseData =
     ]
 };
 
+
+
 const AccountCalendarDetail = ({ formatday }) => {
+    const [isModalOpen, setModalOpen] = useState(false);
+    const [dataDetail, setDataDetail] = useState(false);
+
+    function openModal(item) {
+        setDataDetail(item)
+        setModalOpen(true);
+    }
+
+    const closeModal = () => {
+        setModalOpen(false);
+    }
+
+    // const [responseData, setResponseData] = useState([]);
+    // useEffect(() => {
+    //     // 백틱으로 바꾸기
+    //     axios.get($`/api/v1/cash?date={formatday}`)
+    //     .then(response => {
+    //         setResponseData(response.data);
+    //     })
+    //     .catch(error => {
+    //         console.error('Error fetching data:', error);
+    //     });
+    // }, []);
+
     return (
         <ModalPage>
             { responseData && (
                     responseData.date === formatday && (
                 <IncomeExpenditure>
-                        
-                    <IncomeList>
-                        {responseData.incomeList.map(incomeItem => (
-                                <IncomeItem key={incomeItem.id}>
-                                        <IncomeItemData>항목: {incomeItem.first_tag_name}</IncomeItemData>
-                                        <IncomeItemData>가격: {incomeItem.amount}</IncomeItemData>
-                                        <IncomeItemData>결제자: {incomeItem.role === "BRIDE" ? "예비신부" : "예비신랑"}</IncomeItemData>
-                                </IncomeItem>
-                        ))}
-                    </IncomeList>
-
-                    <ExpenditureList>
-                        {responseData.expenditureList.map(expenditureItem => (
-                        <ExpenditureItem key={expenditureItem.id}>
-                                <ExpenditureItemData>항목: {expenditureItem.first_tag_name}</ExpenditureItemData>
-                                <ExpenditureItemData>가격: {expenditureItem.amount}</ExpenditureItemData>
-                                <ExpenditureItemData>결제자: {expenditureItem.role === "BRIDE" ? "예비신부" : "예비신랑"}</ExpenditureItemData>
-                                </ExpenditureItem>
-                        ))}
-                    </ExpenditureList>
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                            <TableCell>항목</TableCell>
+                            <TableCell>가격</TableCell>
+                            <TableCell>결제자</TableCell>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {responseData.incomeList.map(incomeItem => (
+                            <TableRow key={incomeItem.id} onClick={() => openModal(incomeItem)}>
+                                <IncomeTableCell>{incomeItem.first_tag_name}</IncomeTableCell>
+                                <IncomeTableCell>+{incomeItem.amount.toLocaleString()}</IncomeTableCell>
+                                <IncomeTableCell>{incomeItem.role === "BRIDE" ? "예비신부" : "예비신랑"}</IncomeTableCell>
+                            </TableRow>
+                            ))}
+                            {responseData.expenditureList.map(expenditureItem => (
+                            <TableRow key={expenditureItem.id} onClick={() => openModal(expenditureItem)}>
+                                <ExpenditureTableCell>{expenditureItem.first_tag_name}</ExpenditureTableCell>
+                                <ExpenditureTableCell>-{expenditureItem.amount.toLocaleString()}</ExpenditureTableCell>
+                                <ExpenditureTableCell>{expenditureItem.role === "BRIDE" ? "예비신부" : "예비신랑"}</ExpenditureTableCell>
+                            </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
                 </IncomeExpenditure>
 
                 )
             )}
             <p>{formatday}</p>
+            <CalendarInput isOpen={isModalOpen} content={dataDetail} formatday={formatday} closeModal={closeModal}/>
+
         </ModalPage>
     );
 };
