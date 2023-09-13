@@ -10,7 +10,6 @@ import { AiOutlineMenu } from "react-icons/ai";
 const Container = styled.div`
 display: flex;
 justify-content: space-around;
-padding: 10px;
 position: fixed;
 bottom: 0;
 left: 0;

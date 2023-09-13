@@ -1,6 +1,6 @@
 import React from 'react';
 
-const LoanRecommend = () => {
+const LoginAuth = () => {
     return (
         <div>
             
@@ -8,4 +8,4 @@ const LoanRecommend = () => {
     );
 };
 
-export default LoanRecommend;
+export default LoginAuth;

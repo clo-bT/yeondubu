@@ -1,19 +1,22 @@
-import {React, useEffect} from 'react';
+import { React } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
-import GlobalStyle from "./styles/GlobalStyle";
-import FirstMain from './components/Login/FirstMain';
-import HouseNaverMap from './components/HouseFind/HouseNaverMap';
-import CoupleImage from './components/Common/CoupleImage';
-import AccountInputMessage from './components/AccountInputStart/AccountInputMessage';
-import AccountInputHeader from './components/Common/AccountInputHeader';
-import DepositAccountInputForm from './components/AccountInput/DepositAccountInputForm';
-import WeddingDayInput from './components/WeddingDay/WeddingDayInput';
-import styled from 'styled-components';
-import ScoreInputHeader from './components/CreditScoreInput/ScoreInputHeader';
-import ScoreInput from './components/CreditScoreInput/ScoreInput';
-import Menubar from './components/Common/Menubar';
-import MyAccountProfile from './components/Common/MyAccountProfile';
 
+// import GlobalStyle from "./styles/GlobalStyle";
+// import FirstMain from './components/Login/FirstMain';
+// import HouseNaverMap from './components/HouseFind/HouseNaverMap';
+// import CoupleImage from './components/Common/CoupleImage';
+// import AccountInputMessage from './components/AccountInputStart/AccountInputMessage';
+// import AccountInputHeader from './components/Common/AccountInputHeader';
+// import DepositAccountInputForm from './components/AccountInput/DepositAccountInputForm';
+// import WeddingDayInput from './components/WeddingDay/WeddingDayInput';
+// import styled from 'styled-components';
+// import ScoreInputHeader from './components/CreditScoreInput/ScoreInputHeader';
+// import ScoreInput from './components/CreditScoreInput/ScoreInput';
+// import LoginAuth from './components/KakaoLogin/LoginAuth';
+// import Menubar from './components/Common/Menubar';
+// import MyAccountProfile from './components/Common/MyAccountProfile';
+import Main from './pages/Main';
 
 function App() {
   function setScreenSize() {
@@ -23,14 +26,16 @@ function App() {
 
   window.addEventListener('resize', () => setScreenSize());
   return (
-    
-    <div className="App">
-      <GlobalStyle />
-      <MyAccountProfile/>
- 
-
+    <BrowserRouter>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<Main />} />
+          {/* <Route path="/auth" element={<LoginAuth />} /> */}
+            
+        </Routes>
+      </div>
+    </BrowserRouter>
       
-    </div>
   );
 }
 
