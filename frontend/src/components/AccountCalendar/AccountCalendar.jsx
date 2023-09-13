@@ -1,10 +1,48 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import { format, addMonths, subMonths } from 'date-fns';
 import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from 'date-fns';
 import { isSameMonth, isSameDay, addDays } from 'date-fns';
 import './AccountCalendar.css'
 // import React, { useEffect, useState } from 'react';
-// import axios from 'axios'; 
+// import axios from 'axios';
+
+const CalendarPage = styled.div`
+width: 393px;
+height: 852px;
+`
+const CalendarHeader = styled.div`
+display: flex;
+width: 338px;
+justify-content: center;
+align-items: flex-start;
+gap: 20px;
+`
+const Col = styled.div`
+flex: 1;
+text-align: center;
+padding: 5px;
+cursor: pointer;
+
+`
+const TextMonth = styled.span`
+font-size: 18px;
+font-weight: bold;
+`
+const DaysRow = styled.div`
+display: flex;
+background-color: #f0f0f0;
+padding: 5px;
+font-weight: bold;
+flex: 1;
+text-align: center;
+padding: 5px;
+`
+const RowsBody = styled.div`
+display: flex;
+flex-direction: column;
+`
+
 
 const responseData = [
     
@@ -162,28 +200,11 @@ const responseData = [
 
 ];
 
+const today = new Date();
 
-const RenderHeader = ({ currentMonth, prevMonth, nextMonth }) => {
-    return (
-        <div className="header row">
-            <div className="col col-start">
-                <span className="text">
-                    
-                    {/* {format(currentMonth, 'yyyy')} */}
-                </span>
-            </div>
-            <div className="col">
-                <span onClick={prevMonth}>←</span>
-                <span className="text month">
-                        {format(currentMonth, 'M')}월
-                    </span>
-                <span onClick={nextMonth}>→</span>
-            </div>
-        </div>
-    );
-};
-
-const RenderDays = () => {
+const AccountCalendar = ({ onDateClick : handleClick }) => {
+    const [currentMonth, setCurrentMonth] = useState(new Date());
+    const [selectedDate, setSelectedDate] = useState(new Date());
     const days = [];
     const date = ['일', '월', '화', '수', '목', '금', '토'];
 
@@ -194,15 +215,6 @@ const RenderDays = () => {
             </div>,
         );
     }
-
-    return <div className="days row">{days}</div>;
-};
-
-
-const today = new Date();
-
-
-const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
     const monthStart = startOfMonth(currentMonth);
     const monthEnd = endOfMonth(monthStart);
     const startDate = startOfWeek(monthStart);
@@ -215,7 +227,7 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
     }, {});
 
     const rows = [];
-    let days = [];
+    let dates = [];
     let day = startDate;
     let formattedDate = '';
 
@@ -241,7 +253,7 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
                 ${expenditure > 0 ? 'expenditure-text' : ''}
             `;
     
-            days.push(
+            dates.push(
                 <div
                     className={cellClass}
                     key={formattedDate}
@@ -268,22 +280,11 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
         }
         rows.push(
             <div className="row" key={formattedDate}>
-                {days}
+                {dates}
             </div>,
         );
-        days = [];
+        dates = [];
     }
-    return <div className="body">{rows}</div>;
-};
-
-
-
-
-
-const AccountCalendar = ({ onDateClick : handleClick }) => {
-    const [currentMonth, setCurrentMonth] = useState(new Date());
-    const [selectedDate, setSelectedDate] = useState(new Date());
-
     const prevMonth = () => {
         setCurrentMonth(subMonths(currentMonth, 1));
     };
@@ -314,19 +315,23 @@ const AccountCalendar = ({ onDateClick : handleClick }) => {
         // }, []);
         
     return (
-        <div className="calendar">
-            <RenderHeader
-                currentMonth={currentMonth}
-                prevMonth={prevMonth}
-                nextMonth={nextMonth}
-            />
-            <RenderDays />
-            <RenderCells
-                currentMonth={currentMonth}
-                selectedDate={selectedDate}
-                onDateClick={onDateClick}
-            />
-        </div>
+        <CalendarPage>
+            <CalendarHeader>
+                <Col>
+                    <span onClick={prevMonth}>←</span>
+                    <TextMonth>
+                        {format(currentMonth, 'M')}월
+                    </TextMonth>
+                    <span onClick={nextMonth}>→</span>
+                </Col>
+            </CalendarHeader>
+            <DaysRow>
+                {days}
+            </DaysRow>
+            <RowsBody>
+                {rows}
+            </RowsBody>
+        </CalendarPage>
     );
 };
 
