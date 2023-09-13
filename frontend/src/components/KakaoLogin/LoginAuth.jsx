@@ -12,7 +12,7 @@ const LoginAuth = () => {
         async function getid() {
             const code = new URL(window.location.href).searchParams.get("code");
             setcode(code)
-            window.location.href = 'http://localhost:3000/auth'
+            // window.location.href = 'http://localhost:3000/main'
             
             try{        
                 await axios.get(`${process.env.REACT_APP_API_ROOT}/member/login?code=${code}`)
@@ -33,7 +33,7 @@ const LoginAuth = () => {
                         setid(r.data.data.id)
                     }
                     else if(r.data.code === 2101 || r.data.code === 2201 || r.data.code === 2202 ){
-                        window.location.href = `${process.env.REACT_APP_HOME_URL}/login`
+                        window.location.href = `${process.env.REACT_APP_HOME_URL}/main`
                     }
                     else{alert('warning')}
                 })
