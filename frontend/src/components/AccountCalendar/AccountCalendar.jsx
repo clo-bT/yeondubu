@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { format, addMonths, subMonths } from 'date-fns';
 import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from 'date-fns';
 import { isSameMonth, isSameDay, addDays } from 'date-fns';
-import './AccountCalendar.css'
+// import './AccountCalendar.css'
 // import React, { useEffect, useState } from 'react';
 // import axios from 'axios';
 
@@ -13,36 +13,71 @@ height: 852px;
 `
 const CalendarHeader = styled.div`
 display: flex;
-width: 338px;
-justify-content: center;
-align-items: flex-start;
-gap: 20px;
+justify-content: space-between;
+/* padding: 10px; */
+background-color: #f0f0f0;
+font-size: 18px;
+font-weight: bold;
+
 `
 const Col = styled.div`
 flex: 1;
 text-align: center;
 padding: 5px;
 cursor: pointer;
-
 `
 const TextMonth = styled.span`
-font-size: 18px;
+font-size: 20px;
 font-weight: bold;
+flex-direction: column;
+
 `
 const DaysRow = styled.div`
 display: flex;
-background-color: #f0f0f0;
-padding: 5px;
-font-weight: bold;
-flex: 1;
-text-align: center;
-padding: 5px;
+justify-content: space-between;
+/* padding: 10px 20px; */
+background-color: #f2f2f2;
+
+`
+const IncomeExpenditure = styled.div`
+flex-direction: column;
+
+`
+const CellClass = styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;
+width: 56.14px;
+
+`
+const TextClass = styled.span`
+display: flex;
+flex-direction: row;
+
+`
+const Row = styled.span`
+padding-top: .5rem;
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+height: 3rem;
+
+`
+const IncomeText = styled.div`
+color: #4caf50; /* 수입 텍스트 색상 */
+/* font-weight: bold; */
+font-size: .1rem;
+`
+const ExpenditureText = styled.div`
+color: #f44336; /* 지출 텍스트 색상 */
+/* font-weight: bold; */
+font-size: .1rem;
 `
 const RowsBody = styled.div`
 display: flex;
 flex-direction: column;
-`
 
+`
 
 const responseData = [
     
@@ -210,9 +245,9 @@ const AccountCalendar = ({ onDateClick : handleClick }) => {
 
     for (let i = 0; i < 7; i++) {
         days.push(
-            <div className="col" key={i}>
+            <Col key={i}>
                 {date[i]}
-            </div>,
+            </Col>,
         );
     }
     const monthStart = startOfMonth(currentMonth);
@@ -239,7 +274,6 @@ const AccountCalendar = ({ onDateClick : handleClick }) => {
             const income = dataMap[formattedDate]?.income || 0;
             const expenditure = dataMap[formattedDate]?.expenditure || 0;
             const cellClass = `
-                col cell 
                 ${!isSameMonth(day, monthStart) ? 'disabled' : ''}
                 ${isSameDay(day, selectedDate) ? 'selected' : ''}
                 ${format(currentMonth, 'M') !== format(day, 'M') ? 'not-valid' : ''}
@@ -254,34 +288,35 @@ const AccountCalendar = ({ onDateClick : handleClick }) => {
             `;
     
             dates.push(
-                <div
+                <CellClass
                     className={cellClass}
                     key={formattedDate}
                     onClick={() => onDateClick(cloneDay)}
                 >
-                    <span className={textClass}>
+
+                    <TextClass className={textClass}>
                     {isToday && (
-                    <div className="todaydot">{formattedDate.split('-')[2]}</div> // 동그란 원 추가
+                        <div className="todaydot">{formattedDate.split('-')[2]}</div> // 동그란 원 추가
                         )}
                     {!isToday && (
-                    <div>{formattedDate.split('-')[2]}</div>
-                    
-                    )}
-                    </span>
+                        <div>{formattedDate.split('-')[2]}</div>
+                        
+                        )}
+                    </TextClass>
 
-                    <div className={`income-expenditure ${income > 0 ? 'income' : expenditure > 0 ? 'expenditure' : ''}`}>
-                        <div className='incometext'>{income > 0 ? `+ ${income.toLocaleString()}원` : ''}</div>
-                        <div className='expendituretext'>{expenditure > 0 ? `- ${expenditure.toLocaleString()}원` : ''}</div>
-                    </div>
+                    <IncomeExpenditure>
+                        <IncomeText>{income > 0 ? `+ ${income.toLocaleString()}` : ''}</IncomeText>
+                        <ExpenditureText>{expenditure > 0 ? `- ${expenditure.toLocaleString()}` : ''}</ExpenditureText>
+                    </IncomeExpenditure>
 
-                </div>,
+                </CellClass>,
             );
             day = addDays(day, 1);
         }
         rows.push(
-            <div className="row" key={formattedDate}>
+            <Row key={formattedDate}>
                 {dates}
-            </div>,
+            </Row>,
         );
         dates = [];
     }
