@@ -1,4 +1,4 @@
-package yeon.dubu.oauth.dto;
+package yeon.dubu.oauth.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

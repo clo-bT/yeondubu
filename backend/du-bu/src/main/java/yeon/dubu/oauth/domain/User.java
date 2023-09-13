@@ -2,7 +2,7 @@ package yeon.dubu.oauth.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.antlr.v4.runtime.misc.NotNull;
 import yeon.dubu.BaseTimeEntity;
 import yeon.dubu.oauth.enumeration.AuthProvider;
 import yeon.dubu.oauth.enumeration.Role;
@@ -19,12 +19,14 @@ public class User extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    private String oauth2Id; // 로그인시 전달되는 id
+    private String refreshToken;
+    @NotNull
+    private String name;  // 사용자 nickname
+    @NotNull
     private String email;
-
-    private String name;
-
-    private String oauth2Id;
+    @NotNull
+    private String profileImageUrl;
 
     @Enumerated(EnumType.STRING)
     private AuthProvider authProvider;

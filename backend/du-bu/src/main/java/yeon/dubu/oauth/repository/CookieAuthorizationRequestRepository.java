@@ -6,9 +6,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import yeon.dubu.oauth.lib.CookieUtils;
 
-@Component
+@Repository
 public class CookieAuthorizationRequestRepository implements AuthorizationRequestRepository {
 
     public static final String OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME = "oauth2_auth_request";

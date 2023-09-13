@@ -32,8 +32,14 @@ public class UserPrincipal implements OAuth2User, UserDetails {
         this.authorities = authorities;
     }
 
+    /**
+     * 해당 User의 권한 리턴
+     * @param user
+     * @param attributes
+     * @return
+     */
     public static UserPrincipal create(User user, Map<String, Object> attributes) {
-        List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(Role.ROLE_USER.name()));
+        List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(Role.USER.name()));
         UserPrincipal userPrincipal = new UserPrincipal(user.getId(), user.getEmail(), authorities);
         userPrincipal.setAttributes(attributes);
         return userPrincipal;
@@ -43,24 +49,27 @@ public class UserPrincipal implements OAuth2User, UserDetails {
     public String getUsername() {
         return email;
     }
-
+    // 계정 만료 여부
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
-
+    // 계정 잠겼는지
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
-
+    // 비밀번호 기간 지났는지
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
-
+    // 활성화 여부
     @Override
     public boolean isEnabled() {
+
+        // 사이트 1년동안 회원이 로그인을 하지 않으면 휴면 계정 하기로 함. return false
+
         return true;
     }
 

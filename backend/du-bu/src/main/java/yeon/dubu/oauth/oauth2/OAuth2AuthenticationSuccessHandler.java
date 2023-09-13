@@ -10,7 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
-import yeon.dubu.oauth.dto.UserResponseDto;
+import yeon.dubu.oauth.dto.response.UserResponseDto;
 import yeon.dubu.oauth.jwt.JwtTokenProvider;
 import yeon.dubu.oauth.lib.CookieUtils;
 import yeon.dubu.oauth.repository.CookieAuthorizationRequestRepository;
@@ -26,7 +26,7 @@ import static yeon.dubu.oauth.repository.CookieAuthorizationRequestRepository.RE
 @RequiredArgsConstructor
 public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
-    @Value("${oauth.authorizedRedirectUri}")
+    @Value("${app.oauth2.authorizedRedirectUri}")
     private String redirectUri;
     private final JwtTokenProvider jwtTokenProvider;
     private final CookieAuthorizationRequestRepository cookieAuthorizationRequestRepository;

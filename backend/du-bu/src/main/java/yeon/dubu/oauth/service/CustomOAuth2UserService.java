@@ -1,5 +1,6 @@
 package yeon.dubu.oauth.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -22,6 +23,13 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
     private final UserRepository userRepository;
 
+    /**
+     * 조회
+     * @param oAuth2UserRequest the user request
+     * @return
+     * @throws OAuth2AuthenticationException
+     */
+    @Transactional
     @Override
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
         OAuth2UserService oAuth2UserService = new DefaultOAuth2UserService();
@@ -30,6 +38,12 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         return processOAuth2User(oAuth2UserRequest, oAuth2User);
     }
 
+    /**
+     * 로그인
+     * @param oAuth2UserRequest
+     * @param oAuth2User
+     * @return
+     */
     protected OAuth2User processOAuth2User(OAuth2UserRequest oAuth2UserRequest, OAuth2User oAuth2User) {
         //OAuth2 로그인 플랫폼 구분
         AuthProvider authProvider = AuthProvider.valueOf(oAuth2UserRequest.getClientRegistration().getRegistrationId().toUpperCase());
@@ -55,13 +69,19 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         return UserPrincipal.create(user, oAuth2UserInfo.getAttributes());
     }
 
-    private User registerUser(AuthProvider authProvider, OAuth2UserInfo oAuth2UserInfo) {
+    /**
+     * 회원가입
+     * @param authProvider
+     * @param oAuth2UserInfo
+     * @return
+     */
+    public User registerUser(AuthProvider authProvider, OAuth2UserInfo oAuth2UserInfo) {
         User user = User.builder()
                 .email(oAuth2UserInfo.getEmail())
                 .name(oAuth2UserInfo.getName())
                 .oauth2Id(oAuth2UserInfo.getOAuth2Id())
                 .authProvider(authProvider)
-                .role(Role.ROLE_USER)
+                .role(Role.USER)
                 .build();
 
         return userRepository.save(user);

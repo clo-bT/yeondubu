@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import yeon.dubu.oauth.enumeration.Role;
@@ -31,22 +33,21 @@ public class WebSecurityConfigure {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         //httpBasic, csrf, formLogin, rememberMe, logout, session disable
         http
-                .csrf((csrfConfig) ->
-                        csrfConfig.disable()
+                .csrf(AbstractHttpConfigurer::disable
                 )
                 .headers((headerConfig) ->
-                        headerConfig.frameOptions(frameOptionsConfig ->
-                                frameOptionsConfig.disable()
+                        headerConfig.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable
                         )
-                );
+                )
+                .formLogin(AbstractHttpConfigurer::disable);
 
         //요청에 대한 권한 설정
         http.authorizeHttpRequests((authorizeRequests) ->
                 authorizeRequests
-                        .requestMatchers(PathRequest.toH2Console()).permitAll()
+//                        .requestMatchers(PathRequest.toH2Console()).permitAll()
                         .requestMatchers("/", "/login/**").permitAll()
-                        .requestMatchers("/posts/**", "/api/v1/posts/**").hasRole(Role.ROLE_USER.name())
-                        .requestMatchers("/admins/**", "/api/v1/admin/**").hasRole(Role.ROLE_ADMIN.name())
+                        .requestMatchers("/posts/**", "/api/v1/posts/**").hasRole(Role.USER.name())
+                        .requestMatchers("/admins/**", "/api/v1/admin/**").hasRole(Role.ADMIN.name())
                         .anyRequest().authenticated()
         );
 
