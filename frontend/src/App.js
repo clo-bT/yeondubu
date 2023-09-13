@@ -1,18 +1,19 @@
-import { React, useEffect } from 'react';
+import { React } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
-import GlobalStyle from "./styles/GlobalStyle";
+// import GlobalStyle from "./styles/GlobalStyle";
 import FirstMain from './components/Login/FirstMain';
-import HouseNaverMap from './components/HouseFind/HouseNaverMap';
-import CoupleImage from './components/Common/CoupleImage';
-import AccountInputMessage from './components/AccountInputStart/AccountInputMessage';
-import AccountInputHeader from './components/Common/AccountInputHeader';
-import DepositAccountInputForm from './components/AccountInput/DepositAccountInputForm';
-import WeddingDayInput from './components/WeddingDay/WeddingDayInput';
-import styled from 'styled-components';
-import ScoreInputHeader from './components/CreditScoreInput/ScoreInputHeader';
-import ScoreInput from './components/CreditScoreInput/ScoreInput';
+// import HouseNaverMap from './components/HouseFind/HouseNaverMap';
+// import CoupleImage from './components/Common/CoupleImage';
+// import AccountInputMessage from './components/AccountInputStart/AccountInputMessage';
+// import AccountInputHeader from './components/Common/AccountInputHeader';
+// import DepositAccountInputForm from './components/AccountInput/DepositAccountInputForm';
+// import WeddingDayInput from './components/WeddingDay/WeddingDayInput';
+// import styled from 'styled-components';
+// import ScoreInputHeader from './components/CreditScoreInput/ScoreInputHeader';
+// import ScoreInput from './components/CreditScoreInput/ScoreInput';
 import LoginAuth from './components/KakaoLogin/LoginAuth';
+import AccountCalendar from './pages/AccountCalendar'
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Routes>
           <Route path="/" element={<FirstMain />} />
           <Route path="/auth" element={<LoginAuth />} />
+          <Route path="/calendar" element={<AccountCalendar />} />
             
         </Routes>
       </div>
