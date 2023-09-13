@@ -1,13 +1,14 @@
 import os
 import cv2
-import urllib
+from io import BytesIO
 import numpy as np
+from pathlib import Path
+from PIL import Image
+import urllib
 
 import json
 from dotenv import load_dotenv
-from PIL import Image
 from feature_extractor import FeatureExtractor
-from pathlib import Path
 
 load_dotenv()
 CLIENT_ID = os.environ.get('NAVER_ID')
@@ -19,7 +20,8 @@ CLIENT_SECRET = os.environ.get('NAVER_PW')
 #     appliances = json.load(file2)
 # queries = {**furniture, **appliances}
 
-queries = {"sofa":"소파", "desk":"책상", "drawer":"서랍장"}
+# queries = {"sofa":"소파", "desk":"책상", "drawer":"서랍장"}
+queries = {"desk":"책상"}
 
 #총 1000개 상품 크롤링
 # START = 1
@@ -51,16 +53,21 @@ if __name__ == '__main__':
         features_path = Path("./static/feature") / (str(cat) + ".npy")
         for idx, product in enumerate(result):
             img = ''.join(product['image'].split('\\'))
+            # res = urllib.request.urlopen(img).read()
+            # image_np = np.frombuffer(res, dtype=np.uint8)
+            # image = cv2.imdecode(image_np, cv2.IMREAD_COLOR)
+            # cv2.imwrite('./tmp/' + str(idx) + '.png', image)
+            # res = requests.get(img, stream=True)
             res = urllib.request.urlopen(img).read()
-            image_np = np.frombuffer(res, dtype=np.uint8)
-            image = cv2.imdecode(image_np, cv2.IMREAD_COLOR)
-            cv2.imwrite('./tmp/' + str(idx) + '.png', image)
+            pic = Image.open(BytesIO(res))
+            print(type(pic))
+
             '''
             BGrem 이 부분에서 식별해서 배경 제거할것
             OS.remove(원본파일)
             '''
-            feature = fe.extract(img=Image.open('./tmp/' + str(idx) + '.png'))
-            features.append(feature)
+            # feature = fe.extract(img=Image.open('./tmp/' + str(idx) + '.png'))
+            # features.append(feature)
             '''
             OS.remove(배경제거파일)
             '''
