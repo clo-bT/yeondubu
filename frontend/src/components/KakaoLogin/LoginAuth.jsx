@@ -13,9 +13,8 @@ const LoginAuth = () => {
             const code = new URL(window.location.href).searchParams.get("code");
             setcode(code)
             // window.location.href = 'http://localhost:3000/main'
-            
             try{        
-                await axios.get(`${process.env.REACT_APP_API_ROOT}/member/login?code=${code}`)
+                await axios.get(`${process.env.REACT_APP_API_ROOT}/login/oauth2/code/kakao?code=${code}`)
                 .then(function(r){
                     alert(r.data.message)
                     if(r.data.code === 2001){ // 로그인 성공 시
@@ -47,13 +46,10 @@ const LoginAuth = () => {
     return (
         <div>
                     <div>
-            {/* <Header/> */}
             <div className="auth">
                 인가코드 :  {c}
                 {id? <div>uuid : {id}</div> :''}
             </div>
-                        <button>회원가입</button>
-                        <div>로딩중...</div>
 
         </div>
         </div>
