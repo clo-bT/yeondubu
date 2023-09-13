@@ -5,7 +5,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import yeon.dubu.oauth.lib.CookieUtils;
 
@@ -43,11 +42,6 @@ public class CookieAuthorizationRequestRepository implements AuthorizationReques
     public OAuth2AuthorizationRequest removeAuthorizationRequest(HttpServletRequest request, HttpServletResponse response) {
         return this.loadAuthorizationRequest(request);
     }
-
-//    @Override
-//    public OAuth2AuthorizationRequest removeAuthorizationRequest(HttpServletRequest request) {
-//        return this.loadAuthorizationRequest(request);
-//    }
 
     public void removeAuthorizationRequestCookies(HttpServletRequest request, HttpServletResponse response) {
         CookieUtils.deleteCookie(request, response, OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME);

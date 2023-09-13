@@ -67,9 +67,6 @@ public class UserPrincipal implements OAuth2User, UserDetails {
     // 활성화 여부
     @Override
     public boolean isEnabled() {
-
-        // 사이트 1년동안 회원이 로그인을 하지 않으면 휴면 계정 하기로 함. return false
-
         return true;
     }
 

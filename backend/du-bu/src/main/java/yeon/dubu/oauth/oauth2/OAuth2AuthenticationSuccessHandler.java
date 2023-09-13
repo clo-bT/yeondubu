@@ -45,14 +45,14 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     }
 
     protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-        Optional<String> redirectUri = CookieUtils.getCookie(request, REDIRECT_URI_PARAM_COOKIE_NAME)
-                .map(Cookie::getValue);
-
-        if (redirectUri.isPresent() && !isAuthorizedRedirectUri(redirectUri.get())) {
-            throw new RuntimeException("redirect URIs are not matched.");
-        }
-        String targetUrl = redirectUri.orElse(getDefaultTargetUrl());
-
+//        Optional<String> redirectUri = CookieUtils.getCookie(request, REDIRECT_URI_PARAM_COOKIE_NAME)
+//                .map(Cookie::getValue);
+//
+//        if (redirectUri.isPresent() && !isAuthorizedRedirectUri(redirectUri.get())) {
+//            throw new RuntimeException("redirect URIs are not matched.");
+//        }
+//        String targetUrl = redirectUri.orElse(getDefaultTargetUrl());
+        String targetUrl = redirectUri;
         //JWT 생성
         UserResponseDto.TokenInfo tokenInfo = jwtTokenProvider.generateToken(authentication);
 

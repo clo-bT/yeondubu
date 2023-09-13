@@ -45,10 +45,10 @@ public class WebSecurityConfigure {
         http.authorizeHttpRequests((authorizeRequests) ->
                 authorizeRequests
 //                        .requestMatchers(PathRequest.toH2Console()).permitAll()
-                        .requestMatchers("/", "/login/**").permitAll()
-                        .requestMatchers("/posts/**", "/api/v1/posts/**").hasRole(Role.USER.name())
-                        .requestMatchers("/admins/**", "/api/v1/admin/**").hasRole(Role.ADMIN.name())
-                        .anyRequest().authenticated()
+//                        .requestMatchers("/", "/login/**").permitAll()
+//                        .requestMatchers("/posts/**", "/api/v1/posts/**").hasRole(Role.USER.name())
+//                        .requestMatchers("/admins/**", "/api/v1/admin/**").hasRole(Role.ADMIN.name())
+                        .anyRequest().permitAll()
         );
 
         //oauth2Login
@@ -57,9 +57,9 @@ public class WebSecurityConfigure {
                         .baseUri("/oauth2/authorization")
                         .authorizationRequestRepository(cookieAuthorizationRequestRepository)
                 )
-                .redirectionEndpoint(redirection -> redirection
-                        .baseUri("/oauth2/callback/*") // 소셜 인증 후 redirect url
-                )
+//                .redirectionEndpoint(redirection -> redirection
+//                        .baseUri("/login/oauth2/code/kakao") // 소셜 인증 후 redirect url
+//                )
                 //userService()는 OAuth2 인증 과정에서 Authentication 생성에 필요한 OAuth2User 를 반환하는 클래스를 지정한다.
                 .userInfoEndpoint(userInfo -> userInfo
                         .userService(customOAuth2UserService)  // 회원 정보 처리
