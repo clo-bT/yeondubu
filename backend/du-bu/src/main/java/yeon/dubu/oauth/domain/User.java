@@ -26,7 +26,7 @@ public class User extends BaseTimeEntity {
     @NotNull
     private String email;
     @NotNull
-    private String profileImageUrl;
+    private String imageUrl;
 
     @Enumerated(EnumType.STRING)
     private AuthProvider authProvider;

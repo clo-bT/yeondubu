@@ -54,15 +54,15 @@ public class WebSecurityConfigure {
         //oauth2Login
         http.oauth2Login(oauth2Login -> oauth2Login
                 .authorizationEndpoint(authorization -> authorization
-                        .baseUri("/oauth2/authorize")
-                        .authorizationRequestRepository(this.cookieAuthorizationRequestRepository)
+                        .baseUri("/oauth2/authorization")
+                        .authorizationRequestRepository(cookieAuthorizationRequestRepository)
                 )
                 .redirectionEndpoint(redirection -> redirection
                         .baseUri("/oauth2/callback/*") // 소셜 인증 후 redirect url
                 )
                 //userService()는 OAuth2 인증 과정에서 Authentication 생성에 필요한 OAuth2User 를 반환하는 클래스를 지정한다.
                 .userInfoEndpoint(userInfo -> userInfo
-                        .userService(this.customOAuth2UserService)  // 회원 정보 처리
+                        .userService(customOAuth2UserService)  // 회원 정보 처리
                 )
                 .successHandler(oAuth2AuthenticationSuccessHandler)
                 .failureHandler(oAuth2AuthenticationFailureHandler));
