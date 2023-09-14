@@ -3,13 +3,11 @@ import styled from 'styled-components';
 import { format, addMonths, subMonths } from 'date-fns';
 import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from 'date-fns';
 import { isSameMonth, isSameDay, addDays } from 'date-fns';
-// import './AccountCalendar.css'
 // import React, { useEffect, useState } from 'react';
 // import axios from 'axios';
 
 const CalendarPage = styled.div`
-width: 393px;
-height: 852px;
+width: 355px;
 `
 const CalendarHeader = styled.div`
 display: flex;
@@ -47,13 +45,17 @@ const CellClass = styled.div`
 display: flex;
 flex-direction: column;
 align-items: center;
-width: 56.14px;
-
+width: 50.71px;
+&.not-current-month {
+        color: rgba(0, 0, 0, 0.2); /* 전달 및 다음달 날짜의 텍스트 색상을 회색으로 지정 */
+    }
 `
 const TextClass = styled.span`
 display: flex;
 flex-direction: row;
-
+&.not-valid {
+        color: rgba(0, 0, 0, 0.2); /* 전달 및 다음달 날짜의 텍스트 색상을 회색으로 지정 */
+    }
 `
 const Row = styled.span`
 padding-top: .5rem;
@@ -64,12 +66,12 @@ height: 3rem;
 
 `
 const IncomeText = styled.div`
-color: #4caf50; /* 수입 텍스트 색상 */
+color: #2663FF; /* 수입 텍스트 색상 */
 /* font-weight: bold; */
 font-size: .1rem;
 `
 const ExpenditureText = styled.div`
-color: #f44336; /* 지출 텍스트 색상 */
+color: #FF6565; /* 지출 텍스트 색상 */
 /* font-weight: bold; */
 font-size: .1rem;
 `
@@ -77,6 +79,14 @@ const RowsBody = styled.div`
 display: flex;
 flex-direction: column;
 
+`
+const TodayDot = styled.div`
+    width: 30px;
+    height: 30px;
+    background-color: #FF6565; /* 원하는 색상으로 설정 */
+    border-radius: 50%;
+    z-index: 1;
+    margin: 0 auto; 
 `
 
 const responseData = [
@@ -296,7 +306,7 @@ const AccountCalendar = ({ onDateClick : handleClick }) => {
 
                     <TextClass className={textClass}>
                     {isToday && (
-                        <div className="todaydot">{formattedDate.split('-')[2]}</div> // 동그란 원 추가
+                        <TodayDot>{formattedDate.split('-')[2]}</TodayDot> // 동그란 원 추가
                         )}
                     {!isToday && (
                         <div>{formattedDate.split('-')[2]}</div>
@@ -305,8 +315,8 @@ const AccountCalendar = ({ onDateClick : handleClick }) => {
                     </TextClass>
 
                     <IncomeExpenditure>
-                        <IncomeText>{income > 0 ? `+ ${income.toLocaleString()}` : ''}</IncomeText>
-                        <ExpenditureText>{expenditure > 0 ? `- ${expenditure.toLocaleString()}` : ''}</ExpenditureText>
+                        <IncomeText>{income > 0 ? `+${income.toLocaleString()}` : ''}</IncomeText>
+                        <ExpenditureText>{expenditure > 0 ? `-${expenditure.toLocaleString()}` : ''}</ExpenditureText>
                     </IncomeExpenditure>
 
                 </CellClass>,
