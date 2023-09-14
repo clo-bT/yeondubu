@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import wife from '../../assets/Common/wife.svg';
 import husband from '../../assets/Common/husband.svg';
 import heart from '../../assets/Common/heart.svg';
@@ -8,13 +8,12 @@ import styled from 'styled-components';
 
 const CoupleContainer = styled.div`
 margin-top: 30px;
-height: ${({ isBudgetOpen }) => (isBudgetOpen ? '92px' : '182px')};
-height: 182px;
+height: 190px;
 display: flex;
 flex-direction: column;
 align-items: center;
 justify-content: center;
-cursor: pointer; 
+cursor: pointer; /* 컴포넌트를 클릭 가능하게 만듭니다. */
 `
 
 
@@ -71,36 +70,14 @@ const RowContainer = styled.div`
     align-items: center;
 `
 
-const CoupleImage = ({ onScroll }) => {
-  const coupleRef = useRef(null);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY || window.pageYOffset;
-      const coupleTop = coupleRef.current.getBoundingClientRect().top;
-      const halfBudgetMoneyHeight = window.innerHeight / 2;
-
-      if (scrollY > coupleTop - halfBudgetMoneyHeight) {
-        onScroll(false); // CoupleImage가 BudgetMoney 위로 스크롤될 때 호출
-      } else {
-        onScroll(true); // CoupleImage가 BudgetMoney 아래로 스크롤될 때 호출
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [onScroll]);
-
-  const handleCoupleClick = () => {
-    onScroll(true); // CoupleImage 클릭 시 BudgetMoney 컨테이너를 다시 전체로 보이도록 업데이트
+const CoupleImage = ({ setIsBudgetOpen, isBudgetOpen }) => {
+  const handleClick = () => {
+    setIsBudgetOpen(!isBudgetOpen); // BudgetMoney의 높이를 토글
   };
-
 
     return (
       <div>
-      <CoupleContainer isBudgetOpen={isBudgetOpen} onClick={handleCoupleClick}>
+      <CoupleContainer isBudgetOpen={isBudgetOpen} onClick={handleClick}>
         <RowContainer>
           <CoupleContent>
             <WifeName>손예진</WifeName>

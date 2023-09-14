@@ -4,36 +4,32 @@ import styled from 'styled-components';
 const CoupleMoneyContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr; /* 2열로 나누기 */
-
 `;
 
 const CoupleMoneyItem = styled.div`
   background-color: #FFF;
-  padding: 10px;
   text-align: center;
+  padding: 10px;
 `;
 
 const CoupleMoney = () => {
-    return (
-        <CoupleMoneyContainer>
-        <CoupleMoneyItem>
-          <p>현금</p>
-          <p>5,000,000원</p>
+  const dummyData = [
+    { type: '현금', amount: '5,000,000원' },
+    { type: '현금', amount: '5,000,000원' },
+    { type: '예적금', amount: '80,000,000원' },
+    { type: '예적금', amount: '90,000,000원' },
+  ];
+
+  return (
+    <CoupleMoneyContainer>
+      {dummyData.map((item, index) => (
+        <CoupleMoneyItem key={index}>
+          <p>{item.type}</p>
+          <p>{item.amount}</p>
         </CoupleMoneyItem>
-        <CoupleMoneyItem>
-          <p>현금</p>
-          <p>5,000,000원</p>
-        </CoupleMoneyItem>
-        <CoupleMoneyItem>
-          <p>예적금</p>
-          <p>80,000,000원</p>
-        </CoupleMoneyItem>
-        <CoupleMoneyItem>
-          <p>예적금</p>
-          <p>90,000,000원</p>
-        </CoupleMoneyItem>
-      </CoupleMoneyContainer>
-    );
+      ))}
+    </CoupleMoneyContainer>
+  );
 };
 
 export default CoupleMoney;
