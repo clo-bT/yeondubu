@@ -11,11 +11,14 @@ logs
 node_modules
 bower_components
 
+
 *.sublime*
+yolov5
 static
 psd
 thumb
 sketch
+model
 
 *.csv
 *.ipynb
