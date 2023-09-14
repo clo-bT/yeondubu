@@ -72,7 +72,7 @@ public class UserPrincipal implements OAuth2User, UserDetails {
 
     @Override
     public Map<String, Object> getAttributes() {
-        return null;
+        return attributes;
     }
 
     @Override

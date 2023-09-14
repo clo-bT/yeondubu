@@ -38,7 +38,8 @@ public class JwtTokenProvider {
     //The specified key byte array is 248 bits which is not secure enough for any JWT HMAC-SHA algorithm.
     // The JWT JWA Specification (RFC 7518, Section 3.2) states that keys used with HMAC-SHA algorithms MUST have a size >= 256 bits (the key size must be greater than or equal to the hash output size).
     // Consider using the io.jsonwebtoken.security.Keys#secretKeyFor(SignatureAlgorithm) method to create a key guaranteed to be secure enough for your preferred HMAC-SHA algorithm.
-    public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
+    // 주입받은 secret 값을 이용해 암호화 키 생성
+    public JwtTokenProvider(@Value("${custom.jwt.secretKey}") String secretKey) {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
