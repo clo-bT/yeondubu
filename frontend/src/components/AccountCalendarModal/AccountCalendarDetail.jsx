@@ -5,28 +5,69 @@ import CalendarInput from '../CalendarInputCreate/CalendarInput';
 // import axios from 'axios'; 
 
 const ModalPage = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+width: 355px;
+margin-top: 40px;
 `
 const IncomeExpenditure = styled.div``
-const Table = styled.table``
-const TableHeader = styled.thead``;
-const TableBody = styled.tbody``;
-const TableRow = styled.tr``;
-const TableCell = styled.td`
-  color: black;
+const IncomeRow = styled.div`
+display: flex;
+justify-content: space-between;
+align-items: center;
+width: 300px;
+margin-bottom: 10px;
+&::before {
+    content: '';
+    position: absolute;
+    left: 21px;
+    width: 2px; /* 세로 줄의 너비 설정 */
+    height: 5%; /* 부모 요소의 높이에 맞게 설정 */
+    background-color: #FF6565; /* 세로 줄의 색상 설정 */
+  }
+
 `;
 
-const IncomeTableCell = styled(TableCell)`
-  color: red; 
-  cursor: pointer;
-`;
+const TagAndWho = styled.div`
+  display: flex;
+  align-items: flex-start;
+flex-direction: column;
 
-const ExpenditureTableCell = styled(TableCell)`
-  color: blue;
-  cursor: pointer;
+
+`;
+const IncomeTag = styled.div``;
+const IncomeWho = styled.div`
+font-size: .5rem;
+margin-top: 2px;
+`;
+const IncomeMoney = styled.div`
+font-size: 15px;
+`;
+const ExpenditureRow = styled.div`
+display: flex;
+justify-content: space-between;
+align-items: center;
+width: 300px;
+margin-bottom: 10px;
+
+&::before {
+    content: '';
+    position: absolute;
+    left: 21px;
+    width: 2px; /* 세로 줄의 너비 설정 */
+    height: 5%; /* 부모 요소의 높이에 맞게 설정 */
+    background-color: #2663FF; /* 세로 줄의 색상 설정 */
+  }
+`;
+const ExpenditureTag = styled.div``;
+const ExpenditureWho = styled.div`
+font-size: .5rem;
+margin-top: 2px;
+`;
+const ExpenditureMoney = styled.div`
+font-size: 15px;
 `;
 
 
@@ -105,35 +146,27 @@ const AccountCalendarDetail = ({ formatday }) => {
     return (
         <ModalPage>
             { responseData && (
-                    responseData.date === formatday && (
-                <IncomeExpenditure>
-                    <Table>
-                        <TableHeader>
-                            <TableRow>
-                            <TableCell>항목</TableCell>
-                            <TableCell>가격</TableCell>
-                            <TableCell>결제자</TableCell>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {responseData.incomeList.map(incomeItem => (
-                            <TableRow key={incomeItem.id} onClick={() => openModal(incomeItem)}>
-                                <IncomeTableCell>{incomeItem.first_tag_name}</IncomeTableCell>
-                                <IncomeTableCell>+{incomeItem.amount.toLocaleString()}</IncomeTableCell>
-                                <IncomeTableCell>{incomeItem.role === "BRIDE" ? "예비신부" : "예비신랑"}</IncomeTableCell>
-                            </TableRow>
-                            ))}
-                            {responseData.expenditureList.map(expenditureItem => (
-                            <TableRow key={expenditureItem.id} onClick={() => openModal(expenditureItem)}>
-                                <ExpenditureTableCell>{expenditureItem.first_tag_name}</ExpenditureTableCell>
-                                <ExpenditureTableCell>-{expenditureItem.amount.toLocaleString()}</ExpenditureTableCell>
-                                <ExpenditureTableCell>{expenditureItem.role === "BRIDE" ? "예비신부" : "예비신랑"}</ExpenditureTableCell>
-                            </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </IncomeExpenditure>
-
+                responseData.date === formatday && (
+                    <IncomeExpenditure>
+                        {responseData.incomeList.map(incomeItem => (
+                            <IncomeRow key={incomeItem.id} onClick={() => openModal(incomeItem)}>
+                                <TagAndWho>
+                                    <IncomeTag>{incomeItem.first_tag_name}</IncomeTag>
+                                    <IncomeWho>{incomeItem.role === "BRIDE" ? "예비신부" : "예비신랑"}</IncomeWho>
+                                </TagAndWho>
+                                <IncomeMoney>+{incomeItem.amount.toLocaleString()}</IncomeMoney>
+                            </IncomeRow>
+                        ))}
+                        {responseData.expenditureList.map(expenditureItem => (
+                            <ExpenditureRow key={expenditureItem.id} onClick={() => openModal(expenditureItem)}>
+                                <TagAndWho>
+                                    <ExpenditureTag>{expenditureItem.first_tag_name}</ExpenditureTag>
+                                    <ExpenditureWho>{expenditureItem.role === "BRIDE" ? "예비신부" : "예비신랑"}</ExpenditureWho>
+                                </TagAndWho>
+                                <ExpenditureMoney>-{expenditureItem.amount.toLocaleString()}</ExpenditureMoney>
+                            </ExpenditureRow>
+                        ))}
+                    </IncomeExpenditure>
                 )
             )}
             <p>{formatday}</p>
