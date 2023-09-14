@@ -32,3 +32,4 @@ sketch
 *.bin*
 *.npy
 *__pycache__*
+*.h5

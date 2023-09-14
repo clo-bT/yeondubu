@@ -4,7 +4,7 @@ from feature_extractor import FeatureExtractor
 from pathlib import Path
 
 # image를 input.png, 비교할 DB||hdf5, 최대 출력 입력 구간
-INPUT_IMAGE = './tmp/input.png'
+INPUT_IMAGE = './input.png'
 COMPARE_DB = 'desk'
 MX = 30
 
