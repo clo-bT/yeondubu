@@ -1,18 +1,19 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
-height: ${({ isBudgetOpen }) => (isBudgetOpen ? '516px' : '230px')};
+position: sticky;
+top: 0;
+z-index: 1;
+height: ${props => (props.isBudgetOpen ? '470px' : '230px')}; /* 상태에 따라 높이 변경 */
 background: #FFD0D0;
 flex-direction: column;
 align-items: center;
 justify-content: center;
-position: sticky;
-top: 0;
-z-index: 1;
 transition: height 0.3s;
 overflow: hidden;
-`
+
+`;
 
 const Dday = styled.p`
 color: #FFF;
@@ -50,7 +51,7 @@ font-size: 23px;
 font-style: normal;
 font-weight: 400;
 line-height: normal;
-margin-top: 70px;
+margin-top: 50px;
 `
 
 const WeHaveDetail = styled.p`
