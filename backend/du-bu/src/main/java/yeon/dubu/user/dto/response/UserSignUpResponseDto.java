@@ -6,13 +6,13 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserInfoResponseDto {
+public class UserSignUpResponseDto {
     private Long id;
     private String email;
     private String imgUrl;
 
     @Builder
-    public UserInfoResponseDto(Long id, String email, String imgUrl) {
+    public UserSignUpResponseDto(Long id, String email, String imgUrl) {
         this.id = id;
         this.email = email;
         this.imgUrl = imgUrl;

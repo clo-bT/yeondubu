@@ -8,7 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import yeon.dubu.user.domain.User;
-import yeon.dubu.auth.enumeration.Role;
+import yeon.dubu.auth.enumeration.RoleType;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -39,7 +39,7 @@ public class UserPrincipal implements OAuth2User, UserDetails {
      * @return
      */
     public static UserPrincipal create(User user, Map<String, Object> attributes) {
-        List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(Role.USER.name()));
+        List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(RoleType.USER.name()));
         UserPrincipal userPrincipal = new UserPrincipal(user.getId(), user.getEmail(), authorities);
         userPrincipal.setAttributes(attributes);
         return userPrincipal;

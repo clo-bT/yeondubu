@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import yeon.dubu.user.domain.User;
 import yeon.dubu.auth.enumeration.AuthProvider;
-import yeon.dubu.auth.enumeration.Role;
+import yeon.dubu.auth.enumeration.RoleType;
 import yeon.dubu.auth.oauth2.OAuth2UserInfo;
 import yeon.dubu.auth.oauth2.OAuth2UserInfoFactory;
 import yeon.dubu.auth.oauth2.UserPrincipal;
@@ -65,7 +65,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 .imageUrl(oAuth2UserInfo.getImageUrl())
                 .oauth2Id(oAuth2UserInfo.getOAuth2Id())
                 .authProvider(authProvider)
-                .role(Role.USER)
+                .roleType(RoleType.USER)
                 .build();
 
         return userRepository.save(user);

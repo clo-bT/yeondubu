@@ -5,10 +5,10 @@ import lombok.*;
 import org.antlr.v4.runtime.misc.NotNull;
 import yeon.dubu.BaseTimeEntity;
 import yeon.dubu.auth.enumeration.AuthProvider;
-import yeon.dubu.auth.enumeration.Role;
+import yeon.dubu.auth.enumeration.RoleType;
 import yeon.dubu.auth.oauth2.OAuth2UserInfo;
+import yeon.dubu.user.enumeration.UserRole;
 
-@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
@@ -31,7 +31,12 @@ public class User extends BaseTimeEntity {
     private AuthProvider authProvider;
 
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private RoleType roleType;  // adimin or user
+
+    @Enumerated(EnumType.STRING)
+    private UserRole userRole;   // 신랑 or 신부
+
+    private Float creditScore;  // 신용점수
 
     public User update(OAuth2UserInfo oAuth2UserInfo) {
         this.name = oAuth2UserInfo.getName();
@@ -41,7 +46,7 @@ public class User extends BaseTimeEntity {
     }
 
     @Builder
-    public User(Long id, String oauth2Id, String refreshToken, String name, String email, String imageUrl, AuthProvider authProvider, Role role) {
+    public User(Long id, String oauth2Id, String refreshToken, String name, String email, String imageUrl, AuthProvider authProvider, RoleType roleType) {
         this.id = id;
         this.oauth2Id = oauth2Id;
         this.refreshToken = refreshToken;
@@ -49,6 +54,6 @@ public class User extends BaseTimeEntity {
         this.email = email;
         this.imageUrl = imageUrl;
         this.authProvider = authProvider;
-        this.role = role;
+        this.roleType = roleType;
     }
 }
