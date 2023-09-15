@@ -7,7 +7,7 @@ import yeon.dubu.user.enumeration.UserRole;
 
 @Getter
 @Setter
-public class UserResponseDto {
+public class UserResDto {
     private Long id;
     private String name;
     private String imageUrl;
@@ -15,7 +15,7 @@ public class UserResponseDto {
     private Integer creditScore;
 
     @Builder
-    public UserResponseDto(Long id, String name, String imageUrl, UserRole userRole, Integer creditScore) {
+    public UserResDto(Long id, String name, String imageUrl, UserRole userRole, Integer creditScore) {
         this.id = id;
         this.name = name;
         this.imageUrl = imageUrl;

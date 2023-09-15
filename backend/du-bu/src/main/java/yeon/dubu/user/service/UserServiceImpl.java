@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import yeon.dubu.user.domain.User;
-import yeon.dubu.user.dto.response.UserResponseDto;
+import yeon.dubu.user.dto.response.UserResDto;
 import yeon.dubu.user.exception.NoSuchUserException;
 import yeon.dubu.user.repository.UserRepository;
 
@@ -18,11 +18,11 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public UserResponseDto retrieveMember(Long userId) {
+    public UserResDto retrieveMember(Long userId) {
 
         User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원은 존재하지 않습니다."));
 
-        UserResponseDto userResponseDto = UserResponseDto.builder()
+        UserResDto userResDto = UserResDto.builder()
                 .id(userId)
                 .name(user.getName())
                 .imageUrl(user.getImageUrl())
@@ -30,6 +30,6 @@ public class UserServiceImpl implements UserService {
                 .creditScore(user.getCreditScore())
                 .build();
 
-        return userResponseDto;
+        return userResDto;
     }
 }
