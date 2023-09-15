@@ -7,7 +7,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import yeon.dubu.user.dto.response.UserResponseDto;
+import yeon.dubu.user.dto.response.UserResDto;
 import yeon.dubu.user.service.UserService;
 
 @Slf4j
@@ -26,9 +26,9 @@ public class UserController {
     @GetMapping
     public ResponseEntity getId(@AuthenticationPrincipal Long userId) {
         log.debug("retrieve() userId: {}", userId);
-        UserResponseDto userResponseDto = userService.retrieveMember(userId);
+        UserResDto userResDto = userService.retrieveMember(userId);
 
-        return ResponseEntity.ok(userResponseDto);
+        return ResponseEntity.ok(userResDto);
     }
 
 
