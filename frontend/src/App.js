@@ -17,6 +17,8 @@ import './App.css';
 // import Menubar from './components/Common/Menubar';
 // import MyAccountProfile from './components/Common/MyAccountProfile';
 import Main from './pages/Main';
+import ShopingMallCategory from './pages/ShopingMallCategory';
+import ShoppingMall from './pages/ShoppingMall';
 
 function App() {
   function setScreenSize() {
@@ -29,7 +31,7 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <Routes>
-          <Route path="/" element={<Main />} />
+          <Route path="/" element={<ShoppingMall />} />
           {/* <Route path="/auth" element={<LoginAuth />} /> */}
             
         </Routes>
