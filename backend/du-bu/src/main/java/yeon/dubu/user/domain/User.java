@@ -36,7 +36,7 @@ public class User extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private UserRole userRole;   // 신랑 or 신부
 
-    private Float creditScore;  // 신용점수
+    private Integer creditScore;  // 신용점수
 
     public User update(OAuth2UserInfo oAuth2UserInfo) {
         this.name = oAuth2UserInfo.getName();

@@ -1,9 +1,9 @@
 package yeon.dubu.user.service;
 
-import yeon.dubu.user.dto.response.UserSignUpResponseDto;
+import yeon.dubu.user.dto.response.UserResponseDto;
 
 public interface UserService {
 
-    UserSignUpResponseDto retrieveMember(Long userId);
+    UserResponseDto retrieveMember(Long userId);
 
 }
