@@ -9,7 +9,6 @@ import yeon.dubu.oauth.enumeration.Role;
 import yeon.dubu.oauth.oauth2.OAuth2UserInfo;
 
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
@@ -39,5 +38,17 @@ public class User extends BaseTimeEntity {
         this.oauth2Id = oAuth2UserInfo.getOAuth2Id();
 
         return this;
+    }
+
+    @Builder
+    public User(Long id, String oauth2Id, String refreshToken, String name, String email, String imageUrl, AuthProvider authProvider, Role role) {
+        this.id = id;
+        this.oauth2Id = oauth2Id;
+        this.refreshToken = refreshToken;
+        this.name = name;
+        this.email = email;
+        this.imageUrl = imageUrl;
+        this.authProvider = authProvider;
+        this.role = role;
     }
 }

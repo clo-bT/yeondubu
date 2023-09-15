@@ -50,12 +50,15 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         //가입되지 않은 경우
         else {
             user = registerUser(authProvider, oAuth2UserInfo);
+            System.out.println("가입되지 않은 경우");
         }
 
+        System.out.println("커스텀 오어스 유저 서비스");
         return UserPrincipal.create(user, oAuth2UserInfo.getAttributes());
     }
 
     private User registerUser(AuthProvider authProvider, OAuth2UserInfo oAuth2UserInfo) {
+        System.out.println("레포에 저장");
         User user = User.builder()
                 .email(oAuth2UserInfo.getEmail())
                 .name(oAuth2UserInfo.getName())
