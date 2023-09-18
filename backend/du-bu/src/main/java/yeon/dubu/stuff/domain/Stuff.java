@@ -1,6 +1,7 @@
 package yeon.dubu.stuff.domain;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,6 +24,19 @@ public class Stuff extends BaseTimeEntity {
     private String imageVector;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Brand brand;
+    @JoinColumn(name = "STUFF_TAG_ID")
+    private Stuff stuff;
 
+    @Builder
+    public Stuff(Long id, String title, String link, String image, String lowPrice,
+        String imageVector,
+        Stuff stuff) {
+        this.id = id;
+        this.title = title;
+        this.link = link;
+        this.image = image;
+        this.lowPrice = lowPrice;
+        this.imageVector = imageVector;
+        this.stuff = stuff;
+    }
 }
