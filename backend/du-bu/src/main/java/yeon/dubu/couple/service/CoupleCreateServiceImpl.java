@@ -26,7 +26,7 @@ public class CoupleCreateServiceImpl implements CoupleCreateService{
             () -> new NoSuchUserException()
         );
 
-        Optional<CoupleConnection> opCoupleConnection = coupleConnectionRepository.findByUserId(userId);
+        Optional<CoupleConnection> opCoupleConnection = coupleConnectionRepository.findById(userId);
 
         //entity 없으면 생성 후 waiting return
         if(opCoupleConnection.isEmpty()){
