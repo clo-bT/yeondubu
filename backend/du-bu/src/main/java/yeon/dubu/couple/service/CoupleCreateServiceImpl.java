@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yeon.dubu.couple.domain.CoupleConnection;
+import yeon.dubu.couple.exception.NoSuceCoupleConnectionException;
 import yeon.dubu.couple.repository.CoupleConnectionRepository;
 import yeon.dubu.user.domain.User;
 import yeon.dubu.user.exception.NoSuchUserException;
@@ -54,5 +55,35 @@ public class CoupleCreateServiceImpl implements CoupleCreateService{
         }
 
         return -1L;
+    }
+
+    @Override
+    @Transactional
+    public void deleteCoupleConnection(Long userId){
+        User user = userRepository.findById(userId).orElseThrow(
+            () -> new NoSuchUserException()
+        );
+        coupleConnectionRepository.deleteById(userId);
+    }
+
+    @Override
+    @Transactional
+    public Long enterCoupleConnection(Long userId, Integer code) {
+        User user = userRepository.findById(userId).orElseThrow(
+            () -> new NoSuchUserException("해당하는 사용자가 없습니다.")
+        );
+
+        CoupleConnection coupleConnection = coupleConnectionRepository.findByCode(code).orElseThrow(
+            () -> new NoSuceCoupleConnectionException("일치하지 않는 코드입니다.")
+        );
+
+        if(coupleConnection.getGuest() == null){
+            coupleConnection.setGuest(user);
+            coupleConnectionRepository.save(coupleConnection);
+            return coupleConnection.getHost().getId();
+        }
+
+        return -1L;
+
     }
 }
