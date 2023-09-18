@@ -17,8 +17,9 @@ margin-top: 10px;
 const Box = styled.div`
   display: flex;
   align-items: center; 
-  margin-top: 20px;
+  margin-top: 10px;
   gap: 10px; 
+  width: 100%;
 
 `
 const ProductInfo = styled.div`
@@ -26,11 +27,11 @@ display: flex;
 align-items: center;
 justify-content: space-between;
 width: 100%;
+margin-bottom: 50px;
+
 `
 const GetOutButton = styled.a`
 color: #000;
-leading-trim: both;
-text-edge: cap;
 font-size: 18px;
 font-style: normal;
 font-weight: 400;
@@ -43,13 +44,13 @@ display: flex;
 justify-content: center;
 align-items: flex-start;
 gap: 10px;
+width: 130px;
+height: 130px;
 
 `
 
 const TagName = styled.p`
 color: #000;
-leading-trim: both;
-text-edge: cap;
 font-size: 23px;
 font-style: normal;
 font-weight: 700;
@@ -60,8 +61,6 @@ margin-left: 20px;
 const Filter = styled.a`
 color: #000;
 text-align: center;
-leading-trim: both;
-text-edge: cap;
 font-size: 12px;
 font-style: normal;
 font-weight: 400;

@@ -19,6 +19,7 @@ import './App.css';
 import Main from './pages/Main';
 import ShopingMallCategory from './pages/ShopingMallCategory';
 import ShoppingMall from './pages/ShoppingMall';
+import PutShoppingImage from './pages/PutShoppingImage';
 
 function App() {
   function setScreenSize() {
@@ -31,7 +32,7 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <Routes>
-          <Route path="/" element={<ShoppingMall />} />
+          <Route path="/" element={<PutShoppingImage />} />
           {/* <Route path="/auth" element={<LoginAuth />} /> */}
             
         </Routes>
