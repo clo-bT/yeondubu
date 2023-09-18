@@ -10,33 +10,35 @@ const CalendarPage = styled.div`
 width: 355px;
 `
 const CalendarHeader = styled.div`
+width: 355px;
 display: flex;
 justify-content: space-between;
 /* padding: 10px; */
-background-color: #f0f0f0;
 font-size: 18px;
 font-weight: bold;
 
 `
 const Col = styled.div`
 flex: 1;
-text-align: center;
 padding: 5px;
 cursor: pointer;
+/* text-align: left; */
+
 `
 const TextMonth = styled.span`
+width: 355px;
 font-size: 20px;
 font-weight: bold;
 flex-direction: column;
 
 `
-const DaysRow = styled.div`
+const DaysClass = styled.div`
+width: 355px;
 display: flex;
 justify-content: space-between;
-/* padding: 10px 20px; */
-background-color: #f2f2f2;
 
 `
+
 const IncomeExpenditure = styled.div`
 flex-direction: column;
 
@@ -48,7 +50,15 @@ align-items: center;
 width: 50.71px;
 &.not-current-month {
         color: rgba(0, 0, 0, 0.2); /* 전달 및 다음달 날짜의 텍스트 색상을 회색으로 지정 */
-    }
+}
+&.selected {    
+    width: 30px;
+    height: 30px;
+    background: rgba(255, 101, 101, 0.50);
+    border-radius: 50%;
+    z-index: 1;
+    margin: 0 auto;
+}
 `
 const TextClass = styled.span`
 display: flex;
@@ -87,6 +97,23 @@ const TodayDot = styled.div`
     border-radius: 50%;
     z-index: 1;
     margin: 0 auto; 
+    color: white;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+
+const NotTodayDot = styled.div`
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    z-index: 1;
+    margin: 0 auto; 
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `
 
 const responseData = [
@@ -255,9 +282,9 @@ const AccountCalendar = ({ onDateClick : handleClick }) => {
 
     for (let i = 0; i < 7; i++) {
         days.push(
-            <Col key={i}>
+            <div key={i}>
                 {date[i]}
-            </Col>,
+            </div>,
         );
     }
     const monthStart = startOfMonth(currentMonth);
@@ -305,13 +332,20 @@ const AccountCalendar = ({ onDateClick : handleClick }) => {
                 >
 
                     <TextClass className={textClass}>
-                    {isToday && (
-                        <TodayDot>{formattedDate.split('-')[2]}</TodayDot> // 동그란 원 추가
-                        )}
-                    {!isToday && (
+                    {isToday ? (
+                            <TodayDot>
+                                <div>
+                                {formattedDate.split('-')[2]}
+                                </div>
+                            </TodayDot> // 동그란 원 추가
+                        ) : 
+                            <NotTodayDot>
+
                         <div>{formattedDate.split('-')[2]}</div>
+                            </NotTodayDot>
                         
-                        )}
+                        }
+                    
                     </TextClass>
 
                     <IncomeExpenditure>
@@ -370,9 +404,9 @@ const AccountCalendar = ({ onDateClick : handleClick }) => {
                     <span onClick={nextMonth}>→</span>
                 </Col>
             </CalendarHeader>
-            <DaysRow>
+            <DaysClass>
                 {days}
-            </DaysRow>
+            </DaysClass>
             <RowsBody>
                 {rows}
             </RowsBody>
