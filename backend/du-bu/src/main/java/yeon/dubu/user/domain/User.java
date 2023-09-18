@@ -7,6 +7,7 @@ import yeon.dubu.BaseTimeEntity;
 import yeon.dubu.auth.enumeration.AuthProvider;
 import yeon.dubu.auth.enumeration.RoleType;
 import yeon.dubu.auth.oauth2.OAuth2UserInfo;
+import yeon.dubu.couple.domain.Couple;
 import yeon.dubu.user.enumeration.UserRole;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -37,6 +38,10 @@ public class User extends BaseTimeEntity {
     private UserRole userRole;   // 신랑 or 신부
 
     private Integer creditScore;  // 신용점수
+
+    @ManyToOne
+    private Couple couple;
+
 
     public User update(OAuth2UserInfo oAuth2UserInfo) {
         this.name = oAuth2UserInfo.getName();

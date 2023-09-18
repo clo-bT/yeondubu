@@ -10,20 +10,20 @@ import jakarta.persistence.ManyToOne;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.Setter;
+import org.antlr.v4.runtime.misc.NotNull;
 import yeon.dubu.couple.domain.Couple;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class IncomeTag {
+public class TagIncome {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NonNull
+    @NotNull
     private String tagName;
 
     @ManyToOne(fetch = LAZY)
@@ -31,7 +31,7 @@ public class IncomeTag {
     private Couple couple;
 
     @Builder
-    public IncomeTag(Long id, @NonNull String tagName, Couple couple) {
+    public TagIncome(Long id, @NotNull String tagName, Couple couple) {
         this.id = id;
         this.tagName = tagName;
         this.couple = couple;

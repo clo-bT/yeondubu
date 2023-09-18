@@ -15,8 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.antlr.v4.runtime.misc.NotNull;
-import yeon.dubu.category.domain.ExpenditureTag;
-import yeon.dubu.category.domain.IncomeTag;
+import yeon.dubu.category.domain.TagIncome;
 import yeon.dubu.user.enumeration.UserRole;
 
 @Entity
@@ -42,16 +41,16 @@ public class MoneyIncome {
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "INCOME_TAG_ID")
-    private IncomeTag incomeTag;
+    private TagIncome tagIncome;
 
     @Builder
     public MoneyIncome(Long id, UserRole userRole, LocalDate date, Long amount, String memo,
-        IncomeTag incomeTag) {
+        TagIncome tagIncome) {
         this.id = id;
         this.userRole = userRole;
         this.date = date;
         this.amount = amount;
         this.memo = memo;
-        this.incomeTag = incomeTag;
+        this.tagIncome = tagIncome;
     }
 }

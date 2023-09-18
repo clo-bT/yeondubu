@@ -11,7 +11,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import yeon.dubu.category.domain.ExpenditureTag;
 import yeon.dubu.user.domain.User;
 
 @Entity
