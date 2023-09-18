@@ -17,8 +17,8 @@ import yeon.dubu.user.repository.UserRepository;
 @RequiredArgsConstructor
 public class CoupleCreateServiceImpl implements CoupleCreateService{
 
-    private static CoupleConnectionRepository coupleConnectionRepository;
-    private static UserRepository userRepository;
+    private final CoupleConnectionRepository coupleConnectionRepository;
+    private final UserRepository userRepository;
     @Override
     @Transactional
     public Long createCoupleConnection(Long userId, Integer code) {
@@ -26,7 +26,7 @@ public class CoupleCreateServiceImpl implements CoupleCreateService{
             () -> new NoSuchUserException()
         );
 
-        Optional<CoupleConnection> opCoupleConnection = coupleConnectionRepository.findById(userId);
+        Optional<CoupleConnection> opCoupleConnection = coupleConnectionRepository.findByHostId(userId);
 
         //entity 없으면 생성 후 waiting return
         if(opCoupleConnection.isEmpty()){
@@ -40,7 +40,7 @@ public class CoupleCreateServiceImpl implements CoupleCreateService{
             CoupleConnection coupleConnection = opCoupleConnection.get();
 
             //코드 일치 확인 후 없으면 변경
-            if (code != coupleConnection.getCode()){
+            if (!code.equals(coupleConnection.getCode())){
                 coupleConnection.setCode(code);
                 coupleConnectionRepository.save(coupleConnection);
             }

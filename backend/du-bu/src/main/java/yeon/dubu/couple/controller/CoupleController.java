@@ -18,7 +18,7 @@ import yeon.dubu.couple.service.CoupleCreateService;
 @RequestMapping("/api/v1/couple")
 @RequiredArgsConstructor
 public class CoupleController {
-    private static CoupleCreateService coupleCreateService;
+    private final CoupleCreateService coupleCreateService;
     @PostMapping("/code/{code}")
     public ResponseEntity<?> createCode(@AuthenticationPrincipal Long userId, @PathVariable Integer code){
         Long guestId = coupleCreateService.createCoupleConnection(userId, code);
