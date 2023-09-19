@@ -26,7 +26,7 @@ public class CoupleConnection {
     private Integer code;
     private Boolean hostCheck;
     private Boolean guestCheck;
-    private Boolean isCanceled;
+    private Boolean isCancelled;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "HOST_ID")
@@ -38,12 +38,12 @@ public class CoupleConnection {
 
     @Builder
     public CoupleConnection(Long id, Integer code, Boolean hostCheck, Boolean guestCheck,
-        Boolean isCanceled, User host, User guest) {
+        Boolean isCancelled, User host, User guest) {
         this.id = id;
         this.code = code;
         this.hostCheck = hostCheck;
         this.guestCheck = guestCheck;
-        this.isCanceled = isCanceled;
+        this.isCancelled = isCancelled;
         this.host = host;
         this.guest = guest;
     }
