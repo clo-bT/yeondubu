@@ -1,6 +1,7 @@
 package yeon.dubu.couple.domain;
 import static jakarta.persistence.FetchType.LAZY;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,9 +12,12 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 import yeon.dubu.category.domain.ExpenditureTag;
 import yeon.dubu.user.domain.User;
 
+@DynamicInsert
 @Entity
 @Getter
 @Setter
@@ -24,8 +28,12 @@ public class CoupleConnection {
     private Long id;
 
     private Integer code;
+
+    @ColumnDefault("FALSE")
     private Boolean hostCheck;
+    @ColumnDefault("FALSE")
     private Boolean guestCheck;
+    @ColumnDefault("FALSE")
     private Boolean isCancelled;
 
     @ManyToOne(fetch = LAZY)
