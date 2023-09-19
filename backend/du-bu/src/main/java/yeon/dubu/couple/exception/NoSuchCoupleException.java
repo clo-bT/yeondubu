@@ -3,11 +3,11 @@ package yeon.dubu.couple.exception;
 import org.springframework.http.HttpStatus;
 import yeon.dubu.exception.CustomException;
 
-public class NoSuceCoupleConnectionException extends CustomException{
-    public NoSuceCoupleConnectionException() {
+public class NoSuchCoupleException extends CustomException {
+    public NoSuchCoupleException() {
     }
 
-    public NoSuceCoupleConnectionException(String message) {
+    public NoSuchCoupleException(String message) {
         super(message);
     }
     @Override
