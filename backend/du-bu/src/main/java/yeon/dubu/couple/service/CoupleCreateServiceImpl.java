@@ -27,19 +27,16 @@ public class CoupleCreateServiceImpl implements CoupleCreateService{
             () -> new NoSuchUserException()
         );
 
-        Optional<CoupleConnection> opCoupleConnection = coupleConnectionRepository.findByHostId(userId);
 
+        CoupleConnection coupleConnection = findConnection(userId, "");
         //entity 없으면 생성 후 waiting return
-        if(opCoupleConnection.isEmpty()){
-            CoupleConnection coupleConnection = new CoupleConnection();
+        if(coupleConnection == null){
+            coupleConnection = new CoupleConnection();
             coupleConnection.setHost(user);
             coupleConnection.setCode(code);
             coupleConnectionRepository.save(coupleConnection);
         }
-        else {
-            //entity 있으면
-            CoupleConnection coupleConnection = opCoupleConnection.get();
-
+        else { //entity 있으면
             //코드 일치 확인 후 없으면 변경
             if (!code.equals(coupleConnection.getCode())){
                 coupleConnection.setCode(code);
@@ -63,12 +60,15 @@ public class CoupleCreateServiceImpl implements CoupleCreateService{
         User user = userRepository.findById(userId).orElseThrow(
             () -> new NoSuchUserException()
         );
-        coupleConnectionRepository.deleteById(userId);
+
+        deleteConnection(userId);
     }
 
     @Override
     @Transactional
     public Long enterCoupleConnection(Long userId, Integer code) {
+        //TODO:
+        // userId가 hostId인 coupleConnection 지우기
         User user = userRepository.findById(userId).orElseThrow(
             () -> new NoSuchUserException("해당하는 사용자가 없습니다.")
         );
@@ -86,4 +86,68 @@ public class CoupleCreateServiceImpl implements CoupleCreateService{
         return -1L;
 
     }
+
+    @Override
+    @Transactional
+    public String checkPartner(Long userId, String role, Boolean isRepeat) {
+        CoupleConnection coupleConnection = findConnection(userId, role);
+        //null일땐 지워줘야함
+        //iscancelled 일 땐 db삭제
+        if(coupleConnection.getIsCancelled()){
+            deleteConnection(userId);
+            return "cancelled";
+        }
+
+        if(getCheck(coupleConnection, role)){
+            if(isRepeat) deleteConnection(userId);
+            else setCheck(coupleConnection, role);
+            return "finish";
+        }
+        else{
+            setCheck(coupleConnection, role);
+            return "waiting";
+        }
+
+    }
+
+
+    private CoupleConnection findConnection(Long userId, String role){
+        Optional<CoupleConnection> opCoupleConnection = null;
+
+        if (role.equals("guest")) {
+            opCoupleConnection = coupleConnectionRepository.findByGuestId(userId);
+        }
+        else
+            opCoupleConnection = coupleConnectionRepository.findByHostId(userId);
+        System.out.println("opCoupleConnection.toString() = " + opCoupleConnection.toString());
+        if(opCoupleConnection.isEmpty())
+            return null;
+        else
+            return opCoupleConnection.get();
+
+
+    }
+    private void deleteConnection(Long userId){
+            coupleConnectionRepository.deleteByGuestId(userId);
+            coupleConnectionRepository.deleteByHostId(userId);
+    }
+
+    private Boolean getCheck(CoupleConnection coupleConnection, String role){
+        //상대방을 체크하는거라 반대로
+        if(role.equals("host"))
+            return coupleConnection.getGuestCheck();
+        else
+            return coupleConnection.getHostCheck();
+    }
+    @Transactional
+    public void setCheck(CoupleConnection coupleConnection, String role){
+
+        if(role.equals("host"))
+            coupleConnection.setHostCheck(Boolean.TRUE);
+        else {
+            coupleConnection.setGuestCheck(Boolean.TRUE);
+        }
+        coupleConnectionRepository.save(coupleConnection);
+    }
+
 }

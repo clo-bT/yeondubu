@@ -1,18 +1,18 @@
 package yeon.dubu.couple.controller;
-
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import yeon.dubu.couple.dto.response.CoupleCreatePartnerRes;
+import yeon.dubu.couple.dto.response.CoupleCreatePartnerResDto;
 import yeon.dubu.couple.service.CoupleCreateService;
 
 @Slf4j
@@ -24,15 +24,15 @@ public class CoupleController {
     @PostMapping("/code/{code}")
     public ResponseEntity<?> createCode(@AuthenticationPrincipal Long userId, @PathVariable Integer code){
         Long guestId = coupleCreateService.createCoupleConnection(userId, code);
-        CoupleCreatePartnerRes coupleCreatePartnerRes = new CoupleCreatePartnerRes();
+        CoupleCreatePartnerResDto coupleCreatePartnerResDto = new CoupleCreatePartnerResDto();
 
         if(guestId != -1L) { //guest가 있으면
-            coupleCreatePartnerRes.setState("finish");
-            coupleCreatePartnerRes.setPartnerId(guestId);
+            coupleCreatePartnerResDto.setState("finish");
+            coupleCreatePartnerResDto.setPartnerId(guestId);
         }
         else
-            coupleCreatePartnerRes.setState("waiting");
-        return new ResponseEntity<CoupleCreatePartnerRes>(coupleCreatePartnerRes, HttpStatus.OK);
+            coupleCreatePartnerResDto.setState("waiting");
+        return new ResponseEntity<CoupleCreatePartnerResDto>(coupleCreatePartnerResDto, HttpStatus.OK);
     }
 
     @DeleteMapping("/code")
@@ -44,16 +44,28 @@ public class CoupleController {
     @GetMapping("/code/{code}")
     public ResponseEntity<?> enterCode(@AuthenticationPrincipal Long userId, @PathVariable Integer code){
         Long hostId = coupleCreateService.enterCoupleConnection(userId, code);
-        CoupleCreatePartnerRes coupleCreatePartnerRes = new CoupleCreatePartnerRes();
+        CoupleCreatePartnerResDto coupleCreatePartnerResDto = new CoupleCreatePartnerResDto();
 
         if(hostId != -1L) { //guest가 있으면
-            coupleCreatePartnerRes.setState("success");
-            coupleCreatePartnerRes.setPartnerId(hostId);
+            coupleCreatePartnerResDto.setState("success");
+            coupleCreatePartnerResDto.setPartnerId(hostId);
         }
         else
-            coupleCreatePartnerRes.setState("fail");
-        return new ResponseEntity<CoupleCreatePartnerRes>(coupleCreatePartnerRes, HttpStatus.OK);
+            coupleCreatePartnerResDto.setState("fail");
+        return new ResponseEntity<CoupleCreatePartnerResDto>(coupleCreatePartnerResDto, HttpStatus.OK);
 
+    }
+
+    @GetMapping("/check1/{role}")
+    public ResponseEntity<?> checkPartner1(@AuthenticationPrincipal Long userId, @PathVariable String role){
+        String state = coupleCreateService.checkPartner(userId, role, FALSE);
+        return new ResponseEntity<String>(state, HttpStatus.OK);
+    }
+
+    @GetMapping("/check2/{role}")
+    public ResponseEntity<?> checkPartner2(@AuthenticationPrincipal Long userId, @PathVariable String role){
+        String state = coupleCreateService.checkPartner(userId, role, TRUE);
+        return new ResponseEntity<String>(state, HttpStatus.OK);
     }
 
 }

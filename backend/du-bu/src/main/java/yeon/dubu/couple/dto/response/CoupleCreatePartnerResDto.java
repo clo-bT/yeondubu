@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CoupleCreatePartnerRes {
+public class CoupleCreatePartnerResDto {
     private String state;
     private Long partnerId;
 }
