@@ -8,7 +8,11 @@ import FirstMain from './components/Login/FirstMain';
 // import AccountInputMessage from './components/AccountInputStart/AccountInputMessage';
 // import AccountInputHeader from './components/Common/AccountInputHeader';
 // import DepositAccountInputForm from './components/AccountInput/DepositAccountInputForm';
+<<<<<<< HEAD
 // import WeddingDayInput from './components/WeddingDay/WeddingDayInput';
+=======
+import WeddingDayInput from './components/WeddingDay/WeddingDayInput';
+>>>>>>> 3a785bab945b87691bc125e1b32384974232cecd
 // import styled from 'styled-components';
 // import ScoreInputHeader from './components/CreditScoreInput/ScoreInputHeader';
 // import ScoreInput from './components/CreditScoreInput/ScoreInput';
@@ -29,13 +33,13 @@ function App() {
         <Routes>
           <Route path="/" element={<FirstMain />} />
           <Route path="/auth" element={<LoginAuth />} />
+          <Route path="/main" element={<WeddingDayInput />} />
           <Route path="/calendar" element={<AccountCalendar />} />
-            
         </Routes>
       </div>
     </BrowserRouter>
-      
   );
 }
 
 export default App;
+
