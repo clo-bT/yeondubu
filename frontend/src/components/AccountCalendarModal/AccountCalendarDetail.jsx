@@ -12,13 +12,16 @@ flex-direction: column;
 width: 355px;
 margin-top: 40px;
 `
-const IncomeExpenditure = styled.div``
+const IncomeExpenditure = styled.div`
+`
 const IncomeRow = styled.div`
 display: flex;
 justify-content: space-between;
 align-items: center;
 width: 300px;
 margin-bottom: 10px;
+cursor: pointer;
+
 &::before {
     content: '';
     position: absolute;
@@ -51,6 +54,7 @@ justify-content: space-between;
 align-items: center;
 width: 300px;
 margin-bottom: 10px;
+cursor: pointer;
 
 &::before {
     content: '';
