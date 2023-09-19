@@ -12,9 +12,10 @@ import WeddingDayInput from './components/WeddingDay/WeddingDayInput';
 // import styled from 'styled-components';
 // import ScoreInputHeader from './components/CreditScoreInput/ScoreInputHeader';
 // import ScoreInput from './components/CreditScoreInput/ScoreInput';
-import LoginAuth from './components/KakaoLogin/LoginAuth';
-import AccountCalendar from './pages/AccountCalendar';
-
+// import LoginAuth from './components/KakaoLogin/LoginAuth';
+// import Menubar from './components/Common/Menubar';
+// import MyAccountProfile from './components/Common/MyAccountProfile';
+import Main from './pages/Main';
 
 function App() {
   function setScreenSize() {
@@ -27,10 +28,9 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <Routes>
-          <Route path="/" element={<FirstMain />} />
-          <Route path="/auth" element={<LoginAuth />} />
-          <Route path="/main" element={<WeddingDayInput />} />
-          <Route path="/calendar" element={<AccountCalendar />} />
+          <Route path="/" element={<Main />} />
+          {/* <Route path="/auth" element={<LoginAuth />} /> */}
+            
         </Routes>
       </div>
     </BrowserRouter>
