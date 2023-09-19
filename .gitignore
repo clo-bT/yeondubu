@@ -31,7 +31,6 @@ model
 .env
 
 *practice*
-*.txt
 *.bin*
 *.npy
 *__pycache__*

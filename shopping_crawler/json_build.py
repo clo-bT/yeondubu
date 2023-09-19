@@ -48,5 +48,5 @@ if __name__ == '__main__':
     for category, subcategories in queries.items():
         for subcategory, query in subcategories.items():
             json_data = data_parser(query)
-            with open('./tmp/'+category+subcategory+'.json', 'w', encoding='utf-8') as json_file:
+            with open('../static/json/'+category+subcategory+'.json', 'w', encoding='utf-8') as json_file:
                 json.dump(json_data, json_file, ensure_ascii=False, indent=4)
