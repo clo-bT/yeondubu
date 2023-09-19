@@ -1,8 +1,8 @@
 import { React } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
-import FirstMain from './components/Login/FirstMain';
 // import GlobalStyle from "./styles/GlobalStyle";
+import FirstMain from './components/Login/FirstMain';
 // import HouseNaverMap from './components/HouseFind/HouseNaverMap';
 // import CoupleImage from './components/Common/CoupleImage';
 // import AccountInputMessage from './components/AccountInputStart/AccountInputMessage';
@@ -31,7 +31,6 @@ function App() {
           <Route path="/auth" element={<LoginAuth />} />
           <Route path="/main" element={<WeddingDayInput />} />
           <Route path="/calendar" element={<AccountCalendar />} />
-            
         </Routes>
       </div>
     </BrowserRouter>
@@ -39,3 +38,4 @@ function App() {
 }
 
 export default App;
+
