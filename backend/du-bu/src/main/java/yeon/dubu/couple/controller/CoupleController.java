@@ -68,4 +68,11 @@ public class CoupleController {
         return new ResponseEntity<String>(state, HttpStatus.OK);
     }
 
+    @DeleteMapping("/check")
+    public ResponseEntity<?> rejectCheck(@AuthenticationPrincipal Long userId){
+        coupleCreateService.rejectCheck(userId);
+        return new ResponseEntity<String>("success", HttpStatus.OK);
+
+    }
+
 }
