@@ -1,5 +1,7 @@
 package yeon.dubu.user.domain;
 
+import static jakarta.persistence.FetchType.LAZY;
+
 import jakarta.persistence.*;
 import lombok.*;
 import org.antlr.v4.runtime.misc.NotNull;
@@ -39,9 +41,9 @@ public class User extends BaseTimeEntity {
 
     private Integer creditScore;  // 신용점수
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "COUPLE_ID")
     private Couple couple;
-
 
     public User update(OAuth2UserInfo oAuth2UserInfo) {
         this.name = oAuth2UserInfo.getName();

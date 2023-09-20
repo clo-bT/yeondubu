@@ -9,4 +9,9 @@ import yeon.dubu.couple.domain.CoupleConnection;
 public interface CoupleConnectionRepository extends JpaRepository<CoupleConnection, Long> {
     Optional<CoupleConnection> findById(Long userId);
     Optional<CoupleConnection> findByHostId(Long userId);
+    Optional<CoupleConnection> findByGuestId(Long userId);
+
+    Optional<CoupleConnection> findByCode(Integer code);
+    void deleteByHostId(Long userId);
+    void deleteByGuestId(Long userId);
 }
