@@ -30,7 +30,7 @@ public class TagExpenditureServiceImpl implements TagExpenditureService{
      */
     @Override
     @Transactional
-    public TagExpenditure saveFirstTag(String firstTagName, Long userId) {
+    public TagExpenditure insertFirstTag(String firstTagName, Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
         Couple couple = coupleRepository.findById(user.getCouple().getId()).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
 
@@ -53,7 +53,7 @@ public class TagExpenditureServiceImpl implements TagExpenditureService{
      */
     @Override
     @Transactional
-    public TagExpenditure saveSecondTag(String firstTagName, String secondTagName, Long userId) {
+    public TagExpenditure insertSecondTag(String firstTagName, String secondTagName, Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
         Couple couple = coupleRepository.findById(user.getCouple().getId()).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
 
@@ -78,7 +78,7 @@ public class TagExpenditureServiceImpl implements TagExpenditureService{
      */
     @Override
     @Transactional
-    public TagExpenditure saveThirdTag(String firstTagName, String secondTagName, String thirdTagName, Long userId) {
+    public TagExpenditure insertThirdTag(String firstTagName, String secondTagName, String thirdTagName, Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
         Couple couple = coupleRepository.findById(user.getCouple().getId()).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
 
