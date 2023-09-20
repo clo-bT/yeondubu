@@ -1,10 +1,11 @@
 package yeon.dubu.category.service;
 
 import yeon.dubu.category.domain.TagExpenditure;
-import yeon.dubu.category.dto.request.TagExpenditureReqDto;
 
 public interface TagExpenditureService {
 
     TagExpenditure saveFirstTag(String firstTagName, Long userId);
-    TagExpenditure save(TagExpenditureReqDto tagExpenditureReqDto, Long userId);
+    TagExpenditure saveSecondTag(String firstTagName, String secondTagName, Long userId);
+    TagExpenditure saveThirdTag(String firstTagName, String secondTagName, String thirdTagName, Long userId);
+
 }

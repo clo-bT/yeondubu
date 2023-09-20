@@ -53,7 +53,7 @@ public class User extends BaseTimeEntity {
     }
 
     @Builder
-    public User(Long id, String oauth2Id, String refreshToken, String name, String email, String imageUrl, AuthProvider authProvider, RoleType roleType) {
+    public User(Long id, String oauth2Id, String refreshToken, String name, String email, String imageUrl, AuthProvider authProvider, RoleType roleType, UserRole userRole, Integer creditScore, Couple couple) {
         this.id = id;
         this.oauth2Id = oauth2Id;
         this.refreshToken = refreshToken;
@@ -62,5 +62,8 @@ public class User extends BaseTimeEntity {
         this.imageUrl = imageUrl;
         this.authProvider = authProvider;
         this.roleType = roleType;
+        this.userRole = userRole;
+        this.creditScore = creditScore;
+        this.couple = couple;
     }
 }

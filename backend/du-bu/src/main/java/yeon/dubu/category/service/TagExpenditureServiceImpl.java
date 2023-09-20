@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import yeon.dubu.category.domain.TagExpenditure;
-import yeon.dubu.category.dto.request.TagExpenditureReqDto;
 import yeon.dubu.category.repository.TagExpenditureRepository;
 import yeon.dubu.couple.domain.Couple;
 import yeon.dubu.couple.exception.NoSuchCoupleException;
@@ -23,31 +22,76 @@ public class TagExpenditureServiceImpl implements TagExpenditureService{
     private final CoupleRepository coupleRepository;
     private final TagExpenditureRepository tagExpenditureRepository;
 
+    /**
+     * firstTag 등록
+     * @param firstTagName
+     * @param userId
+     * @return
+     */
     @Override
     @Transactional
     public TagExpenditure saveFirstTag(String firstTagName, Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
         Couple couple = coupleRepository.findById(user.getCouple().getId()).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
 
-
-        return null;
-    }
-
-    @Override
-    @Transactional
-    public TagExpenditure save(TagExpenditureReqDto tagExpenditureReqDto, Long userId) {
-
-        // userId로 couple Id 조회
-        User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
-
         TagExpenditure tagExpenditure = TagExpenditure.builder()
-                .firstTagName(tagExpenditureReqDto.getFirstTagName())
-                .secondTagName(tagExpenditureReqDto.getSecondTagName())
-                .thirdTagName(tagExpenditureReqDto.getThirdTagName())
+                .couple(couple)
+                .firstTagName(firstTagName)
                 .build();
 
-        TagExpenditure savedTag = tagExpenditureRepository.save(tagExpenditure);
+        tagExpenditureRepository.save(tagExpenditure);
 
-        return savedTag;
+        return tagExpenditure;
     }
+
+    /**
+     * secondTag 등록
+     * @param firstTagName
+     * @param secondTagName
+     * @param userId
+     * @return
+     */
+    @Override
+    @Transactional
+    public TagExpenditure saveSecondTag(String firstTagName, String secondTagName, Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
+        Couple couple = coupleRepository.findById(user.getCouple().getId()).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
+
+        TagExpenditure tagExpenditure = TagExpenditure.builder()
+                .couple(couple)
+                .firstTagName(firstTagName)
+                .secondTagName(secondTagName)
+                .build();
+
+        tagExpenditureRepository.save(tagExpenditure);
+
+        return tagExpenditure;
+    }
+
+    /**
+     * thirdTag 등록
+     * @param firstTagName
+     * @param secondTagName
+     * @param thirdTagName
+     * @param userId
+     * @return
+     */
+    @Override
+    @Transactional
+    public TagExpenditure saveThirdTag(String firstTagName, String secondTagName, String thirdTagName, Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
+        Couple couple = coupleRepository.findById(user.getCouple().getId()).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
+
+        TagExpenditure tagExpenditure = TagExpenditure.builder()
+                .couple(couple)
+                .firstTagName(firstTagName)
+                .secondTagName(secondTagName)
+                .thirdTagName(thirdTagName)
+                .build();
+
+        tagExpenditureRepository.save(tagExpenditure);
+
+        return tagExpenditure;
+    }
+
 }
