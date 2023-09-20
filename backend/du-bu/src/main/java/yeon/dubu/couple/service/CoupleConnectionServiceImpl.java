@@ -19,7 +19,7 @@ import yeon.dubu.user.repository.UserRepository;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class CoupleCreateServiceImpl implements CoupleCreateService{
+public class CoupleConnectionServiceImpl implements CoupleConnectionService {
 
     private final CoupleConnectionRepository coupleConnectionRepository;
     private final CoupleRepository coupleRepository;
