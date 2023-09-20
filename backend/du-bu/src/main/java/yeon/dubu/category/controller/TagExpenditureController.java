@@ -13,21 +13,5 @@ import yeon.dubu.user.dto.response.UserResDto;
 @RequestMapping("/api/v1/tags")
 public class TagExpenditureController {
 
-    @PostMapping("/{firstTagName}")
-    public ResponseEntity saveFirstTag(
-            @AuthenticationPrincipal Long userId,
-            @PathVariable String firstTagName
-    ) {
-
-    }
-
-
-//    @GetMapping
-//    public ResponseEntity getId(@AuthenticationPrincipal Long userId) {
-//        log.debug("retrieve() userId: {}", userId);
-//        UserResDto userResDto = userService.retrieveMember(userId);
-//
-//        return ResponseEntity.ok(userResDto);
-//    }
 
 }
