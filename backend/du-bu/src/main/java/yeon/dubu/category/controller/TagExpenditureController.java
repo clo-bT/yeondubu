@@ -26,11 +26,11 @@ public class TagExpenditureController {
      * @return
      */
     @PostMapping("/{firstTagName}")
-    public ResponseEntity saveFirstTag(
+    public ResponseEntity insertFirstTag(
             @AuthenticationPrincipal Long userId,
             @PathVariable String firstTagName
     ) {
-        TagExpenditure savedFirstTag = tagExpenditureService.saveFirstTag(firstTagName, userId);
+        TagExpenditure savedFirstTag = tagExpenditureService.insertFirstTag(firstTagName, userId);
 
         return ResponseEntity.ok(savedFirstTag);
     }
@@ -43,12 +43,12 @@ public class TagExpenditureController {
      * @return
      */
     @PostMapping("/{firstTagName}/{secondTagName}")
-    public ResponseEntity saveSecondTag(
+    public ResponseEntity insertSecondTag(
             @AuthenticationPrincipal Long userId,
             @PathVariable String firstTagName,
             @PathVariable String secondTagName
     ) {
-        TagExpenditure savedSecondTag = tagExpenditureService.saveSecondTag(firstTagName, secondTagName, userId);
+        TagExpenditure savedSecondTag = tagExpenditureService.insertSecondTag(firstTagName, secondTagName, userId);
 
         return ResponseEntity.ok(savedSecondTag);
     }
@@ -62,13 +62,13 @@ public class TagExpenditureController {
      * @return
      */
     @PostMapping("/{firstTagName}/{secondTagName}/{thirdTagName}")
-    public ResponseEntity saveSecondTag(
+    public ResponseEntity insertSecondTag(
             @AuthenticationPrincipal Long userId,
             @PathVariable String firstTagName,
             @PathVariable String secondTagName,
             @PathVariable String thirdTagName
     ) {
-        TagExpenditure savedThirdTag = tagExpenditureService.saveThirdTag(firstTagName, secondTagName, thirdTagName, userId);
+        TagExpenditure savedThirdTag = tagExpenditureService.insertThirdTag(firstTagName, secondTagName, thirdTagName, userId);
 
         return ResponseEntity.ok(savedThirdTag);
     }
