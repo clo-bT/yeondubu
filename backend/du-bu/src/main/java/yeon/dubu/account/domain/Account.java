@@ -1,7 +1,7 @@
 package yeon.dubu.account.domain;
 
 import static jakarta.persistence.FetchType.LAZY;
-
+import static yeon.dubu.account.enumeration.AccountType.*;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import lombok.Builder;
@@ -11,6 +11,7 @@ import lombok.Setter;
 import org.antlr.v4.runtime.misc.NotNull;
 import yeon.dubu.BaseTimeEntity;
 import yeon.dubu.account.dto.request.DepositAccountReqDto;
+import yeon.dubu.account.dto.request.SavingAccountReqDto;
 import yeon.dubu.account.enumeration.AccountType;
 import yeon.dubu.user.domain.User;
 
@@ -54,6 +55,28 @@ public class Account extends BaseTimeEntity {
         this.transferDay = transferDay;
         this.transferAmount = transferAmount;
         this.finalDate = finalDate;
+    }
+
+    public static Account fromSaving(SavingAccountReqDto savingAccountReqDto){
+        return Account.builder()
+            .name(savingAccountReqDto.getAccountName())
+            .accountType(SAVINGS)
+            .finalAmount(savingAccountReqDto.getFinalAmount())
+            .finalDate(savingAccountReqDto.getFinalDate())
+            .startAmount(savingAccountReqDto.getStartAmount())
+            .transferAmount(savingAccountReqDto.getTransferAmount())
+            .transferDay(savingAccountReqDto.getTransferDay())
+            .build();
+    }
+
+    public static Account fromDeposit(DepositAccountReqDto depositAccountReqDto){
+        return Account.builder()
+            .name(depositAccountReqDto.getAccountName())
+            .accountType(DEPOSIT)
+            .finalAmount(depositAccountReqDto.getFinalAmount())
+            .finalDate(depositAccountReqDto.getFinalDate())
+            .startAmount(depositAccountReqDto.getStartAmount())
+            .build();
     }
 
 }
