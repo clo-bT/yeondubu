@@ -8,7 +8,7 @@ import FirstMain from './components/Login/FirstMain';
 // import AccountInputMessage from './components/AccountInputStart/AccountInputMessage';
 // import AccountInputHeader from './components/Common/AccountInputHeader';
 // import DepositAccountInputForm from './components/AccountInput/DepositAccountInputForm';
-import WeddingDayInput from './components/WeddingDay/WeddingDayInput';
+// import WeddingDayInput from './components/WeddingDay/WeddingDayInput';
 // import styled from 'styled-components';
 // import ScoreInputHeader from './components/CreditScoreInput/ScoreInputHeader';
 // import ScoreInput from './components/CreditScoreInput/ScoreInput';
@@ -16,6 +16,8 @@ import WeddingDayInput from './components/WeddingDay/WeddingDayInput';
 // import Menubar from './components/Common/Menubar';
 // import MyAccountProfile from './components/Common/MyAccountProfile';
 import Main from './pages/Main';
+import CodeInput from './components/Invite/CodeInput';
+import InvitationCode from './components/ShowInviteCode/InvitationCode';
 
 function App() {
   function setScreenSize() {
@@ -30,6 +32,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Main />} />
           {/* <Route path="/auth" element={<LoginAuth />} /> */}
+          <Route path="/login" element={<FirstMain />} />
+          <Route path="/codeinput" element={<CodeInput />} />
+          <Route path="/auth" element={<InvitationCode />} />
             
         </Routes>
       </div>

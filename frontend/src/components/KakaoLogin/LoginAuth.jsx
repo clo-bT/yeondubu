@@ -16,6 +16,9 @@ const LoginAuth = () => {
         async function getid() {
             const code = new URL(window.location.href).searchParams.get("token");
             setcode(code)
+            if (code) {
+                sessionStorage.setItem("token", code);
+            }
             // window.location.href = 'http://localhost:3000/main'
             // try{        
             //     await axios.get(`${process.env.REACT_APP_API_ROOT}/login/oauth2/code/kakao?code=${code}`)
