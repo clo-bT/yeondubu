@@ -12,6 +12,7 @@ import yeon.dubu.couple.exception.NoSuchCoupleException;
 import yeon.dubu.couple.repository.CoupleRepository;
 import yeon.dubu.money.domain.MoneyExpenditure;
 import yeon.dubu.money.dto.request.MoneyExpenditureReqDto;
+import yeon.dubu.money.exception.NoSuchTagExpenditureException;
 import yeon.dubu.money.repository.MoneyExpenditureRepository;
 import yeon.dubu.money.repository.MoneyRepository;
 import yeon.dubu.user.domain.User;
@@ -45,8 +46,11 @@ public class MoneyExpenditureServiceImpl implements MoneyExpenditureService{
         User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
         Couple couple = coupleRepository.findById(user.getCouple().getId()).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
 
-        // 태그 조회 -> 태그 조회해서 거기에 넣기
         Optional<TagExpenditure> searchTags = tagExpenditureRepository.findTagExpenditureByCoupleAndFirstTagNameAndSecondTagNameAndThirdTagName(couple, moneyExpenditureReqDto.getFirstTagName(), moneyExpenditureReqDto.getSecondTagName(), moneyExpenditureReqDto.getThirdTagName());
+
+        if (!searchTags.isPresent()) {
+            throw new NoSuchTagExpenditureException("해당하는 태그 정보가 없습니다.");
+        }
 
         MoneyExpenditure moneyExpenditure = MoneyExpenditure.builder()
                 .userRole(moneyExpenditureReqDto.getUserRole())
