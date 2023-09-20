@@ -1,5 +1,7 @@
 package yeon.dubu.couple.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +13,7 @@ import yeon.dubu.couple.exception.NoSuchCoupleConnectionException;
 import yeon.dubu.couple.exception.NoSuchCoupleException;
 import yeon.dubu.couple.repository.CoupleConnectionRepository;
 import yeon.dubu.couple.repository.CoupleRepository;
+import yeon.dubu.money.domain.Money;
 import yeon.dubu.user.domain.User;
 import yeon.dubu.user.exception.NoSuchUserException;
 import yeon.dubu.user.repository.UserRepository;
@@ -24,6 +27,7 @@ public class CoupleConnectionServiceImpl implements CoupleConnectionService {
     private final CoupleConnectionRepository coupleConnectionRepository;
     private final CoupleRepository coupleRepository;
     private final UserRepository userRepository;
+    //private final MoneyRepository moneyRepository;
     @Override
     @Transactional
     public Long createCoupleConnection(Long userId, Integer code) {
@@ -110,6 +114,11 @@ public class CoupleConnectionServiceImpl implements CoupleConnectionService {
             if(isRepeat) {
                 //커플 생성 및 user에게 coupleId없애주기
                 createCoupleColumn(coupleConnection);
+                //TODO:
+                //  money row 생성
+                createMoney(coupleConnection);
+
+
                 //couple connection 삭제
                 deleteConnection(userId);
             }
@@ -193,6 +202,21 @@ public class CoupleConnectionServiceImpl implements CoupleConnectionService {
 
         host.setCouple(couple);
         guest.setCouple(couple);
+    }
+
+    @Transactional
+    public void createMoney(CoupleConnection coupleConnection){
+        User host = coupleConnection.getHost();
+        User guest = coupleConnection.getGuest();
+        List<User> users = new ArrayList<>();
+        users.add(host);
+        users.add(guest);
+        for(User user : users){
+            Money money = new Money();
+            money.setUser(user);
+            //moneyRepository.save(money);
+        }
+
     }
 
 }
