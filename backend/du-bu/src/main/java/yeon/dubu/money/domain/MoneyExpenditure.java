@@ -15,9 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.antlr.v4.runtime.misc.NotNull;
-import org.hibernate.annotations.NotFound;
-import yeon.dubu.category.domain.ExpenditureTag;
-import yeon.dubu.couple.domain.Couple;
+import yeon.dubu.category.domain.TagExpenditure;
 import yeon.dubu.user.enumeration.UserRole;
 
 @Entity
@@ -42,15 +40,15 @@ public class MoneyExpenditure {
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "EXPENDITURE_TAG_ID")
-    private ExpenditureTag expenditureTag;
+    private TagExpenditure tagExpenditure;
     @Builder
     public MoneyExpenditure(Long id, UserRole userRole, LocalDate date, Long amount, String memo,
-        ExpenditureTag expenditureTag) {
+        TagExpenditure tagExpenditure) {
         this.id = id;
         this.userRole = userRole;
         this.date = date;
         this.amount = amount;
         this.memo = memo;
-        this.expenditureTag = expenditureTag;
+        this.tagExpenditure = tagExpenditure;
     }
 }
