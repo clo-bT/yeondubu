@@ -17,16 +17,35 @@ import yeon.dubu.user.repository.UserRepository;
 public class TagExpenditureServiceImpl implements TagExpenditureService{
 
     private final UserRepository userRepository;
+    private final CoupleRe
     private final TagExpenditureRepository tagExpenditureRepository;
 
     @Override
     @Transactional
-    public TagExpenditure insert(TagExpenditureReqDto tagExpenditureReqDto, Long userId) {
+    public TagExpenditure saveFirstTag(String firstTagName, Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
+        Couple couple = coupleRepository.findBy
+        user.getCouple().getId()
+
+
+        return null;
+    }
+
+    @Override
+    @Transactional
+    public TagExpenditure save(TagExpenditureReqDto tagExpenditureReqDto, Long userId) {
 
         // userId로 couple Id 조회
         User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
 
+        TagExpenditure tagExpenditure = TagExpenditure.builder()
+                .firstTagName(tagExpenditureReqDto.getFirstTagName())
+                .secondTagName(tagExpenditureReqDto.getSecondTagName())
+                .thirdTagName(tagExpenditureReqDto.getThirdTagName())
+                .build();
 
-        return null;
+        TagExpenditure savedTag = tagExpenditureRepository.save(tagExpenditure);
+
+        return savedTag;
     }
 }
