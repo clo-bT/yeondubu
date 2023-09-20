@@ -16,6 +16,10 @@ import yeon.dubu.user.enumeration.UserRole;
 @Getter
 @Setter
 @Entity
+@Table(name = "USER", indexes = {
+    @Index(name = "idx__id", columnList = "id"),
+    @Index(name = "idx__coupleId", columnList = "couple_id")
+})
 public class User extends BaseTimeEntity {
 
     @Id

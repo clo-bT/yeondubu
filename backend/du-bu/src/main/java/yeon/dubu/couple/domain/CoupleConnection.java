@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
-import yeon.dubu.category.domain.ExpenditureTag;
 import yeon.dubu.user.domain.User;
 
 @DynamicInsert
