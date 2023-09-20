@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import yeon.dubu.BaseTimeEntity;
 import yeon.dubu.couple.domain.Couple;
 import yeon.dubu.user.domain.User;
 
@@ -18,7 +19,7 @@ import yeon.dubu.user.domain.User;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Money {
+public class Money extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
