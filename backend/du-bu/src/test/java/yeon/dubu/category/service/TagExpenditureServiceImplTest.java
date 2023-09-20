@@ -61,7 +61,9 @@ class TagExpenditureServiceImplTest {
 
     }
 
-
+    /**
+     * firstTag 등록
+     */
     @Transactional
     @Test
     void saveFirstTag() {
@@ -72,15 +74,48 @@ class TagExpenditureServiceImplTest {
         TagExpenditure tagExpenditure = tagExpenditureService.saveFirstTag(firstTagName, USER1.getId());
 
         // then
-        assertThat(tagExpenditure.getFirstTagName()).isEqualTo(firstTagName);
+        assertThat(tagExpenditureRepository.findById(tagExpenditure.getId()).get().getFirstTagName()).isEqualTo(firstTagName);
+
 
     }
+
+    /**
+     * secondTag 등록
+     */
     @Transactional
     @Test
     void saveSecondTag() {
+        // given
+        String firstTagName = "혼수";
+        String secondTagName = "가구";
+
+        // when
+        TagExpenditure tagExpenditure = tagExpenditureService.saveSecondTag(firstTagName, secondTagName, USER1.getId());
+
+        // then
+        assertThat(tagExpenditureRepository.findById(tagExpenditure.getId()).get().getFirstTagName()).isEqualTo(firstTagName);
+        assertThat(tagExpenditureRepository.findById(tagExpenditure.getId()).get().getSecondTagName()).isEqualTo(secondTagName);
+
     }
+
+    /**
+     * thirdTag 등록
+     */
     @Transactional
     @Test
     void saveThirdTag() {
+        // given
+        String firstTagName = "혼수";
+        String secondTagName = "가구";
+        String thirdTagName = "침대";
+
+        // when
+        TagExpenditure tagExpenditure = tagExpenditureService.saveThirdTag(firstTagName, secondTagName, thirdTagName, USER1.getId());
+
+        // then
+        assertThat(tagExpenditureRepository.findById(tagExpenditure.getId()).get().getFirstTagName()).isEqualTo(firstTagName);
+        assertThat(tagExpenditureRepository.findById(tagExpenditure.getId()).get().getSecondTagName()).isEqualTo(secondTagName);
+        assertThat(tagExpenditureRepository.findById(tagExpenditure.getId()).get().getThirdTagName()).isEqualTo(thirdTagName);
+
     }
 }
