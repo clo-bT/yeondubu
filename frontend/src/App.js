@@ -16,6 +16,12 @@ import WeddingDayInput from './components/WeddingDay/WeddingDayInput';
 // import Menubar from './components/Common/Menubar';
 // import MyAccountProfile from './components/Common/MyAccountProfile';
 import Main from './pages/Main';
+import MyPage from './pages/MyPage';
+import MyAccount from './pages/MyAccount';
+import MyAccountDetail from './pages/MyAccountDetail';
+import MyAccountUpdate from './pages/MyAccountUpdate';
+import MyProductLike from './pages/MyProductLike';
+import UserWithdraw from './pages/UserWithdraw';
 
 function App() {
   function setScreenSize() {
@@ -28,7 +34,7 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <Routes>
-          <Route path="/" element={<Main />} />
+          <Route path="/" element={<UserWithdraw />} />
           {/* <Route path="/auth" element={<LoginAuth />} /> */}
             
         </Routes>
