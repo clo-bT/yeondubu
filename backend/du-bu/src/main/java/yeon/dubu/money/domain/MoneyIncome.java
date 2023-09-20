@@ -15,6 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.antlr.v4.runtime.misc.NotNull;
+import yeon.dubu.BaseTimeEntity;
 import yeon.dubu.category.domain.TagIncome;
 import yeon.dubu.user.enumeration.UserRole;
 
@@ -22,7 +23,7 @@ import yeon.dubu.user.enumeration.UserRole;
 @Getter
 @Setter
 @NoArgsConstructor
-public class MoneyIncome {
+public class MoneyIncome extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

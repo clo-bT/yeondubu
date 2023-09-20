@@ -1,32 +1,35 @@
 package yeon.dubu.money.domain;
-import static jakarta.persistence.FetchType.LAZY;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import yeon.dubu.couple.domain.Couple;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import yeon.dubu.BaseTimeEntity;
 import yeon.dubu.user.domain.User;
 
+import static jakarta.persistence.FetchType.LAZY;
+
+@DynamicInsert
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class Money {
+public class Money extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ColumnDefault("0")
     private Long totalCash; //총 현금
+    @ColumnDefault("0")
     private Long totalAccount; //총 예적금
+    @ColumnDefault("0")
     private Long presentExpenditure; //현재까지 지출
+    @ColumnDefault("0")
     private Long futureExpenditure; //미래 지출
 
 
