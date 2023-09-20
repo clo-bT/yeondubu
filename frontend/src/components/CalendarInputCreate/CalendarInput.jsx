@@ -130,7 +130,7 @@ display: flex;
 align-items: center;
 `
 const InputSpan = styled.span`
-margin-right: 20px;
+margin-right: 30px;
 `
 const InputMemo = styled.div`
 display: flex;
@@ -186,7 +186,7 @@ const CompleteButton = styled.button`
 const CalendarInput = ({ isOpen, content, formatday, closeModal }) => {
     const [selectedWho, setSelectedWho] = useState(''); 
     const [selectedType, setSelectType] = useState(''); 
-    
+
     const handleSelectWho = (who) => {
         setSelectedWho(who); // 선택된 결제자 업데이트
     };
@@ -236,7 +236,7 @@ const CalendarInput = ({ isOpen, content, formatday, closeModal }) => {
                         </InputWhoBride>
                     </InputWho>
 
-                    <InputTag><InputSpan>태그 </InputSpan></InputTag>
+                    <InputTag><InputSpan>태그 </InputSpan><BoldSpan>침대</BoldSpan></InputTag>
                     <InputDate><InputSpan>날짜 </InputSpan> <BoldSpan>{formatday}</BoldSpan></InputDate>
                     <InputMoney><InputSpan>가격 </InputSpan> <BoldSpan>{content.amount.toLocaleString()} </BoldSpan>원</InputMoney>
                     <InputMemo><InputSpan>메모 </InputSpan></InputMemo>
