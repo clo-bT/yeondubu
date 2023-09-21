@@ -24,6 +24,8 @@ import MyProductLike from './pages/MyProductLike';
 import UserWithdraw from './pages/UserWithdraw';
 import WholeTab from './pages/WholeTab';
 import Mooni from './pages/Mooni';
+import WeddingDayUpdate from './pages/WeddingDayUpdate';
+import CreditScoreInput from './pages/CreditScoreInput';
 
 function App() {
   function setScreenSize() {
@@ -36,7 +38,7 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <Routes>
-          <Route path="/" element={<Mooni />} />
+          <Route path="/" element={<CreditScoreInput />} />
           {/* <Route path="/auth" element={<LoginAuth />} /> */}
             
         </Routes>

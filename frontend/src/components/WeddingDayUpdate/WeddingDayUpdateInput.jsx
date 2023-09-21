@@ -30,7 +30,6 @@ const StyledDatePicker = styled(DatePicker)`
 const Congrats = styled.p`
 color: #000;
 text-align: center;
-font-family: Inter;
 font-size: 18px;
 font-style: normal;
 font-weight: 400;
@@ -41,7 +40,6 @@ margin-top : 50px;
 const DateInputDetail = styled.p`
 color: #000;
 text-align: center;
-font-family: Inter;
 font-size: 18px;
 font-style: normal;
 font-weight: 400;
@@ -61,6 +59,8 @@ padding : 10px 20px;
 border: none;
 margin-top : 60px;
 border-radius: 10px;
+
+
 `
 
 const DateInputContainer = styled.div`
@@ -72,24 +72,13 @@ const DateInputContainer = styled.div`
   position: relative;
 `;
 
-const StyledCalendarIcon = styled.img`
-width: 24px;
-height: 24px;
-cursor: pointer;
-position: absolute;
-left: 140px; 
-top: 50%; 
-transform: translateY(-50%);
-`;
 
 const WeddingDayUpdateInput = () => {
     const [selectedDate, setSelectedDate] = useState(null);
     const handleDateChange = (date) => {
         setSelectedDate(date);
       };
-    const openCalendar = () => {
-    document.querySelector('.react-datepicker__input-container input').click();
-    };
+
     const clearDate = () => {
         setSelectedDate(null);
       };
@@ -111,7 +100,7 @@ const WeddingDayUpdateInput = () => {
             {/* <StyledCalendarIcon src={Calender} onClick={openCalendar} /> */}
             </DateInputContainer>
             
-            <InputButton>입력하기</InputButton>
+            <InputButton>수정하기</InputButton>
         </div>
 
     );
