@@ -2,9 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 import os
 import sys
-sys.path.append("../img_utils")
-from feature_extractor import FeatureExtractor
-from bgrem import background_remove
+from utilities import verify, image_processor, sim_search
 
 app = Flask(__name__)
 # CORS(app)
@@ -18,34 +16,16 @@ def home():
 @app.route('/api/imgupload', methods=['POST'])
 # @cross_origin(origin='*localhost',headers=['Content- Type','Authorization','video/x-matroska;codecs=avc1', 'audio/ogg codecs=opus', 'audio/wav'])
 def image_upload():
-    # image data / brand data / cost data / user token data
-    # request.files.get('img')
-    # request.files.get('brand')
-    # request.files.get('cost')
-    # request.files.get('user_token')
-    if 'img' in request.files and 'brand' in request.files and 'cost' in request.files and 'user_token' in request.files:
-        img_file = request.files.get('img')
-        img_data = img_file.read()
-        img_file.seek(0)
-        brand = request.files.get('brand').read()
-        brand = brand.decode('utf-8')
-        cost = request.files.get('cost').read()
-        cost = cost.decode('utf-8')
-        user_token = request.files.get('user_token').read()
-        user_token = user_token.decode('utf-8')
-        # img_analysis
-        img_path = f'dataset/img_data_{user_token}_1.jpg'
-        with open(img_path, 'wb') as f:
-            f.write(img_data)
-        '''
-        사진 처리하는 함수에 
-        image / brand / cost data 넣기
-        처리결과물 받은 변수 : result
-        '''
-        if os.path.exists(img_path):
-            os.remove(img_path)
-    
-        return jsonify({'result': result})
+    data = request.form
+    if verify(data):
+        from PIL import Image
+        from io import BytesIO
+        img = request.files.get('image')
+        img = img.read()
+        img = Image.open(BytesIO(img))
+        img = image_processor(img)
+        sim = sim_search(img, data)
+        return jsonify({'result': sim})
     else:
         return jsonify({'success': False})
     
@@ -66,7 +46,7 @@ def loan_upload():
         '''
         loan_analysis function's return results
         '''
-        return jsonify({'result': results})
+        return jsonify({'result': True})
     else:
         return jsonify({'success': False})
 
