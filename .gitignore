@@ -11,10 +11,28 @@ logs
 node_modules
 bower_components
 
-*.sublime*
 
+*.sublime*
+yolov5
+static
 psd
 thumb
 sketch
+model
 
+*.csv
+*.ipynb
 # End of https://www.toptal.com/developers/gitignore/api/react
+
+*.jpg
+*.jpeg
+*.png
+
+.env
+
+*practice*
+*.txt
+*.bin*
+*.npy
+*__pycache__*
+*.h5
