@@ -1,11 +1,11 @@
-package yeon.dubu.category.service;
+package yeon.dubu.expenditure.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import yeon.dubu.category.domain.TagExpenditure;
-import yeon.dubu.category.repository.TagExpenditureRepository;
+import yeon.dubu.expenditure.domain.TagExpenditure;
+import yeon.dubu.expenditure.repository.TagExpenditureRepository;
 import yeon.dubu.couple.domain.Couple;
 import yeon.dubu.couple.exception.NoSuchCoupleException;
 import yeon.dubu.couple.repository.CoupleRepository;

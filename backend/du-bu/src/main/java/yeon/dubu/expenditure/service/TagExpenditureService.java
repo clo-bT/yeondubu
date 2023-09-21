@@ -1,6 +1,6 @@
-package yeon.dubu.category.service;
+package yeon.dubu.expenditure.service;
 
-import yeon.dubu.category.domain.TagExpenditure;
+import yeon.dubu.expenditure.domain.TagExpenditure;
 
 public interface TagExpenditureService {
 
