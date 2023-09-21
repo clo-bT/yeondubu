@@ -22,17 +22,11 @@ public class TagIncome {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String tagName;
-
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "COUPLE_ID")
-    private Couple couple;
 
     @Builder
     public TagIncome(Long id, String tagName, Couple couple) {
         this.id = id;
         this.tagName = tagName;
-        this.couple = couple;
     }
 }
