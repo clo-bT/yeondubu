@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 import os
+import json
+from prac import credit_scores
 
 app = Flask(__name__)
 # CORS(app)
@@ -30,7 +32,7 @@ def image_upload():
         user_token = request.files.get('user_token').read()
         user_token = user_token.decode('utf-8')
         # img_analysis
-        img_path = f'dataset/img_data_{user_token}_1.jpg'
+        img_path = f'./dataset/img_data_{user_token}_1.jpg'
         with open(img_path, 'wb') as f:
             f.write(img_data)
         '''
@@ -59,9 +61,7 @@ def loan_upload():
         user_token = request.files.get('user_token').read()
         user_token = user_token.decode('utf-8')
         # loan_analysis
-        '''
-        loan_analysis function's return results
-        '''
+        results = credit_scores(credit_score, necessary_money)
         return jsonify({'result': results})
     else:
         return jsonify({'success': False})
