@@ -7,9 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import yeon.dubu.auth.enumeration.RoleType;
 import yeon.dubu.expenditure.domain.TagExpenditure;
+import yeon.dubu.expenditure.domain.TagFirstExpenditure;
+import yeon.dubu.expenditure.domain.TagSecondExpenditure;
+import yeon.dubu.expenditure.domain.TagThirdExpenditure;
 import yeon.dubu.expenditure.repository.TagExpenditureRepository;
 import yeon.dubu.couple.domain.Couple;
 import yeon.dubu.couple.repository.CoupleRepository;
+import yeon.dubu.expenditure.repository.TagFirstExpenditureRepository;
+import yeon.dubu.expenditure.repository.TagSecondExpenditureRepository;
+import yeon.dubu.expenditure.repository.TagThirdExpenditureRepository;
 import yeon.dubu.expenditure.service.TagExpenditureService;
 import yeon.dubu.user.domain.User;
 import yeon.dubu.user.enumeration.UserRole;
@@ -25,7 +31,12 @@ class TagExpenditureServiceImplTest {
     @Autowired
     TagExpenditureService tagExpenditureService;
     @Autowired
-    TagExpenditureRepository tagExpenditureRepository;
+    TagFirstExpenditureRepository tagFirstExpenditureRepository;
+    @Autowired
+    TagSecondExpenditureRepository tagSecondExpenditureRepository;
+    @Autowired
+    TagThirdExpenditureRepository tagThirdExpenditureRepository;
+
     @Autowired
     UserRepository userRepository;
     @Autowired
@@ -72,10 +83,10 @@ class TagExpenditureServiceImplTest {
         String firstTagName = "혼수";
 
         // when
-        TagExpenditure tagExpenditure = tagExpenditureService.insertFirstTag(firstTagName, USER1.getId());
+        TagFirstExpenditure tagFirstExpenditure = tagExpenditureService.insertFirstTag(firstTagName, USER1.getId());
 
         // then
-        assertThat(tagExpenditureRepository.findById(tagExpenditure.getId()).get().getFirstTagName()).isEqualTo(firstTagName);
+        assertThat(tagFirstExpenditureRepository.findById(tagFirstExpenditure.getId()).get().getFirstTagName()).isEqualTo(firstTagName);
 
 
     }
@@ -91,11 +102,10 @@ class TagExpenditureServiceImplTest {
         String secondTagName = "가구";
 
         // when
-        TagExpenditure tagExpenditure = tagExpenditureService.insertSecondTag(firstTagName, secondTagName, USER1.getId());
+        TagSecondExpenditure tagSecondExpenditure = tagExpenditureService.insertSecondTag(firstTagName, secondTagName, USER1.getId());
 
         // then
-        assertThat(tagExpenditureRepository.findById(tagExpenditure.getId()).get().getFirstTagName()).isEqualTo(firstTagName);
-        assertThat(tagExpenditureRepository.findById(tagExpenditure.getId()).get().getSecondTagName()).isEqualTo(secondTagName);
+        assertThat(tagSecondExpenditureRepository.findById(tagSecondExpenditure.getId()).get().getSecondTagName()).isEqualTo(secondTagName);
 
     }
 
@@ -111,12 +121,10 @@ class TagExpenditureServiceImplTest {
         String thirdTagName = "침대";
 
         // when
-        TagExpenditure tagExpenditure = tagExpenditureService.insertThirdTag(firstTagName, secondTagName, thirdTagName, USER1.getId());
+        TagThirdExpenditure tagThirdExpenditure = tagExpenditureService.insertThirdTag(firstTagName, secondTagName, thirdTagName, USER1.getId());
 
         // then
-        assertThat(tagExpenditureRepository.findById(tagExpenditure.getId()).get().getFirstTagName()).isEqualTo(firstTagName);
-        assertThat(tagExpenditureRepository.findById(tagExpenditure.getId()).get().getSecondTagName()).isEqualTo(secondTagName);
-        assertThat(tagExpenditureRepository.findById(tagExpenditure.getId()).get().getThirdTagName()).isEqualTo(thirdTagName);
+        assertThat(tagThirdExpenditureRepository.findById(tagThirdExpenditure.getId()).get().getThirdTagName()).isEqualTo(thirdTagName);
 
     }
 }

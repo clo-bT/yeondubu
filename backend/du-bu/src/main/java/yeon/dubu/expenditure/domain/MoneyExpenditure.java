@@ -35,15 +35,14 @@ public class MoneyExpenditure extends BaseTimeEntity {
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "EXPENDITURE_TAG_ID")
-    private TagExpenditure tagExpenditure;
+    private TagThirdExpenditure tagThirdExpenditure;
     @Builder
-    public MoneyExpenditure(Long id, UserRole userRole, LocalDate date, Long amount, String memo,
-        TagExpenditure tagExpenditure) {
+    public MoneyExpenditure(Long id, UserRole userRole, LocalDate date, Long amount, String memo, TagThirdExpenditure tagThirdExpenditure) {
         this.id = id;
         this.userRole = userRole;
         this.date = date;
         this.amount = amount;
         this.memo = memo;
-        this.tagExpenditure = tagExpenditure;
+        this.tagThirdExpenditure = tagThirdExpenditure;
     }
 }

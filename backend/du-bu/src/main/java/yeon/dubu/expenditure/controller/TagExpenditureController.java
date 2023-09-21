@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import yeon.dubu.expenditure.domain.TagExpenditure;
+import yeon.dubu.expenditure.domain.TagFirstExpenditure;
+import yeon.dubu.expenditure.domain.TagSecondExpenditure;
+import yeon.dubu.expenditure.domain.TagThirdExpenditure;
 import yeon.dubu.expenditure.service.TagExpenditureService;
 
 @Slf4j
@@ -30,7 +32,7 @@ public class TagExpenditureController {
             @AuthenticationPrincipal Long userId,
             @PathVariable String firstTagName
     ) {
-        TagExpenditure savedFirstTag = tagExpenditureService.insertFirstTag(firstTagName, userId);
+        TagFirstExpenditure savedFirstTag = tagExpenditureService.insertFirstTag(firstTagName, userId);
 
         return ResponseEntity.ok(savedFirstTag);
     }
@@ -48,7 +50,7 @@ public class TagExpenditureController {
             @PathVariable String firstTagName,
             @PathVariable String secondTagName
     ) {
-        TagExpenditure savedSecondTag = tagExpenditureService.insertSecondTag(firstTagName, secondTagName, userId);
+        TagSecondExpenditure savedSecondTag = tagExpenditureService.insertSecondTag(firstTagName, secondTagName, userId);
 
         return ResponseEntity.ok(savedSecondTag);
     }
@@ -68,7 +70,7 @@ public class TagExpenditureController {
             @PathVariable String secondTagName,
             @PathVariable String thirdTagName
     ) {
-        TagExpenditure savedThirdTag = tagExpenditureService.insertThirdTag(firstTagName, secondTagName, thirdTagName, userId);
+        TagThirdExpenditure savedThirdTag = tagExpenditureService.insertThirdTag(firstTagName, secondTagName, thirdTagName, userId);
 
         return ResponseEntity.ok(savedThirdTag);
     }

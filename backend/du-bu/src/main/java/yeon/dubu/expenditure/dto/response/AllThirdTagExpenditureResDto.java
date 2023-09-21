@@ -1,5 +1,6 @@
 package yeon.dubu.expenditure.dto.response;
 
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.*;
 
 @Getter
@@ -12,6 +13,7 @@ public class AllThirdTagExpenditureResDto {
     private Long amount;
 
     @Builder
+    @QueryProjection
     public AllThirdTagExpenditureResDto(String thirdTagName, Long moneyId, Long amount) {
         this.thirdTagName = thirdTagName;
         this.moneyId = moneyId;
