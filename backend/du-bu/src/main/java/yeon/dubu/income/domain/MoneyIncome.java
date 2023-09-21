@@ -1,4 +1,4 @@
-package yeon.dubu.money.domain;
+package yeon.dubu.income.domain;
 import static jakarta.persistence.FetchType.LAZY;
 
 import jakarta.persistence.Entity;
@@ -16,7 +16,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.antlr.v4.runtime.misc.NotNull;
 import yeon.dubu.BaseTimeEntity;
-import yeon.dubu.category.domain.TagIncome;
 import yeon.dubu.user.enumeration.UserRole;
 
 @Entity
@@ -41,7 +40,7 @@ public class MoneyIncome extends BaseTimeEntity {
     private String memo; //메모
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "INCOME_TAG_ID")
+    @JoinColumn(name = "TAG_INCOME_ID")
     private TagIncome tagIncome;
 
     @Builder

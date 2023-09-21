@@ -3,8 +3,10 @@ package yeon.dubu.account.controller;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import yeon.dubu.account.dto.request.DepositAccountReqDto;
 import yeon.dubu.account.dto.request.SavingAccountReqDto;
+import yeon.dubu.account.dto.response.AccountInfoResDto;
 import yeon.dubu.account.service.AccountService;
 
 @Slf4j
@@ -62,5 +65,11 @@ public class AccountController {
     public ResponseEntity<?> deleteDeposit(@AuthenticationPrincipal Long userId, @RequestParam Long accountId){
         accountService.deleteDeposit(accountId);
         return new ResponseEntity<>("", HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<?> searchAccounts(@AuthenticationPrincipal Long userId){
+        List<AccountInfoResDto> accountInfoResDtoList = accountService.searchAccounts(userId);
+        return new ResponseEntity<List<AccountInfoResDto>>(accountInfoResDtoList, HttpStatus.OK);
     }
 }

@@ -20,8 +20,8 @@ import yeon.dubu.user.repository.UserRepository;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class CoupleServiceImpl implements CoupleService{
-    private CoupleRepository coupleRepository;
-    private UserRepository userRepository;
+    private final CoupleRepository coupleRepository;
+    private final UserRepository userRepository;
     @Override
     @Transactional
     public void insertInfo(Long userId, CoupleInfoReqDto coupleInfoReqDto) {
