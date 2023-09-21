@@ -1,3 +1,6 @@
+def veiry(data):
+    pass
+
 def image_processor(img):
     import sys
     sys.path.append("../img_utils")
@@ -8,14 +11,6 @@ def image_processor(img):
     img = background_remove(img)
     feature = fe.extract(img)
     return feature
-'''
-filter = {
-    'brand'   : 'LG퓨리케어,삼성,...,다이슨'
-    'lprice'  : 5000000,
-    'hprice'  : 500000000,
-    'item_cnt': 20,
-}
-'''
 
 def sim_search(query, data):
     import h5py
@@ -24,7 +19,6 @@ def sim_search(query, data):
     category = data['category']
     subcategory = data['subcategory']
     with h5py.File('../static/data.h5', 'r') as db:
-        # product_data = json.load(db[category][subcategory]['json'], ascii=False)
         product_data = db[category][subcategory]['json'][()]
         product_data = json.loads(product_data)
         feature_data = db[category][subcategory]['npy']
@@ -43,3 +37,4 @@ def sim_search(query, data):
         # if (len(sorted_products) > filter['item_cnt']):
         #     sorted_products = sorted_products[:filter['item_cnt']]
         return sorted_products
+    
