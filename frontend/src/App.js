@@ -12,7 +12,7 @@ import FirstMain from './components/Login/FirstMain';
 // import styled from 'styled-components';
 // import ScoreInputHeader from './components/CreditScoreInput/ScoreInputHeader';
 // import ScoreInput from './components/CreditScoreInput/ScoreInput';
-// import LoginAuth from './components/KakaoLogin/LoginAuth';
+import LoginAuth from './components/KakaoLogin/LoginAuth';
 // import Menubar from './components/Common/Menubar';
 // import MyAccountProfile from './components/Common/MyAccountProfile';
 import Main from './pages/Main';
@@ -31,10 +31,10 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<Main />} />
-          {/* <Route path="/auth" element={<LoginAuth />} /> */}
           <Route path="/login" element={<FirstMain />} />
-          <Route path="/codeinput" element={<CodeInput />} />
-          <Route path="/auth" element={<InvitationCode />} />
+          <Route path="/auth" element={<LoginAuth />} />
+          <Route path="/input" element={<CodeInput />} />
+          <Route path="/invite" element={<InvitationCode />} />
             
         </Routes>
       </div>
