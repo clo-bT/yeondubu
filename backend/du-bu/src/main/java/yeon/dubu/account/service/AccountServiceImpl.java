@@ -34,6 +34,7 @@ public class AccountServiceImpl implements AccountService{
     }
 
     @Override
+    @Transactional
     public void insertDeposit(Long userId, DepositAccountReqDto depositAccountReqDto) {
         User user = userRepository.findById(userId).orElseThrow(
             () -> new NoSuchUserException("올바른 사용자가 아닙니다.")
@@ -47,33 +48,51 @@ public class AccountServiceImpl implements AccountService{
 
     @Override
     @Transactional
-    public void updateSaving(Long userId, Long accountId, SavingAccountReqDto savingAccountReqDto) {
-        User user = userRepository.findById(userId).orElseThrow(
-            () -> new NoSuchUserException("올바른 사용자가 아닙니다.")
-        );
+    public void updateSaving(Long accountId, SavingAccountReqDto savingAccountReqDto) {
 
-//        Account account = accountRepository.findById(accountId).orElseThrow(
-//            () -> new NoSuchAccountException("해당 계좌가 존재하지 않습니다.")
-//        );
-//
-//        account = Account.fromSaving(savingAccountReqDto);
-//        accountRepository.save(account);
+        Account account = Account.fromSaving(savingAccountReqDto);
+
+        Account savedAccount = accountRepository.findById(accountId).orElseThrow(
+            () -> new NoSuchAccountException("해당 계좌가 존재하지 않습니다.")
+        );
+        account.setId(savedAccount.getId());
+
+        accountRepository.save(account);
 
     }
 
     @Override
-    public void updateDeposit(Long userId, Long accountId,
+    @Transactional
+    public void updateDeposit(Long accountId,
         DepositAccountReqDto depositAccountReqDto) {
-        User user = userRepository.findById(userId).orElseThrow(
-            () -> new NoSuchUserException("올바른 사용자가 아닙니다.")
+
+
+        Account account = Account.fromDeposit(depositAccountReqDto);
+
+        Account depositAccount = accountRepository.findById(accountId).orElseThrow(
+            () -> new NoSuchAccountException("해당 계좌가 존재하지 않습니다.")
         );
+        account.setId(depositAccount.getId());
 
-//        Account account = accountRepository.findById(accountId).orElseThrow(
-//            () -> new NoSuchAccountException("해당 계좌가 존재하지 않습니다.")
-//        );
-//
-//        account = Account.fromDeposit(depositAccountReqDto);
-//        accountRepository.save(account);
+        accountRepository.save(account);
 
+    }
+
+    @Override
+    @Transactional
+    public void deleteSaving(Long accountId) {
+        Account savedAccount = accountRepository.findById(accountId).orElseThrow(
+            () -> new NoSuchAccountException("해당 계좌가 존재하지 않습니다.")
+        );
+        accountRepository.delete(savedAccount);
+    }
+
+    @Override
+    @Transactional
+    public void deleteDeposit(Long accountId) {
+        Account depositAccount = accountRepository.findById(accountId).orElseThrow(
+            () -> new NoSuchAccountException("해당 계좌가 존재하지 않습니다.")
+        );
+        accountRepository.delete(depositAccount);
     }
 }
