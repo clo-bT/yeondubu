@@ -11,6 +11,7 @@ import yeon.dubu.account.domain.Account;
 import yeon.dubu.account.dto.request.DepositAccountReqDto;
 import yeon.dubu.account.dto.request.SavingAccountReqDto;
 import yeon.dubu.account.dto.response.AccountInfoResDto;
+import yeon.dubu.account.enumeration.AccountType;
 import yeon.dubu.account.exception.NoSuchAccountException;
 import yeon.dubu.account.repository.AccountRepository;
 import yeon.dubu.user.domain.User;
@@ -106,7 +107,11 @@ public class AccountServiceImpl implements AccountService{
         List<AccountInfoResDto> accountInfoResDtoList = new ArrayList<>();
 
         for(Account account : accountList){
-            Long price = calNowMoney(account);
+            Long price;
+            if(account.getAccountType().equals(AccountType.SAVINGS))
+                price = calNowMoney(account);
+            else price = account.getFinalAmount();
+
 
             AccountInfoResDto accountInfoResDto = new AccountInfoResDto();
             accountInfoResDto.setName(account.getName());
@@ -120,13 +125,36 @@ public class AccountServiceImpl implements AccountService{
 
     private Long calNowMoney(Account account){
         LocalDate today = LocalDate.now();
-        System.out.println("today = " + today);
 
-        Long price = 0L;
+        int nowMonth = today.getMonthValue();
+        int nowYear = today.getYear();
+        int nowDay = today.getDayOfMonth();
 
-        int accountYear = account.getCreatedAt().getYear();
-        int accountMonth = account.getCreatedAt().getMonth().getValue();
-        return price;
+        int createdYear = account.getCreatedAt().getYear();
+        int createdMonth = account.getCreatedAt().getMonthValue();
+        int createdDay = account.getCreatedAt().getDayOfMonth();
+
+        int transferDay = account.getTransferDay();
+
+        Long startPrice = account.getStartAmount();
+
+        int totalMonths = 0;
+        //년
+        totalMonths += 12 * (nowYear - createdYear - 1);
+
+        //월
+        if (nowMonth >= createdMonth){
+            totalMonths += nowMonth - createdMonth + 12;
+        }
+        else{
+            totalMonths += 12 - (createdMonth - nowMonth);
+        }
+
+        //일
+        if(nowDay < transferDay) totalMonths -= 1;
+        if(createdDay < transferDay) totalMonths += 1;
+
+        return startPrice + (totalMonths * account.getTransferAmount());
     }
 }
 
