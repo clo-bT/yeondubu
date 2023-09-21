@@ -1,22 +1,18 @@
 package yeon.dubu.account.controller;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import yeon.dubu.account.dto.request.DepositAccountReqDto;
 import yeon.dubu.account.dto.request.SavingAccountReqDto;
@@ -44,25 +40,25 @@ public class AccountController {
     }
 
     @PutMapping("/saving/{accountId}")
-    public ResponseEntity<?> updateSaving(@AuthenticationPrincipal Long userId, @RequestBody SavingAccountReqDto savingAccountReqDto, @RequestParam Long accountId){
+    public ResponseEntity<?> updateSaving(@AuthenticationPrincipal Long userId, @RequestBody SavingAccountReqDto savingAccountReqDto, @PathVariable Long accountId){
         accountService.updateSaving(accountId, savingAccountReqDto);
         return new ResponseEntity<>("", HttpStatus.OK);
     }
 
     @PutMapping("/deposit/{accountId}")
-    public ResponseEntity<?> updateDeposit(@AuthenticationPrincipal Long userId, @RequestBody DepositAccountReqDto depositAccountReqDto, @RequestParam Long accountId){
+    public ResponseEntity<?> updateDeposit(@AuthenticationPrincipal Long userId, @RequestBody DepositAccountReqDto depositAccountReqDto, @PathVariable Long accountId){
         accountService.updateDeposit(accountId, depositAccountReqDto);
         return new ResponseEntity<>("", HttpStatus.OK);
     }
 
     @DeleteMapping("/saving/{accountId}")
-    public ResponseEntity<?> deleteSaving(@AuthenticationPrincipal Long userId, @RequestParam Long accountId){
+    public ResponseEntity<?> deleteSaving(@AuthenticationPrincipal Long userId, @PathVariable Long accountId){
         accountService.deleteSaving(accountId);
         return new ResponseEntity<>("", HttpStatus.OK);
     }
 
     @DeleteMapping("/deposit/{accountId}")
-    public ResponseEntity<?> deleteDeposit(@AuthenticationPrincipal Long userId, @RequestParam Long accountId){
+    public ResponseEntity<?> deleteDeposit(@AuthenticationPrincipal Long userId, @PathVariable Long accountId){
         accountService.deleteDeposit(accountId);
         return new ResponseEntity<>("", HttpStatus.OK);
     }
