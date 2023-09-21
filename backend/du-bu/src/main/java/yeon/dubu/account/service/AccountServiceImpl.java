@@ -1,5 +1,8 @@
 package yeon.dubu.account.service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -7,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import yeon.dubu.account.domain.Account;
 import yeon.dubu.account.dto.request.DepositAccountReqDto;
 import yeon.dubu.account.dto.request.SavingAccountReqDto;
+import yeon.dubu.account.dto.response.AccountInfoResDto;
 import yeon.dubu.account.exception.NoSuchAccountException;
 import yeon.dubu.account.repository.AccountRepository;
 import yeon.dubu.user.domain.User;
@@ -18,8 +22,8 @@ import yeon.dubu.user.repository.UserRepository;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService{
-    private UserRepository userRepository;
-    private AccountRepository accountRepository;
+    private final UserRepository userRepository;
+    private final AccountRepository accountRepository;
     @Override
     @Transactional
     public void insertSaving(Long userId, SavingAccountReqDto savingAccountReqDto) {
@@ -95,4 +99,34 @@ public class AccountServiceImpl implements AccountService{
         );
         accountRepository.delete(depositAccount);
     }
+
+    @Override
+    public List<AccountInfoResDto> searchAccounts(Long userId) {
+        List<Account> accountList = accountRepository.findByUserId(userId);
+        List<AccountInfoResDto> accountInfoResDtoList = new ArrayList<>();
+
+        for(Account account : accountList){
+            Long price = calNowMoney(account);
+
+            AccountInfoResDto accountInfoResDto = new AccountInfoResDto();
+            accountInfoResDto.setName(account.getName());
+            accountInfoResDto.setPrice(price);
+            accountInfoResDto.setId(account.getId());
+
+            accountInfoResDtoList.add(accountInfoResDto);
+        }
+        return accountInfoResDtoList;
+    }
+
+    private Long calNowMoney(Account account){
+        LocalDate today = LocalDate.now();
+        System.out.println("today = " + today);
+
+        Long price = 0L;
+
+        int accountYear = account.getCreatedAt().getYear();
+        int accountMonth = account.getCreatedAt().getMonth().getValue();
+        return price;
+    }
 }
+

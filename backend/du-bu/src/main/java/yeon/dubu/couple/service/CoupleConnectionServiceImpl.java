@@ -114,7 +114,7 @@ public class CoupleConnectionServiceImpl implements CoupleConnectionService {
             if(isRepeat) {
                 //커플 생성 및 user에게 coupleId없애주기
                 createCoupleColumn(coupleConnection);
-                //TODO:
+                // TODO:
                 //  money row 생성
                 createMoney(coupleConnection);
 
