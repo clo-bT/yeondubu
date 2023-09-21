@@ -1,4 +1,4 @@
-package yeon.dubu.category.domain;
+package yeon.dubu.expenditure.domain;
 import static jakarta.persistence.FetchType.LAZY;
 
 import jakarta.persistence.Entity;

@@ -1,19 +1,19 @@
-package yeon.dubu.money.service;
+package yeon.dubu.expenditure.service;
 
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import yeon.dubu.category.domain.TagExpenditure;
-import yeon.dubu.category.repository.TagExpenditureRepository;
 import yeon.dubu.couple.domain.Couple;
 import yeon.dubu.couple.exception.NoSuchCoupleException;
 import yeon.dubu.couple.repository.CoupleRepository;
-import yeon.dubu.money.domain.MoneyExpenditure;
-import yeon.dubu.money.dto.request.MoneyExpenditureReqDto;
+import yeon.dubu.expenditure.domain.MoneyExpenditure;
+import yeon.dubu.expenditure.domain.TagExpenditure;
+import yeon.dubu.expenditure.dto.request.MoneyExpenditureReqDto;
+import yeon.dubu.expenditure.repository.MoneyExpenditureRepository;
+import yeon.dubu.expenditure.repository.TagExpenditureRepository;
 import yeon.dubu.money.exception.NoSuchTagExpenditureException;
-import yeon.dubu.money.repository.MoneyExpenditureRepository;
 import yeon.dubu.money.repository.MoneyRepository;
 import yeon.dubu.user.domain.User;
 import yeon.dubu.user.exception.NoSuchUserException;
@@ -64,4 +64,5 @@ public class MoneyExpenditureServiceImpl implements MoneyExpenditureService{
 
         return moneyExpenditure;
     }
+
 }

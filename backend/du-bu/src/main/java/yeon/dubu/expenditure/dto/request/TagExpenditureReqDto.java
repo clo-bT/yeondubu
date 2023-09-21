@@ -1,6 +1,10 @@
-package yeon.dubu.category.dto.request;
+package yeon.dubu.expenditure.dto.request;
 
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.*;
+import yeon.dubu.user.enumeration.UserRole;
+
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -17,4 +21,6 @@ public class TagExpenditureReqDto {
         this.secondTagName = secondTagName;
         this.thirdTagName = thirdTagName;
     }
+
+
 }
