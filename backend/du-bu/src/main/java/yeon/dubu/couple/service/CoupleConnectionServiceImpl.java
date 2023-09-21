@@ -78,8 +78,9 @@ public class CoupleConnectionServiceImpl implements CoupleConnectionService {
     @Override
     @Transactional
     public Long enterCoupleConnection(Long userId, Integer code) {
-        //TODO:
         // userId가 hostId인 coupleConnection 지우기
+        coupleConnectionRepository.deleteByHostId(userId);
+
         User user = userRepository.findById(userId).orElseThrow(
             () -> new NoSuchUserException("해당하는 사용자가 없습니다.")
         );
