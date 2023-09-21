@@ -88,9 +88,7 @@ const WeddingDayInput = () => {
     const handleDateChange = (date) => {
         setSelectedDate(date);
       };
-    const openCalendar = () => {
-    document.querySelector('.react-datepicker__input-container input').click();
-    };
+
     const clearDate = () => {
         setSelectedDate(null);
       };
