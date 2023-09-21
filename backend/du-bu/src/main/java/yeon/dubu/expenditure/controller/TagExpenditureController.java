@@ -4,14 +4,18 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import yeon.dubu.expenditure.domain.TagFirstExpenditure;
 import yeon.dubu.expenditure.domain.TagSecondExpenditure;
 import yeon.dubu.expenditure.domain.TagThirdExpenditure;
+import yeon.dubu.expenditure.dto.request.TagSecondExpenditureReqDto;
+import yeon.dubu.expenditure.dto.request.TagThirdExpenditureReqDto;
 import yeon.dubu.expenditure.service.TagExpenditureService;
+import yeon.dubu.expenditure.service.TagFirstExpenditureService;
+import yeon.dubu.expenditure.service.TagSecondExpenditureService;
+import yeon.dubu.expenditure.service.TagThirdExpenditureService;
+
+import java.net.URISyntaxException;
 
 @Slf4j
 @RestController
@@ -20,57 +24,37 @@ import yeon.dubu.expenditure.service.TagExpenditureService;
 public class TagExpenditureController {
 
     private final TagExpenditureService tagExpenditureService;
+    private final TagFirstExpenditureService tagFirstExpenditureService;
+    private final TagSecondExpenditureService tagSecondExpenditureService;
+    private final TagThirdExpenditureService tagThirdExpenditureService;
 
-    /**
-     * firstTagName 등록
-     * @param userId
-     * @param firstTagName
-     * @return
-     */
     @PostMapping("/{firstTagName}")
     public ResponseEntity insertFirstTag(
             @AuthenticationPrincipal Long userId,
             @PathVariable String firstTagName
-    ) {
-        TagFirstExpenditure savedFirstTag = tagExpenditureService.insertFirstTag(firstTagName, userId);
+    ) throws URISyntaxException {
+        TagFirstExpenditure savedFirstTag = tagFirstExpenditureService.insertFirstTag(firstTagName, userId);
 
         return ResponseEntity.ok(savedFirstTag);
     }
 
-    /**
-     * secondTagName 등록
-     * @param userId
-     * @param firstTagName
-     * @param secondTagName
-     * @return
-     */
     @PostMapping("/{firstTagName}/{secondTagName}")
     public ResponseEntity insertSecondTag(
             @AuthenticationPrincipal Long userId,
-            @PathVariable String firstTagName,
-            @PathVariable String secondTagName
-    ) {
-        TagSecondExpenditure savedSecondTag = tagExpenditureService.insertSecondTag(firstTagName, secondTagName, userId);
+            @RequestBody TagSecondExpenditureReqDto tagSecondExpenditureReqDto
+            ) throws URISyntaxException {
+
+        TagSecondExpenditure savedSecondTag = tagSecondExpenditureService.insertSecondTag(tagSecondExpenditureReqDto, userId);
 
         return ResponseEntity.ok(savedSecondTag);
     }
 
-    /**
-     * thirdTag 등록
-     * @param userId
-     * @param firstTagName
-     * @param secondTagName
-     * @param thirdTagName
-     * @return
-     */
     @PostMapping("/{firstTagName}/{secondTagName}/{thirdTagName}")
     public ResponseEntity insertSecondTag(
             @AuthenticationPrincipal Long userId,
-            @PathVariable String firstTagName,
-            @PathVariable String secondTagName,
-            @PathVariable String thirdTagName
-    ) {
-        TagThirdExpenditure savedThirdTag = tagExpenditureService.insertThirdTag(firstTagName, secondTagName, thirdTagName, userId);
+            @RequestBody TagThirdExpenditureReqDto tagThirdExpenditureReqDto
+            ) throws URISyntaxException {
+        TagThirdExpenditure savedThirdTag = tagThirdExpenditureService.insertThirdTag(tagThirdExpenditureReqDto, userId);
 
         return ResponseEntity.ok(savedThirdTag);
     }

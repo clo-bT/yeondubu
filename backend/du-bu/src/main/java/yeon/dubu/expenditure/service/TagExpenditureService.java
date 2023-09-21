@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface TagExpenditureService {
 
-    TagFirstExpenditure insertFirstTag(String firstTagName, Long userId);
-    TagSecondExpenditure insertSecondTag(String firstTagName, String secondTagName, Long userId);
-    TagThirdExpenditure insertThirdTag(String firstTagName, String secondTagName, String thirdTagName, Long userId);
+//    TagFirstExpenditure insertFirstTag(String firstTagName, Long userId);
+//    TagSecondExpenditure insertSecondTag(String firstTagName, String secondTagName, Long userId);
+//    TagThirdExpenditure insertThirdTag(String firstTagName, String secondTagName, String thirdTagName, Long userId);
 
     List<AllFirstTagExpenditureResDto> searchAllTags(Long userId);
 }
