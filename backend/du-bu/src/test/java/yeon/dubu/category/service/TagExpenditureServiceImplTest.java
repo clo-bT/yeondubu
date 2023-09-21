@@ -6,10 +6,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import yeon.dubu.auth.enumeration.RoleType;
-import yeon.dubu.category.domain.TagExpenditure;
-import yeon.dubu.category.repository.TagExpenditureRepository;
+import yeon.dubu.expenditure.domain.TagExpenditure;
+import yeon.dubu.expenditure.repository.TagExpenditureRepository;
 import yeon.dubu.couple.domain.Couple;
 import yeon.dubu.couple.repository.CoupleRepository;
+import yeon.dubu.expenditure.service.TagExpenditureService;
 import yeon.dubu.user.domain.User;
 import yeon.dubu.user.enumeration.UserRole;
 import yeon.dubu.user.repository.UserRepository;
@@ -71,7 +72,7 @@ class TagExpenditureServiceImplTest {
         String firstTagName = "혼수";
 
         // when
-        TagExpenditure tagExpenditure = tagExpenditureService.saveFirstTag(firstTagName, USER1.getId());
+        TagExpenditure tagExpenditure = tagExpenditureService.insertFirstTag(firstTagName, USER1.getId());
 
         // then
         assertThat(tagExpenditureRepository.findById(tagExpenditure.getId()).get().getFirstTagName()).isEqualTo(firstTagName);
@@ -90,7 +91,7 @@ class TagExpenditureServiceImplTest {
         String secondTagName = "가구";
 
         // when
-        TagExpenditure tagExpenditure = tagExpenditureService.saveSecondTag(firstTagName, secondTagName, USER1.getId());
+        TagExpenditure tagExpenditure = tagExpenditureService.insertSecondTag(firstTagName, secondTagName, USER1.getId());
 
         // then
         assertThat(tagExpenditureRepository.findById(tagExpenditure.getId()).get().getFirstTagName()).isEqualTo(firstTagName);
@@ -110,7 +111,7 @@ class TagExpenditureServiceImplTest {
         String thirdTagName = "침대";
 
         // when
-        TagExpenditure tagExpenditure = tagExpenditureService.saveThirdTag(firstTagName, secondTagName, thirdTagName, USER1.getId());
+        TagExpenditure tagExpenditure = tagExpenditureService.insertThirdTag(firstTagName, secondTagName, thirdTagName, USER1.getId());
 
         // then
         assertThat(tagExpenditureRepository.findById(tagExpenditure.getId()).get().getFirstTagName()).isEqualTo(firstTagName);

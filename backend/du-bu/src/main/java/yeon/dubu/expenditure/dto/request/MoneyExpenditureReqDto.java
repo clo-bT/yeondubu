@@ -1,4 +1,4 @@
-package yeon.dubu.money.dto.request;
+package yeon.dubu.expenditure.dto.request;
 
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.*;
