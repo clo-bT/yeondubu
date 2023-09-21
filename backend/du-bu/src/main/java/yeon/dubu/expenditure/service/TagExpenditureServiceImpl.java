@@ -1,9 +1,10 @@
 package yeon.dubu.expenditure.service;
 
-import jakarta.transaction.Transactional;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import yeon.dubu.expenditure.domain.TagExpenditure;
 import yeon.dubu.expenditure.repository.TagExpenditureRepository;
 import yeon.dubu.couple.domain.Couple;
@@ -92,6 +93,24 @@ public class TagExpenditureServiceImpl implements TagExpenditureService{
         tagExpenditureRepository.save(tagExpenditure);
 
         return tagExpenditure;
+    }
+
+    /**
+     * 사용자의 couple의 전체 태그 조회(first, second, third)
+     * @param userId
+     * @return
+     */
+    @Override
+    @Transactional
+    public TagExpenditure searchAllTags(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
+        Couple couple = coupleRepository.findById(user.getCouple().getId()).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
+
+
+
+
+
+        return null;
     }
 
 }

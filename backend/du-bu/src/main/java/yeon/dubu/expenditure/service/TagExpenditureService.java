@@ -8,4 +8,5 @@ public interface TagExpenditureService {
     TagExpenditure insertSecondTag(String firstTagName, String secondTagName, Long userId);
     TagExpenditure insertThirdTag(String firstTagName, String secondTagName, String thirdTagName, Long userId);
 
+    TagExpenditure searchAllTags(Long userId);
 }
