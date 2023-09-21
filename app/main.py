@@ -2,9 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 import os
 import sys
-sys.path.append("../img_utils")
-from feature_extractor import FeatureExtractor
-from bgrem import background_remove
+from utilities import image_processor, sim_search
 
 app = Flask(__name__)
 # CORS(app)
@@ -37,6 +35,10 @@ def image_upload():
         img_path = f'dataset/img_data_{user_token}_1.jpg'
         with open(img_path, 'wb') as f:
             f.write(img_data)
+        
+        img_data = image_processor(img_data)
+        similar_products = sim_search(img_data)
+        
         '''
         사진 처리하는 함수에 
         image / brand / cost data 넣기
@@ -44,8 +46,8 @@ def image_upload():
         '''
         if os.path.exists(img_path):
             os.remove(img_path)
-    
-        return jsonify({'result': result})
+
+        return jsonify({'result': similar_products})
     else:
         return jsonify({'success': False})
     
