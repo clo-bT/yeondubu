@@ -5,9 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import yeon.dubu.money.domain.MoneyExpenditure;
-import yeon.dubu.money.dto.request.MoneyExpenditureReqDto;
-import yeon.dubu.money.service.MoneyExpenditureService;
+import yeon.dubu.expenditure.domain.MoneyExpenditure;
+import yeon.dubu.expenditure.dto.request.MoneyExpenditureReqDto;
+import yeon.dubu.expenditure.service.MoneyExpenditureService;
 
 import java.net.URISyntaxException;
 
@@ -21,6 +21,7 @@ public class MoneyExpenditureController {
 
     /**
      * couple의 예산안 or 지출 등록
+     *
      * @param userId
      * @param moneyExpenditureReqDto
      * @return
@@ -30,7 +31,7 @@ public class MoneyExpenditureController {
     public ResponseEntity insertExpenditure(
             @AuthenticationPrincipal Long userId,
             @RequestBody MoneyExpenditureReqDto moneyExpenditureReqDto
-            ) throws URISyntaxException {
+    ) throws URISyntaxException {
 
         MoneyExpenditure moneyExpenditure = moneyExpenditureService.insertExpenditure(moneyExpenditureReqDto, userId);
 

@@ -10,7 +10,7 @@ import yeon.dubu.couple.exception.NoSuchCoupleException;
 import yeon.dubu.couple.repository.CoupleRepository;
 import yeon.dubu.expenditure.domain.MoneyExpenditure;
 import yeon.dubu.expenditure.domain.TagExpenditure;
-import yeon.dubu.expenditure.dto.request.TagExpenditureReqDto;
+import yeon.dubu.expenditure.dto.request.MoneyExpenditureReqDto;
 import yeon.dubu.expenditure.repository.MoneyExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagExpenditureRepository;
 import yeon.dubu.money.exception.NoSuchTagExpenditureException;
@@ -42,7 +42,7 @@ public class MoneyExpenditureServiceImpl implements MoneyExpenditureService{
      */
     @Override
     @Transactional
-    public MoneyExpenditure insertExpenditure(TagExpenditureReqDto.MoneyExpenditureReqDto moneyExpenditureReqDto, Long userId) {
+    public MoneyExpenditure insertExpenditure(MoneyExpenditureReqDto moneyExpenditureReqDto, Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
         Couple couple = coupleRepository.findById(user.getCouple().getId()).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
 
@@ -64,4 +64,5 @@ public class MoneyExpenditureServiceImpl implements MoneyExpenditureService{
 
         return moneyExpenditure;
     }
+
 }
