@@ -10,19 +10,16 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 public class AllFirstTagExpenditureResDto {
-    private Long tagId;
+    private Long firstTagId;
     private String firstTagName;
     private List<AllSecondTagExpenditureResDto> allSecondTagList;
 
-    @Builder
-    public AllFirstTagExpenditureResDto(Long tagId, String firstTagName, List<AllSecondTagExpenditureResDto> allSecondTagList) {
-        this.tagId = tagId;
+    @QueryProjection
+    public AllFirstTagExpenditureResDto(Long firstTagId, String firstTagName, List<AllSecondTagExpenditureResDto> allSecondTagList) {
+        this.firstTagId = firstTagId;
         this.firstTagName = firstTagName;
         this.allSecondTagList = allSecondTagList;
     }
-    @QueryProjection
-    public AllFirstTagExpenditureResDto(Long tagId, String firstTagName) {
-        this.tagId = tagId;
-        this.firstTagName = firstTagName;
-    }
+
+
 }

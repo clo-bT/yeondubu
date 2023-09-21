@@ -10,17 +10,15 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 public class AllSecondTagExpenditureResDto {
+    private Long secondTagId;
     private String secondTagName;
     private List<AllThirdTagExpenditureResDto> allThirdTagList;
 
-    @Builder
-    public AllSecondTagExpenditureResDto(String secondTagName, List<AllThirdTagExpenditureResDto> allThirdTagList) {
+    @QueryProjection
+    public AllSecondTagExpenditureResDto(Long secondTagId, String secondTagName, List<AllThirdTagExpenditureResDto> allThirdTagList) {
+        this.secondTagId = secondTagId;
         this.secondTagName = secondTagName;
         this.allThirdTagList = allThirdTagList;
     }
 
-    @QueryProjection
-    public AllSecondTagExpenditureResDto(String secondTagName) {
-        this.secondTagName = secondTagName;
-    }
 }

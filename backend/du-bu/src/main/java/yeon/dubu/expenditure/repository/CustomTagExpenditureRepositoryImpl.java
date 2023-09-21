@@ -1,10 +1,12 @@
 package yeon.dubu.expenditure.repository;
 
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
+import yeon.dubu.couple.domain.QCouple;
 import yeon.dubu.expenditure.domain.QMoneyExpenditure;
 import yeon.dubu.expenditure.domain.QTagFirstExpenditure;
 import yeon.dubu.expenditure.domain.QTagSecondExpenditure;
@@ -12,13 +14,9 @@ import yeon.dubu.expenditure.domain.QTagThirdExpenditure;
 import yeon.dubu.expenditure.dto.response.AllFirstTagExpenditureResDto;
 import yeon.dubu.expenditure.dto.response.AllSecondTagExpenditureResDto;
 import yeon.dubu.expenditure.dto.response.AllThirdTagExpenditureResDto;
+import yeon.dubu.expenditure.dto.response.QAllFirstTagExpenditureResDto;
 
 import java.util.List;
-
-import static yeon.dubu.expenditure.domain.QMoneyExpenditure.*;
-import static yeon.dubu.expenditure.domain.QTagFirstExpenditure.*;
-import static yeon.dubu.expenditure.domain.QTagSecondExpenditure.*;
-import static yeon.dubu.expenditure.domain.QTagThirdExpenditure.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -26,10 +24,11 @@ public class CustomTagExpenditureRepositoryImpl implements CustomTagExpenditureR
 
     private final JPAQueryFactory queryFactory;
 
-    QTagFirstExpenditure qTagFirstExpenditure = tagFirstExpenditure;
-    QTagSecondExpenditure qTagSecondExpenditure = tagSecondExpenditure;
-    QTagThirdExpenditure qTagThirdExpenditure = tagThirdExpenditure;
-    QMoneyExpenditure qMoneyExpenditure = moneyExpenditure;
+    QCouple qCouple = QCouple.couple;
+    QTagFirstExpenditure qTagFirstExpenditure = QTagFirstExpenditure.tagFirstExpenditure;
+    QTagSecondExpenditure qTagSecondExpenditure = QTagSecondExpenditure.tagSecondExpenditure;
+    QTagThirdExpenditure qTagThirdExpenditure = QTagThirdExpenditure.tagThirdExpenditure;
+    QMoneyExpenditure qMoneyExpenditure = QMoneyExpenditure.moneyExpenditure;
 
     /**
      * couple의 firstTag 전체 조회
@@ -42,9 +41,11 @@ public class CustomTagExpenditureRepositoryImpl implements CustomTagExpenditureR
 
         List<AllFirstTagExpenditureResDto> searchFirstTagList = queryFactory
                 .selectDistinct(Projections.constructor(AllFirstTagExpenditureResDto.class,
-                        tagFirstExpenditure.firstTagName))
-                .from(tagFirstExpenditure)
-                .where(tagFirstExpenditure.couple.id.eq(coupleId))
+                        qTagFirstExpenditure.id,
+                        qTagFirstExpenditure.firstTagName
+                ))
+                .from(qTagFirstExpenditure)
+                .where(qTagFirstExpenditure.couple.id.eq(coupleId))
                 .fetch();
 
         return searchFirstTagList;
@@ -62,35 +63,76 @@ public class CustomTagExpenditureRepositoryImpl implements CustomTagExpenditureR
 
         List<AllSecondTagExpenditureResDto> searchSecondTagList = queryFactory
                 .selectDistinct(Projections.constructor(AllSecondTagExpenditureResDto.class,
-                        tagSecondExpenditure.secondTagName))
-                .from(tagSecondExpenditure)
-                .leftJoin(tagSecondExpenditure.tagFirstExpenditure, tagFirstExpenditure)
-                .where(tagFirstExpenditure.firstTagName.eq(firstTagName))
+                        qTagSecondExpenditure.id,
+                        qTagSecondExpenditure.secondTagName
+                ))
+                .from(qTagSecondExpenditure)
+                .leftJoin(qTagSecondExpenditure.tagFirstExpenditure, qTagFirstExpenditure)
+                .where(qTagFirstExpenditure.firstTagName.eq(firstTagName))
                 .fetch();
 
         return searchSecondTagList;
     }
 
     /**
-     * couple의 secondTag의
+     * couple의 secondTag의 thirdTag 전체 조회
      * @param coupleId
-     * @param firstTagName
      * @param secondTagName
-     * @param thirdTagName
      * @return
      */
     @Override
-    public List<AllThirdTagExpenditureResDto> searchThirdTagByCouple(Long coupleId, String firstTagName, String secondTagName, String thirdTagName) {
+    public List<AllThirdTagExpenditureResDto> searchThirdTagByCouple(Long coupleId, String secondTagName) {
 
         List<AllThirdTagExpenditureResDto> searchThirdTagList = queryFactory
                 .select(Projections.constructor(AllThirdTagExpenditureResDto.class,
-                        tagThirdExpenditure.thirdTagName))
-                .from(tagThirdExpenditure)
-                .leftJoin(tagThirdExpenditure.tagSecondExpenditure, tagSecondExpenditure)
-//                .leftJoin(tagSecondExpenditure.tagFirstExpenditure, tag)
-                .where()
+                        qTagThirdExpenditure.id,
+                        qTagThirdExpenditure.thirdTagName,
+                        qMoneyExpenditure.id,
+                        qMoneyExpenditure.amount
+                ))
+                .from(qTagThirdExpenditure)
+                .leftJoin(qTagThirdExpenditure.tagSecondExpenditure, qTagSecondExpenditure)
+                .leftJoin(qTagSecondExpenditure.tagFirstExpenditure, qTagFirstExpenditure)
+                .leftJoin(qMoneyExpenditure.tagThirdExpenditure, qTagThirdExpenditure)
+                .where(qTagSecondExpenditure.secondTagName.eq(secondTagName))
                 .fetch();
 
-        return null;
+        return searchThirdTagList;
     }
+
+    /**
+     * 사용자의 전체 태그 리스트 조회
+     * @param coupleId
+     * @return
+     */
+    @Override
+    public List<AllFirstTagExpenditureResDto> searhAllTags(Long coupleId) {
+
+        List<AllFirstTagExpenditureResDto> result = queryFactory
+                .select(Projections.constructor(AllFirstTagExpenditureResDto.class,
+                        qTagFirstExpenditure.id,
+                        qTagFirstExpenditure.firstTagName,
+                        Projections.list(Projections.constructor(AllSecondTagExpenditureResDto.class,
+                                qTagSecondExpenditure.id,
+                                qTagSecondExpenditure.secondTagName,
+                                Projections.list(Projections.constructor(AllThirdTagExpenditureResDto.class,
+                                        qTagThirdExpenditure.id,
+                                        qTagThirdExpenditure.thirdTagName,
+                                        qMoneyExpenditure.id,
+                                        qMoneyExpenditure.amount
+                                ))
+                        ))
+
+                ))
+                .from(qCouple)
+                .leftJoin(qTagFirstExpenditure.couple, qCouple)
+                .leftJoin(qTagSecondExpenditure.tagFirstExpenditure, qTagFirstExpenditure)
+                .leftJoin(qTagThirdExpenditure.tagSecondExpenditure, qTagSecondExpenditure)
+                .leftJoin(qMoneyExpenditure.tagThirdExpenditure, qTagThirdExpenditure)
+                .where(qCouple.id.eq(coupleId))
+                .fetch();
+
+        return result;
+    }
+
 }

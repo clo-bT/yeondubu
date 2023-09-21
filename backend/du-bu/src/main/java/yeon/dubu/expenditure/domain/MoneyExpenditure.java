@@ -1,10 +1,7 @@
 package yeon.dubu.expenditure.domain;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.antlr.v4.runtime.misc.NotNull;
 import yeon.dubu.BaseTimeEntity;
 import yeon.dubu.user.enumeration.UserRole;
@@ -16,6 +13,7 @@ import static jakarta.persistence.FetchType.LAZY;
 @Entity
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 public class MoneyExpenditure extends BaseTimeEntity {
     @Id
@@ -34,7 +32,6 @@ public class MoneyExpenditure extends BaseTimeEntity {
     private String memo; //메모
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "EXPENDITURE_TAG_ID")
     private TagThirdExpenditure tagThirdExpenditure;
     @Builder
     public MoneyExpenditure(Long id, UserRole userRole, LocalDate date, Long amount, String memo, TagThirdExpenditure tagThirdExpenditure) {

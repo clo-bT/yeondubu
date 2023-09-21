@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import yeon.dubu.auth.enumeration.RoleType;
-import yeon.dubu.expenditure.repository.TagExpenditureRepository;
 import yeon.dubu.couple.domain.Couple;
 import yeon.dubu.couple.repository.CoupleRepository;
 import yeon.dubu.money.domain.Money;
@@ -23,9 +22,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 class MoneyServiceImplTest {
 
-
-    @Autowired
-    TagExpenditureRepository tagExpenditureRepository;
     @Autowired
     UserRepository userRepository;
     @Autowired

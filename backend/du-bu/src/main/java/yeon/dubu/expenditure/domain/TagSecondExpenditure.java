@@ -1,10 +1,7 @@
 package yeon.dubu.expenditure.domain;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.antlr.v4.runtime.misc.NotNull;
 import yeon.dubu.couple.domain.Couple;
 
@@ -13,6 +10,7 @@ import static jakarta.persistence.FetchType.LAZY;
 @Entity
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 public class TagSecondExpenditure {
     @Id
