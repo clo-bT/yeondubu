@@ -1,4 +1,4 @@
-package yeon.dubu.money.controller;
+package yeon.dubu.expenditure.controller;
 
 public class MoneyExpenditureController {
 }

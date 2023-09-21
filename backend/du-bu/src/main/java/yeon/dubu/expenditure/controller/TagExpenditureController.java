@@ -1,4 +1,4 @@
-package yeon.dubu.category.controller;
+package yeon.dubu.expenditure.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import yeon.dubu.category.domain.TagExpenditure;
-import yeon.dubu.category.service.TagExpenditureService;
+import yeon.dubu.expenditure.domain.TagExpenditure;
+import yeon.dubu.expenditure.service.TagExpenditureService;
 
 @Slf4j
 @RestController

@@ -1,16 +1,16 @@
-package yeon.dubu.money.service;
+package yeon.dubu.expenditure.service;
 
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import yeon.dubu.category.repository.TagExpenditureRepository;
+import yeon.dubu.expenditure.dto.request.TagExpenditureReqDto;
+import yeon.dubu.expenditure.repository.TagExpenditureRepository;
 import yeon.dubu.couple.domain.Couple;
 import yeon.dubu.couple.exception.NoSuchCoupleException;
 import yeon.dubu.couple.repository.CoupleRepository;
-import yeon.dubu.money.domain.MoneyExpenditure;
-import yeon.dubu.money.dto.request.MoneyExpenditureReqDto;
+import yeon.dubu.expenditure.domain.MoneyExpenditure;
 import yeon.dubu.money.repository.MoneyRepository;
 import yeon.dubu.user.domain.User;
 import yeon.dubu.user.exception.NoSuchUserException;
@@ -36,7 +36,7 @@ public class MoneyExpenditureServiceImpl implements MoneyExpenditureService{
      */
     @Override
     @Transactional
-    public MoneyExpenditure insertExpenditure(MoneyExpenditureReqDto moneyExpenditureReqDto, Long userId) {
+    public MoneyExpenditure insertExpenditure(TagExpenditureReqDto.MoneyExpenditureReqDto moneyExpenditureReqDto, Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
         Couple couple = coupleRepository.findById(user.getCouple().getId()).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
 

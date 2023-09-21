@@ -1,4 +1,4 @@
-package yeon.dubu.money.repository;
+package yeon.dubu.expenditure.repository;
 
 public interface CustomMoneyExpenditureRepository {
 
