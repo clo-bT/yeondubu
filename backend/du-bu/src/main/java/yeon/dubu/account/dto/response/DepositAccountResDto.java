@@ -2,8 +2,11 @@ package yeon.dubu.account.dto.response;
 
 import java.time.LocalDate;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 import yeon.dubu.account.domain.Account;
-
+@Getter
+@Setter
 public class DepositAccountResDto {
     private String accountName;
     private Long startAmount;

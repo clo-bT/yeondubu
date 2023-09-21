@@ -19,7 +19,7 @@ import yeon.dubu.couple.service.CoupleService;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/couple")
+@RequestMapping("/api/v1/couples")
 @RequiredArgsConstructor
 public class CoupleController {
     private final CoupleService coupleService;
