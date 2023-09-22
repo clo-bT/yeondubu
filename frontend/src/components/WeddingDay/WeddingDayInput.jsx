@@ -30,7 +30,6 @@ const StyledDatePicker = styled(DatePicker)`
 const Congrats = styled.p`
 color: #000;
 text-align: center;
-font-family: Inter;
 font-size: 18px;
 font-style: normal;
 font-weight: 400;
@@ -41,7 +40,6 @@ margin-top : 50px;
 const DateInputDetail = styled.p`
 color: #000;
 text-align: center;
-font-family: Inter;
 font-size: 18px;
 font-style: normal;
 font-weight: 400;
@@ -72,15 +70,6 @@ const DateInputContainer = styled.div`
   position: relative;
 `;
 
-const StyledCalendarIcon = styled.img`
-width: 24px;
-height: 24px;
-cursor: pointer;
-position: absolute;
-left: 140px; 
-top: 50%; 
-transform: translateY(-50%);
-`;
 
 
 const WeddingDayInput = () => {
@@ -88,9 +77,7 @@ const WeddingDayInput = () => {
     const handleDateChange = (date) => {
         setSelectedDate(date);
       };
-    const openCalendar = () => {
-    document.querySelector('.react-datepicker__input-container input').click();
-    };
+
     const clearDate = () => {
         setSelectedDate(null);
       };
