@@ -1,5 +1,6 @@
 package yeon.dubu.expenditure.dto.response;
 
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.*;
 
 @Getter
@@ -7,15 +8,22 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class AllThirdTagExpenditureResDto {
+    private Long thirdTagId;
     private String thirdTagName;
-    private Long moneyId;
+    private Long moneyExpenditureId;
     private Long amount;
 
-    @Builder
-    public AllThirdTagExpenditureResDto(String thirdTagName, Long moneyId, Long amount) {
+    @QueryProjection
+    public AllThirdTagExpenditureResDto(Long thirdTagId, String thirdTagName, Long moneyExpenditureId, Long amount) {
+        this.thirdTagId = thirdTagId;
         this.thirdTagName = thirdTagName;
-        this.moneyId = moneyId;
+        this.moneyExpenditureId = moneyExpenditureId;
         this.amount = amount;
     }
 
+//    @QueryProjection
+//    public AllThirdTagExpenditureResDto(Long thirdTagId, String thirdTagName) {
+//        this.thirdTagId = thirdTagId;
+//        this.thirdTagName = thirdTagName;
+//    }
 }

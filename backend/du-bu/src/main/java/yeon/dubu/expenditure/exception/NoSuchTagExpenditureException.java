@@ -1,4 +1,4 @@
-package yeon.dubu.money.exception;
+package yeon.dubu.expenditure.exception;
 
 import org.springframework.http.HttpStatus;
 import yeon.dubu.exception.CustomException;

@@ -11,29 +11,18 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @ToString
 public class MoneyExpenditureReqDto {
-    private String firstTagName;
-    private String secondTagName;
-    private String thirdTagName;
+    private Long thirdTagId;
     private UserRole userRole;
     private LocalDate date;
     private Long amount;
     private String memo;
 
     @Builder
-    public MoneyExpenditureReqDto(String firstTagName, String secondTagName, String thirdTagName, UserRole userRole, LocalDate date, Long amount, String memo) {
-        this.firstTagName = firstTagName;
-        this.secondTagName = secondTagName;
-        this.thirdTagName = thirdTagName;
+    public MoneyExpenditureReqDto(Long thirdTagId, UserRole userRole, LocalDate date, Long amount, String memo) {
+        this.thirdTagId = thirdTagId;
         this.userRole = userRole;
         this.date = date;
         this.amount = amount;
         this.memo = memo;
-    }
-
-    @QueryProjection
-    public MoneyExpenditureReqDto(String firstTagName, String secondTagName, String thirdTagName) {
-        this.firstTagName = firstTagName;
-        this.secondTagName = secondTagName;
-        this.thirdTagName = thirdTagName;
     }
 }
