@@ -3,6 +3,7 @@ package yeon.dubu.expenditure.domain;
 import jakarta.persistence.*;
 import lombok.*;
 import org.antlr.v4.runtime.misc.NotNull;
+import org.hibernate.annotations.ColumnDefault;
 import yeon.dubu.BaseTimeEntity;
 import yeon.dubu.user.enumeration.UserRole;
 
@@ -30,6 +31,9 @@ public class MoneyExpenditure extends BaseTimeEntity {
     private Long amount; //금액
 
     private String memo; //메모
+
+    @ColumnDefault("false")
+    private Boolean payComplete; // 결제 완료 여부
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "THIRD_TAG_EXPENDITURE_ID")

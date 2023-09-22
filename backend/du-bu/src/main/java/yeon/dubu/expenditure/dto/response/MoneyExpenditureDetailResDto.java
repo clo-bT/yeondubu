@@ -14,12 +14,14 @@ public class MoneyExpenditureDetailResDto {
     private LocalDate date;
     private Long amount;
     private String memo;
+    private Boolean payComplete;
 
     @Builder
-    public MoneyExpenditureDetailResDto(UserRole userRole, LocalDate date, Long amount, String memo) {
+    public MoneyExpenditureDetailResDto(UserRole userRole, LocalDate date, Long amount, String memo, Boolean payComplete) {
         this.userRole = userRole;
         this.date = date;
         this.amount = amount;
         this.memo = memo;
+        this.payComplete = payComplete;
     }
 }
