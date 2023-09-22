@@ -15,7 +15,7 @@ import './App.css';
 // import LoginAuth from './components/KakaoLogin/LoginAuth';
 // import Menubar from './components/Common/Menubar';
 // import MyAccountProfile from './components/Common/MyAccountProfile';
-// import Main from './pages/Main';
+import Main from './pages/Main';
 // import MyPage from './pages/MyPage';
 // import MyAccount from './pages/MyAccount';
 // import MyAccountDetail from './pages/MyAccountDetail';
@@ -27,6 +27,7 @@ import './App.css';
 // import WeddingDayUpdate from './pages/WeddingDayUpdate';
 // import CreditScoreInput from './pages/CreditScoreInput';
 import CheckBox from './pages/CheckBox';
+import CreditScoreInput from './pages/CreditScoreInput';
 
 function App() {
   function setScreenSize() {
@@ -39,8 +40,8 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <Routes>
-          <Route path="/" element={<CheckBox />} />
-          {/* <Route path="/auth" element={<LoginAuth />} /> */}
+          <Route path="/" element={<Main />} />
+          <Route path="/input" element={<CreditScoreInput />} />
             
         </Routes>
       </div>
