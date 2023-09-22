@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RequiredArgsConstructor
-public class CustomMoneyExpenditureRepositoryImpl implements  CustomMoneyExpenditureRepository{
+public class CustomMoneyExpenditureRepositoryImpl implements CustomMoneyExpenditureRepository{
 
     private final JPAQueryFactory queryFactory;
 
