@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CheckBoxWhole = () => {
+const KakaoLogin = () => {
     return (
         <div>
             
@@ -8,4 +8,4 @@ const CheckBoxWhole = () => {
     );
 };
 
-export default CheckBoxWhole;
+export default KakaoLogin;
