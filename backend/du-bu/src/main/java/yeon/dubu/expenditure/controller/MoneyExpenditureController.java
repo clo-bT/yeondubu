@@ -14,20 +14,19 @@ import java.net.URISyntaxException;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/money")
+@RequestMapping("/api/v1/expenditure")
 public class MoneyExpenditureController {
 
-    private MoneyExpenditureService moneyExpenditureService;
+    private final MoneyExpenditureService moneyExpenditureService;
 
     /**
      * couple의 예산안 or 지출 등록
-     *
      * @param userId
      * @param moneyExpenditureReqDto
      * @return
      * @throws URISyntaxException
      */
-    @PostMapping("/expenditure")
+    @PostMapping("/money")
     public ResponseEntity insertExpenditure(
             @AuthenticationPrincipal Long userId,
             @RequestBody MoneyExpenditureReqDto moneyExpenditureReqDto

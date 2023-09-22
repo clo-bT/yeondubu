@@ -32,6 +32,7 @@ public class MoneyExpenditure extends BaseTimeEntity {
     private String memo; //메모
 
     @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "THIRD_TAG_EXPENDITURE_ID")
     private TagThirdExpenditure tagThirdExpenditure;
     @Builder
     public MoneyExpenditure(Long id, UserRole userRole, LocalDate date, Long amount, String memo, TagThirdExpenditure tagThirdExpenditure) {

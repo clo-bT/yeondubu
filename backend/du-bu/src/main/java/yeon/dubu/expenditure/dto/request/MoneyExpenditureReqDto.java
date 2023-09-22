@@ -1,6 +1,5 @@
 package yeon.dubu.expenditure.dto.request;
 
-import com.querydsl.core.annotations.QueryProjection;
 import lombok.*;
 import yeon.dubu.user.enumeration.UserRole;
 
