@@ -1,5 +1,6 @@
 package yeon.dubu.expenditure.controller;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -10,17 +11,19 @@ import yeon.dubu.expenditure.domain.TagSecondExpenditure;
 import yeon.dubu.expenditure.domain.TagThirdExpenditure;
 import yeon.dubu.expenditure.dto.request.TagSecondExpenditureReqDto;
 import yeon.dubu.expenditure.dto.request.TagThirdExpenditureReqDto;
+import yeon.dubu.expenditure.dto.response.TagAllExpenditureResDto;
 import yeon.dubu.expenditure.service.TagExpenditureService;
 import yeon.dubu.expenditure.service.TagFirstExpenditureService;
 import yeon.dubu.expenditure.service.TagSecondExpenditureService;
 import yeon.dubu.expenditure.service.TagThirdExpenditureService;
 
 import java.net.URISyntaxException;
+import java.util.List;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/tags")
+@RequestMapping("/api/v1/expenditure/tags")
 public class TagExpenditureController {
 
     private final TagExpenditureService tagExpenditureService;
@@ -57,6 +60,15 @@ public class TagExpenditureController {
         TagThirdExpenditure savedThirdTag = tagThirdExpenditureService.insertThirdTag(tagThirdExpenditureReqDto, userId);
 
         return ResponseEntity.ok(savedThirdTag);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity searchAllTag(
+            @AuthenticationPrincipal Long userId
+    ) throws URISyntaxException {
+        List<TagAllExpenditureResDto> tagAllExpenditure = tagExpenditureService.searchAllTags(userId);
+
+        return ResponseEntity.ok(tagAllExpenditure);
     }
 
 }

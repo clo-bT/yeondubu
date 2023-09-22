@@ -8,13 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 import yeon.dubu.couple.domain.Couple;
 import yeon.dubu.couple.exception.NoSuchCoupleException;
 import yeon.dubu.couple.repository.CoupleRepository;
-import yeon.dubu.expenditure.domain.TagFirstExpenditure;
-import yeon.dubu.expenditure.domain.TagSecondExpenditure;
-import yeon.dubu.expenditure.domain.TagThirdExpenditure;
-import yeon.dubu.expenditure.dto.response.AllFirstTagExpenditureResDto;
-import yeon.dubu.expenditure.dto.response.AllSecondTagExpenditureResDto;
-import yeon.dubu.expenditure.dto.response.AllThirdTagExpenditureResDto;
-import yeon.dubu.expenditure.exception.NoSuchTagExpenditureException;
+import yeon.dubu.expenditure.dto.query.AllTagsExpenditureQueryDto;
+import yeon.dubu.expenditure.dto.response.TagAllExpenditureResDto;
+import yeon.dubu.expenditure.dto.response.TagSecondExpenditureDto;
+import yeon.dubu.expenditure.dto.response.TagThirdExpenditureDto;
 import yeon.dubu.expenditure.repository.TagFirstExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagSecondExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagThirdExpenditureRepository;
@@ -23,7 +20,9 @@ import yeon.dubu.user.exception.NoSuchUserException;
 import yeon.dubu.user.repository.UserRepository;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -45,59 +44,100 @@ public class TagExpenditureServiceImpl implements TagExpenditureService{
      */
     @Override
     @Transactional
-    public List<AllFirstTagExpenditureResDto> searchAllTags(Long userId) {
+    public List<TagAllExpenditureResDto> searchAllTags(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
         Couple couple = coupleRepository.findById(user.getCouple().getId()).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
 
-        List<AllFirstTagExpenditureResDto> allTags = tagFirstExpenditureRepository.searhAllTags(couple.getId());
+        // 전체 태그 조회
+        List<AllTagsExpenditureQueryDto> allTags = tagFirstExpenditureRepository.searchAllTag(couple.getId());
 
-        return allTags;
+        Map<Long, TagAllExpenditureResDto> firstTagMap = new LinkedHashMap<>();
+
+        for (AllTagsExpenditureQueryDto dto : allTags) {
+
+            Long firstTagId = dto.getFirstTagId();
+
+            // firstTagMap에 존재하지 않으면
+            if (!firstTagMap.containsKey(firstTagId)) {
+
+                // 첫번째 만들기
+                TagAllExpenditureResDto firstTagDto = TagAllExpenditureResDto.builder()
+                        .firstTagId(dto.getFirstTagId())
+                        .firstTagName(dto.getFirstTagName())
+                        .tagSecondExpenditureDtoList(new ArrayList<>())
+                        .build();
+
+                // 두번째 만들기
+                TagSecondExpenditureDto secondTagDto = TagSecondExpenditureDto.builder()
+                        .secondTagId(dto.getSecondTagId())
+                        .secondTagName(dto.getSecondTagName())
+                        .tagThirdExpenditureDtoList(new ArrayList<>())
+                        .build();
+
+                // 세번째 만들기
+                TagThirdExpenditureDto thirdTagDto = TagThirdExpenditureDto.builder()
+                        .thirdTagId(dto.getThirdTagId())
+                        .thirdTagName(dto.getThirdTagName())
+                        .moneyExpenditureId(dto.getMoneyExpenditureId())
+                        .amount(dto.getAmount())
+                        .build();
+
+                // 세번째 담기, 두번째 담기
+                secondTagDto.getTagThirdExpenditureDtoList().add(thirdTagDto);
+                firstTagDto.getTagSecondExpenditureDtoList().add(secondTagDto);
+                firstTagMap.put(firstTagId, firstTagDto);  // firstTagMap에 담기
+
+            } else {
+
+                TagAllExpenditureResDto existingFirstTagDto = firstTagMap.get(firstTagId);
+                // 첫번째 태그가 이미 존재한다면
+                // 두 번째 태그가 이미 존재하는지 확인
+                boolean isSecondTagExists = false;
+
+                for (TagSecondExpenditureDto secondTagDto : existingFirstTagDto.getTagSecondExpenditureDtoList() ) {
+                    if (secondTagDto.getSecondTagId().equals(dto.getSecondTagId())) {
+                        isSecondTagExists = true;
+                        // 이미 존재하면
+                        // 세 번째 태그 추가
+                        TagThirdExpenditureDto thirdTagDto = TagThirdExpenditureDto.builder()
+                                .thirdTagId(dto.getThirdTagId())
+                                .thirdTagName(dto.getThirdTagName())
+                                .moneyExpenditureId(dto.getMoneyExpenditureId())
+                                .amount(dto.getAmount())
+                                .build();
+
+                        secondTagDto.getTagThirdExpenditureDtoList().add(thirdTagDto);
+                        break;
+                    }
+                }
+
+                // 두 번째 태그가 이미 존재하지 않는 경우 생성하여 추가
+                if (!isSecondTagExists) {
+                    // 두번째 만들기
+                    TagSecondExpenditureDto secondTagDto = TagSecondExpenditureDto.builder()
+                            .secondTagId(dto.getSecondTagId())
+                            .secondTagName(dto.getSecondTagName())
+                            .tagThirdExpenditureDtoList(new ArrayList<>())
+                            .build();
+
+                    // 세번째 만들기
+                    TagThirdExpenditureDto thirdTagDto = TagThirdExpenditureDto.builder()
+                            .thirdTagId(dto.getThirdTagId())
+                            .thirdTagName(dto.getThirdTagName())
+                            .moneyExpenditureId(dto.getMoneyExpenditureId())
+                            .amount(dto.getAmount())
+                            .build();
+
+                    secondTagDto.getTagThirdExpenditureDtoList().add(thirdTagDto);
+                }
+
+            }
+        }
+
+        List<TagAllExpenditureResDto> finalResult = new ArrayList<>(firstTagMap.values());
+
+        return finalResult;
     }
-
-    /**
-     * couple의 전체 태그 조회(first, second, third)
-     * @param userId
-     * @return
-     */
-//    @Override
-//    @Transactional
-//    public List<AllFirstTagExpenditureResDto> searchAllTags(Long userId) {
-//        User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
-//        Couple couple = coupleRepository.findById(user.getCouple().getId()).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
-//
-//        // firstTag 불러오기
-//        List<AllFirstTagExpenditureResDto> allFirstTagList = tagFirstExpenditureRepository.searchFirstTagByCouple(couple.getId());
-//        List<AllFirstTagExpenditureResDto> firstList = new ArrayList<>();
-//        for (AllFirstTagExpenditureResDto firstTag : allFirstTagList) {
-//            String firstTagName = firstTag.getFirstTagName();
-//
-//            List<AllSecondTagExpenditureResDto> allSecondTagList = tagSecondExpenditureRepository.searchSecondTagByCouple(couple.getId(), firstTagName);
-//
-//            // firstTag에 속하는 secondTag
-//            List<AllSecondTagExpenditureResDto> secondList = new ArrayList<>();
-//            for (AllSecondTagExpenditureResDto secondTag : allSecondTagList) {
-//                String secondTagName = secondTag.getSecondTagName();
-//
-//                // secondTag에 속하는 thirdTag
-//                List<AllThirdTagExpenditureResDto> allThirdTagList = tagThirdExpenditureRepository.searchThirdTagByCouple(couple.getId(), secondTagName);
-//                AllSecondTagExpenditureResDto allSecondTagExpenditureResDto = AllSecondTagExpenditureResDto.builder()
-//                        .secondTagId(secondTag.getSecondTagId())
-//                        .secondTagName(secondTag.getSecondTagName())
-//                        .allThirdTagList(allThirdTagList)
-//                        .build();
-//                secondList.add(allSecondTagExpenditureResDto);
-//            }
-//
-//            AllFirstTagExpenditureResDto allFirstTagExpenditureResDto = AllFirstTagExpenditureResDto.builder()
-//                    .firstTagId(firstTag.getFirstTagId())
-//                    .firstTagName(firstTag.getFirstTagName())
-//                    .allSecondTagList(secondList)
-//                    .build();
-//            firstList.add(allFirstTagExpenditureResDto);
-//        }
-//
-//        return firstList;
-//    }
 
 
 

@@ -43,4 +43,5 @@ public class TagFirstExpenditureServiceImpl implements TagFirstExpenditureServic
 
         return tagFirstExpenditure;
     }
+
 }
