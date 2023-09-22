@@ -39,12 +39,13 @@ public class MoneyExpenditure extends BaseTimeEntity {
     @JoinColumn(name = "THIRD_TAG_EXPENDITURE_ID")
     private TagThirdExpenditure tagThirdExpenditure;
     @Builder
-    public MoneyExpenditure(Long id, UserRole userRole, LocalDate date, Long amount, String memo, TagThirdExpenditure tagThirdExpenditure) {
+    public MoneyExpenditure(Long id, UserRole userRole, LocalDate date, Long amount, String memo, Boolean payComplete, TagThirdExpenditure tagThirdExpenditure) {
         this.id = id;
         this.userRole = userRole;
         this.date = date;
         this.amount = amount;
         this.memo = memo;
+        this.payComplete = payComplete;
         this.tagThirdExpenditure = tagThirdExpenditure;
     }
 }
