@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import yeon.dubu.couple.dto.response.CoupleCreatePartnerResDto;
 import yeon.dubu.couple.service.CoupleConnectionService;
+import yeon.dubu.user.domain.User;
 
 @Slf4j
 @RestController
@@ -24,12 +25,14 @@ public class CoupleConnectionController {
     private final CoupleConnectionService coupleConnectionService;
     @PostMapping("/code/{code}")
     public ResponseEntity<?> createCode(@AuthenticationPrincipal Long userId, @PathVariable Integer code){
-        Long guestId = coupleConnectionService.createCoupleConnection(userId, code);
+        User guest = coupleConnectionService.createCoupleConnection(userId, code);
         CoupleCreatePartnerResDto coupleCreatePartnerResDto = new CoupleCreatePartnerResDto();
 
-        if(guestId != -1L) { //guest가 있으면
+        if(guest != null) { //guest가 있으면
             coupleCreatePartnerResDto.setState("finish");
-            coupleCreatePartnerResDto.setPartnerId(guestId);
+            coupleCreatePartnerResDto.setPartnerId(guest.getId());
+            coupleCreatePartnerResDto.setPartnerName(guest.getName());
+            coupleCreatePartnerResDto.setPartnerImg(guest.getImageUrl());
         }
         else
             coupleCreatePartnerResDto.setState("waiting");
@@ -44,12 +47,14 @@ public class CoupleConnectionController {
 
     @GetMapping("/code/{code}")
     public ResponseEntity<?> enterCode(@AuthenticationPrincipal Long userId, @PathVariable Integer code){
-        Long hostId = coupleConnectionService.enterCoupleConnection(userId, code);
+        User host = coupleConnectionService.enterCoupleConnection(userId, code);
         CoupleCreatePartnerResDto coupleCreatePartnerResDto = new CoupleCreatePartnerResDto();
 
-        if(hostId != -1L) { //guest가 있으면
+        if(host != null) { //guest가 있으면
             coupleCreatePartnerResDto.setState("success");
-            coupleCreatePartnerResDto.setPartnerId(hostId);
+            coupleCreatePartnerResDto.setPartnerId(host.getId());
+            coupleCreatePartnerResDto.setPartnerName(host.getName());
+            coupleCreatePartnerResDto.setPartnerImg(host.getImageUrl());
         }
         else
             coupleCreatePartnerResDto.setState("fail");
