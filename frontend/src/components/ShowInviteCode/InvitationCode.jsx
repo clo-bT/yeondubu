@@ -9,54 +9,78 @@ width: 343px;
 height: 296px;
 `
 const Exit = styled.div``
+const Timer = styled.div``
 
 const InvitationCode = () => {
     const navigate = useNavigate();
-
-    const [canGenerateCode, setCanGenerateCode] = useState(true);
-    const [code, setCode] = useState(true);
-
-    useEffect(() => {
-        // const accessToken = JSON.parse(sessionStorage.getItem("token"));
+    const [code, setCode] = useState('');
+    
+    function generateRandomCode() {
+        const min = 10000; 
+        const max = 99999; 
+        const randomCode = Math.floor(Math.random() * (max - min + 1)) + min;
+        setCode(randomCode)
+        return randomCode;
+    }
+    function sendRandomCode() {
         const accessToken = sessionStorage.getItem("token");
-        const lastGeneratedTime = localStorage.getItem("lastGeneratedTime");
-        const min = 10000;
-        const max = 99999;
-        const generatedCode = Math.floor(Math.random() * (max - min + 1)) + min;
-        localStorage.setItem("lastGeneratedTime", new Date().getTime().toString());
-        localStorage.setItem("generatedCode", generatedCode);
-        console.log('generatedCode', generatedCode); 
-
-        if (canGenerateCode) {
-            const currentTime = new Date().getTime();
-            const timeDifference = currentTime - parseInt(lastGeneratedTime);
-            const threeMinutesInMillis = 3 * 60 * 1000; // 3분을 밀리초로 계산
-            if (timeDifference < threeMinutesInMillis) {
-                setCanGenerateCode(false);
-                setCode(generatedCode)
-                return;
-            }
-        }
-
-        
-        axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/couples/code/${generatedCode}`,{
+        axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/couples/code/${code}`, {},{
             headers: {
                 Authorization: `Bearer ${accessToken}`,
             },
         })
         .then((response) => {
-            console.log(response);
+            console.log(response.data.state);
+            // console.log(code)
+            
         })
         .catch((error) => {
             console.error('코드 전송 실패', error);
         });
-    },[canGenerateCode]);
+    }
+    
+    // 타이머
+    const MINUTES_IN_MS = 3 * 60 * 1000;
+    const INTERVAL = 1000;
+    const [timeLeft, setTimeLeft] = useState(MINUTES_IN_MS);
+
+    const minutes = Math.floor((timeLeft / (1000 * 60)) % 60);
+    const second = Math.floor((timeLeft / 1000) % 60);
+
+    useEffect(() => {
+
+        const timer = setInterval(() => {
+            setTimeLeft((prevTime) => prevTime - INTERVAL);
+            sendRandomCode();
+
+        }, INTERVAL);
+        if (timeLeft === MINUTES_IN_MS) {
+            generateRandomCode();
+            sendRandomCode();
+
+        }
+        if (timeLeft <= 0) {
+            clearInterval(timer);
+            setTimeLeft(MINUTES_IN_MS);
+            generateRandomCode();
+
+            console.log('타이머가 종료, 인증코드 재생성.');
+        }
+
+        return () => {
+            clearInterval(timer);
+        };
+    }, [timeLeft, MINUTES_IN_MS]);
+    
+
+
 
     return (
         <Container>
             <CodeDiv>
                 { code }
             </CodeDiv>
+            <Timer>{minutes} : {second}</Timer>
             <Exit onClick={() => navigate("/input")}>닫기</Exit>
         </Container>
     );
