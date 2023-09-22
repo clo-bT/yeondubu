@@ -18,6 +18,7 @@ import LoginAuth from './components/KakaoLogin/LoginAuth';
 import Main from './pages/Main';
 import CodeInput from './components/Invite/CodeInput';
 import InvitationCode from './components/ShowInviteCode/InvitationCode';
+import UserProfile from './components/CheckUser/UserProfile';
 
 function App() {
   function setScreenSize() {
@@ -35,6 +36,7 @@ function App() {
           <Route path="/auth" element={<LoginAuth />} />
           <Route path="/input" element={<CodeInput />} />
           <Route path="/invite" element={<InvitationCode />} />
+          <Route path="/check" element={<UserProfile />} />
             
         </Routes>
       </div>

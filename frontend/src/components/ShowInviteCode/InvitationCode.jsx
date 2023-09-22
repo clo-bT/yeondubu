@@ -24,7 +24,7 @@ const InvitationCode = () => {
     }
     function sendRandomCode() {
         const accessToken = sessionStorage.getItem("token");
-        axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/couples/code/${code}`, {},{
+        axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/couples/code/${code}`, {}, {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
             },
@@ -32,7 +32,9 @@ const InvitationCode = () => {
         .then((response) => {
             console.log(response.data.state);
             // console.log(code)
-            
+            if (response.data.state === 'finish') {
+                navigate(`/check`)
+            };
         })
         .catch((error) => {
             console.error('코드 전송 실패', error);
