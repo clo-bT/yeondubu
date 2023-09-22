@@ -31,7 +31,7 @@ public class CoupleConnectionServiceImpl implements CoupleConnectionService {
     private final MoneyRepository moneyRepository;
     @Override
     @Transactional
-    public Long createCoupleConnection(Long userId, Integer code) {
+    public User createCoupleConnection(Long userId, Integer code) {
         User user = userRepository.findById(userId).orElseThrow(
             () -> new NoSuchUserException("해당하는 사용자가 없습니다.")
         );
@@ -57,12 +57,12 @@ public class CoupleConnectionServiceImpl implements CoupleConnectionService {
                 User guest = coupleConnection.getGuest();
                 //guestId가 있으면 성공
                 if (guest != null) {
-                    return guest.getId();
+                    return guest;
                 }
             }
         }
 
-        return -1L;
+        return null;
     }
 
     @Override
@@ -77,7 +77,7 @@ public class CoupleConnectionServiceImpl implements CoupleConnectionService {
 
     @Override
     @Transactional
-    public Long enterCoupleConnection(Long userId, Integer code) {
+    public User enterCoupleConnection(Long userId, Integer code) {
         // userId가 hostId인 coupleConnection 지우기
         coupleConnectionRepository.deleteByHostId(userId);
 
@@ -92,10 +92,10 @@ public class CoupleConnectionServiceImpl implements CoupleConnectionService {
         if(coupleConnection.getGuest() == null){
             coupleConnection.setGuest(user);
             coupleConnectionRepository.save(coupleConnection);
-            return coupleConnection.getHost().getId();
+            return coupleConnection.getHost();
         }
 
-        return -1L;
+        return null;
 
     }
 

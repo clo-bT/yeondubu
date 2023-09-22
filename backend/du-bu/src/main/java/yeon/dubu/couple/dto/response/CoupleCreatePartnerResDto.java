@@ -8,4 +8,6 @@ import lombok.Setter;
 public class CoupleCreatePartnerResDto {
     private String state;
     private Long partnerId;
+    private String partnerName;
+    private String partnerImg;
 }
