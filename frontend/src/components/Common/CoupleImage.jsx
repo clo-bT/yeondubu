@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import wife from '../../assets/Common/wife.svg';
 import husband from '../../assets/Common/husband.svg';
 import heart from '../../assets/Common/heart.svg';
