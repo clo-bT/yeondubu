@@ -4,7 +4,7 @@ import './App.css';
 // import GlobalStyle from "./styles/GlobalStyle";
 import FirstMain from './components/Login/FirstMain';
 import AccountCalendar from './pages/AccountCalendar';
-import AccountCalendarModal from './pages/AccountCalendarModal';
+import AccountCalendarModal from './pages/AccountCalenderModal';
 import AccountInput from './pages/AccountInput';
 import AccountInputStart from './pages/AccountInputStart';
 import AirlineRecommend from './pages/AirlineRecommend';
