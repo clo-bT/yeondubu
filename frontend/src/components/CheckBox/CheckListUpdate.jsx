@@ -26,15 +26,15 @@ font-weight: 400;
 line-height: normal;    
 
 `
-const ThirdTag = styled.p`
-color: #000;
-text-align: left;
-font-size: 16px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
-margin-right: 10px;
-`
+// const ThirdTag = styled.p`
+// color: #000;
+// text-align: left;
+// font-size: 16px;
+// font-style: normal;
+// font-weight: 400;
+// line-height: normal;
+// margin-right: 10px;
+// `
 
 const ThirdTagContainer = styled.div`
   display: flex;

@@ -27,7 +27,7 @@ import './App.css';
 // import WeddingDayUpdate from './pages/WeddingDayUpdate';
 // import CreditScoreInput from './pages/CreditScoreInput';
 import CheckBox from './pages/CheckBox';
-import BudgetCheckBox from './pages/BudgetCheckBox';
+// import BudgetCheckBox from './pages/BudgetCheckBox';
 
 function App() {
   function setScreenSize() {
