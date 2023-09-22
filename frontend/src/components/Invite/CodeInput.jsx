@@ -13,8 +13,13 @@ const InputContainer = styled.div`
     display: flex;
     justify-content: center;
 `;
-const CreateCode = styled.div``
-const InputButton = styled.div``
+const CreateCode = styled.div`
+    cursor: pointer;
+`
+const InputButton = styled.div`
+    cursor: pointer;
+
+`
 
 const NumberInput = styled.input`
 
@@ -53,7 +58,8 @@ const CodeInput = () => {
         }
         e.target.value = numericValue;
         const updatedCode = inputRefs.map((ref) => ref.current.value).join('');
-        setCode(updatedCode);
+        const updatedCodeNumber = parseInt(updatedCode, 10);
+        setCode(updatedCodeNumber);
 
     };
     const sendCodeToBackend = () => {
@@ -92,7 +98,7 @@ const CodeInput = () => {
                 ))}
             </InputContainer>
             <InputButton onClick={sendCodeToBackend}>코드 입력</InputButton>
-            <CreateCode onClick={() => navigate("/invite")}>코드생성</CreateCode>
+            <CreateCode onClick={() => navigate("/invite")}>코드 생성</CreateCode>
             
         </Container>
     );
