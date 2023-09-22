@@ -15,13 +15,15 @@ public class MoneyExpenditureReqDto {
     private LocalDate date;
     private Long amount;
     private String memo;
+    private Boolean payComplete;
 
     @Builder
-    public MoneyExpenditureReqDto(Long thirdTagId, UserRole userRole, LocalDate date, Long amount, String memo) {
+    public MoneyExpenditureReqDto(Long thirdTagId, UserRole userRole, LocalDate date, Long amount, String memo, Boolean payComplete) {
         this.thirdTagId = thirdTagId;
         this.userRole = userRole;
         this.date = date;
         this.amount = amount;
         this.memo = memo;
+        this.payComplete = payComplete;
     }
 }

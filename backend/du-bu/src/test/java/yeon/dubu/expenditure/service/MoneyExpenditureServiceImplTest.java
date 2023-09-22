@@ -18,6 +18,8 @@ import yeon.dubu.expenditure.repository.MoneyExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagFirstExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagSecondExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagThirdExpenditureRepository;
+import yeon.dubu.money.domain.Money;
+import yeon.dubu.money.repository.MoneyRepository;
 import yeon.dubu.user.domain.User;
 import yeon.dubu.user.enumeration.UserRole;
 import yeon.dubu.user.repository.UserRepository;
@@ -43,6 +45,8 @@ class MoneyExpenditureServiceImplTest {
     @Autowired
     MoneyExpenditureRepository moneyExpenditureRepository;
     @Autowired
+    MoneyRepository moneyRepository;
+    @Autowired
     MoneyExpenditureService moneyExpenditureService;
 
     MoneyExpenditureReqDto moneyExpenditureReqDto;
@@ -56,7 +60,7 @@ class MoneyExpenditureServiceImplTest {
     @BeforeEach
     void beforeEach() {
         Couple couple = Couple.builder()
-                .weddingDate(LocalDate.of(2024, 05, 25))
+                .weddingDate(LocalDate.of(2024, 5, 25))
                 .build();
 
         Couple createCouple = coupleRepository.save(couple);
@@ -98,6 +102,17 @@ class MoneyExpenditureServiceImplTest {
                 .thirdTagName("침대")
                 .build();
         TAG3 = tagThirdExpenditureRepository.save(tagThirdExpenditure);
+
+        // TODO: couple 생성 후 money 생기는 로직 작성 후 삭제필요
+        Money money = Money.builder()
+                .totalCash(0L)
+                .totalAccount(0L)
+                .presentExpenditure(0L)
+                .futureExpenditure(0L)
+                .user(USER1)
+                .build();
+
+        moneyRepository.save(money);
     }
 
     @DisplayName("사용자의 예산안 등록")
@@ -110,7 +125,7 @@ class MoneyExpenditureServiceImplTest {
         MoneyExpenditureReqDto moneyExpenditureReqDto = MoneyExpenditureReqDto.builder()
                 .thirdTagId(TAG3.getId())
                 .userRole(UserRole.BRIDE)
-                .date(LocalDate.of(2023, 10, 6))
+                .date(LocalDate.now())
                 .amount(100000L)
                 .memo("침대 샀다")
                 .build();
@@ -118,6 +133,8 @@ class MoneyExpenditureServiceImplTest {
         MoneyExpenditure moneyExpenditure = moneyExpenditureService.insertExpenditure(moneyExpenditureReqDto, USER1.getId());
 
         // then
+        System.out.println("moneyRepository = " + moneyRepository.findByUser(USER1).get().getFutureExpenditure());
         assertThat(moneyExpenditureRepository.findById(moneyExpenditure.getId()).get().getTagThirdExpenditure()).isEqualTo(TAG3);
+        assertThat(moneyRepository.findByUser(USER1).get().getPresentExpenditure()).isEqualTo(moneyExpenditureReqDto.getAmount());
     }
 }
