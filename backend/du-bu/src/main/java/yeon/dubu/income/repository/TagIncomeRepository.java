@@ -6,5 +6,4 @@ import yeon.dubu.income.domain.TagIncome;
 
 @Repository
 public interface TagIncomeRepository extends JpaRepository<TagIncome, Long> {
-
 }

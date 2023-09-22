@@ -17,6 +17,8 @@ import lombok.Setter;
 import org.antlr.v4.runtime.misc.NotNull;
 import yeon.dubu.BaseTimeEntity;
 import yeon.dubu.couple.domain.Couple;
+import yeon.dubu.income.dto.request.MoneyIncomeReqDto;
+import yeon.dubu.income.dto.request.MoneyIncomeUpdateReqDto;
 import yeon.dubu.user.enumeration.UserRole;
 
 @Entity
@@ -57,5 +59,24 @@ public class MoneyIncome extends BaseTimeEntity {
         this.memo = memo;
         this.couple = couple;
         this.tagIncome = tagIncome;
+    }
+
+    public static MoneyIncome fromReqDto(MoneyIncomeReqDto moneyIncomeReqDto){
+        return MoneyIncome.builder()
+            .userRole(moneyIncomeReqDto.getUserRole())
+            .date(moneyIncomeReqDto.getDate())
+            .amount(moneyIncomeReqDto.getAmount())
+            .memo(moneyIncomeReqDto.getMemo())
+            .build();
+    }
+
+    public static MoneyIncome fromUpdateReqDto(MoneyIncomeUpdateReqDto moneyIncomeupdateReqDto){
+        return MoneyIncome.builder()
+            .id(moneyIncomeupdateReqDto.getId())
+            .userRole(moneyIncomeupdateReqDto.getUserRole())
+            .date(moneyIncomeupdateReqDto.getDate())
+            .amount(moneyIncomeupdateReqDto.getAmount())
+            .memo(moneyIncomeupdateReqDto.getMemo())
+            .build();
     }
 }
