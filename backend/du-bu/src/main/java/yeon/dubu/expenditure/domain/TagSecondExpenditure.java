@@ -3,6 +3,7 @@ package yeon.dubu.expenditure.domain;
 import jakarta.persistence.*;
 import lombok.*;
 import org.antlr.v4.runtime.misc.NotNull;
+import yeon.dubu.BaseTimeEntity;
 
 import static jakarta.persistence.FetchType.LAZY;
 
@@ -11,7 +12,7 @@ import static jakarta.persistence.FetchType.LAZY;
 @Setter
 @ToString
 @NoArgsConstructor
-public class TagSecondExpenditure {
+public class TagSecondExpenditure extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
