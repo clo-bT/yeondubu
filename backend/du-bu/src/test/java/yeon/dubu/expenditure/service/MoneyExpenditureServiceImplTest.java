@@ -14,6 +14,7 @@ import yeon.dubu.expenditure.domain.TagFirstExpenditure;
 import yeon.dubu.expenditure.domain.TagSecondExpenditure;
 import yeon.dubu.expenditure.domain.TagThirdExpenditure;
 import yeon.dubu.expenditure.dto.request.MoneyExpenditureReqDto;
+import yeon.dubu.expenditure.dto.request.MoneyExpenditureUpdateReqDto;
 import yeon.dubu.expenditure.repository.MoneyExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagFirstExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagSecondExpenditureRepository;
@@ -113,6 +114,16 @@ class MoneyExpenditureServiceImplTest {
                 .build();
 
         moneyRepository.save(money);
+
+        Money money2 = Money.builder()
+                .totalCash(0L)
+                .totalAccount(0L)
+                .presentExpenditure(0L)
+                .futureExpenditure(0L)
+                .user(USER2)
+                .build();
+
+        moneyRepository.save(money2);
     }
 
     @DisplayName("사용자의 예산안 등록")
@@ -133,8 +144,40 @@ class MoneyExpenditureServiceImplTest {
         MoneyExpenditure moneyExpenditure = moneyExpenditureService.insertExpenditure(moneyExpenditureReqDto, USER1.getId());
 
         // then
-        System.out.println("moneyRepository = " + moneyRepository.findByUser(USER1).get().getFutureExpenditure());
         assertThat(moneyExpenditureRepository.findById(moneyExpenditure.getId()).get().getTagThirdExpenditure()).isEqualTo(TAG3);
         assertThat(moneyRepository.findByUser(USER1).get().getPresentExpenditure()).isEqualTo(moneyExpenditureReqDto.getAmount());
+    }
+
+    @DisplayName("사용자의 지출 내역 수정")
+    @Test
+    @Transactional
+    void updateExpenditure() {
+        // given
+        MoneyExpenditureReqDto moneyExpenditureReqDto = MoneyExpenditureReqDto.builder()
+                .thirdTagId(TAG3.getId())
+                .userRole(UserRole.BRIDE)
+                .date(LocalDate.now())
+                .amount(100000L)
+                .memo("침대 샀다")
+                .payComplete(false)
+                .build();
+        
+        moneyExpenditureService.insertExpenditure(moneyExpenditureReqDto, USER1.getId());
+
+        // when
+        MoneyExpenditureUpdateReqDto moneyExpenditureUpdateReqDto = MoneyExpenditureUpdateReqDto.builder()
+                .expenditureId(1L)
+                .userRole(UserRole.GROOM)
+                .date(LocalDate.now().minusDays(3))
+                .amount(400L)
+                .memo("수정된 메모")
+                .payComplete(true)
+                .build();
+        
+        moneyExpenditureService.updateExpenditure(moneyExpenditureUpdateReqDto, USER1.getId());
+
+        // then
+        assertThat(moneyRepository.findByUser(USER2).get().getPresentExpenditure()).isEqualTo(moneyExpenditureUpdateReqDto.getAmount());
+
     }
 }

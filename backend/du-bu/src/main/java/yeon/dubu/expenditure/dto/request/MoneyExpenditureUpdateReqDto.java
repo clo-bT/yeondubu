@@ -17,6 +17,17 @@ public class MoneyExpenditureUpdateReqDto {
     private String memo;
     private Boolean payComplete;
 
+    @Builder
+    public MoneyExpenditureUpdateReqDto(Long expenditureId, UserRole userRole, LocalDate date, Long amount, String memo, Boolean payComplete) {
+        this.expenditureId = expenditureId;
+        this.userRole = userRole;
+        this.date = date;
+        this.amount = amount;
+        this.memo = memo;
+        this.payComplete = payComplete;
+    }
+
+
     public void update(MoneyExpenditure moneyExpenditure) {
         moneyExpenditure.setUserRole(userRole);
         moneyExpenditure.setDate(date);

@@ -108,25 +108,25 @@ public class MoneyExpenditureServiceImpl implements MoneyExpenditureService{
      * @return
      */
     @Override
+    @Transactional
     public void updateExpenditure(MoneyExpenditureUpdateReqDto moneyExpenditureUpdateReqDto, Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
         Couple couple = coupleRepository.findById(user.getCouple().getId()).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
         MoneyExpenditure moneyExpenditure = moneyExpenditureRepository.findById(moneyExpenditureUpdateReqDto.getExpenditureId()).orElseThrow(() -> new NoSuchExpenditureException("해당하는 지출 정보가 없습니다."));
 
-        // 수정되는 금액 -> (수정금액 - 기존 금액)
-        Long updateAmount = moneyExpenditureUpdateReqDto.getAmount() - moneyExpenditure.getAmount();
-        Long updateBeforeAmount = moneyExpenditure.getAmount() - moneyExpenditureUpdateReqDto.getAmount();
         if (!moneyExpenditure.getUserRole().equals(moneyExpenditureUpdateReqDto.getUserRole())) {
             // 역할 수정 시
             Optional<User> afterUser = userRepository.findByCoupleIdAndAndUserRole(couple.getId(), moneyExpenditureUpdateReqDto.getUserRole());
             Optional<User> beforeUser = userRepository.findByCoupleIdAndAndUserRole(couple.getId(), moneyExpenditure.getUserRole());
             if (afterUser.isPresent() && beforeUser.isPresent()) {
                 // 기존 사람 바뀐사람 모두 금액 업데이트
-                updateUserExpenditure(updateAmount, moneyExpenditureUpdateReqDto.getDate(), afterUser.get().getId());
-                updateUserExpenditure(updateBeforeAmount, moneyExpenditureUpdateReqDto.getDate(), beforeUser.get().getId());
+                updateUserExpenditure(moneyExpenditureUpdateReqDto.getAmount(), moneyExpenditureUpdateReqDto.getDate(), afterUser.get().getId());
+                updateUserExpenditure(-moneyExpenditure.getAmount(), moneyExpenditureUpdateReqDto.getDate(), beforeUser.get().getId());
             }
 
         } else {
+            // 수정되는 금액 -> (수정금액 - 기존 금액)
+            Long updateAmount = moneyExpenditureUpdateReqDto.getAmount() - moneyExpenditure.getAmount();
             updateUserExpenditure(updateAmount, moneyExpenditureUpdateReqDto.getDate(), userId);
         }
 
