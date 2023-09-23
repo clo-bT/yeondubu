@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import yeon.dubu.expenditure.domain.MoneyExpenditure;
 import yeon.dubu.expenditure.dto.request.MoneyExpenditureReqDto;
 import yeon.dubu.expenditure.dto.request.MoneyExpenditureUpdateReqDto;
+import yeon.dubu.expenditure.dto.response.MoneyExpenditureDetailResDto;
 import yeon.dubu.expenditure.service.MoneyExpenditureService;
 
 import java.net.URISyntaxException;
@@ -39,6 +40,16 @@ public class MoneyExpenditureController {
         return ResponseEntity.ok(moneyExpenditure);
     }
 
+    @GetMapping("/{thirdTagId}")
+    public ResponseEntity<?> searchExpenditure(
+            @AuthenticationPrincipal Long userId,
+            @PathVariable Long thirdTagId
+            ) {
+        MoneyExpenditureDetailResDto moneyExpenditureDetailResDto = moneyExpenditureService.searchExpenditure(thirdTagId, userId);
+
+        return ResponseEntity.ok(moneyExpenditureDetailResDto);
+    }
+
     @PutMapping("/{expenditureId}")
     public ResponseEntity<?> updateExpenditure(
             @AuthenticationPrincipal Long userId,
@@ -48,4 +59,5 @@ public class MoneyExpenditureController {
 
         return new ResponseEntity<>("", HttpStatus.OK);
     }
+
 }

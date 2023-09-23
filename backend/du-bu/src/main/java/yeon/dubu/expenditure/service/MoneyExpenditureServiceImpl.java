@@ -12,6 +12,7 @@ import yeon.dubu.expenditure.domain.MoneyExpenditure;
 import yeon.dubu.expenditure.domain.TagThirdExpenditure;
 import yeon.dubu.expenditure.dto.request.MoneyExpenditureReqDto;
 import yeon.dubu.expenditure.dto.request.MoneyExpenditureUpdateReqDto;
+import yeon.dubu.expenditure.dto.response.MoneyExpenditureDetailResDto;
 import yeon.dubu.expenditure.exception.NoSuchExpenditureException;
 import yeon.dubu.expenditure.repository.MoneyExpenditureRepository;
 import yeon.dubu.expenditure.exception.NoSuchTagExpenditureException;
@@ -81,6 +82,7 @@ public class MoneyExpenditureServiceImpl implements MoneyExpenditureService{
      * @param userId
      */
     @Override
+    @Transactional
     public void updateUserExpenditure(Long amount, LocalDate date, Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
         Money money = moneyRepository.findByUser(user).orElseThrow(() -> new NoSuchMoneyException("해당하는 사용자의 자산 정보가 없습니다."));
@@ -132,5 +134,26 @@ public class MoneyExpenditureServiceImpl implements MoneyExpenditureService{
 
         moneyExpenditureUpdateReqDto.update(moneyExpenditure);
     }
+
+    @Override
+    @Transactional
+    public MoneyExpenditureDetailResDto searchExpenditure(Long thirdTagId, Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
+        Couple couple = coupleRepository.findById(user.getCouple().getId()).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
+        TagThirdExpenditure tagThirdExpenditure = tagThirdExpenditureRepository.findById(thirdTagId).orElseThrow(() -> new NoSuchTagExpenditureException("해당하는 태그 정보가 없습니다."));
+        MoneyExpenditure moneyExpenditure = moneyExpenditureRepository.findByTagThirdExpenditure(tagThirdExpenditure).orElseThrow(() -> new NoSuchExpenditureException("해당하는 지출 정보가 없습니다."));
+
+        MoneyExpenditureDetailResDto moneyExpenditureDetailResDto = MoneyExpenditureDetailResDto.builder()
+                .expenditureId(moneyExpenditure.getId())
+                .userRole(moneyExpenditure.getUserRole())
+                .date(moneyExpenditure.getDate())
+                .amount(moneyExpenditure.getAmount())
+                .memo(moneyExpenditure.getMemo() != null ? moneyExpenditure.getMemo() : "")
+                .payComplete(moneyExpenditure.getPayComplete())
+                .build();
+
+        return moneyExpenditureDetailResDto;
+    }
+
 
 }

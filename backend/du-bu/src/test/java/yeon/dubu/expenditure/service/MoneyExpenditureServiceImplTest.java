@@ -15,6 +15,7 @@ import yeon.dubu.expenditure.domain.TagSecondExpenditure;
 import yeon.dubu.expenditure.domain.TagThirdExpenditure;
 import yeon.dubu.expenditure.dto.request.MoneyExpenditureReqDto;
 import yeon.dubu.expenditure.dto.request.MoneyExpenditureUpdateReqDto;
+import yeon.dubu.expenditure.dto.response.MoneyExpenditureDetailResDto;
 import yeon.dubu.expenditure.repository.MoneyExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagFirstExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagSecondExpenditureRepository;
@@ -49,7 +50,6 @@ class MoneyExpenditureServiceImplTest {
     MoneyRepository moneyRepository;
     @Autowired
     MoneyExpenditureService moneyExpenditureService;
-
     MoneyExpenditureReqDto moneyExpenditureReqDto;
 
     static User USER1;
@@ -57,6 +57,7 @@ class MoneyExpenditureServiceImplTest {
     static TagFirstExpenditure TAG1;
     static TagSecondExpenditure TAG2;
     static TagThirdExpenditure TAG3;
+    static Money MONEY1;
 
     @BeforeEach
     void beforeEach() {
@@ -113,7 +114,7 @@ class MoneyExpenditureServiceImplTest {
                 .user(USER1)
                 .build();
 
-        moneyRepository.save(money);
+        MONEY1 = moneyRepository.save(money);
 
         Money money2 = Money.builder()
                 .totalCash(0L)
@@ -161,12 +162,12 @@ class MoneyExpenditureServiceImplTest {
                 .memo("침대 샀다")
                 .payComplete(false)
                 .build();
-        
-        moneyExpenditureService.insertExpenditure(moneyExpenditureReqDto, USER1.getId());
+
+        MoneyExpenditure savedExpenditure = moneyExpenditureService.insertExpenditure(moneyExpenditureReqDto, USER1.getId());
 
         // when
         MoneyExpenditureUpdateReqDto moneyExpenditureUpdateReqDto = MoneyExpenditureUpdateReqDto.builder()
-                .expenditureId(1L)
+                .expenditureId(savedExpenditure.getId())
                 .userRole(UserRole.GROOM)
                 .date(LocalDate.now().minusDays(3))
                 .amount(400L)
@@ -179,5 +180,30 @@ class MoneyExpenditureServiceImplTest {
         // then
         assertThat(moneyRepository.findByUser(USER2).get().getPresentExpenditure()).isEqualTo(moneyExpenditureUpdateReqDto.getAmount());
 
+    }
+
+    @DisplayName("지출 내역 조회")
+    @Test
+    @Transactional
+    void searchExpenditure() {
+        // given
+        MoneyExpenditureReqDto moneyExpenditureReqDto = MoneyExpenditureReqDto.builder()
+                .thirdTagId(TAG3.getId())
+                .userRole(UserRole.BRIDE)
+                .date(LocalDate.now())
+                .amount(100000L)
+                .payComplete(false)
+                .build();
+
+        moneyExpenditureService.insertExpenditure(moneyExpenditureReqDto, USER1.getId());
+        
+        // when
+        MoneyExpenditureDetailResDto expectExpenditure = moneyExpenditureService.searchExpenditure(TAG3.getId(), USER1.getId());
+
+        // then
+        System.out.println("expectExpenditure = " + expectExpenditure);
+        assertThat(moneyExpenditureRepository.findByTagThirdExpenditure(TAG3).get().getId()).isEqualTo(expectExpenditure.getExpenditureId());
+        
+        
     }
 }
