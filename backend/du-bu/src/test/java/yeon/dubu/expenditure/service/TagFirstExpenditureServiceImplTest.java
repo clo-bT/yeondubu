@@ -10,6 +10,7 @@ import yeon.dubu.auth.enumeration.RoleType;
 import yeon.dubu.couple.domain.Couple;
 import yeon.dubu.couple.repository.CoupleRepository;
 import yeon.dubu.expenditure.domain.TagFirstExpenditure;
+import yeon.dubu.expenditure.dto.request.TagFirstExpenditureUpdateDto;
 import yeon.dubu.expenditure.repository.TagFirstExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagSecondExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagThirdExpenditureRepository;
@@ -85,4 +86,22 @@ class TagFirstExpenditureServiceImplTest {
 
     }
 
+    @Test
+    @Transactional
+    void updateFirstTag() {
+        // given
+        String firstTagName = "혼수";
+        TagFirstExpenditure tagFirstExpenditure = tagFirstExpenditureService.insertFirstTag(firstTagName, USER1.getId());
+
+        // when
+        TagFirstExpenditureUpdateDto tagFirstExpenditureUpdateDto = TagFirstExpenditureUpdateDto.builder()
+                .firstTagId(tagFirstExpenditure.getId())
+                .firstTagName("수정된 첫번째 태그 이름")
+                .build();
+
+        TagFirstExpenditure updateFirstTag = tagFirstExpenditureService.updateFirstTag(tagFirstExpenditureUpdateDto, USER1.getId());
+
+        // then
+        assertThat(updateFirstTag.getFirstTagName()).isEqualTo(tagFirstExpenditureUpdateDto.getFirstTagName());
+    }
 }
