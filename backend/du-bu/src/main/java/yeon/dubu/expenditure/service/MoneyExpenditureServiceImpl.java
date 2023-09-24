@@ -199,10 +199,10 @@ public class MoneyExpenditureServiceImpl implements MoneyExpenditureService{
         User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
         Couple couple = coupleRepository.findById(user.getCouple().getId()).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
         MoneyExpenditure moneyExpenditure = moneyExpenditureRepository.findById(expenditureId).orElseThrow(() -> new NoSuchExpenditureException("해당하는 지출 정보가 없습니다."));
-
-        // 지출 삭제 -> 누구의 지출인지 찾기 -> 지출 업데이트
         Optional<User> expendUser = userRepository.findByCoupleIdAndAndUserRole(couple.getId(), moneyExpenditure.getUserRole());
+        Money expendMoney = moneyRepository.findByUser(expendUser.get()).orElseThrow(() -> new NoSuchMoneyException("해당하는 사용자의 자산 정보가 없습니다."));
 
+        expendMoney.updateExpenditureByDelete(moneyExpenditure.getAmount(), moneyExpenditure.getPayComplete());  // 자산 정보 업데이트
         moneyExpenditureRepository.deleteById(expenditureId);
 
     }

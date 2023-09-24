@@ -28,6 +28,7 @@ import yeon.dubu.user.repository.UserRepository;
 
 import java.time.LocalDate;
 
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -206,5 +207,28 @@ class MoneyExpenditureServiceImplTest {
         assertThat(moneyExpenditureRepository.findByTagThirdExpenditure(TAG3).get().getId()).isEqualTo(expectExpenditure.getExpenditureId());
         
         
+    }
+    @DisplayName("지출 내역 삭제")
+    @Test
+    @Transactional
+    void deleteExpenditure() {
+        // given
+        MoneyExpenditureReqDto moneyExpenditureReqDto = MoneyExpenditureReqDto.builder()
+                .thirdTagId(TAG3.getId())
+                .userRole(UserRole.BRIDE)
+                .date(LocalDate.now())
+                .amount(100000L)
+                .payComplete(true)
+                .build();
+
+        MoneyExpenditure moneyExpenditure = moneyExpenditureService.insertExpenditure(moneyExpenditureReqDto, USER1.getId());
+
+        // when
+        moneyExpenditureService.deleteExpenditure(moneyExpenditure.getId(), USER2.getId());
+
+        // then
+        assertThat(moneyExpenditureRepository.findById(moneyExpenditure.getId())).isEmpty();
+        assertThat(moneyRepository.findByUser(USER1).get().getExpectExpenditure()).isEqualTo(0L);
+        assertThat(moneyRepository.findByUser(USER1).get().getCompleteExpenditure()).isEqualTo(0L);
     }
 }
