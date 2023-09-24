@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CheckListOpened = () => {
+const TagSelect = () => {
     return (
         <div>
             
@@ -8,4 +8,4 @@ const CheckListOpened = () => {
     );
 };
 
-export default CheckListOpened;
+export default TagSelect;
