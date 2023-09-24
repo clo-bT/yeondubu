@@ -10,6 +10,7 @@ import yeon.dubu.couple.repository.CoupleRepository;
 import yeon.dubu.expenditure.domain.TagFirstExpenditure;
 import yeon.dubu.expenditure.domain.TagSecondExpenditure;
 import yeon.dubu.expenditure.dto.request.TagSecondExpenditureReqDto;
+import yeon.dubu.expenditure.dto.request.TagSecondExpenditureUpdateDto;
 import yeon.dubu.expenditure.exception.NoSuchTagExpenditureException;
 import yeon.dubu.expenditure.repository.TagFirstExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagSecondExpenditureRepository;
@@ -49,6 +50,16 @@ public class TagSecondExpenditureServiceImpl implements TagSecondExpenditureServ
         tagSecondExpenditureRepository.save(tagSecondExpenditure);
 
         return tagSecondExpenditure;
+    }
+
+    @Override
+    @Transactional
+    public void updateSecondTag(TagSecondExpenditureUpdateDto tagSecondExpenditureUpdateDto, Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
+        Couple couple = coupleRepository.findById(user.getCouple().getId()).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
+        TagSecondExpenditure tagSecondExpenditure = tagSecondExpenditureRepository.findById(tagSecondExpenditureUpdateDto.getSecondTagId()).orElseThrow(() -> new NoSuchTagExpenditureException("해당하는 태그 정보가 없습니다."));
+
+        tagSecondExpenditureUpdateDto.updateSecondTagName(tagSecondExpenditure);
     }
 
 }

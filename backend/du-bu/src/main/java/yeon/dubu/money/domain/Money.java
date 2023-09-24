@@ -28,19 +28,17 @@ public class Money extends BaseTimeEntity {
     @ColumnDefault("0")
     private Long totalAccount; //총 예적금
     @ColumnDefault("0")
-    private Long presentExpenditure; //현재까지 지출
+    private Long expectExpenditure;  // 예상 지출
     @ColumnDefault("0")
-    private Long futureExpenditure; //미래 지출
-
+    private Long completeExpenditure;  // 확정 지출
 
     @Builder
-    public Money(Long id, Long totalCash, Long totalAccount, Long presentExpenditure,
-        Long futureExpenditure, User user) {
+    public Money(Long id, Long totalCash, Long totalAccount, Long expectExpenditure, Long completeExpenditure, User user) {
         this.id = id;
         this.totalCash = totalCash;
         this.totalAccount = totalAccount;
-        this.presentExpenditure = presentExpenditure;
-        this.futureExpenditure = futureExpenditure;
+        this.expectExpenditure = expectExpenditure;
+        this.completeExpenditure = completeExpenditure;
         this.user = user;
     }
 
@@ -48,4 +46,10 @@ public class Money extends BaseTimeEntity {
     @JoinColumn(name = "USER_ID")
     private User user;
 
+    public void updateExpenditureByDelete (Long amount, Boolean payComplete) {
+        this.expectExpenditure -= amount;
+        if (payComplete) {
+            this.completeExpenditure -= amount;
+        }
+    }
 }

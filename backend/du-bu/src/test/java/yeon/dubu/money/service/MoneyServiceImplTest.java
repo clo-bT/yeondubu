@@ -64,8 +64,8 @@ class MoneyServiceImplTest {
         Money money = Money.builder()
                 .totalCash(0L)
                 .totalAccount(0L)
-                .presentExpenditure(0L)
-                .futureExpenditure(0L)
+                .expectExpenditure(0L)
+                .completeExpenditure(0L)
                 .user(USER1)
                 .build();
 
