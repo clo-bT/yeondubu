@@ -1,12 +1,12 @@
 package yeon.dubu.user.dto.response;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import yeon.dubu.user.enumeration.UserRole;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@ToString
 public class UserResDto {
     private Long id;
     private String name;

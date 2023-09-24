@@ -33,4 +33,10 @@ public class UserServiceImpl implements UserService {
 
         return userResDto;
     }
+
+    @Override
+    public void deleteUser(Long userId) {
+        // TODO: 사용자 탈퇴 시 couple에 대한 정보 여부 정하기
+        userRepository.deleteById(userId);
+    }
 }
