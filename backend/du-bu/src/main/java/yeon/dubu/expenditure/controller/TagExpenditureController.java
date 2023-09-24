@@ -12,6 +12,7 @@ import yeon.dubu.expenditure.domain.TagSecondExpenditure;
 import yeon.dubu.expenditure.domain.TagThirdExpenditure;
 import yeon.dubu.expenditure.dto.request.TagFirstExpenditureUpdateDto;
 import yeon.dubu.expenditure.dto.request.TagSecondExpenditureReqDto;
+import yeon.dubu.expenditure.dto.request.TagSecondExpenditureUpdateDto;
 import yeon.dubu.expenditure.dto.request.TagThirdExpenditureReqDto;
 import yeon.dubu.expenditure.dto.response.TagAllExpenditureResDto;
 import yeon.dubu.expenditure.service.TagExpenditureService;
@@ -34,7 +35,7 @@ public class TagExpenditureController {
     private final TagThirdExpenditureService tagThirdExpenditureService;
 
     @PostMapping("/{firstTagName}")
-    public ResponseEntity insertFirstTag(
+    public ResponseEntity<?> insertFirstTag(
             @AuthenticationPrincipal Long userId,
             @PathVariable String firstTagName
     ) throws URISyntaxException {
@@ -44,7 +45,7 @@ public class TagExpenditureController {
     }
 
     @PostMapping("/{firstTagName}/{secondTagName}")
-    public ResponseEntity insertSecondTag(
+    public ResponseEntity<?> insertSecondTag(
             @AuthenticationPrincipal Long userId,
             @RequestBody TagSecondExpenditureReqDto tagSecondExpenditureReqDto
             ) throws URISyntaxException {
@@ -55,7 +56,7 @@ public class TagExpenditureController {
     }
 
     @PostMapping("/{firstTagName}/{secondTagName}/{thirdTagName}")
-    public ResponseEntity insertSecondTag(
+    public ResponseEntity<?> insertSecondTag(
             @AuthenticationPrincipal Long userId,
             @RequestBody TagThirdExpenditureReqDto tagThirdExpenditureReqDto
             ) throws URISyntaxException {
@@ -65,7 +66,7 @@ public class TagExpenditureController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity searchAllTag(
+    public ResponseEntity<?> searchAllTag(
             @AuthenticationPrincipal Long userId
     ) throws URISyntaxException {
         List<TagAllExpenditureResDto> tagAllExpenditure = tagExpenditureService.searchAllTags(userId);
@@ -79,6 +80,16 @@ public class TagExpenditureController {
             @RequestBody TagFirstExpenditureUpdateDto tagFirstExpenditureUpdateDto
     ) {
         tagFirstExpenditureService.updateFirstTag(tagFirstExpenditureUpdateDto, userId);
+
+        return new ResponseEntity<>("", HttpStatus.OK);
+    }
+
+    @PutMapping("/{firstTagName}/{secondTagName}")
+    public ResponseEntity<?> updateSecondTag(
+            @AuthenticationPrincipal Long userId,
+            @RequestBody TagSecondExpenditureUpdateDto tagSecondExpenditureUpdateDto
+            ) {
+        tagSecondExpenditureService.updateSecondTag(tagSecondExpenditureUpdateDto, userId);
 
         return new ResponseEntity<>("", HttpStatus.OK);
     }
