@@ -1,15 +1,17 @@
 package yeon.dubu.money.service;
 
-import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 import yeon.dubu.auth.enumeration.RoleType;
 import yeon.dubu.couple.domain.Couple;
 import yeon.dubu.couple.repository.CoupleRepository;
 import yeon.dubu.money.domain.Money;
 import yeon.dubu.money.dto.request.MoneyCashReqDto;
+import yeon.dubu.money.dto.response.MoneyCashResDto;
 import yeon.dubu.money.repository.MoneyRepository;
 import yeon.dubu.user.domain.User;
 import yeon.dubu.user.enumeration.UserRole;
@@ -71,11 +73,19 @@ class MoneyServiceImplTest {
 
         moneyRepository.save(money);
 
+        Money money2 = Money.builder()
+                .totalCash(0L)
+                .totalAccount(0L)
+                .expectExpenditure(0L)
+                .completeExpenditure(0L)
+                .user(USER2)
+                .build();
+
+        moneyRepository.save(money2);
+
     }
 
-    /**
-     * 사용자 현금 등록
-     */
+    @DisplayName("사용자 현금 등록")
     @Transactional
     @Test
     void insertCash() {
@@ -89,5 +99,29 @@ class MoneyServiceImplTest {
 
         // then
         assertThat(moneyRepository.findByUser(USER1).get().getTotalCash()).isEqualTo(insertedCash.getTotalCash());
+    }
+    @DisplayName("couple의 현금 조회")
+    @Test
+    @Transactional
+    void searchTotalCash() {
+        // given
+        MoneyCashReqDto moneyCash1 = MoneyCashReqDto.builder()
+                .totalCash(1000000L)
+                .build();
+
+        MoneyCashReqDto moneyCash2 = MoneyCashReqDto.builder()
+                .totalCash(2000000L)
+                .build();
+
+        moneyService.insertCash(moneyCash1, USER1.getId());
+        moneyService.insertCash(moneyCash2, USER2.getId());
+
+        // when
+        MoneyCashResDto totalCash = moneyService.searchTotalCash(USER2.getId());
+
+        // then
+        Long actualCash = totalCash.getBrideTotalCash() + totalCash.getGroomTotalCash();
+        assertThat(actualCash).isEqualTo(3000000L);
+
     }
 }
