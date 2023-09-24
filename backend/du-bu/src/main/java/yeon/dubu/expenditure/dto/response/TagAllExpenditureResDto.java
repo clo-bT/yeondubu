@@ -1,6 +1,7 @@
 package yeon.dubu.expenditure.dto.response;
 
 import lombok.*;
+import yeon.dubu.expenditure.dto.TagSecondExpenditureDto;
 
 import java.util.List;
 

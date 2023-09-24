@@ -12,6 +12,7 @@ import yeon.dubu.expenditure.domain.TagFirstExpenditure;
 import yeon.dubu.expenditure.domain.TagSecondExpenditure;
 import yeon.dubu.expenditure.domain.TagThirdExpenditure;
 import yeon.dubu.expenditure.dto.request.TagThirdExpenditureReqDto;
+import yeon.dubu.expenditure.dto.request.TagThirdExpenditureUpdateDto;
 import yeon.dubu.expenditure.repository.TagFirstExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagSecondExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagThirdExpenditureRepository;
@@ -109,5 +110,28 @@ class TagThirdExpenditureServiceImplTest {
         assertThat(tagThirdExpenditureRepository.findById(tagThirdExpenditure.getId()).get().getThirdTagName()).isEqualTo("침대");
 
 
+    }
+
+    @Test
+    @Transactional
+    void updateThirdTag() {
+        // given
+        TagThirdExpenditureReqDto thirdExpenditureReqDto = TagThirdExpenditureReqDto.builder()
+                .firstTagId(TAG1.getId())
+                .secondTagId(TAG2.getId())
+                .thirdTagName("침대")
+                .build();
+        TagThirdExpenditure tagThirdExpenditure = tagThirdExpenditureService.insertThirdTag(thirdExpenditureReqDto, USER1.getId());
+
+        // when
+        TagThirdExpenditureUpdateDto tagThirdExpenditureUpdateDto = TagThirdExpenditureUpdateDto.builder()
+                .thirdTagId(tagThirdExpenditure.getId())
+                .thirdTagName("수정된 세번째 태그")
+                .build();
+
+        tagThirdExpenditureService.updateThirdTag(tagThirdExpenditureUpdateDto, USER1.getId());
+
+        // then
+        assertThat(tagThirdExpenditureRepository.findById(tagThirdExpenditure.getId()).get().getThirdTagName()).isEqualTo(tagThirdExpenditureUpdateDto.getThirdTagName());
     }
 }

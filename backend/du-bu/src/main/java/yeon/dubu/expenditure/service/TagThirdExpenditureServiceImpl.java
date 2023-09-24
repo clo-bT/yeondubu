@@ -7,10 +7,10 @@ import org.springframework.transaction.annotation.Transactional;
 import yeon.dubu.couple.domain.Couple;
 import yeon.dubu.couple.exception.NoSuchCoupleException;
 import yeon.dubu.couple.repository.CoupleRepository;
-import yeon.dubu.expenditure.domain.TagFirstExpenditure;
 import yeon.dubu.expenditure.domain.TagSecondExpenditure;
 import yeon.dubu.expenditure.domain.TagThirdExpenditure;
 import yeon.dubu.expenditure.dto.request.TagThirdExpenditureReqDto;
+import yeon.dubu.expenditure.dto.request.TagThirdExpenditureUpdateDto;
 import yeon.dubu.expenditure.exception.NoSuchTagExpenditureException;
 import yeon.dubu.expenditure.repository.TagFirstExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagSecondExpenditureRepository;
@@ -51,5 +51,15 @@ public class TagThirdExpenditureServiceImpl implements TagThirdExpenditureServic
         tagThirdExpenditureRepository.save(tagThirdExpenditure);
 
         return tagThirdExpenditure;
+    }
+
+    @Override
+    @Transactional
+    public void updateThirdTag(TagThirdExpenditureUpdateDto tagThirdExpenditureUpdateDto, Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
+        Couple couple = coupleRepository.findById(user.getCouple().getId()).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
+        TagThirdExpenditure tagThirdExpenditure = tagThirdExpenditureRepository.findById(tagThirdExpenditureUpdateDto.getThirdTagId()).orElseThrow(() -> new NoSuchTagExpenditureException("해당하는 태그 정보가 없습니다."));
+
+        tagThirdExpenditureUpdateDto.updateThirdTagName(tagThirdExpenditure);
     }
 }

@@ -1,4 +1,4 @@
-package yeon.dubu.expenditure.dto.response;
+package yeon.dubu.expenditure.dto;
 
 import lombok.*;
 
