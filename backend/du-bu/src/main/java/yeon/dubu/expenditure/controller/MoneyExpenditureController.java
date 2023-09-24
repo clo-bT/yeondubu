@@ -10,6 +10,7 @@ import yeon.dubu.expenditure.domain.MoneyExpenditure;
 import yeon.dubu.expenditure.dto.request.MoneyExpenditureReqDto;
 import yeon.dubu.expenditure.dto.request.MoneyExpenditureUpdateReqDto;
 import yeon.dubu.expenditure.dto.response.MoneyExpenditureDetailResDto;
+import yeon.dubu.expenditure.dto.response.TotalExpectExpenditureResDto;
 import yeon.dubu.expenditure.service.MoneyExpenditureService;
 
 import java.net.URISyntaxException;
@@ -68,6 +69,16 @@ public class MoneyExpenditureController {
         moneyExpenditureService.deleteExpenditure(expenditureId, userId);
 
         return new ResponseEntity<>("", HttpStatus.OK);
+    }
+
+
+    @GetMapping("/expect-total")
+    public ResponseEntity<?> searchTotalExpectExpenditure(
+            @AuthenticationPrincipal Long userId
+    ) {
+        TotalExpectExpenditureResDto totalExpectExpenditure = moneyExpenditureService.searchTotalExpectExpenditure(userId);
+
+        return ResponseEntity.ok(totalExpectExpenditure);
     }
 
 }

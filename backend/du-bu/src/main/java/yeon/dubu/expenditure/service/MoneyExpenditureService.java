@@ -5,6 +5,7 @@ import yeon.dubu.expenditure.dto.UpdateExpenditureInfoDto;
 import yeon.dubu.expenditure.dto.request.MoneyExpenditureReqDto;
 import yeon.dubu.expenditure.dto.request.MoneyExpenditureUpdateReqDto;
 import yeon.dubu.expenditure.dto.response.MoneyExpenditureDetailResDto;
+import yeon.dubu.expenditure.dto.response.TotalExpectExpenditureResDto;
 
 public interface MoneyExpenditureService {
     MoneyExpenditure insertExpenditure(MoneyExpenditureReqDto moneyExpenditureReqDto, Long userId);
@@ -12,4 +13,5 @@ public interface MoneyExpenditureService {
     void updateExpenditure(MoneyExpenditureUpdateReqDto moneyExpenditureUpdateReqDto, Long userId);
     MoneyExpenditureDetailResDto searchExpenditure(Long thirdTagId, Long userId);
     void deleteExpenditure(Long expenditureId, Long userId);
+    TotalExpectExpenditureResDto searchTotalExpectExpenditure(Long userId);
 }

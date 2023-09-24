@@ -14,6 +14,7 @@ import yeon.dubu.expenditure.dto.UpdateExpenditureInfoDto;
 import yeon.dubu.expenditure.dto.request.MoneyExpenditureReqDto;
 import yeon.dubu.expenditure.dto.request.MoneyExpenditureUpdateReqDto;
 import yeon.dubu.expenditure.dto.response.MoneyExpenditureDetailResDto;
+import yeon.dubu.expenditure.dto.response.TotalExpectExpenditureResDto;
 import yeon.dubu.expenditure.exception.NoSuchExpenditureException;
 import yeon.dubu.expenditure.repository.MoneyExpenditureRepository;
 import yeon.dubu.expenditure.exception.NoSuchTagExpenditureException;
@@ -22,6 +23,7 @@ import yeon.dubu.money.domain.Money;
 import yeon.dubu.money.exception.NoSuchMoneyException;
 import yeon.dubu.money.repository.MoneyRepository;
 import yeon.dubu.user.domain.User;
+import yeon.dubu.user.enumeration.UserRole;
 import yeon.dubu.user.exception.NoSuchUserException;
 import yeon.dubu.user.exception.NoSuchUserRoleException;
 import yeon.dubu.user.repository.UserRepository;
@@ -205,6 +207,29 @@ public class MoneyExpenditureServiceImpl implements MoneyExpenditureService{
         expendMoney.updateExpenditureByDelete(moneyExpenditure.getAmount(), moneyExpenditure.getPayComplete());  // 자산 정보 업데이트
         moneyExpenditureRepository.deleteById(expenditureId);
 
+    }
+
+    /**
+     * 사용자의 couple의 총 예상 금액 조회
+     * @param userId
+     * @return
+     */
+    @Override
+    @Transactional
+    public TotalExpectExpenditureResDto searchTotalExpectExpenditure(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
+        Couple couple = coupleRepository.findById(user.getCouple().getId()).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
+        User bride = userRepository.findByCoupleIdAndAndUserRole(couple.getId(), UserRole.BRIDE).orElseThrow(() -> new NoSuchUserException("해당하는 예비 신부 사용자가 없습니다."));
+        User groom = userRepository.findByCoupleIdAndAndUserRole(couple.getId(), UserRole.GROOM).orElseThrow(() -> new NoSuchUserException("해당하는 예비 신랑 사용자가 없습니다."));
+
+        Money brideMoney = moneyRepository.findByUser(bride).orElseThrow(() -> new NoSuchMoneyException("해당하는 사용자의 자산 정보가 없습니다."));
+        Money groomMoney = moneyRepository.findByUser(groom).orElseThrow(() -> new NoSuchMoneyException("해당하는 사용자의 자산 정보가 없습니다."));
+
+        Long totalExpectExpenditure = brideMoney.getExpectExpenditure() + groomMoney.getExpectExpenditure();
+
+        TotalExpectExpenditureResDto totalExpectExpenditureResDto = new TotalExpectExpenditureResDto(totalExpectExpenditure);
+
+        return totalExpectExpenditureResDto;
     }
 
 
