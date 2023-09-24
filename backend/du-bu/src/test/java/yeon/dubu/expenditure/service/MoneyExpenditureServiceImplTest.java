@@ -16,7 +16,6 @@ import yeon.dubu.expenditure.domain.TagThirdExpenditure;
 import yeon.dubu.expenditure.dto.request.MoneyExpenditureReqDto;
 import yeon.dubu.expenditure.dto.request.MoneyExpenditureUpdateReqDto;
 import yeon.dubu.expenditure.dto.response.MoneyExpenditureDetailResDto;
-import yeon.dubu.expenditure.dto.response.TotalExpectExpenditureResDto;
 import yeon.dubu.expenditure.repository.MoneyExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagFirstExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagSecondExpenditureRepository;
@@ -29,7 +28,6 @@ import yeon.dubu.user.repository.UserRepository;
 
 import java.time.LocalDate;
 
-import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -232,26 +230,6 @@ class MoneyExpenditureServiceImplTest {
         assertThat(moneyRepository.findByUser(USER1).get().getExpectExpenditure()).isEqualTo(0L);
         assertThat(moneyRepository.findByUser(USER1).get().getCompleteExpenditure()).isEqualTo(0L);
     }
-    @DisplayName("couple의 총 예상 금액 조회")
-    @Test
-    @Transactional
-    void searchTotalExpectExpenditure() {
-        // given
-        MoneyExpenditureReqDto moneyExpenditureReqDto = MoneyExpenditureReqDto.builder()
-                .thirdTagId(TAG3.getId())
-                .userRole(UserRole.BRIDE)
-                .date(LocalDate.now())
-                .amount(100000L)
-                .payComplete(true)
-                .build();
 
-        MoneyExpenditure moneyExpenditure = moneyExpenditureService.insertExpenditure(moneyExpenditureReqDto, USER1.getId());
-        
-        // when
-        TotalExpectExpenditureResDto totalExpectExpenditure = moneyExpenditureService.searchTotalExpectExpenditure(USER2.getId());
-
-        // then
-        assertThat(moneyRepository.findByUser(USER1).get().getExpectExpenditure()).isEqualTo(totalExpectExpenditure.getTotalExpenditure());
-    }
     
 }

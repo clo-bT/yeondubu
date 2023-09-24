@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import yeon.dubu.money.dto.response.TotalExpectExpenditureResDto;
 import yeon.dubu.money.domain.Money;
 import yeon.dubu.money.dto.request.MoneyCashReqDto;
 import yeon.dubu.money.dto.response.MoneyCashResDto;
@@ -35,6 +36,15 @@ public class MoneyController {
         Money cash = moneyService.insertCash(moneyCashReqDto, userId);
 
         return ResponseEntity.ok(cash);
+    }
+
+    @GetMapping("/total-expect")
+    public ResponseEntity<?> searchTotalExpectExpenditure(
+            @AuthenticationPrincipal Long userId
+    ) {
+        TotalExpectExpenditureResDto totalExpectExpenditure = moneyService.searchTotalExpectExpenditure(userId);
+
+        return ResponseEntity.ok(totalExpectExpenditure);
     }
 
     @GetMapping("/total-cash")
