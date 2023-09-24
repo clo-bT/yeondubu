@@ -2,7 +2,18 @@
 // const Container = styled.div`
 
 // display: flex;
-// flex-direction: column; 
+// flex-direction: column;
 // align-items: center;
 
 // `
+import React from 'react';
+
+const AccountInput = () => {
+    return (
+        <div>
+            
+        </div>
+    );
+};
+
+export default AccountInput;

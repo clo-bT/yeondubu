@@ -4,47 +4,57 @@ import kakao from '../../assets/Login/kakao.svg';
 
 
 const PageWrapper = styled.div`
-    height: calc(var(--vh, 1vh) * 100);
-    width: 393px;
-    background : #FFD0D0; 
-    display: inline-flex;
-    padding: 315px 24px 335px 24px;
-    flex-direction: column;
-    align-items: center;
+height: calc(var(--vh, 1vh) * 100);
+background : #FFD0D0; 
+/* padding: 315px 24px 335px 24px; */
+top: 0;
+z-index: 1;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+padding: 0px;
+
 `
 
 const LoginTitle = styled.p`
-    color: #FFF;
-    text-align: center;
-    font-family: Inter;
-    font-size: 27px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+color: #FFF;
+font-size: 25px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+margin-top:0px;
 
 `
 
 const KakaoLogin = styled.button`
-    width: 345px;
-    height: 75px;
+    width: 300px;
+    height: 60px;
     color: #000;
-    font-family: Inter;
-    font-size: 24px;
+    font-size: 20px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
     border-radius: 18px;
     background: #FEE500;
     border: none;
-    
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `
 
 const KakaoImg = styled.img`
-    margin-bottom: -3px;
-    margin-left: -15px;
-    width: 58px;
-    height: 25px;
-    flex-shrink: 0;
+display: flex;
+flex-direction: column;
+align-items: center;
+margin-bottom: -3px;
+margin-left: -15px;
+height: 25px;
+flex-shrink: 0;
 
 `
 
