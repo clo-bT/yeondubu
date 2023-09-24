@@ -1,6 +1,5 @@
 package yeon.dubu.expenditure.controller;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -10,10 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import yeon.dubu.expenditure.domain.TagFirstExpenditure;
 import yeon.dubu.expenditure.domain.TagSecondExpenditure;
 import yeon.dubu.expenditure.domain.TagThirdExpenditure;
-import yeon.dubu.expenditure.dto.request.TagFirstExpenditureUpdateDto;
-import yeon.dubu.expenditure.dto.request.TagSecondExpenditureReqDto;
-import yeon.dubu.expenditure.dto.request.TagSecondExpenditureUpdateDto;
-import yeon.dubu.expenditure.dto.request.TagThirdExpenditureReqDto;
+import yeon.dubu.expenditure.dto.request.*;
 import yeon.dubu.expenditure.dto.response.TagAllExpenditureResDto;
 import yeon.dubu.expenditure.service.TagExpenditureService;
 import yeon.dubu.expenditure.service.TagFirstExpenditureService;
@@ -93,5 +89,15 @@ public class TagExpenditureController {
 
         return new ResponseEntity<>("", HttpStatus.OK);
     }
+
+    @PutMapping("/{firstTagName}/{secondTagName}/{thirdTagName}")
+    public ResponseEntity<?> updateThirdTag(
+            @AuthenticationPrincipal Long userId,
+            @RequestBody TagThirdExpenditureUpdateDto tagThirdExpenditureUpdateDto
+            ) {
+        tagThirdExpenditureService.updateThirdTag(tagThirdExpenditureUpdateDto, userId);
+        return new ResponseEntity<>("", HttpStatus.OK);
+    }
+
 
 }
