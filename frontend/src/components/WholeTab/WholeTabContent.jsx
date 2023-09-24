@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-
 const Container = styled.div`
 display: flex;
 flex-direction: column;
@@ -37,21 +36,23 @@ line-height: normal;
 margin-top: 5px;
 text-decoration: none;
 `
-const MyPageList = () => {
-    return (
-        <Container>
-            {/* <HorizontalLine /> */}
-            <Header>내 계좌 관리</Header>
-            <Detail href="/">계좌 조회/수정</Detail>
+
+const WholeTabContent = () => {
+    return ( 
+            <Container>
+            <Header>추천 메뉴</Header>
+            <Detail href="/">가구 추천</Detail>
+            <Detail href="/">챗봇</Detail>
             <HorizontalLine />
-            <Header>장바구니</Header>
-            <Detail href="/">내가 찜한 상품</Detail>
+            <Header>체크리스트</Header>
+            <Detail href="/">체크리스트 수정</Detail>
             <HorizontalLine />
-            <Header>기타 기능</Header>
-            <Detail href="/">파혼하기</Detail>
+            <Header>고객센터</Header>
+            <Detail href="/">문의하기</Detail>
             <HorizontalLine />
         </Container>
+
     );
 };
 
-export default MyPageList;
+export default WholeTabContent;
