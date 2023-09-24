@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import yeon.dubu.user.domain.User;
 import yeon.dubu.user.dto.response.UserResDto;
+import yeon.dubu.user.enumeration.UserRole;
 import yeon.dubu.user.exception.NoSuchUserException;
 import yeon.dubu.user.repository.UserRepository;
 
@@ -26,8 +27,8 @@ public class UserServiceImpl implements UserService {
                 .id(userId)
                 .name(user.getName())
                 .imageUrl(user.getImageUrl())
-                .userRole(user.getUserRole())
-                .creditScore(user.getCreditScore())
+                .userRole(user.getUserRole() != null ? user.getUserRole() : UserRole.UNDEFINED)
+                .creditScore(user.getCreditScore() != null ? user.getCreditScore() : -1)
                 .build();
 
         return userResDto;
