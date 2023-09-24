@@ -60,4 +60,14 @@ public class MoneyExpenditureController {
         return new ResponseEntity<>("", HttpStatus.OK);
     }
 
+    @DeleteMapping("/{expenditureId}")
+    public ResponseEntity<?> deleteExpenditure(
+            @AuthenticationPrincipal Long userId,
+            @PathVariable Long expenditureId
+    ) throws URISyntaxException {
+        moneyExpenditureService.deleteExpenditure(expenditureId, userId);
+
+        return new ResponseEntity<>("", HttpStatus.OK);
+    }
+
 }

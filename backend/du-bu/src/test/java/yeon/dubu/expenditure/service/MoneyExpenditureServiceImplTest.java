@@ -109,8 +109,8 @@ class MoneyExpenditureServiceImplTest {
         Money money = Money.builder()
                 .totalCash(0L)
                 .totalAccount(0L)
-                .presentExpenditure(0L)
-                .futureExpenditure(0L)
+                .expectExpenditure(0L)
+                .completeExpenditure(0L)
                 .user(USER1)
                 .build();
 
@@ -119,8 +119,8 @@ class MoneyExpenditureServiceImplTest {
         Money money2 = Money.builder()
                 .totalCash(0L)
                 .totalAccount(0L)
-                .presentExpenditure(0L)
-                .futureExpenditure(0L)
+                .expectExpenditure(0L)
+                .completeExpenditure(0L)
                 .user(USER2)
                 .build();
 
@@ -140,13 +140,14 @@ class MoneyExpenditureServiceImplTest {
                 .date(LocalDate.now())
                 .amount(100000L)
                 .memo("침대 샀다")
+                .payComplete(false)
                 .build();
 
         MoneyExpenditure moneyExpenditure = moneyExpenditureService.insertExpenditure(moneyExpenditureReqDto, USER1.getId());
 
         // then
         assertThat(moneyExpenditureRepository.findById(moneyExpenditure.getId()).get().getTagThirdExpenditure()).isEqualTo(TAG3);
-        assertThat(moneyRepository.findByUser(USER1).get().getPresentExpenditure()).isEqualTo(moneyExpenditureReqDto.getAmount());
+        assertThat(moneyRepository.findByUser(USER1).get().getExpectExpenditure()).isEqualTo(moneyExpenditureReqDto.getAmount());
     }
 
     @DisplayName("사용자의 지출 내역 수정")
@@ -178,8 +179,8 @@ class MoneyExpenditureServiceImplTest {
         moneyExpenditureService.updateExpenditure(moneyExpenditureUpdateReqDto, USER1.getId());
 
         // then
-        assertThat(moneyRepository.findByUser(USER2).get().getPresentExpenditure()).isEqualTo(moneyExpenditureUpdateReqDto.getAmount());
-
+        assertThat(moneyRepository.findByUser(USER2).get().getExpectExpenditure()).isEqualTo(moneyExpenditureUpdateReqDto.getAmount());
+        assertThat(moneyRepository.findByUser(USER1).get().getExpectExpenditure()).isEqualTo(0L);
     }
 
     @DisplayName("지출 내역 조회")
