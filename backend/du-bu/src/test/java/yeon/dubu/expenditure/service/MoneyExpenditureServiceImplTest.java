@@ -28,7 +28,6 @@ import yeon.dubu.user.repository.UserRepository;
 
 import java.time.LocalDate;
 
-import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -231,4 +230,6 @@ class MoneyExpenditureServiceImplTest {
         assertThat(moneyRepository.findByUser(USER1).get().getExpectExpenditure()).isEqualTo(0L);
         assertThat(moneyRepository.findByUser(USER1).get().getCompleteExpenditure()).isEqualTo(0L);
     }
+
+    
 }

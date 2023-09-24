@@ -6,6 +6,6 @@ import yeon.dubu.expenditure.domain.TagThirdExpenditure;
 
 import java.util.Optional;
 
-public interface MoneyExpenditureRepository extends JpaRepository<MoneyExpenditure, Long> {
+public interface MoneyExpenditureRepository extends JpaRepository<MoneyExpenditure, Long>, CustomMoneyExpenditureRepository {
     Optional<MoneyExpenditure> findByTagThirdExpenditure(TagThirdExpenditure tagThirdExpenditure);
 }
