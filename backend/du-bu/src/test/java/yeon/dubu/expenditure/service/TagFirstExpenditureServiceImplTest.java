@@ -99,9 +99,9 @@ class TagFirstExpenditureServiceImplTest {
                 .firstTagName("수정된 첫번째 태그 이름")
                 .build();
 
-        TagFirstExpenditure updateFirstTag = tagFirstExpenditureService.updateFirstTag(tagFirstExpenditureUpdateDto, USER1.getId());
+        tagFirstExpenditureService.updateFirstTag(tagFirstExpenditureUpdateDto, USER1.getId());
 
         // then
-        assertThat(updateFirstTag.getFirstTagName()).isEqualTo(tagFirstExpenditureUpdateDto.getFirstTagName());
+        assertThat(tagFirstExpenditureRepository.findById(tagFirstExpenditure.getId()).get().getFirstTagName()).isEqualTo(tagFirstExpenditureUpdateDto.getFirstTagName());
     }
 }
