@@ -8,10 +8,12 @@
 // `
 import React from 'react';
 import DepositAccountInputForm from '../components/AccountInput/DepositAccountInputForm';
+import AccountInputHeader from '../components/Common/AccountInputHeader';
 
 const AccountInput = () => {
     return (
         <div>
+            <AccountInputHeader />
             <DepositAccountInputForm/>
         </div>
     );
