@@ -1,25 +1,28 @@
-import {React, useState} from 'react';
+import {React, useState, useEffect} from 'react';
 import styled from 'styled-components';
 import { BsFill1CircleFill,BsFill2CircleFill,BsFill3CircleFill,
     BsFill4CircleFill,BsFill5CircleFill,BsFill6CircleFill,BsFill7CircleFill } from "react-icons/bs";
-
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
-// display: flex;
-// flex-direction: column; 
-
+display: flex;
+flex-direction: column; 
+margin-top: 40px;
 align-items: center;
-// width: 331px;
-// height: 515px;
-// flex-shrink: 0;
+
 
 `
 
 const Text = styled.p`
 margin-left:10px;
+display: flex;
+flex-direction: column;
+align-items: center;
 `
 const CheckBoxContainer = styled.div`
   display: flex;
+  
   align-items: center;
   margin-left: 20px;
 `;
@@ -27,6 +30,7 @@ const CheckBoxContainer = styled.div`
 
 const IconWithText = styled.div`
 display: flex;
+/* flex-direction: column; */
 align-items: center;
 margin-bottom: 20px;
 
@@ -91,7 +95,6 @@ align-items: center;
 gap: 10px;
 color: #FF5A5A;
 text-align: center;
-font-family: Pretendard-Regular;
 font-size: 18px;
 font-style: normal;
 font-weight: 400;
@@ -118,13 +121,44 @@ const InfoInput = styled.input`
   text-align: center;
 `
 
-const DepositContainer = styled.div`
-  display: flex;
+const Box = styled.div`
+  /* display: flex; 
   flex-direction: column; 
-  justify-content: center; 
-  align-items: center;
+  align-items: center; */
 `
 const DepositAccountInputForm = () => {
+  const navigate = useNavigate();
+  const [accessToken, setAccessToken] = useState('')
+  const [code, setCode] = useState('');
+
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+
+    setAccessToken(token)
+},[setAccessToken])
+
+  const sendCodeToBackend = () => {
+    console.log(accessToken)
+    console.log(code)
+    // 여기서 axios 요청을 보내세요.
+    axios.get(`${process.env.REACT_APP_API_ROOT}/api/v1/accounts/saving`, {
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+        },
+    })
+        .then((response) => {
+            // 요청 성공 시 처리
+            console.log('요청 성공:', response.data.state);
+            if (response.data.state === 'success') {
+                navigate(`/checkuser`)
+            };
+        })
+        .catch((error) => {
+            // 요청 실패 시 처리
+            console.error('요청 실패:', error);
+        });
+};
+
     const [selectedAccountType, setSelectedAccountType] = useState('');
     const [showFields, setShowFields] = useState(true); 
   
@@ -142,8 +176,9 @@ const DepositAccountInputForm = () => {
     };
   
     return (
-        <>
         <Container>
+  
+            <Box>
           <IconWithText>
             <CountIcon1 />
             <Text>계좌</Text>
@@ -177,10 +212,11 @@ const DepositAccountInputForm = () => {
 
               <Text>현금</Text>
             </CheckBoxContainer>
+          {/* </Box> */}
+
           </IconWithText>
-    
           {showFields && selectedAccountType === '적금' && (
-        <>
+        <Box>
           <IconWithText>
             <CountIcon2 />
             <Text>계좌이름</Text>
@@ -216,12 +252,12 @@ const DepositAccountInputForm = () => {
             <Text>이체금액</Text>
             <InfoInput />
           </IconWithText>
-          <InputButton>입력하기</InputButton>
-    </>
+          {/* <InputButton>입력하기</InputButton> */}
+    </Box>
       )}
 
         {showFields && selectedAccountType === '예금' && (
-        <>
+        <Box>
           <IconWithText>
             <CountIcon2 />
             <Text>계좌이름</Text>
@@ -245,25 +281,26 @@ const DepositAccountInputForm = () => {
             <Text>만기예상금액</Text>
             <InfoInput />
           </IconWithText>
-          <InputButton>입력하기</InputButton>
-        </>
+          {/* <InputButton>입력하기</InputButton> */}
+        </Box>
       )}
 
         {showFields && selectedAccountType === '현금' && (
-        <>
+        <Box>
           <IconWithText>
-            <CountIcon1 />
+            <CountIcon2 />
             <Text>현재금액</Text>
             <InfoInput />
           </IconWithText>
-          <InputButton>입력하기</InputButton>
-        </>
+          {/* <InputButton>입력하기</InputButton> */}
+        </Box>
       )}
+
    
-    
+
+        <InputButton onClick={sendCodeToBackend}>입력하기</InputButton>
+        </Box>
     </Container>
-        {/* <InputButton>입력하기</InputButton> */}
-    </>
       );
     };
     
