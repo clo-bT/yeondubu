@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-// import axios from 'axios';
 import styled from 'styled-components';
-// import axios from 'axios';
+import axios from 'axios';
 
 const AuthPage = styled.div`
     
@@ -19,40 +18,40 @@ const LoginAuth = () => {
             setcode(accessToken)
             if (accessToken) {
                 sessionStorage.setItem("token", accessToken);
-                window.location.href = `${process.env.REACT_APP_HOME_URL}/input`
+                // window.location.href = `${process.env.REACT_APP_HOME_URL}/invite`
             }
-            // try{        
-            //     await axios.get(`${process.env.REACT_APP_API_ROOT}/api/v1/users`, {
-            //         headers: {
-            //             Authorization: `Bearer ${accessToken}`,
-            //         },
-            //     })
-            //         .then(function (r) {
-            //         console.log(r)
-            //         // if(r.data.code === 200){ // 로그인 성공 시
-            //         //     // setuserinfo(r.data.data.member);
-            //         //     sessionStorage.setItem("isAuthorized", "true")
-            //         //     sessionStorage.setItem("id",JSON.stringify(r.data.id))
-		    //         //     sessionStorage.setItem("name",JSON.stringify(r.data.name));
-		    //         //     // sessionStorage.setItem("imageUrl",JSON.stringify(r.data.imageUrl));
-		    //         //     sessionStorage.setItem("userRole",JSON.stringify(r.data.userRole));
-		    //         //     sessionStorage.setItem("creditScore",JSON.stringify(r.data.creditScore));
+            try{        
+                await axios.get(`${process.env.REACT_APP_API_ROOT}/api/v1/users`, {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                })
+                    .then((response)=> {
+                    console.log(response)
+                    // if(r.data.code === 200){ // 로그인 성공 시
+                    //     // setuserinfo(r.data.data.member);
+                    //     sessionStorage.setItem("isAuthorized", "true")
+                    //     sessionStorage.setItem("id",JSON.stringify(r.data.id))
+		            //     sessionStorage.setItem("name",JSON.stringify(r.data.name));
+		            //     // sessionStorage.setItem("imageUrl",JSON.stringify(r.data.imageUrl));
+		            //     sessionStorage.setItem("userRole",JSON.stringify(r.data.userRole));
+		            //     sessionStorage.setItem("creditScore",JSON.stringify(r.data.creditScore));
                         
-            //         //     window.location.href = process.env.REACT_APP_HOME_URL
-            //         // }
+                    //     window.location.href = process.env.REACT_APP_HOME_URL
+                    // }
 
-            //         // else if(r.data.code === 2002 || r.data.code === 2003){ // 회원가입 성공 시
-            //         //     setid(r.data.data.id)
-            //         // }
-            //         // else if(r.data.code === 2101 || r.data.code === 2201 || r.data.code === 2202 ){
-            //         //     window.location.href = `${process.env.REACT_APP_HOME_URL}/main`
-            //         // }
-            //         // else{alert('warning')}
-            //     })
-            // }
-            // catch(error){
-            //     console.error('Error fetching data:', error);
-            // }
+                    // else if(r.data.code === 2002 || r.data.code === 2003){ // 회원가입 성공 시
+                    //     setid(r.data.data.id)
+                    // }
+                    // else if(r.data.code === 2101 || r.data.code === 2201 || r.data.code === 2202 ){
+                    //     window.location.href = `${process.env.REACT_APP_HOME_URL}/main`
+                    // }
+                    // else{alert('warning')}
+                })
+            }
+            catch(error){
+                console.error('Error fetching data:', error);
+            }
         }
         getid()
     },[])
