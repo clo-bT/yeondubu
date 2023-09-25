@@ -25,19 +25,18 @@ const Header = styled.div`
     height: 58px;
     flex-direction: column;
     justify-content: center;
+    font-size: 24px;
 `;
 const InputContainer = styled.div`
     display: flex;
     justify-content: center;
-    width: 293px;
-    height: 47px;
 `;
 const NumberInput = styled.input`
-
+    border: none;
     width: 30px;
-    height: 30px;
+    height: 40px;
     text-align: center;
-    margin: 0 10px;
+    margin: 10px;
 
 `;
 const InputButton = styled.div`
@@ -51,7 +50,9 @@ const InputButton = styled.div`
     font-weight: 400;
     line-height: normal;
     cursor: pointer;
-
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `;
 const CreateCode = styled.div`
     color: #FFF;
