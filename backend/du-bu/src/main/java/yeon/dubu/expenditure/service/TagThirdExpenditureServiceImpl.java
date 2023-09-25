@@ -9,6 +9,7 @@ import yeon.dubu.couple.exception.NoSuchCoupleException;
 import yeon.dubu.couple.repository.CoupleRepository;
 import yeon.dubu.expenditure.domain.TagSecondExpenditure;
 import yeon.dubu.expenditure.domain.TagThirdExpenditure;
+import yeon.dubu.expenditure.dto.request.MoneyExpenditureReqDto;
 import yeon.dubu.expenditure.dto.request.TagThirdExpenditureReqDto;
 import yeon.dubu.expenditure.dto.request.TagThirdExpenditureUpdateDto;
 import yeon.dubu.expenditure.exception.NoSuchTagExpenditureException;
@@ -16,6 +17,7 @@ import yeon.dubu.expenditure.repository.TagFirstExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagSecondExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagThirdExpenditureRepository;
 import yeon.dubu.user.domain.User;
+import yeon.dubu.user.enumeration.UserRole;
 import yeon.dubu.user.exception.NoSuchUserException;
 import yeon.dubu.user.repository.UserRepository;
 
@@ -49,6 +51,14 @@ public class TagThirdExpenditureServiceImpl implements TagThirdExpenditureServic
                 .build();
 
         tagThirdExpenditureRepository.save(tagThirdExpenditure);
+
+        MoneyExpenditureReqDto moneyExpenditureReqDto = MoneyExpenditureReqDto.builder()
+                .thirdTagId(tagThirdExpenditure.getId())
+                .userRole(UserRole.UNDEFINED)
+                .amount(0L)
+                .memo("")
+                .payComplete(false)
+                .build();
 
         return tagThirdExpenditure;
     }

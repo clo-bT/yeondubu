@@ -11,6 +11,7 @@ import yeon.dubu.expenditure.domain.TagFirstExpenditure;
 import yeon.dubu.expenditure.domain.TagSecondExpenditure;
 import yeon.dubu.expenditure.dto.request.TagSecondExpenditureReqDto;
 import yeon.dubu.expenditure.dto.request.TagSecondExpenditureUpdateDto;
+import yeon.dubu.expenditure.dto.request.TagThirdExpenditureReqDto;
 import yeon.dubu.expenditure.exception.NoSuchTagExpenditureException;
 import yeon.dubu.expenditure.repository.TagFirstExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagSecondExpenditureRepository;
@@ -28,6 +29,7 @@ public class TagSecondExpenditureServiceImpl implements TagSecondExpenditureServ
     private final CoupleRepository coupleRepository;
     private final TagFirstExpenditureRepository tagFirstExpenditureRepository;
     private final TagSecondExpenditureRepository tagSecondExpenditureRepository;
+    private final TagThirdExpenditureService tagThirdExpenditureService;
 
     /**
      * secondTag 등록
@@ -48,6 +50,13 @@ public class TagSecondExpenditureServiceImpl implements TagSecondExpenditureServ
                 .build();
 
         tagSecondExpenditureRepository.save(tagSecondExpenditure);
+
+        TagThirdExpenditureReqDto tagThirdExpenditureReqDto = TagThirdExpenditureReqDto.builder()
+                .secondTagId(tagSecondExpenditure.getId())
+                .thirdTagName("기타")
+                .build();
+
+        tagThirdExpenditureService.insertThirdTag(tagThirdExpenditureReqDto, userId);
 
         return tagSecondExpenditure;
     }

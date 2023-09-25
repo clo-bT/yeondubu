@@ -98,7 +98,6 @@ class TagThirdExpenditureServiceImplTest {
     void insertThirdTag() {
         // given
         TagThirdExpenditureReqDto thirdExpenditureReqDto = TagThirdExpenditureReqDto.builder()
-                .firstTagId(TAG1.getId())
                 .secondTagId(TAG2.getId())
                 .thirdTagName("침대")
                 .build();
@@ -117,7 +116,6 @@ class TagThirdExpenditureServiceImplTest {
     void updateThirdTag() {
         // given
         TagThirdExpenditureReqDto thirdExpenditureReqDto = TagThirdExpenditureReqDto.builder()
-                .firstTagId(TAG1.getId())
                 .secondTagId(TAG2.getId())
                 .thirdTagName("침대")
                 .build();
