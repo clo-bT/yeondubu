@@ -3,11 +3,27 @@ import styled from 'styled-components';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
-const Container = styled.div``
-const CodeDiv = styled.div`
+const Container = styled.div`
+    background-color: #FFD0D0;
+    height: calc(var(--vh, 1vh) * 100);
+    width: 100%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+`
+const CodeBox = styled.div`
 width: 343px;
 height: 296px;
+border-radius: 15px;
+background: #F5F5F5;
 `
+const InVite = styled.div`
+
+`
+const CodeDiv = styled.div`
+
+`
+const Reload = styled.div``
 const Exit = styled.div``
 const Timer = styled.div``
 
@@ -54,18 +70,17 @@ const InvitationCode = () => {
         const timer = setInterval(() => {
             setTimeLeft((prevTime) => prevTime - INTERVAL);
             sendRandomCode();
-
         }, INTERVAL);
+
         if (timeLeft === MINUTES_IN_MS) {
             generateRandomCode();
             sendRandomCode();
-
         }
+
         if (timeLeft <= 0) {
             clearInterval(timer);
             setTimeLeft(MINUTES_IN_MS);
             generateRandomCode();
-
             console.log('타이머가 종료, 인증코드 재생성.');
         }
 
@@ -75,15 +90,19 @@ const InvitationCode = () => {
     }, [timeLeft, MINUTES_IN_MS]);
     
 
-
+    function handleReloadButtonClick() {
+        window.location.reload();
+      }
 
     return (
         <Container>
-            <CodeDiv>
-                { code }
-            </CodeDiv>
-            <Timer>{minutes} : {second}</Timer>
-            <Exit onClick={() => navigate("/input")}>닫기</Exit>
+            <CodeBox>
+                <InVite>초대 코드</InVite>
+                <CodeDiv>{ code }</CodeDiv>
+                <Timer>남은 시간 {minutes} : {second}</Timer>
+                <Reload onClick={handleReloadButtonClick}>코드 재생성하기</Reload>
+                <Exit onClick={() => navigate("/invite")}>닫기</Exit>
+            </CodeBox>
         </Container>
     );
 };
