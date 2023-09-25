@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import yeon.dubu.couple.dto.request.CoupleInfoReqDto;
 import yeon.dubu.couple.service.CoupleService;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Slf4j
 @RestController
