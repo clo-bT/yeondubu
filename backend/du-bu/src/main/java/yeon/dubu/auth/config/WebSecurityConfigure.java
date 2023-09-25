@@ -29,6 +29,8 @@ public class WebSecurityConfigure {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        System.out.println("http = " + http);
+
         //httpBasic, csrf, formLogin, rememberMe, logout, session disable
         http
                 .csrf(AbstractHttpConfigurer::disable
