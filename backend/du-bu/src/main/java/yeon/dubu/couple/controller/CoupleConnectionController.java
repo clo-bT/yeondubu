@@ -21,6 +21,7 @@ import yeon.dubu.user.domain.User;
 @RestController
 @RequestMapping("/api/v1/couples")
 @RequiredArgsConstructor
+@CrossOrigin(origins = {"http://localhost:3000", "https://localhost:3000", "https://j9a307.p.ssafy.io:3000", "https://j9a307.p.ssafy.io"})
 public class CoupleConnectionController {
     private final CoupleConnectionService coupleConnectionService;
     @PostMapping("/code/{code}")
