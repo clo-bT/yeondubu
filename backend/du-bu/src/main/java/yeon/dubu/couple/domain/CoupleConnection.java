@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
+import yeon.dubu.BaseTimeEntity;
 import yeon.dubu.user.domain.User;
 
 @DynamicInsert
@@ -21,7 +22,7 @@ import yeon.dubu.user.domain.User;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CoupleConnection {
+public class CoupleConnection extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
