@@ -5,6 +5,7 @@ import static jakarta.persistence.FetchType.LAZY;
 import jakarta.persistence.*;
 import lombok.*;
 import org.antlr.v4.runtime.misc.NotNull;
+import org.hibernate.annotations.ColumnDefault;
 import yeon.dubu.BaseTimeEntity;
 import yeon.dubu.auth.enumeration.AuthProvider;
 import yeon.dubu.auth.enumeration.RoleType;
