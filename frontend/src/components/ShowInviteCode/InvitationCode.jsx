@@ -92,7 +92,11 @@ const InvitationCode = () => {
         .then((response) => {
             console.log(response.data.state);
             // console.log(code)
+            // 코드 생성이야. 이 사람이 host
             if (response.data.state === 'finish') {
+                localStorage.setItem('partner_id', response.data.partner_id);
+                localStorage.setItem('partner_name', response.data.partner_name);
+                localStorage.setItem('partner_img', response.data.partner_img);
                 navigate(`/checkuser`)
             };
         })
