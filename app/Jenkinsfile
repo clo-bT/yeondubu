@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Build') {
+            steps {
+                sh 'docker build -t flask_server .'
+            }
+        }
+        
+        stage('Deploy') {
+            steps {
+                sh 'docker run -d -p 5000:5000 --name flask_server flask_server'
+            }
+        }
+    }
+    
+    post {
+        always {
+            sh 'docker stop flask_server || true'
+            sh 'docker rm flask_server || true'
+            sh 'docker rmi flask_server || true'
+        }
+    }
+}
