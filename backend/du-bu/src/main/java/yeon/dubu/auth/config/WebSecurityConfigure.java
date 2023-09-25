@@ -72,7 +72,7 @@ public class WebSecurityConfigure {
 
         //jwt filter 설정
         http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
-
+        System.out.println("http = " + http);
         return http.build();
     }
 }
