@@ -111,7 +111,7 @@ const CodeInput = () => {
                 // 요청 성공 시 처리
                 console.log('요청 성공:', response.data.state);
                 if (response.data.state === 'success') {
-                    navigate(`/check`)
+                    navigate(`/checkuser`)
                 };
             })
             .catch((error) => {
@@ -138,7 +138,7 @@ const CodeInput = () => {
                     ))}
                 </InputContainer>
                 <InputButton onClick={sendCodeToBackend}>코드 입력</InputButton>
-                <CreateCode onClick={() => navigate("/invite")}>코드 생성</CreateCode>
+                <CreateCode onClick={() => navigate("/invitepageentercode")}>코드 생성</CreateCode>
             </CodeInputBox>
         </Container>
     );

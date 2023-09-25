@@ -33,7 +33,7 @@ const InvitationCode = () => {
             console.log(response.data.state);
             // console.log(code)
             if (response.data.state === 'finish') {
-                navigate(`/check`)
+                navigate(`/checkuser`)
             };
         })
         .catch((error) => {
