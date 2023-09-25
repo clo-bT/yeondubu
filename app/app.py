@@ -2,12 +2,10 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 import os
 import sys
-from utilities import verify, image_processor, sim_search
+from utilities import check_keys, image_processor, sim_search
 
 app = Flask(__name__)
-# CORS(app)
-cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
-
+cors = CORS(app, resources={r"/api/*": {"origins": ["https://j9a307.p.ssafy.io:3000/*", "http://localhost:3000/*"]}})
 
 @app.route('/api')
 def home():
@@ -17,16 +15,18 @@ def home():
 # @cross_origin(origin='*localhost',headers=['Content- Type','Authorization','video/x-matroska;codecs=avc1', 'audio/ogg codecs=opus', 'audio/wav'])
 def image_upload():
     data = request.form
-    if verify(data):
-        from PIL import Image
-        from io import BytesIO
-        img = request.files.get('image')
-        img = img.read()
-        img = Image.open(BytesIO(img))
-        img = image_processor(img)
-        sim = sim_search(img, data)
-        return jsonify({'result': sim})
-    else:
+    check_list = ['category', 'subcategory', 'brand', 'lprice', 'hprice']
+    try:
+        if check_keys(data, check_list):
+            from PIL import Image
+            from io import BytesIO
+            img = request.files.get('image')
+            img = img.read()
+            img = Image.open(BytesIO(img))
+            img = image_processor(img)
+            sim = sim_search(img, data)
+            return jsonify({'success' : True, 'result': sim})
+    except:
         return jsonify({'success': False})
     
 @app.route('/api/loanupload', methods=['POST'])
@@ -52,3 +52,23 @@ def loan_upload():
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000, host='0.0.0.0')
+
+'''
+import os
+import json
+import h5py
+from dotenv import load_dotenv
+
+if __name__ == '__main__':
+    load_dotenv()
+    query_file    = os.environ.get('query_file')
+    target_file   = os.environ.get('target_file')
+    
+    with open(query_file, 'r', encoding='utf-8') as file:
+        queries = json.load(file)
+
+    with h5py.File(target_file, 'r') as hdf5_file:
+        for category in queries.keys():
+            for subcategory, _ in queries[category].items():
+                print(json.loads(hdf5_file[category][subcategory]['category_data'][()]))
+'''
