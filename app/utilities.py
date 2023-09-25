@@ -1,14 +1,18 @@
-def veiry(data):
-    pass
+def check_keys(data, check_list):
+    if set(check_list) != set(data.keys()):
+        return False
+    if len(check_list) != len(data.keys()):
+        return False
+    return True
 
 def image_processor(img):
     import sys
-    sys.path.append("../img_utils")
+    from rembg import remove
     from feature_extractor import FeatureExtractor
-    from bgrem import background_remove
 
     fe = FeatureExtractor()
-    img = background_remove(img)
+
+    img = remove(img)
     feature = fe.extract(img)
     return feature
 
