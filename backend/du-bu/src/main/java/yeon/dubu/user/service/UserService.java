@@ -5,5 +5,5 @@ import yeon.dubu.user.dto.response.UserResDto;
 public interface UserService {
 
     UserResDto retrieveMember(Long userId);
-
+    void deleteUser(Long userId);
 }
