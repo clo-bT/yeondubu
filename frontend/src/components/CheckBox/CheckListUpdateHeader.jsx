@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import TagSelect from '../TagInput/TagSelect';
 
 const Box = styled.div`
 display: flex;
@@ -57,11 +58,20 @@ margin-top: 35px;
 width: 100%;
 height: 1.5px;
 `
-const CheckListHeader = () => {
+const CheckListUpdateHeader = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const openModal = () => {
+      setIsModalOpen(true);
+    };
+  
+    const closeModal = () => {
+      setIsModalOpen(false);
+    };
     return (
         <div>
             <Box>
-            <AddTag href="/">추가하기</AddTag>
+            <AddTag onClick={openModal}>추가하기</AddTag>
             <SaveAtag href="/">적용하기</SaveAtag>
 
             </Box>
@@ -69,8 +79,9 @@ const CheckListHeader = () => {
                 <CheckIcon>✔</CheckIcon></CheckHeader>
             <CheckDetail>우리 부부의 결혼식에 필요한 <br />모든 것들을 직접 입력해보세요</CheckDetail>
             <HorizonLine />
+            <TagSelect isOpen={isModalOpen} onClose={closeModal} />
         </div>
     );
 };
 
-export default CheckListHeader;
+export default CheckListUpdateHeader;

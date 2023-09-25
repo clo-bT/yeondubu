@@ -1,8 +1,10 @@
 import { React, useState } from 'react';
 import styled from 'styled-components';
 import { AiFillMinusCircle } from "react-icons/ai";
+import { AiFillPlusCircle } from "react-icons/ai";
 
 const Container = styled.div`
+margin-top:-25px;
 display: flex;
 flex-direction: column;
 align-items: flex-start;
@@ -15,7 +17,7 @@ font-size: 18px;
 font-style: normal;
 font-weight: 700;
 line-height: normal;    
-
+margin-top:40px;
 `
 const SecondTag = styled.p`
 color: #000;
@@ -26,15 +28,6 @@ font-weight: 400;
 line-height: normal;    
 
 `
-// const ThirdTag = styled.p`
-// color: #000;
-// text-align: left;
-// font-size: 16px;
-// font-style: normal;
-// font-weight: 400;
-// line-height: normal;
-// margin-right: 10px;
-// `
 
 const ThirdTagContainer = styled.div`
   display: flex;
@@ -44,10 +37,9 @@ const ThirdTagContainer = styled.div`
 `
 const MinusIcon = styled(AiFillMinusCircle)`
 color: #FF937D4D;
-margin-right: 5px;
 cursor: pointer;
+margin-left: 7px;
 `
-
 
 const CheckListUpdate = () => {
   const [dummyData, setDummyData] = useState([
@@ -124,7 +116,7 @@ const CheckListUpdate = () => {
     },
   ]);
 
-      
+  const uniqueFirstTags = {}; // 고유한 firstTag를 추적하기 위한 객체
 
   const removeThirdTag = (firstTagIndex, thirdTagIndex) => {
     const updatedDummyData = [...dummyData];
@@ -136,7 +128,10 @@ const CheckListUpdate = () => {
     <Container>
       {dummyData.map((item, firstTagIndex) => (
         <div key={item.index}>
-          <FirstTag>{item.firstTag}</FirstTag>
+            {/* 첫 번째 발견시에만 FirstTag를 조건부로 렌더링합니다 */}
+            {uniqueFirstTags[item.firstTag] === undefined && (
+              <FirstTag>{item.firstTag}</FirstTag>
+            )}
           <SecondTag>{item.secondTag}</SecondTag>
           <ThirdTagContainer>
             {item.thirdTag.map((thirdItem, thirdTagIndex) => (
@@ -145,10 +140,12 @@ const CheckListUpdate = () => {
               </div>
             ))}
           </ThirdTagContainer>
+          {/* 이제 해당 firstTag를 본 것으로 표시하여 미래에 다시 렌더링되지 않도록 합니다 */}
+          {uniqueFirstTags[item.firstTag] = true}
         </div>
       ))}
     </Container>
-      );
-    };
+  );
+};
 
 export default CheckListUpdate;
