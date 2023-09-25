@@ -8,7 +8,6 @@ const AuthPage = styled.div`
 const Loading = styled.div``
 
 const LoginAuth = () => {
-    const [id, setid] = useState('');    
     const [c, setcode] = useState('')
 
 
@@ -16,7 +15,7 @@ const LoginAuth = () => {
         async function getid() {
             const code = new URL(window.location.href).searchParams.get("token");
             setcode(code)
-            window.location.href = 'http://localhost:3000/invite'
+            window.location.href = `${process.env.REACT_APP_HOME_URL}/invite`
             // try{        
             //     await axios.get(`${process.env.REACT_APP_API_ROOT}/login/oauth2/code/kakao?code=${code}`)
             //     .then(function(r){
@@ -51,7 +50,6 @@ const LoginAuth = () => {
         <AuthPage>
             <Loading>
                 토큰 :  {c}
-                {id ? <div>uuid : {id}</div> : ''}
                 <br/>로딩중
             </Loading>
         </AuthPage>
