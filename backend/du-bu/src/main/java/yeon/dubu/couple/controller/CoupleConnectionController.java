@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import yeon.dubu.couple.dto.response.CoupleCreatePartnerResDto;
 import yeon.dubu.couple.service.CoupleConnectionService;
 import yeon.dubu.user.domain.User;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Slf4j
 @RestController
