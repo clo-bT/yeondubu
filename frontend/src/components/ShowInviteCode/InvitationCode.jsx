@@ -16,16 +16,60 @@ width: 343px;
 height: 296px;
 border-radius: 15px;
 background: #F5F5F5;
+
+`
+const Exit = styled.p`
+display: flex;
+flex-direction: column;
+align-items: end;
+font-size: 22px;
+cursor: pointer;
+margin-right: 20px;
+margin-bottom: 0px;
+`
+const CodeBoxBox = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+gap: 28px;
 `
 const InVite = styled.div`
-
+color: #FF5A5A;
+text-align: center;
+font-size: 36px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
 `
+
+
 const CodeDiv = styled.div`
-
+color: rgba(0, 0, 0, 0.80);
+text-align: center;
+font-size: 42px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
 `
-const Reload = styled.div``
-const Exit = styled.div``
-const Timer = styled.div``
+const Reload = styled.div`
+color: #FF5A5A;
+text-align: center;
+font-size: 18px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+text-decoration-line: underline;
+cursor: pointer;
+`
+const Timer = styled.div`
+color: #080808;
+text-align: center;
+font-size: 15px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+`
 
 const InvitationCode = () => {
     const navigate = useNavigate();
@@ -97,11 +141,13 @@ const InvitationCode = () => {
     return (
         <Container>
             <CodeBox>
-                <InVite>초대 코드</InVite>
-                <CodeDiv>{ code }</CodeDiv>
-                <Timer>남은 시간 {minutes} : {second}</Timer>
-                <Reload onClick={handleReloadButtonClick}>코드 재생성하기</Reload>
-                <Exit onClick={() => navigate("/invite")}>닫기</Exit>
+                <Exit onClick={() => navigate("/invite")}>X</Exit>
+                <CodeBoxBox>
+                    <InVite>초대 코드</InVite>
+                    <CodeDiv>{ code }</CodeDiv>
+                    <Timer>남은 시간 {minutes} : {second}</Timer>
+                    <Reload onClick={handleReloadButtonClick}>코드 재생성하기</Reload>
+                </CodeBoxBox>
             </CodeBox>
         </Container>
     );
