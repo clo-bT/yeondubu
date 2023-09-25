@@ -52,7 +52,7 @@ public class WebSecurityConfigure {
         //oauth2Login
         http.oauth2Login(oauth2Login -> oauth2Login
                 .authorizationEndpoint(authorization -> authorization
-                        .baseUri("/api/v1/oauth2/authorization")
+                        .baseUri("/oauth2/authorization")
                         .authorizationRequestRepository(cookieAuthorizationRequestRepository)
                 )
 //                .redirectionEndpoint(redirection -> redirection
