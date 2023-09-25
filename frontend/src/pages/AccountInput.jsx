@@ -7,11 +7,12 @@
 
 // `
 import React from 'react';
+import DepositAccountInputForm from '../components/AccountInput/DepositAccountInputForm';
 
 const AccountInput = () => {
     return (
         <div>
-            
+            <DepositAccountInputForm/>
         </div>
     );
 };
