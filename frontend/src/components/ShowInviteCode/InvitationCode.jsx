@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
@@ -82,31 +82,31 @@ const InvitationCode = () => {
         setCode(randomCode)
         return randomCode;
     }
-    const sendRandomCode = useCallback(() => {
+    function sendRandomCode() {
         const accessToken = sessionStorage.getItem("token");
         axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/couples/code/${code}`, {}, {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
             },
         })
-            .then((response) => {
-                console.log(response.data.state);
-                // console.log(code)
-                // 코드 생성이야. 이 사람이 host
-                if (response.data.state === 'finish') {
-                    localStorage.setItem('partner_id', response.data.partner_id);
-                    localStorage.setItem('partner_name', response.data.partner_name);
-                    localStorage.setItem('partner_img', response.data.partner_img);
-                    navigate(`/checkuser`)
-                };
-            })
-            .catch((error) => {
-                console.error('코드 전송 실패', error);
-            });
-    }, [code,navigate]);
+        .then((response) => {
+            console.log(response.data.state);
+            // console.log(code)
+            // 코드 생성이야. 이 사람이 host
+            if (response.data.state === 'finish') {
+                localStorage.setItem('partner_id', response.data.partner_id);
+                localStorage.setItem('partner_name', response.data.partner_name);
+                localStorage.setItem('partner_img', response.data.partner_img);
+                navigate(`/checkuser`)
+            };
+        })
+        .catch((error) => {
+            console.error('코드 전송 실패', error);
+        });
+    }
     
     // 타이머
-    const MINUTES_IN_MS = 3 * 60 * 1000;
+    const MINUTES_IN_MS = 3 * 60 * 1000 - 1;
     const INTERVAL = 1000;
     const [timeLeft, setTimeLeft] = useState(MINUTES_IN_MS);
 
@@ -135,12 +135,12 @@ const InvitationCode = () => {
         return () => {
             clearInterval(timer);
         };
-    }, [timeLeft, MINUTES_IN_MS, sendRandomCode]);
+    }, [timeLeft, MINUTES_IN_MS]);
     
 
     function handleReloadButtonClick() {
         window.location.reload();
-    }
+      }
 
     return (
         <Container>

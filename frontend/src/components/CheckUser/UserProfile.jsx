@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 // import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
@@ -91,7 +91,6 @@ const UserProfile = () => {
     const partnerName = localStorage.getItem('partner_name');
     const partnerImg = localStorage.getItem('partner_img');
     const role = localStorage.getItem('role');
-    const [isChecking, setIsChecking] = useState(false);
     const handleCheck = () => {
         axios.get(`${process.env.REACT_APP_API_ROOT}/api/v1/couples/check1/${role}`, {
             headers: {
@@ -101,13 +100,16 @@ const UserProfile = () => {
             .then(response => {
                 console.log('요청 성공', response.data);
                 if (response.data === 'waiting') {
-                    setIsChecking(true)
-                    console.log('기다리는 중')
+                    navigate('/invitepageentercode')
+                    
                 }
                 else if(response.data === 'finish') {
                     navigate('/accountinput')
                 }
                 else {
+                    localStorage.setItem('partner_id', response.data.partner_id);
+                    localStorage.setItem('partner_name', response.data.partner_name);
+                    localStorage.setItem('partner_img', response.data.partner_img);
                     navigate('/invite')
                 }
             })
@@ -141,9 +143,7 @@ const UserProfile = () => {
                     
                         <CheckDiv>연인을 확인해주세요</CheckDiv>
                         <ButtonGroup>
-                        <RightButton onClick={handleCheck} disabled={isChecking}>
-                            {isChecking ? '상대방이 확인 중입니다.' : '확인'}
-                        </RightButton>
+                            <RightButton onClick={handleCheck}>확인</RightButton>
                             <WrongButton onClick={handleCancel}>취소</WrongButton>
                         </ButtonGroup>
                     
