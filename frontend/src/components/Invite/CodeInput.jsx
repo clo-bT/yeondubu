@@ -115,6 +115,7 @@ const CodeInput = () => {
                     localStorage.setItem('partner_id', response.data.partner_id);
                     localStorage.setItem('partner_name', response.data.partner_name);
                     localStorage.setItem('partner_img', response.data.partner_img);
+                    localStorage.setItem('role', 'guest');
                     navigate(`/checkuser`)
                 };
             })
