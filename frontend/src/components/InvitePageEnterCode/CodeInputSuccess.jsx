@@ -85,24 +85,20 @@ const CodeInputSuccess = () => {
     const role = localStorage.getItem('role');
     function sendCheck() {
         const accessToken = sessionStorage.getItem("token");
-        axios.get(`${process.env.REACT_APP_API_ROOT}/api/v1/couples/check1/${role}`, {
+        axios.get(`${process.env.REACT_APP_API_ROOT}/api/v1/couples/check2/${role}`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
             }
         })
             .then(response => {
                 console.log('요청 성공', response.data);
-                if (response.data === 'waiting') {
-                    navigate('/invitepageentercode')
-                    
-                }
-                else if(response.data === 'finish') {
+                if(response.data === 'finish') {
                     navigate('/accountinput')
                 }
-                else {
-                    localStorage.setItem('partner_id', response.data.partner_id);
-                    localStorage.setItem('partner_name', response.data.partner_name);
-                    localStorage.setItem('partner_img', response.data.partner_img);
+                else if(response.data === 'cancelled') {
+                    localStorage.removeItem('partner_id');
+                    localStorage.removeItem('partner_name');
+                    localStorage.removeItem('partner_img');
                     navigate('/invite')
                 }
             })
