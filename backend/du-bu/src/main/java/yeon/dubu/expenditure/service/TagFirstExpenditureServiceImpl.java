@@ -42,14 +42,16 @@ public class TagFirstExpenditureServiceImpl implements TagFirstExpenditureServic
                 .firstTagName(firstTagName)
                 .build();
 
+        TagFirstExpenditure savedFristTag = tagFirstExpenditureRepository.save(tagFirstExpenditure);
+
         TagSecondExpenditureReqDto tagSecondExpenditureReqDto = TagSecondExpenditureReqDto.builder()
-                .firstTagId(tagFirstExpenditure.getId())
+                .firstTagId(savedFristTag.getId())
                 .secondTagName("기타")
                 .build();
 
         tagSecondExpenditureService.insertSecondTag(tagSecondExpenditureReqDto, userId);
 
-        return tagFirstExpenditureRepository.save(tagFirstExpenditure);
+        return savedFristTag;
     }
 
     @Override
@@ -58,8 +60,7 @@ public class TagFirstExpenditureServiceImpl implements TagFirstExpenditureServic
         User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
         Couple couple = coupleRepository.findById(user.getCouple().getId()).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
         TagFirstExpenditure tagFirstExpenditure = tagFirstExpenditureRepository.findById(tagFirstExpenditureUpdateDto.getFirstTagId()).orElseThrow(() -> new NoSuchTagExpenditureException("해당하는 태그 정보가 없습니다."));
-
-        tagFirstExpenditureUpdateDto.updateFirstTag(tagFirstExpenditure);
+        tagFirstExpenditure.setFirstTagName(tagFirstExpenditureUpdateDto.getFirstTagName());
     }
 
 }
