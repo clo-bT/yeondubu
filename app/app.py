@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 import os
 import sys
-from utilities import check_keys, image_processor, sim_search
+from utilities import check_keys, none_brand_included, image_processor, sim_search
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/api/*": {"origins": ["https://j9a307.p.ssafy.io:3000/*", "http://localhost:3000/*"]}})
@@ -14,12 +14,15 @@ def home():
 @app.route('/api/imgupload', methods=['POST'])
 # @cross_origin(origin='*localhost',headers=['Content- Type','Authorization','video/x-matroska;codecs=avc1', 'audio/ogg codecs=opus', 'audio/wav'])
 def image_upload():
-    data = request.form
-    check_list = ['category', 'subcategory', 'brand', 'lprice', 'hprice']
     try:
-        if check_keys(data, check_list):
+        if not request.headers.get('Content-Type'):
+            raise
+        data = request.form
+        if check_keys(data, ['category', 'subcategory', 'brand', 'lprice', 'hprice']):
             from PIL import Image
             from io import BytesIO
+            if data['brand'] == '':
+                data['brand'] = none_brand_included(data)
             img = request.files.get('image')
             img = img.read()
             img = Image.open(BytesIO(img))
