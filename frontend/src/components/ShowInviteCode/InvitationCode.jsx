@@ -106,7 +106,7 @@ const InvitationCode = () => {
     }
     
     // 타이머
-    const MINUTES_IN_MS = 3 * 60 * 1000;
+    const MINUTES_IN_MS = 3 * 60 * 1000 - 1;
     const INTERVAL = 1000;
     const [timeLeft, setTimeLeft] = useState(MINUTES_IN_MS);
 
