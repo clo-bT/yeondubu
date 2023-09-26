@@ -16,8 +16,4 @@ public class TagFirstExpenditureUpdateDto {
         this.firstTagId = firstTagId;
         this.firstTagName = firstTagName;
     }
-
-    public void updateFirstTag(TagFirstExpenditure tagFirstExpenditure) {
-        tagFirstExpenditure.setFirstTagName(firstTagName);
-    }
 }

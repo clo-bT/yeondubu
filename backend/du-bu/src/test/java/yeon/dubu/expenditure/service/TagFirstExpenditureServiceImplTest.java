@@ -102,6 +102,7 @@ class TagFirstExpenditureServiceImplTest {
         tagFirstExpenditureService.updateFirstTag(tagFirstExpenditureUpdateDto, USER1.getId());
 
         // then
+        System.out.println("tagFirstExpenditureRepository = " + tagFirstExpenditureRepository.findById(tagFirstExpenditure.getId()).get().getFirstTagName());
         assertThat(tagFirstExpenditureRepository.findById(tagFirstExpenditure.getId()).get().getFirstTagName()).isEqualTo(tagFirstExpenditureUpdateDto.getFirstTagName());
     }
 }
