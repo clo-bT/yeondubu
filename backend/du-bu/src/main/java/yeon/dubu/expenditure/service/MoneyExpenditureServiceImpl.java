@@ -53,7 +53,7 @@ public class MoneyExpenditureServiceImpl implements MoneyExpenditureService{
         User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
         Couple couple = coupleRepository.findById(user.getCouple().getId()).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
         TagThirdExpenditure tagThirdExpenditure = tagThirdExpenditureRepository.findById(moneyExpenditureReqDto.getThirdTagId()).orElseThrow(() -> new NoSuchTagExpenditureException("해당하는 태그 정보가 없습니다."));
-        MoneyExpenditure updateMoney = moneyExpenditureRepository.findByTagThirdExpenditure(tagThirdExpenditure).orElseThrow(() -> new NoSuchExpenditureException("해당하는 지출 정보가 없습니다."));
+        MoneyExpenditure updateMoney = moneyExpenditureRepository.findByTagThirdExpenditureId(tagThirdExpenditure.getId()).orElseThrow(() -> new NoSuchExpenditureException("해당하는 지출 정보가 없습니다."));
 
         // thirdTag 등록 후 생성된 moneyExpenditure row 초기 업데이트
         MoneyExpenditure moneyExpenditure = MoneyExpenditure.builder()
@@ -189,7 +189,7 @@ public class MoneyExpenditureServiceImpl implements MoneyExpenditureService{
         User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
         Couple couple = coupleRepository.findById(user.getCouple().getId()).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
         TagThirdExpenditure tagThirdExpenditure = tagThirdExpenditureRepository.findById(thirdTagId).orElseThrow(() -> new NoSuchTagExpenditureException("해당하는 태그 정보가 없습니다."));
-        MoneyExpenditure moneyExpenditure = moneyExpenditureRepository.findByTagThirdExpenditure(tagThirdExpenditure).orElseThrow(() -> new NoSuchExpenditureException("해당하는 지출 정보가 없습니다."));
+        MoneyExpenditure moneyExpenditure = moneyExpenditureRepository.findByTagThirdExpenditureId(tagThirdExpenditure.getId()).orElseThrow(() -> new NoSuchExpenditureException("해당하는 지출 정보가 없습니다."));
 
         MoneyExpenditureDetailResDto moneyExpenditureDetailResDto = MoneyExpenditureDetailResDto.builder()
                 .expenditureId(moneyExpenditure.getId())

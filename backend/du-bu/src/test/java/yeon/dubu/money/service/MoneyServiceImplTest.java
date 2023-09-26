@@ -167,7 +167,7 @@ class MoneyServiceImplTest {
                 .build();
 
         MoneyExpenditure moneyExpenditure = moneyExpenditureService.insertExpenditure(moneyExpenditureReqDto, USER1.getId());
-        Optional<MoneyExpenditure> savedExpenditure = moneyExpenditureRepository.findByTagThirdExpenditure(TAG3);
+        Optional<MoneyExpenditure> savedExpenditure = moneyExpenditureRepository.findByTagThirdExpenditureId(TAG3.getId());
 
         // when
         TotalExpectExpenditureResDto totalExpectExpenditure = moneyService.searchTotalExpectExpenditure(USER2.getId());

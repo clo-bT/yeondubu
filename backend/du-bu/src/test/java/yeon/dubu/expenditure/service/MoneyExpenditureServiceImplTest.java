@@ -148,9 +148,9 @@ class MoneyExpenditureServiceImplTest {
     @Transactional
     void insertExpenditure() {
         // given
-        System.out.println("111moneyExpenditureRepository = " + moneyExpenditureRepository.findByTagThirdExpenditure(TAG3));
+        System.out.println("111moneyExpenditureRepository = " + moneyExpenditureRepository.findByTagThirdExpenditureId(TAG3.getId()));
 
-        Optional<MoneyExpenditure> getTag3 = moneyExpenditureRepository.findByTagThirdExpenditure(TAG3);
+        Optional<MoneyExpenditure> getTag3 = moneyExpenditureRepository.findByTagThirdExpenditureId(TAG3.getId());
         // when
         MoneyExpenditureReqDto moneyExpenditureReqDto = MoneyExpenditureReqDto.builder()
                 .thirdTagId(TAG3.getId())
@@ -165,8 +165,8 @@ class MoneyExpenditureServiceImplTest {
 
         // then
         System.out.println("moneyExpenditure = " + moneyExpenditure);
-        System.out.println("11moneyExpenditureRepository = " + moneyExpenditureRepository.findByTagThirdExpenditure(TAG3));
-        assertThat(moneyExpenditureRepository.findByTagThirdExpenditure(TAG3).get().getAmount()).isEqualTo(100000L);
+        System.out.println("11moneyExpenditureRepository = " + moneyExpenditureRepository.findByTagThirdExpenditureId(TAG3.getId()));
+        assertThat(moneyExpenditureRepository.findByTagThirdExpenditureId(TAG3.getId()).get().getAmount()).isEqualTo(100000L);
         assertThat(moneyRepository.findByUserId(USER1.getId()).get().getExpectExpenditure()).isEqualTo(moneyExpenditureReqDto.getAmount());
     }
 
@@ -185,7 +185,7 @@ class MoneyExpenditureServiceImplTest {
                 .build();
 
         moneyExpenditureService.insertExpenditure(moneyExpenditureReqDto, USER1.getId());
-        Optional<MoneyExpenditure> savedExpenditure = moneyExpenditureRepository.findByTagThirdExpenditure(TAG3);
+        Optional<MoneyExpenditure> savedExpenditure = moneyExpenditureRepository.findByTagThirdExpenditureId(TAG3.getId());
 
         // when
         MoneyExpenditureUpdateReqDto moneyExpenditureUpdateReqDto = MoneyExpenditureUpdateReqDto.builder()
@@ -224,7 +224,7 @@ class MoneyExpenditureServiceImplTest {
 
         // then
         System.out.println("expectExpenditure = " + expectExpenditure);
-        assertThat(moneyExpenditureRepository.findByTagThirdExpenditure(TAG3).get().getId()).isEqualTo(expectExpenditure.getExpenditureId());
+        assertThat(moneyExpenditureRepository.findByTagThirdExpenditureId(TAG3.getId()).get().getId()).isEqualTo(expectExpenditure.getExpenditureId());
 
 
     }
@@ -242,7 +242,7 @@ class MoneyExpenditureServiceImplTest {
                 .build();
 
         MoneyExpenditure moneyExpenditure = moneyExpenditureService.insertExpenditure(moneyExpenditureReqDto, USER1.getId());
-        Optional<MoneyExpenditure> findExpenditure = moneyExpenditureRepository.findByTagThirdExpenditure(TAG3);
+        Optional<MoneyExpenditure> findExpenditure = moneyExpenditureRepository.findByTagThirdExpenditureId(TAG3.getId());
         // when
         moneyExpenditureService.deleteExpenditure(findExpenditure.get().getId(), USER2.getId());
 
