@@ -3,7 +3,7 @@ import wife from '../../assets/Common/wife.svg';
 import styled from 'styled-components';
 
 const Container = styled.div`
-margin-top: 70px;
+margin-top: 40px;
 display: inline-flex;
 flex-direction: column;
 align-items: center;
@@ -13,15 +13,14 @@ align-items: center;
 const InfoBox = styled.div`
 width: 254px;
 height: 205px;
-margin-bottom: 90px;
+margin-bottom: 20px;
 
 `
 const WifeImg = styled.img`
-width: 139.232px;
-height: 146.483px;
+width: 130px;
+height: 130px;
 flex-shrink: 0;
 border-radius: 146.483px;
-margin-top: 50px;
 `
 const InputAccount = styled.p`
 color: #000;
@@ -32,14 +31,16 @@ font-weight: 400;
 line-height: normal;
 `
 
+
 const ScoreInputHeader = () => {
     return (
     <Container>
         <InfoBox>
         <WifeImg src={wife}/>
-        <InputAccount>손예진님의 신용점수를 입력해주세요</InputAccount>
+        <InputAccount>맞춤형 서비스를 이용하시려면 <br />아래 정보를 입력해주세요</InputAccount>
 
         </InfoBox>
+
     </Container>
     );
 };

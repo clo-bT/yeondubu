@@ -1,66 +1,66 @@
 import React from 'react';
-import wife from '../../assets/Common/wife.svg';
 import styled from 'styled-components';
-import { CgNametag } from 'react-icons/cg';
+import wife from '../../assets/Common/wife.svg';
 
 const Container = styled.div`
-display: inline-flex;
-flex-direction: column;
-
+  display: flex;
+  margin-left: 20px;
+  margin-top: 20px;
 `
-const ContentContainer = styled.div`
-display: flex;
-align-items: flex-start;
-position: absolute;
-top: 0;
-left: 0;
-margin: 20px;
-margin-top: 30px; 
-`
-const WifeImg = styled.img`
-width: 50px;
-height: 50px;
-flex-shrink: 0;
-border-radius: 50px;
-background: url(<이미지-경로>), lightgray 50% / cover no-repeat;
-margin-top: 40px;
-margin-right: 20px;
-`
-
-const BackAtag = styled.a`
+const GoBack = styled.a`
+text-decoration: none;
 color: #000;
 font-size: 15px;
 font-style: normal;
 font-weight: 400;
 line-height: normal;
-text-decoration: none;
-position: absolute;
-top: 0;
-left: 0;
-margin: 20px; 
-
+display: flex;
+align-items: center; 
+margin: 20px;
 `
 
-const Nametag = styled.p`
+const MyProfile = styled.img`
+width: 57px;
+height: 57px;   
+`
+const MyInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; 
+  margin-left: 10px;
+  gap: 10px;
+`
+
+const MyName = styled.p`
 color: #000;
 font-size: 20px;
 font-style: normal;
 font-weight: 400;
-line-height: normal;
-margin-top: 50px;
-
+line-height: normal;    
+margin: 0;
 `
 
-
+const MyAccount = styled.p`
+color: #6E7781;
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;    
+margin: 0;
+`
 const MyAccountProfile = () => {
     return (
+        <>
+        <GoBack href="/" >뒤로가기</GoBack>
         <Container>
-            <BackAtag href="/">뒤로가기</BackAtag>
-            <ContentContainer>
-            <WifeImg src={wife}/>
-            <Nametag>손예진님</Nametag>
-            </ContentContainer>
+            <MyProfile src={wife}/>
+            <MyInfo>
+                <MyName>손예진님</MyName>
+            </MyInfo>
+
         </Container>
+        </>
+ 
     );
 };
 
