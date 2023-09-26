@@ -36,7 +36,8 @@ public class CustomTagExpenditureRepositoryImpl implements CustomTagExpenditureR
                         qTagThirdExpenditure.id,
                         qTagThirdExpenditure.thirdTagName,
                         qMoneyExpenditure.id,
-                        qMoneyExpenditure.amount
+                        qMoneyExpenditure.amount,
+                        qMoneyExpenditure.payComplete
                 ))
                 .from(qTagFirstExpenditure)
                 .join(qTagFirstExpenditure).on(qCouple.id.eq(qTagFirstExpenditure.couple.id))

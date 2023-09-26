@@ -17,7 +17,4 @@ public class TagThirdExpenditureUpdateDto {
         this.thirdTagName = thirdTagName;
     }
 
-    public void updateThirdTagName(TagThirdExpenditure tagThirdExpenditure) {
-        tagThirdExpenditure.setThirdTagName(thirdTagName);
-    }
 }

@@ -7,15 +7,19 @@ import org.springframework.transaction.annotation.Transactional;
 import yeon.dubu.couple.domain.Couple;
 import yeon.dubu.couple.exception.NoSuchCoupleException;
 import yeon.dubu.couple.repository.CoupleRepository;
+import yeon.dubu.expenditure.domain.MoneyExpenditure;
 import yeon.dubu.expenditure.domain.TagSecondExpenditure;
 import yeon.dubu.expenditure.domain.TagThirdExpenditure;
+import yeon.dubu.expenditure.dto.request.MoneyExpenditureReqDto;
 import yeon.dubu.expenditure.dto.request.TagThirdExpenditureReqDto;
 import yeon.dubu.expenditure.dto.request.TagThirdExpenditureUpdateDto;
 import yeon.dubu.expenditure.exception.NoSuchTagExpenditureException;
+import yeon.dubu.expenditure.repository.MoneyExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagFirstExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagSecondExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagThirdExpenditureRepository;
 import yeon.dubu.user.domain.User;
+import yeon.dubu.user.enumeration.UserRole;
 import yeon.dubu.user.exception.NoSuchUserException;
 import yeon.dubu.user.repository.UserRepository;
 
@@ -29,7 +33,8 @@ public class TagThirdExpenditureServiceImpl implements TagThirdExpenditureServic
     private final TagFirstExpenditureRepository tagFirstExpenditureRepository;
     private final TagSecondExpenditureRepository tagSecondExpenditureRepository;
     private final TagThirdExpenditureRepository tagThirdExpenditureRepository;
-
+    private final MoneyExpenditureService moneyExpenditureService;
+    private final MoneyExpenditureRepository moneyExpenditureRepository;
     /**
      * thirdTag 등록
      * @param tagThirdExpenditureReqDto
@@ -48,9 +53,21 @@ public class TagThirdExpenditureServiceImpl implements TagThirdExpenditureServic
                 .thirdTagName(tagThirdExpenditureReqDto.getThirdTagName())
                 .build();
 
-        tagThirdExpenditureRepository.save(tagThirdExpenditure);
+        TagThirdExpenditure savedThirdTag = tagThirdExpenditureRepository.save(tagThirdExpenditure);
 
-        return tagThirdExpenditure;
+        // thirdTag 등록 후 moneyExpenditure row 생성
+        MoneyExpenditure moneyExpenditure = MoneyExpenditure.builder()
+                .tagThirdExpenditure(savedThirdTag)
+                .userRole(UserRole.UNDEFINED)
+                .amount(0L)
+                .memo("")
+                .payComplete(Boolean.FALSE)
+                .build();
+
+        moneyExpenditureRepository.save(moneyExpenditure);
+
+
+        return savedThirdTag;
     }
 
     @Override
@@ -59,7 +76,6 @@ public class TagThirdExpenditureServiceImpl implements TagThirdExpenditureServic
         User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
         Couple couple = coupleRepository.findById(user.getCouple().getId()).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
         TagThirdExpenditure tagThirdExpenditure = tagThirdExpenditureRepository.findById(tagThirdExpenditureUpdateDto.getThirdTagId()).orElseThrow(() -> new NoSuchTagExpenditureException("해당하는 태그 정보가 없습니다."));
-
-        tagThirdExpenditureUpdateDto.updateThirdTagName(tagThirdExpenditure);
+        tagThirdExpenditure.setThirdTagName(tagThirdExpenditureUpdateDto.getThirdTagName());
     }
 }

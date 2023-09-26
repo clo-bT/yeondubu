@@ -5,6 +5,7 @@ import lombok.*;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.hibernate.annotations.ColumnDefault;
 import yeon.dubu.BaseTimeEntity;
+import yeon.dubu.expenditure.dto.request.MoneyExpenditureReqDto;
 import yeon.dubu.user.enumeration.UserRole;
 
 import java.time.LocalDate;
@@ -47,5 +48,13 @@ public class MoneyExpenditure extends BaseTimeEntity {
         this.memo = memo;
         this.payComplete = payComplete;
         this.tagThirdExpenditure = tagThirdExpenditure;
+    }
+
+    public void initalUpdate(MoneyExpenditure moneyExpenditure) {
+        moneyExpenditure.setUserRole(moneyExpenditure.getUserRole());
+        moneyExpenditure.setAmount(moneyExpenditure.getAmount());
+        moneyExpenditure.setDate(moneyExpenditure.getDate());
+        moneyExpenditure.setMemo(moneyExpenditure.getMemo());
+        moneyExpenditure.setPayComplete(moneyExpenditure.getPayComplete());
     }
 }

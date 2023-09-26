@@ -58,8 +58,8 @@ public class MoneyServiceImpl implements MoneyService{
     public TotalExpectExpenditureResDto searchTotalExpectExpenditure(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
         Couple couple = coupleRepository.findById(user.getCouple().getId()).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
-        User bride = userRepository.findByCoupleIdAndAndUserRole(couple.getId(), UserRole.BRIDE).orElseThrow(() -> new NoSuchUserException("해당하는 예비 신부 사용자가 없습니다."));
-        User groom = userRepository.findByCoupleIdAndAndUserRole(couple.getId(), UserRole.GROOM).orElseThrow(() -> new NoSuchUserException("해당하는 예비 신랑 사용자가 없습니다."));
+        User bride = userRepository.findByCoupleIdAndUserRole(couple.getId(), UserRole.BRIDE).orElseThrow(() -> new NoSuchUserException("해당하는 예비 신부 사용자가 없습니다."));
+        User groom = userRepository.findByCoupleIdAndUserRole(couple.getId(), UserRole.GROOM).orElseThrow(() -> new NoSuchUserException("해당하는 예비 신랑 사용자가 없습니다."));
 
         Money brideMoney = moneyRepository.findByUser(bride).orElseThrow(() -> new NoSuchMoneyException("해당하는 사용자의 자산 정보가 없습니다."));
         Money groomMoney = moneyRepository.findByUser(groom).orElseThrow(() -> new NoSuchMoneyException("해당하는 사용자의 자산 정보가 없습니다."));
@@ -77,8 +77,8 @@ public class MoneyServiceImpl implements MoneyService{
         User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
         Couple couple = coupleRepository.findById(user.getCouple().getId()).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
 
-        User bride = userRepository.findByCoupleIdAndAndUserRole(couple.getId(), UserRole.BRIDE).orElseThrow(() -> new NoSuchUserException("해당하는 예비 신부 사용자가 없습니다."));
-        User groom = userRepository.findByCoupleIdAndAndUserRole(couple.getId(), UserRole.GROOM).orElseThrow(() -> new NoSuchUserException("해당하는 예비 신랑 사용자가 없습니다."));
+        User bride = userRepository.findByCoupleIdAndUserRole(couple.getId(), UserRole.BRIDE).orElseThrow(() -> new NoSuchUserException("해당하는 예비 신부 사용자가 없습니다."));
+        User groom = userRepository.findByCoupleIdAndUserRole(couple.getId(), UserRole.GROOM).orElseThrow(() -> new NoSuchUserException("해당하는 예비 신랑 사용자가 없습니다."));
 
         Money brideMoney = moneyRepository.findByUser(bride).orElseThrow(() -> new NoSuchMoneyException("해당하는 사용자의 자산 정보가 없습니다."));
         Money groomMoney = moneyRepository.findByUser(groom).orElseThrow(() -> new NoSuchMoneyException("해당하는 사용자의 자산 정보가 없습니다."));
