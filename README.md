@@ -16,5 +16,5 @@ python crawling code is neaded. todo through weekend.
 loaded DB needs representation and clustering of products
 image recognition based on DNN + KNN
 
-이미지를 활용한 상품 검색 기능의 개요는 다음과 같음.</br>
+이미지를 활용한 상품 검색 기능의 개요는 다음과 같음.<br>
 ![img](/imgs/img_processing_diagram.png){: width="50%" height="50%"}
