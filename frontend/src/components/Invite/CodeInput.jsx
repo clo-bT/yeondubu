@@ -143,7 +143,7 @@ const CodeInput = () => {
                     ))}
                 </InputContainer>
                 <InputButton onClick={sendCodeToBackend}>코드 입력</InputButton>
-                <CreateCode onClick={() => navigate("/invitepageentercode")}>코드 생성</CreateCode>
+                <CreateCode onClick={() => navigate("/showinvitecode")}>코드 생성</CreateCode>
             </CodeInputBox>
         </Container>
     );

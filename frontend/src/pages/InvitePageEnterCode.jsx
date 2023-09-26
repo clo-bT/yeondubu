@@ -1,10 +1,10 @@
 import React from 'react';
-import InvitationCode from '../components/ShowInviteCode/InvitationCode';
+import CodeInputSuccess from '../components/InvitePageEnterCode/CodeInputSuccess';
 
 const InvitePageEnterCode = () => {
     return (
         <div>
-            <InvitationCode/>
+            <CodeInputSuccess/>
         </div>
     );
 };
