@@ -52,23 +52,3 @@ def loan_upload():
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000, host='0.0.0.0')
-
-'''
-import os
-import json
-import h5py
-from dotenv import load_dotenv
-
-if __name__ == '__main__':
-    load_dotenv()
-    query_file    = os.environ.get('query_file')
-    target_file   = os.environ.get('target_file')
-    
-    with open(query_file, 'r', encoding='utf-8') as file:
-        queries = json.load(file)
-
-    with h5py.File(target_file, 'r') as hdf5_file:
-        for category in queries.keys():
-            for subcategory, _ in queries[category].items():
-                print(json.loads(hdf5_file[category][subcategory]['category_data'][()]))
-'''
