@@ -27,8 +27,6 @@ import yeon.dubu.user.repository.UserRepository;
 
 import java.util.Optional;
 
-import static yeon.dubu.expenditure.domain.QMoneyExpenditure.moneyExpenditure;
-
 
 @Slf4j
 @Service
@@ -79,7 +77,7 @@ public class MoneyExpenditureServiceImpl implements MoneyExpenditureService{
         User expendUser = userRepository.findByCoupleIdAndUserRole(couple.getId(), moneyExpenditureReqDto.getUserRole()).orElse(null);
 
         if (expendUser != null) {
-            Money expendMoney = moneyRepository.findByUser(expendUser).orElseThrow(() -> new NoSuchMoneyException("해당하는 사용자의 자산 정보가 없습니다."));
+            Money expendMoney = moneyRepository.findByUserId(expendUser.getId()).orElseThrow(() -> new NoSuchMoneyException("해당하는 사용자의 자산 정보가 없습니다."));
             expendMoney.setExpectExpenditure(expendMoney.getExpectExpenditure() + moneyExpenditureReqDto.getAmount());
             if (moneyExpenditureReqDto.getPayComplete()) {
                 expendMoney.setCompleteExpenditure(expendMoney.getCompleteExpenditure() + moneyExpenditureReqDto.getAmount());
@@ -98,8 +96,8 @@ public class MoneyExpenditureServiceImpl implements MoneyExpenditureService{
     public void updateUserExpenditure(UpdateExpenditureInfoDto updateInfo) {
         User afterUser = userRepository.findById(updateInfo.getAfterUserId()).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
         User beforeUser = userRepository.findById(updateInfo.getBeforeUserId()).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
-        Money afterMoney = moneyRepository.findByUser(afterUser).orElseThrow(() -> new NoSuchMoneyException("해당하는 사용자의 자산 정보가 없습니다."));
-        Money beforeMoney = moneyRepository.findByUser(beforeUser).orElseThrow(() -> new NoSuchMoneyException("해당하는 사용자의 자산 정보가 없습니다."));
+        Money afterMoney = moneyRepository.findByUserId(afterUser.getId()).orElseThrow(() -> new NoSuchMoneyException("해당하는 사용자의 자산 정보가 없습니다."));
+        Money beforeMoney = moneyRepository.findByUserId(beforeUser.getId()).orElseThrow(() -> new NoSuchMoneyException("해당하는 사용자의 자산 정보가 없습니다."));
 
         Long changeMoney = updateInfo.getAfterAmount() - updateInfo.getBeforeAmount();
         // TODO: 리팩토링 -> Money 엔티티에 update 메서드 구현
@@ -211,7 +209,7 @@ public class MoneyExpenditureServiceImpl implements MoneyExpenditureService{
         Couple couple = coupleRepository.findById(user.getCouple().getId()).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
         MoneyExpenditure moneyExpenditure = moneyExpenditureRepository.findById(expenditureId).orElseThrow(() -> new NoSuchExpenditureException("해당하는 지출 정보가 없습니다."));
         Optional<User> expendUser = userRepository.findByCoupleIdAndUserRole(couple.getId(), moneyExpenditure.getUserRole());
-        Money expendMoney = moneyRepository.findByUser(expendUser.get()).orElseThrow(() -> new NoSuchMoneyException("해당하는 사용자의 자산 정보가 없습니다."));
+        Money expendMoney = moneyRepository.findByUserId(expendUser.get().getId()).orElseThrow(() -> new NoSuchMoneyException("해당하는 사용자의 자산 정보가 없습니다."));
 
         expendMoney.updateExpenditureByDelete(moneyExpenditure.getAmount(), moneyExpenditure.getPayComplete());  // 자산 정보 업데이트
         moneyExpenditureRepository.deleteById(expenditureId);

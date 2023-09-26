@@ -167,7 +167,7 @@ class MoneyExpenditureServiceImplTest {
         System.out.println("moneyExpenditure = " + moneyExpenditure);
         System.out.println("11moneyExpenditureRepository = " + moneyExpenditureRepository.findByTagThirdExpenditure(TAG3));
         assertThat(moneyExpenditureRepository.findByTagThirdExpenditure(TAG3).get().getAmount()).isEqualTo(100000L);
-        assertThat(moneyRepository.findByUser(USER1).get().getExpectExpenditure()).isEqualTo(moneyExpenditureReqDto.getAmount());
+        assertThat(moneyRepository.findByUserId(USER1.getId()).get().getExpectExpenditure()).isEqualTo(moneyExpenditureReqDto.getAmount());
     }
 
     @DisplayName("사용자의 지출 내역 수정")
@@ -200,8 +200,8 @@ class MoneyExpenditureServiceImplTest {
         moneyExpenditureService.updateExpenditure(moneyExpenditureUpdateReqDto, USER1.getId());
 
         // then
-        assertThat(moneyRepository.findByUser(USER2).get().getExpectExpenditure()).isEqualTo(moneyExpenditureUpdateReqDto.getAmount());
-        assertThat(moneyRepository.findByUser(USER1).get().getExpectExpenditure()).isEqualTo(0L);
+        assertThat(moneyRepository.findByUserId(USER2.getId()).get().getExpectExpenditure()).isEqualTo(moneyExpenditureUpdateReqDto.getAmount());
+        assertThat(moneyRepository.findByUserId(USER1.getId()).get().getExpectExpenditure()).isEqualTo(0L);
     }
 
     @DisplayName("지출 내역 조회")
@@ -248,8 +248,8 @@ class MoneyExpenditureServiceImplTest {
 
         // then
         assertThat(moneyExpenditureRepository.findById(findExpenditure.get().getId())).isEmpty();
-        assertThat(moneyRepository.findByUser(USER1).get().getExpectExpenditure()).isEqualTo(0L);
-        assertThat(moneyRepository.findByUser(USER1).get().getCompleteExpenditure()).isEqualTo(0L);
+        assertThat(moneyRepository.findByUserId(USER1.getId()).get().getExpectExpenditure()).isEqualTo(0L);
+        assertThat(moneyRepository.findByUserId(USER1.getId()).get().getCompleteExpenditure()).isEqualTo(0L);
     }
 
     
