@@ -1,8 +1,8 @@
 import React from 'react';
 // import React, { useEffect } from 'react';
 import styled from 'styled-components';
-// import axios from 'axios';
-// import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
     background-color: #FFD0D0;
@@ -47,7 +47,6 @@ const Name = styled.div`
 const Image = styled.img`
     border-radius: 218px;
 `
-const Div = styled.div``
 const CheckDiv = styled.div`
 color: #000;
 text-align: center;
@@ -85,12 +84,55 @@ const WrongButton = styled.div`
 
 
 const UserProfile = () => {
-    // const accessToken = sessionStorage.getItem("token");
+    const navigate = useNavigate();
+    const accessToken = sessionStorage.getItem("token");
     // Local Storage에서 데이터를 가져오기
     // const partnerId = localStorage.getItem('partner_id');
     const partnerName = localStorage.getItem('partner_name');
     const partnerImg = localStorage.getItem('partner_img');
-
+    const role = localStorage.getItem('role');
+    const handleCheck = () => {
+        axios.get(`${process.env.REACT_APP_API_ROOT}/api/v1/couples/check1/${role}`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            }
+        })
+            .then(response => {
+                console.log('요청 성공', response.data);
+                if (response.data === 'waiting') {
+                    navigate('/invitepageentercode')
+                    
+                }
+                else if(response.data === 'finish') {
+                    navigate('/accountinput')
+                }
+                else {
+                    localStorage.setItem('partner_id', response.data.partner_id);
+                    localStorage.setItem('partner_name', response.data.partner_name);
+                    localStorage.setItem('partner_img', response.data.partner_img);
+                    navigate('/invite')
+                }
+            })
+            .catch(error => {
+                console.error('요청 실패', error);
+            });
+    };
+    const handleCancel = () => {
+        axios.delete(`${process.env.REACT_APP_API_ROOT}/api/v1/couples/check`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            }
+        }).then(response => {
+            console.log('요청 성공', response);
+            localStorage.removeItem('partner_id');
+            localStorage.removeItem('partner_name');
+            localStorage.removeItem('partner_img');
+        })
+        .catch(error => {
+            console.error('요청 실패', error);
+        });
+    };
+    
     return (
         <Container>
             <CodeBox>
@@ -98,13 +140,13 @@ const UserProfile = () => {
                 <UserInfo>
                     <Name>{partnerName}</Name>
                     <Image src={partnerImg} alt="프로필 이미지" />
-                    <Div>
+                    
                         <CheckDiv>연인을 확인해주세요</CheckDiv>
                         <ButtonGroup>
-                            <RightButton>확인</RightButton>
-                            <WrongButton>취소</WrongButton>
+                            <RightButton onClick={handleCheck}>확인</RightButton>
+                            <WrongButton onClick={handleCancel}>취소</WrongButton>
                         </ButtonGroup>
-                    </Div>
+                    
                 </UserInfo>
             </CodeBox>
         </Container>
