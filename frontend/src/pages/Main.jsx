@@ -9,13 +9,19 @@ import LoanRecommend from '../components/Main/LoanRecommend';
 
 const Main = () => {
   const [isBudgetOpen, setIsBudgetOpen] = useState(true);
+  const [isLoanOpen, setIsLoanOpen] = useState(false);
+  
+  const toggleLoan = () => {
+    setIsLoanOpen(!isLoanOpen);
+  };
 
+  
     return (
       <div>
         <BudgetMoney isBudgetOpen={isBudgetOpen} />
         <CoupleImage setIsBudgetOpen={setIsBudgetOpen} isBudgetOpen={isBudgetOpen}/>
         <CoupleMoney/>
-        <LoanRecommend/>
+        <LoanRecommend isLoanOpen={isLoanOpen} toggleLoan={toggleLoan}/>
         <Menubar />
         </div>
     );
