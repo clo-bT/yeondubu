@@ -26,7 +26,7 @@ import Main from './pages/Main';
 // import Mooni from './pages/Mooni';
 // import WeddingDayUpdate from './pages/WeddingDayUpdate';
 // import CreditScoreInput from './pages/CreditScoreInput';
-import CheckBox from './pages/CheckBox';
+// import CheckBox from './pages/CheckBox';
 import CreditScoreInput from './pages/CreditScoreInput';
 
 function App() {
@@ -42,7 +42,6 @@ function App() {
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/input" element={<CreditScoreInput />} />
-            
         </Routes>
       </div>
     </BrowserRouter>

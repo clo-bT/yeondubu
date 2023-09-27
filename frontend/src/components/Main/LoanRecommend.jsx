@@ -1,11 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
-import { AiOutlineCheckSquare } from "react-icons/ai";
-import wooribank from '../../assets/Main/wooribank.svg';
+import { AiOutlineCheckSquare, AiOutlineDown, AiOutlineUp } from "react-icons/ai";
+// import wooribank from '../../assets/Main/wooribank.svg';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
 margin-bottom: 100px;
 
+`
+const ToggleButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
 
 `
 const LoanContainer = styled.div`
@@ -37,6 +43,7 @@ text-align: left;
 margin-left: 30px;
 margin-bottom: 20px;
 `
+
 const BankImg = styled.img`
 // width: 40px;
 // height: 40px;
@@ -44,51 +51,42 @@ flex-shrink: 0;
 border-radius: 5px;
 `
 
-const LoanName = styled.p`
-color: #000;
-text-align: center;
-font-size: 12px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
 
-`
-const InterestRate = styled.p`
-color: #000;
-text-align: center;
-font-size: 10px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
-`
-const LoanText = styled.div`
-display: inline-flex;
-flex-direction: column;
-margin-left: 30px;
-align-items: flex-start;
+const InputButton = styled.button`
+  background: #FFD0D0;
+  border: none;
+  cursor: pointer;
+    width:140px;
+    height:30px;
+    border-radius: 5px;
 `;
 
-
-const LoanRecommend = () => {
-    const dummyData = [
-        { name: '우리 전세(주택금융보증)', interestrate: '4.11 ~ 5.11', imageSrc: wooribank },
-        { name: '우리 전세(주택금융보증)', interestrate: '4.11 ~ 5.11',imageSrc: wooribank },
-        { name: '우리 전세(주택금융보증)', interestrate: '4.11 ~ 5.11', imageSrc: wooribank,},
-        
-      ];
+const LoanRecommend = ({ isLoanOpen, toggleLoan, LoanData }) => {
+    // const dummyData = [
+    //     { name: '우리 전세(주택금융보증)', interestrate: '4.11 ~ 5.11', imageSrc: wooribank },
+    //     { name: '우리 전세(주택금융보증)', interestrate: '4.11 ~ 5.11',imageSrc: wooribank },
+    //     { name: '우리 전세(주택금융보증)', interestrate: '4.11 ~ 5.11', imageSrc: wooribank,},
+    // ];
+    const navigate = useNavigate(); // useNavigate 훅 사용
+    const handleGoToScoreInput = () => {
+        navigate('/input');
+      };
     return (
         <Container>
-            <Letmeshow><CheckIcon />우리 부부를 위한 대출상품 보여드릴게요!</Letmeshow>
-                {dummyData.map((data, index) => (
-                <LoanContainer key={index}>
-                    <BankImg src={data.imageSrc} alt={`Image ${index}`} />
-                    <LoanText>
-                    <LoanName>{data.name}</LoanName>
-                    <InterestRate>대출금리 : {data.interestrate}</InterestRate>
-                    </LoanText>
-                </LoanContainer>
-                ))}
-
+            <Letmeshow>
+                <CheckIcon />
+                {"우리 부부를 위한 대출상품을 보여드릴게요!"}
+                <ToggleButton onClick={toggleLoan}>
+                {isLoanOpen ? <AiOutlineUp /> : <AiOutlineDown />}
+                </ToggleButton>
+            </Letmeshow>
+            {isLoanOpen && (
+                    <>
+                        <p>정보를 입력해주시면 <br/> 맞춤형 대출 상품을 추천해드릴게요</p>
+                        <InputButton onClick={handleGoToScoreInput}>정보 입력하러가기!</InputButton>
+                    </>
+                )
+            }
         </Container>
     );
 };
