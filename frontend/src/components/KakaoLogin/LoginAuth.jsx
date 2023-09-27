@@ -18,7 +18,7 @@ const LoginAuth = () => {
             setcode(accessToken)
             if (accessToken) {
                 sessionStorage.setItem("token", accessToken);
-                window.location.href = `${process.env.REACT_APP_HOME_URL}/invite`
+                window.location.replace(`${process.env.REACT_APP_HOME_URL}/invite`)
             }
             try{        
                 await axios.get(`${process.env.REACT_APP_API_ROOT}/api/v1/users`, {
