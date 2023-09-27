@@ -2,7 +2,7 @@ import React from 'react';
 import jae from '../../assets/Monni/jae.svg';
 import jh from '../../assets/Monni/jh.svg';
 import jin from '../../assets/Monni/jin.svg';
-import sh from '../../assets/Monni/sh.svg';
+// import sh from '../../assets/Monni/sh.svg';
 import sw from '../../assets/Monni/sw.svg';
 import ys from '../../assets/Monni/ys.svg';
 import styled from 'styled-components';
@@ -85,12 +85,12 @@ const MonniInfo = () => {
         <Email>youngseo0703@gmail.com</Email>   
         </Item>
 
-        <Item>
+        {/* <Item>
         <Position>Frontend</Position>
         <Img src={sh} />
         <Name>박승희</Name>
         <Email>pshee0329@naver.com</Email>
-        </Item>
+        </Item> */}
 
         <Item>
         <Position>Frontend</Position>
