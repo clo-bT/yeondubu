@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import yeon.dubu.income.domain.MoneyIncome;
 
 @Repository
-public interface MoneyIncomeRepository extends JpaRepository<MoneyIncome, Long> {
+public interface MoneyIncomeRepository extends JpaRepository<MoneyIncome, Long>, CustomMoneyIncomeRepository {
 
 }

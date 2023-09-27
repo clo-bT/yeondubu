@@ -16,6 +16,7 @@ import java.net.URISyntaxException;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = {"http://localhost:3000", "https://localhost:3000"})
 @RequestMapping("/api/v1/money")
 public class MoneyController {
 
