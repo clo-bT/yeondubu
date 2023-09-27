@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { format } from 'date-fns';
 import AccountCalendar from '../components/AccountCalendar/AccountCalendar';
-import AccountCalendarModal from '../components/AccountCalendarModal/AccountCalendarDetail';
+import AccountCalendarDetail from '../components/AccountCalendar/AccountCalendarDetail';
 
 const CalendarPage = () => {
     const today = new Date();
@@ -16,7 +16,7 @@ const CalendarPage = () => {
     return (
         <div>
             <AccountCalendar onDateClick={handleDateClick} />
-            <AccountCalendarModal formatday={formatday} />
+            <AccountCalendarDetail formatday={formatday} />
         </div>
     );
 };
