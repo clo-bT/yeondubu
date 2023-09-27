@@ -150,7 +150,7 @@ class MoneyServiceImplTest {
         Money insertedCash = moneyService.insertCash(moneyCashReqDto, USER1.getId());
 
         // then
-        assertThat(moneyRepository.findByUser(USER1).get().getTotalCash()).isEqualTo(insertedCash.getTotalCash());
+        assertThat(moneyRepository.findByUserId(USER1.getId()).get().getTotalCash()).isEqualTo(insertedCash.getTotalCash());
     }
 
     @DisplayName("couple의 총 예상 금액 조회")
@@ -167,13 +167,13 @@ class MoneyServiceImplTest {
                 .build();
 
         MoneyExpenditure moneyExpenditure = moneyExpenditureService.insertExpenditure(moneyExpenditureReqDto, USER1.getId());
-        Optional<MoneyExpenditure> savedExpenditure = moneyExpenditureRepository.findByTagThirdExpenditure(TAG3);
+        Optional<MoneyExpenditure> savedExpenditure = moneyExpenditureRepository.findByTagThirdExpenditureId(TAG3.getId());
 
         // when
         TotalExpectExpenditureResDto totalExpectExpenditure = moneyService.searchTotalExpectExpenditure(USER2.getId());
 
         // then
-        assertThat(moneyRepository.findByUser(USER1).get().getExpectExpenditure()).isEqualTo(totalExpectExpenditure.getTotalExpenditure());
+        assertThat(moneyRepository.findByUserId(USER1.getId()).get().getExpectExpenditure()).isEqualTo(totalExpectExpenditure.getTotalExpenditure());
     }
 
     @DisplayName("couple의 현금 조회")

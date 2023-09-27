@@ -21,7 +21,6 @@ public class TagFirstExpenditure extends BaseTimeEntity {
     private String firstTagName;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "COUPLE_ID")
     private Couple couple;
     @Builder
     public TagFirstExpenditure(Long id, String firstTagName, Couple couple) {
