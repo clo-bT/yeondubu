@@ -29,6 +29,9 @@ import TagInput from './pages/TagInput';
 import WeddingDay from './pages/WeddingDay';
 import WholeTab from './pages/WholeTab';
 import MyPage from './pages/MyPage';
+import MyAccount from './pages/MyAccount';
+import MyAccountDetail from './pages/MyAccountDetail';
+import MyProductLike from './pages/MyProductLike';
 
 
 function App() {
@@ -69,6 +72,12 @@ function App() {
           <Route path="/weddingday" element={<WeddingDay />} />
           <Route path="/wholetab" element={<WholeTab />} />
           <Route path="/mypage" element={<MyPage />} />
+          <Route path="/myaccount" element={<MyAccount />} />
+          <Route path="/myaccountdetail" element={<MyAccountDetail />} />
+          <Route path="/myproduct" element={<MyProductLike />} />
+
+
+  
 
         </Routes>
       </div>
