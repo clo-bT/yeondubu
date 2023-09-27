@@ -310,7 +310,7 @@ const CashAccount = () => {
   console.log(accessToken)
 
   const requestBody = {
-    "totalCash": cashMoney
+    "total_cash": cashMoney
 }
   // 여기서 axios 요청을 보내세요.
   axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/money/cash`,requestBody, {
