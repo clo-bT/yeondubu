@@ -68,6 +68,7 @@ const FirstMain = () => {
     // const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`
     const handleLogin = ()=>{
         window.location.href = backendapi
+        window.location.reload()
     }
     return (
         <PageWrapper>
