@@ -19,9 +19,10 @@ public class AllTagsExpenditureQueryDto {
     private String thirdTagName;
     private Long moneyExpenditureId;
     private Long amount;
+    private Boolean payComplete;
 
     @QueryProjection
-    public AllTagsExpenditureQueryDto(Long firstTagId, String firstTagName, Long secondTagId, String secondTagName, Long thirdTagId, String thirdTagName, Long moneyExpenditureId, Long amount) {
+    public AllTagsExpenditureQueryDto(Long firstTagId, String firstTagName, Long secondTagId, String secondTagName, Long thirdTagId, String thirdTagName, Long moneyExpenditureId, Long amount, Boolean payComplete) {
         this.firstTagId = firstTagId;
         this.firstTagName = firstTagName;
         this.secondTagId = secondTagId;
@@ -30,5 +31,6 @@ public class AllTagsExpenditureQueryDto {
         this.thirdTagName = thirdTagName;
         this.moneyExpenditureId = moneyExpenditureId;
         this.amount = amount;
+        this.payComplete = payComplete;
     }
 }

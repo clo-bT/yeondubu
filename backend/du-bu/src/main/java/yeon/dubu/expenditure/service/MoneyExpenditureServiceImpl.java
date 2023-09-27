@@ -23,10 +23,11 @@ import yeon.dubu.money.exception.NoSuchMoneyException;
 import yeon.dubu.money.repository.MoneyRepository;
 import yeon.dubu.user.domain.User;
 import yeon.dubu.user.exception.NoSuchUserException;
-import yeon.dubu.user.exception.NoSuchUserRoleException;
 import yeon.dubu.user.repository.UserRepository;
 
 import java.util.Optional;
+
+import static yeon.dubu.expenditure.domain.QMoneyExpenditure.moneyExpenditure;
 
 
 @Slf4j
@@ -54,10 +55,10 @@ public class MoneyExpenditureServiceImpl implements MoneyExpenditureService{
         User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
         Couple couple = coupleRepository.findById(user.getCouple().getId()).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
         TagThirdExpenditure tagThirdExpenditure = tagThirdExpenditureRepository.findById(moneyExpenditureReqDto.getThirdTagId()).orElseThrow(() -> new NoSuchTagExpenditureException("해당하는 태그 정보가 없습니다."));
+        MoneyExpenditure updateMoney = moneyExpenditureRepository.findByTagThirdExpenditure(tagThirdExpenditure).orElseThrow(() -> new NoSuchExpenditureException("해당하는 지출 정보가 없습니다."));
 
-        // couple의 역할에서 사용자의 money 등록
+        // thirdTag 등록 후 생성된 moneyExpenditure row 초기 업데이트
         MoneyExpenditure moneyExpenditure = MoneyExpenditure.builder()
-                .tagThirdExpenditure(tagThirdExpenditure)
                 .userRole(moneyExpenditureReqDto.getUserRole())
                 .date(moneyExpenditureReqDto.getDate())
                 .amount(moneyExpenditureReqDto.getAmount())
@@ -65,17 +66,27 @@ public class MoneyExpenditureServiceImpl implements MoneyExpenditureService{
                 .payComplete(moneyExpenditureReqDto.getPayComplete())
                 .build();
 
-        moneyExpenditureRepository.save(moneyExpenditure);
+        // TODO: update MoneyExpenditure에서 set 구현
+        updateMoney.setUserRole(moneyExpenditureReqDto.getUserRole());
+        updateMoney.setDate(moneyExpenditureReqDto.getDate());
+        updateMoney.setAmount(moneyExpenditureReqDto.getAmount());
+        updateMoney.setMemo(moneyExpenditure.getMemo());
+        updateMoney.setPayComplete(moneyExpenditure.getPayComplete());
+//        updateMoney.initalUpdate(moneyExpenditure);
+
 
         // 사용자의 자산 정보 업데이트
-        User expendUser = userRepository.findByCoupleIdAndAndUserRole(couple.getId(), moneyExpenditureReqDto.getUserRole()).orElseThrow(() -> new NoSuchUserRoleException("해당하는 역할의 사용자가 없습니다."));
-        Money expendMoney = moneyRepository.findByUser(expendUser).orElseThrow(() -> new NoSuchMoneyException("해당하는 사용자의 자산 정보가 없습니다."));
-        expendMoney.setExpectExpenditure(expendMoney.getExpectExpenditure() + moneyExpenditureReqDto.getAmount());
-        if (moneyExpenditureReqDto.getPayComplete()) {
-            expendMoney.setCompleteExpenditure(expendMoney.getCompleteExpenditure() + moneyExpenditureReqDto.getAmount());
+        User expendUser = userRepository.findByCoupleIdAndUserRole(couple.getId(), moneyExpenditureReqDto.getUserRole()).orElse(null);
+
+        if (expendUser != null) {
+            Money expendMoney = moneyRepository.findByUser(expendUser).orElseThrow(() -> new NoSuchMoneyException("해당하는 사용자의 자산 정보가 없습니다."));
+            expendMoney.setExpectExpenditure(expendMoney.getExpectExpenditure() + moneyExpenditureReqDto.getAmount());
+            if (moneyExpenditureReqDto.getPayComplete()) {
+                expendMoney.setCompleteExpenditure(expendMoney.getCompleteExpenditure() + moneyExpenditureReqDto.getAmount());
+            }
         }
 
-        return moneyExpenditure;
+        return null;
     }
 
     /**
@@ -157,8 +168,8 @@ public class MoneyExpenditureServiceImpl implements MoneyExpenditureService{
 
         boolean payCompleteChanged = !moneyExpenditure.getPayComplete().equals(moneyExpenditureUpdateReqDto.getPayComplete());  // payComplete 변경 여부
         boolean roleChanged = !moneyExpenditure.getUserRole().equals(moneyExpenditureUpdateReqDto.getUserRole()); // 역할 수정 여부
-        Optional<User> afterUser = userRepository.findByCoupleIdAndAndUserRole(couple.getId(), moneyExpenditureUpdateReqDto.getUserRole());
-        Optional<User> beforeUser = userRepository.findByCoupleIdAndAndUserRole(couple.getId(), moneyExpenditure.getUserRole());
+        Optional<User> afterUser = userRepository.findByCoupleIdAndUserRole(couple.getId(), moneyExpenditureUpdateReqDto.getUserRole());
+        Optional<User> beforeUser = userRepository.findByCoupleIdAndUserRole(couple.getId(), moneyExpenditure.getUserRole());
 
         UpdateExpenditureInfoDto updateInfo = UpdateExpenditureInfoDto.builder()
                 .beforeAmount(moneyExpenditure.getAmount())
@@ -199,7 +210,7 @@ public class MoneyExpenditureServiceImpl implements MoneyExpenditureService{
         User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
         Couple couple = coupleRepository.findById(user.getCouple().getId()).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
         MoneyExpenditure moneyExpenditure = moneyExpenditureRepository.findById(expenditureId).orElseThrow(() -> new NoSuchExpenditureException("해당하는 지출 정보가 없습니다."));
-        Optional<User> expendUser = userRepository.findByCoupleIdAndAndUserRole(couple.getId(), moneyExpenditure.getUserRole());
+        Optional<User> expendUser = userRepository.findByCoupleIdAndUserRole(couple.getId(), moneyExpenditure.getUserRole());
         Money expendMoney = moneyRepository.findByUser(expendUser.get()).orElseThrow(() -> new NoSuchMoneyException("해당하는 사용자의 자산 정보가 없습니다."));
 
         expendMoney.updateExpenditureByDelete(moneyExpenditure.getAmount(), moneyExpenditure.getPayComplete());  // 자산 정보 업데이트

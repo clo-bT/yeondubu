@@ -80,6 +80,7 @@ public class TagExpenditureServiceImpl implements TagExpenditureService{
                         .thirdTagName(dto.getThirdTagName())
                         .moneyExpenditureId(dto.getMoneyExpenditureId())
                         .amount(dto.getAmount())
+                        .payComplete(dto.getPayComplete())
                         .build();
 
                 // 세번째 담기, 두번째 담기
@@ -104,6 +105,7 @@ public class TagExpenditureServiceImpl implements TagExpenditureService{
                                 .thirdTagName(dto.getThirdTagName())
                                 .moneyExpenditureId(dto.getMoneyExpenditureId())
                                 .amount(dto.getAmount())
+                                .payComplete(dto.getPayComplete())
                                 .build();
 
                         secondTagDto.getTagThirdExpenditureDtoList().add(thirdTagDto);
@@ -126,6 +128,7 @@ public class TagExpenditureServiceImpl implements TagExpenditureService{
                             .thirdTagName(dto.getThirdTagName())
                             .moneyExpenditureId(dto.getMoneyExpenditureId())
                             .amount(dto.getAmount())
+                            .payComplete(dto.getPayComplete())
                             .build();
 
                     secondTagDto.getTagThirdExpenditureDtoList().add(thirdTagDto);

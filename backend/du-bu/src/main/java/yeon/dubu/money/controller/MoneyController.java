@@ -19,7 +19,7 @@ import java.net.URISyntaxException;
 @RequestMapping("/api/v1/money")
 public class MoneyController {
 
-    private MoneyService moneyService;
+    private final MoneyService moneyService;
 
     /**
      * 사용자의 현금 등록
