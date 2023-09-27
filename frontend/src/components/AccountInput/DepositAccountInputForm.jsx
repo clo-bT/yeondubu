@@ -1,25 +1,28 @@
-import {React, useState} from 'react';
+import {React, useState, useEffect} from 'react';
 import styled from 'styled-components';
 import { BsFill1CircleFill,BsFill2CircleFill,BsFill3CircleFill,
     BsFill4CircleFill,BsFill5CircleFill,BsFill6CircleFill,BsFill7CircleFill } from "react-icons/bs";
-
+import axios from 'axios';
 
 const Container = styled.div`
-// display: flex;
-// flex-direction: column; 
-
+display: flex;
+flex-direction: column; 
+margin-top: 40px;
 align-items: center;
-// width: 331px;
-// height: 515px;
-// flex-shrink: 0;
+
+
 
 `
 
 const Text = styled.p`
 margin-left:10px;
+display: flex;
+flex-direction: column;
+align-items: center;
 `
 const CheckBoxContainer = styled.div`
   display: flex;
+  
   align-items: center;
   margin-left: 20px;
 `;
@@ -27,6 +30,7 @@ const CheckBoxContainer = styled.div`
 
 const IconWithText = styled.div`
 display: flex;
+/* flex-direction: column; */
 align-items: center;
 margin-bottom: 20px;
 
@@ -91,14 +95,14 @@ align-items: center;
 gap: 10px;
 color: #FF5A5A;
 text-align: center;
-font-family: Pretendard-Regular;
 font-size: 18px;
 font-style: normal;
 font-weight: 400;
 line-height: normal;
 border: none;
 border-radius: 10px;
-margin-top: 10px;
+/* margin-top: 10px; */
+margin-bottom: 10px;
 `
 
 const CustomCheckbox = styled.input`
@@ -109,7 +113,7 @@ const CustomCheckbox = styled.input`
   }
 `;
 
-const InfoInput = styled.input`
+const AccountNameInput = styled.input`
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.20);
   outline: none;
@@ -118,13 +122,215 @@ const InfoInput = styled.input`
   text-align: center;
 `
 
-const DepositContainer = styled.div`
-  display: flex;
-  flex-direction: column; 
-  justify-content: center; 
-  align-items: center;
+const NowMoneyInput = styled.input`
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.20);
+  outline: none;
+  width: 166.003px;
+  height: 20px;
+  text-align: center;
+`
+const ExpectMoneyInput = styled.input`
+    border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.20);
+  outline: none;
+  width: 166.003px;
+  height: 20px;
+  text-align: center;
+`
+
+const OutDateInput = styled.input`
+    border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.20);
+  outline: none;
+  width: 166.003px;
+  height: 20px;
+  text-align: center;
+
+`
+const OutMoneyInput = styled.input`
+    border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.20);
+  outline: none;
+  width: 166.003px;
+  height: 20px;
+  text-align: center;
+`
+const EndDateInput = styled.input`
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.20);
+  outline: none;
+  width: 166.003px;
+  height: 20px;
+  text-align: center;
+`
+const DepositAccountNameInput = styled.input`
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.20);
+  outline: none;
+  width: 166.003px;
+  height: 20px;
+  text-align: center;
+`
+const DepositEndDateInput = styled.input`
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.20);
+  outline: none;
+  width: 166.003px;
+  height: 20px;
+  text-align: center;
+`
+const DepositNowMoneyInput = styled.input`
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.20);
+  outline: none;
+  width: 166.003px;
+  height: 20px;
+  text-align: center;
+`
+const DepositExpectMoney = styled.input`
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.20);
+  outline: none;
+  width: 166.003px;
+  height: 20px;
+  text-align: center;
+`
+const Box = styled.div`
+justify-content: space-between;
+`
+const CashNowMoneyInput = styled.input`
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.20);
+  outline: none;
+  width: 166.003px;
+  height: 20px;
+  text-align: center;
+
 `
 const DepositAccountInputForm = () => {
+  // const navigate = useNavigate();
+  const [accessToken, setAccessToken] = useState('');
+  const [accountName, setAccountName] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [nowMoney, setnowMoney] = useState('');
+  const [expectMoney, setExpectMoney] = useState('');
+  const [outDate, setOutDate] = useState('');
+  const [outMoney, setoutMoney] = useState('');
+  const [cashMoney, setcashMoney] = useState('');
+  
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+    setAccessToken(token)
+},[])
+
+const handleName = (event) => {
+  const newName = event.target.value;
+  setAccountName(newName);
+};
+const handleEndDate = (event) => {
+  const newEndDate = event.target.value;
+  setEndDate(newEndDate);
+};
+const handleMoney = (event) => {
+  const newMoney = event.target.value;
+  setnowMoney(newMoney);
+};
+const handleExpectMoney = (event) => {
+  const expectMoney = event.target.value;
+  setExpectMoney(expectMoney);
+};
+const handleOutDate = (event) => {
+  const outDate = event.target.value;
+  setOutDate(outDate);
+};
+const handleOutMoney = (event) => {
+  const outMoney = event.target.value;
+  setoutMoney(outMoney);
+};
+const handleCash = (event) => {
+  const CashMoney = event.target.value;
+  setcashMoney(CashMoney);
+};
+
+  
+const SavingAccount = () => {
+  console.log(accessToken)
+
+  const requestBody = {
+    account_name: accountName,
+    transfer_day: outDate,
+    transfer_amount: outMoney,
+    final_date: endDate,
+    start_amount: nowMoney,
+    final_amount: expectMoney
+  };
+  // 여기서 axios 요청을 보내세요.
+  axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/accounts/saving`,requestBody, {
+      headers: {
+          Authorization: `Bearer ${accessToken}`,
+
+      },
+  })
+      .then((response) => {
+          console.log('요청 성공:', response);
+          console.log(requestBody);
+      })
+      .catch((error) => {
+          console.error('요청 실패:', error);
+      });
+};
+
+const DepositAccount = () => {
+  console.log(accessToken)
+
+  const requestBody = {
+    account_name: accountName,
+    final_date: endDate,
+    start_amount: nowMoney,
+    final_amount: expectMoney
+}
+  // 여기서 axios 요청을 보내세요.
+  axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/accounts/deposit`,requestBody, {
+      headers: {
+          Authorization: `Bearer ${accessToken}`,
+
+      },
+  })
+      .then((response) => {
+          console.log('요청 성공:', response);
+          console.log(requestBody);
+      })
+      .catch((error) => {
+          console.error('요청 실패:', error);
+      });
+};
+
+const CashAccount = () => {
+  console.log(accessToken)
+
+  const requestBody = {
+    "total_cash": cashMoney
+}
+  // 여기서 axios 요청을 보내세요.
+  axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/money/cash`,requestBody, {
+      headers: {
+          Authorization: `Bearer ${accessToken}`,
+
+      },
+  })
+      .then((response) => {
+          console.log('요청 성공:', response);
+          console.log(requestBody);
+      })
+      .catch((error) => {
+          console.error('요청 실패:', error);
+      });
+};
+
+
+
+
     const [selectedAccountType, setSelectedAccountType] = useState('');
     const [showFields, setShowFields] = useState(true); 
   
@@ -132,18 +338,17 @@ const DepositAccountInputForm = () => {
       setSelectedAccountType(value);
   
 
-      if (value === '예금') {
+      if (value === '예금' || value === '적금' || value === '현금') {
         setShowFields(true);
-      } else if (value === '적금') {
-        setShowFields(true);
-      } else if (value === '현금') {
-        setShowFields(true); 
+      } else {
+        setShowFields(false);
       }
     };
   
     return (
-        <>
         <Container>
+  
+            <Box>
           <IconWithText>
             <CountIcon1 />
             <Text>계좌</Text>
@@ -177,93 +382,139 @@ const DepositAccountInputForm = () => {
 
               <Text>현금</Text>
             </CheckBoxContainer>
+          {/* </Box> */}
+
           </IconWithText>
-    
           {showFields && selectedAccountType === '적금' && (
-        <>
+        <Box>
           <IconWithText>
             <CountIcon2 />
             <Text>계좌이름</Text>
-            <InfoInput />
+            <AccountNameInput 
+              type='text'
+              onChange={handleName}
+              value={accountName}
+            />
           </IconWithText>
 
           <IconWithText>
             <CountIcon3 />
             <Text>만기일</Text>
-            <InfoInput />
+            <EndDateInput 
+            type='text'
+            onChange={handleEndDate}
+            value={endDate}
+            />
           </IconWithText>
 
           <IconWithText>
             <CountIcon4 />
             <Text>현재금액</Text>
-            <InfoInput />
+            <NowMoneyInput 
+            type="number"
+            onChange={handleMoney}
+            value={nowMoney}
+            />
           </IconWithText>
 
           <IconWithText>
             <CountIcon5 />
             <Text>만기예상금액</Text>
-            <InfoInput />
+            <ExpectMoneyInput 
+            type="number"
+            onChange={handleExpectMoney}
+            value={expectMoney}
+            />
           </IconWithText>
 
           <IconWithText>
             <CountIcon6 />
             <Text>이체일</Text>
-            <InfoInput />
+            <OutDateInput 
+            type="number"
+            onChange={handleOutDate}
+            value={outDate}
+            />
           </IconWithText>
 
           <IconWithText>
             <CountIcon7 />
             <Text>이체금액</Text>
-            <InfoInput />
+            <OutMoneyInput 
+            type="number"
+            onChange={handleOutMoney}
+            value={outMoney}
+            />
           </IconWithText>
-          <InputButton>입력하기</InputButton>
-    </>
+          <InputButton onClick={SavingAccount}>입력하기</InputButton>
+    </Box>
       )}
 
         {showFields && selectedAccountType === '예금' && (
-        <>
+        <Box>
           <IconWithText>
             <CountIcon2 />
             <Text>계좌이름</Text>
-            <InfoInput />
+            <DepositAccountNameInput
+            type='text'
+            onChange={handleName}
+            value={accountName}/>
           </IconWithText>
 
           <IconWithText>
             <CountIcon3 />
             <Text>만기일</Text>
-            <InfoInput />
+            <DepositEndDateInput 
+            type="text"
+            onChange={handleEndDate}
+            value={endDate}
+            />
           </IconWithText>
 
           <IconWithText>
             <CountIcon4 />
             <Text>현재금액</Text>
-            <InfoInput />
+            <DepositNowMoneyInput 
+            type="number"
+            onChange={handleMoney}
+            value={nowMoney}
+            />
           </IconWithText>
 
           <IconWithText>
             <CountIcon5 />
             <Text>만기예상금액</Text>
-            <InfoInput />
+            <DepositExpectMoney 
+            type="number"
+            onChange={handleExpectMoney}
+            value={expectMoney}
+            />
           </IconWithText>
-          <InputButton>입력하기</InputButton>
-        </>
+          <InputButton onClick={DepositAccount}>입력하기</InputButton>
+        </Box>
       )}
 
         {showFields && selectedAccountType === '현금' && (
-        <>
+        <Box>
           <IconWithText>
-            <CountIcon1 />
+            <CountIcon2 />
             <Text>현재금액</Text>
-            <InfoInput />
+            <CashNowMoneyInput 
+            type="number"
+            onChange={handleCash}
+            value={cashMoney}
+            />
           </IconWithText>
-          <InputButton>입력하기</InputButton>
-        </>
+          <InputButton onClick={CashAccount}>입력하기</InputButton>
+
+        </Box>
       )}
+
    
-    
+
+        {/* <InputButton onClick={SavingAccount}>입력하기</InputButton> */}
+        </Box>
     </Container>
-        {/* <InputButton>입력하기</InputButton> */}
-    </>
       );
     };
     

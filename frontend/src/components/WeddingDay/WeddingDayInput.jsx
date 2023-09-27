@@ -1,5 +1,5 @@
 import {React, useState} from 'react';
-import Calender from '../../assets/Common/Calender.svg';
+// import Calender from '../../assets/Common/Calender.svg';
 import styled from 'styled-components';
 import DatePicker from 'react-datepicker';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
