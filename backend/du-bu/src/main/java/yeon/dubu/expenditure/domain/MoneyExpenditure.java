@@ -37,7 +37,6 @@ public class MoneyExpenditure extends BaseTimeEntity {
     private Boolean payComplete; // 결제 완료 여부
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "THIRD_TAG_EXPENDITURE_ID")
     private TagThirdExpenditure tagThirdExpenditure;
     @Builder
     public MoneyExpenditure(Long id, UserRole userRole, LocalDate date, Long amount, String memo, Boolean payComplete, TagThirdExpenditure tagThirdExpenditure) {
