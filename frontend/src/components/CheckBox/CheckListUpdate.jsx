@@ -1,7 +1,6 @@
 import { React, useState } from 'react';
 import styled from 'styled-components';
 import { AiFillMinusCircle } from "react-icons/ai";
-import { AiFillPlusCircle } from "react-icons/ai";
 
 const Container = styled.div`
 margin-top:-25px;
