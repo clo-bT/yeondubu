@@ -14,6 +14,15 @@ import yeon.dubu.account.dto.response.AccountInfoResDto;
 import yeon.dubu.account.enumeration.AccountType;
 import yeon.dubu.account.exception.NoSuchAccountException;
 import yeon.dubu.account.repository.AccountRepository;
+import yeon.dubu.couple.exception.NoSuchCoupleException;
+import yeon.dubu.couple.repository.CoupleRepository;
+import yeon.dubu.income.domain.MoneyIncome;
+import yeon.dubu.income.exception.NoSuchTagIncomeException;
+import yeon.dubu.income.repository.MoneyIncomeRepository;
+import yeon.dubu.income.repository.TagIncomeRepository;
+import yeon.dubu.money.domain.Money;
+import yeon.dubu.money.exception.NoSuchMoneyException;
+import yeon.dubu.money.repository.MoneyRepository;
 import yeon.dubu.user.domain.User;
 import yeon.dubu.user.exception.NoSuchUserException;
 import yeon.dubu.user.repository.UserRepository;
@@ -25,6 +34,9 @@ import yeon.dubu.user.repository.UserRepository;
 public class AccountServiceImpl implements AccountService{
     private final UserRepository userRepository;
     private final AccountRepository accountRepository;
+    private final MoneyIncomeRepository moneyIncomeRepository;
+    private final TagIncomeRepository tagIncomeRepository;
+    private final MoneyRepository moneyRepository;
     @Override
     @Transactional
     public void insertSaving(Long userId, SavingAccountReqDto savingAccountReqDto) {
@@ -34,8 +46,26 @@ public class AccountServiceImpl implements AccountService{
 
         Account account = Account.fromSaving(savingAccountReqDto);
         account.setUser(user);
-
         accountRepository.save(account);
+
+        //총 예적금에 수정
+        Money money = moneyRepository.findByUserId(user.getId()).orElseThrow(
+            () -> new NoSuchMoneyException("해당하는 자산 정보가 없습니다.")
+        );
+        money.setTotalAccount(money.getTotalAccount() + savingAccountReqDto.getStartAmount());
+
+        //만기일에 income에 추가
+        MoneyIncome moneyIncome = new MoneyIncome();
+        moneyIncome.setTagIncome(tagIncomeRepository.findByTagName("적금 만기").orElseThrow(
+            () -> new NoSuchTagIncomeException("해당하는 태그가 없습니다.")
+        ));
+
+        moneyIncome.setCouple(user.getCouple());
+        moneyIncome.setMemo("적금 만기");
+        moneyIncome.setUserRole(user.getUserRole());
+        moneyIncome.setDate(savingAccountReqDto.getFinalDate());
+        moneyIncome.setAmount(savingAccountReqDto.getFinalAmount());
+        moneyIncomeRepository.save(moneyIncome);
     }
 
     @Override
@@ -53,8 +83,7 @@ public class AccountServiceImpl implements AccountService{
 
     @Override
     @Transactional
-    public void updateSaving(Long accountId, SavingAccountReqDto savingAccountReqDto) {
-
+    public void updateSaving(Long userId, Long accountId, SavingAccountReqDto savingAccountReqDto) {
         Account account = Account.fromSaving(savingAccountReqDto);
 
         Account savedAccount = accountRepository.findById(accountId).orElseThrow(

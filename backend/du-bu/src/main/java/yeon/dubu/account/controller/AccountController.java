@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +24,7 @@ import yeon.dubu.account.service.AccountService;
 @RestController
 @RequestMapping("/api/v1/accounts")
 @RequiredArgsConstructor
+@CrossOrigin(origins = {"http://localhost:3000", "https://localhost:3000", "https://j9a307.p.ssafy.io:3000", "https://j9a307.p.ssafy.io"})
 public class AccountController {
     private final AccountService accountService;
 
@@ -41,7 +43,7 @@ public class AccountController {
 
     @PutMapping("/saving/{accountId}")
     public ResponseEntity<?> updateSaving(@AuthenticationPrincipal Long userId, @RequestBody SavingAccountReqDto savingAccountReqDto, @PathVariable Long accountId){
-        accountService.updateSaving(accountId, savingAccountReqDto);
+        accountService.updateSaving(userId, accountId, savingAccountReqDto);
         return new ResponseEntity<>("", HttpStatus.OK);
     }
 

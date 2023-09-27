@@ -19,6 +19,5 @@ public class Likes extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Couple couple;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Stuff stuff;
+    private Long stuffImageUrl;
 }
