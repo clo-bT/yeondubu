@@ -7,13 +7,11 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class TagThirdExpenditureReqDto {
-    private Long firstTagId;
     private Long secondTagId;
     private String thirdTagName;
 
     @Builder
-    public TagThirdExpenditureReqDto(Long firstTagId, Long secondTagId, String thirdTagName) {
-        this.firstTagId = firstTagId;
+    public TagThirdExpenditureReqDto(Long secondTagId, String thirdTagName) {
         this.secondTagId = secondTagId;
         this.thirdTagName = thirdTagName;
     }

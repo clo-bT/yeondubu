@@ -14,6 +14,9 @@ import yeon.dubu.expenditure.domain.TagFirstExpenditure;
 import yeon.dubu.expenditure.domain.TagSecondExpenditure;
 import yeon.dubu.expenditure.domain.TagThirdExpenditure;
 import yeon.dubu.expenditure.dto.request.MoneyExpenditureReqDto;
+import yeon.dubu.expenditure.dto.request.TagThirdExpenditureReqDto;
+import yeon.dubu.expenditure.service.TagFirstExpenditureService;
+import yeon.dubu.expenditure.service.TagThirdExpenditureService;
 import yeon.dubu.money.dto.response.TotalExpectExpenditureResDto;
 import yeon.dubu.expenditure.repository.MoneyExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagFirstExpenditureRepository;
@@ -29,6 +32,7 @@ import yeon.dubu.user.enumeration.UserRole;
 import yeon.dubu.user.repository.UserRepository;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -53,6 +57,10 @@ class MoneyServiceImplTest {
     MoneyExpenditureRepository moneyExpenditureRepository;
     @Autowired
     MoneyExpenditureService moneyExpenditureService;
+    @Autowired
+    TagFirstExpenditureService tagFirstExpenditureService;
+    @Autowired
+    TagThirdExpenditureService tagThirdExpenditureService;
     static User USER1;
     static User USER2;
     static TagFirstExpenditure TAG1;
@@ -99,11 +107,12 @@ class MoneyServiceImplTest {
 
         TAG2 = tagSecondExpenditureRepository.save(tagSecondExpenditure);
 
-        TagThirdExpenditure tagThirdExpenditure = TagThirdExpenditure.builder()
-                .tagSecondExpenditure(TAG2)
+        TagThirdExpenditureReqDto tagThirdExpenditureReqDto = TagThirdExpenditureReqDto.builder()
+                .secondTagId(TAG2.getId())
                 .thirdTagName("침대")
                 .build();
-        TAG3 = tagThirdExpenditureRepository.save(tagThirdExpenditure);
+
+        TAG3 = tagThirdExpenditureService.insertThirdTag(tagThirdExpenditureReqDto, USER1.getId());
 
         // TODO: couple 생성 후 money 생기는 로직 작성 후 삭제필요
         Money money = Money.builder()
@@ -158,6 +167,7 @@ class MoneyServiceImplTest {
                 .build();
 
         MoneyExpenditure moneyExpenditure = moneyExpenditureService.insertExpenditure(moneyExpenditureReqDto, USER1.getId());
+        Optional<MoneyExpenditure> savedExpenditure = moneyExpenditureRepository.findByTagThirdExpenditure(TAG3);
 
         // when
         TotalExpectExpenditureResDto totalExpectExpenditure = moneyService.searchTotalExpectExpenditure(USER2.getId());
