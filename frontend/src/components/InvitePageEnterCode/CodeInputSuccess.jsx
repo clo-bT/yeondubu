@@ -79,12 +79,12 @@ const WrongButton = styled.div`
 `
 const CodeInputSuccess = () => {
     const navigate = useNavigate();
-    const accessToken = sessionStorage.getItem("token");
-    const partnerName = localStorage.getItem('partner_name');
-    const partnerImg = localStorage.getItem('partner_img');
-    const role = localStorage.getItem('role');
+    const accessToken = localStorage.getItem("token");
+    const partnerName = sessionStorage.getItem('partner_name');
+    const partnerImg = sessionStorage.getItem('partner_img');
+    const role = sessionStorage.getItem('role');
     function sendCheck() {
-        const accessToken = sessionStorage.getItem("token");
+        const accessToken = localStorage.getItem("token");
         axios.get(`${process.env.REACT_APP_API_ROOT}/api/v1/couples/check2/${role}`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
@@ -96,9 +96,9 @@ const CodeInputSuccess = () => {
                     navigate('/accountinput')
                 }
                 else if(response.data === 'cancelled') {
-                    localStorage.removeItem('partner_id');
-                    localStorage.removeItem('partner_name');
-                    localStorage.removeItem('partner_img');
+                    sessionStorage.removeItem('partner_id');
+                    sessionStorage.removeItem('partner_name');
+                    sessionStorage.removeItem('partner_img');
                     navigate('/invite')
                 }
             })
@@ -146,9 +146,9 @@ const CodeInputSuccess = () => {
             }
         }).then(response => {
             console.log('요청 성공', response);
-            localStorage.removeItem('partner_id');
-            localStorage.removeItem('partner_name');
-            localStorage.removeItem('partner_img');
+            sessionStorage.removeItem('partner_id');
+            sessionStorage.removeItem('partner_name');
+            sessionStorage.removeItem('partner_img');
             navigate('/invite')
         })
         .catch(error => {

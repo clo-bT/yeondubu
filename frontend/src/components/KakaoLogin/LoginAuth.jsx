@@ -8,17 +8,15 @@ const AuthPage = styled.div`
 const Loading = styled.div``
 
 const LoginAuth = () => {
-    // const [id, setid] = useState('');    
     const [c, setcode] = useState('');
-
 
     useEffect(() => {
         async function getid() {
             const accessToken = new URL(window.location.href).searchParams.get("token");
             setcode(accessToken)
             if (accessToken) {
-                sessionStorage.setItem("token", accessToken);
-                window.location.href = `${process.env.REACT_APP_HOME_URL}/invite`
+                localStorage.setItem("token", accessToken);
+                // window.location.href = `${process.env.REACT_APP_HOME_URL}/invite`
             }
             try{        
                 await axios.get(`${process.env.REACT_APP_API_ROOT}/api/v1/users`, {
