@@ -28,7 +28,7 @@ import ShowInviteCode from './pages/ShowInviteCode';
 import TagInput from './pages/TagInput';
 import WeddingDay from './pages/WeddingDay';
 import WholeTab from './pages/WholeTab';
-
+import MyPage from './pages/MyPage';
 
 
 function App() {
@@ -68,6 +68,8 @@ function App() {
           <Route path="/taginput" element={<TagInput />} />
           <Route path="/weddingday" element={<WeddingDay />} />
           <Route path="/wholetab" element={<WholeTab />} />
+          <Route path="/mypage" element={<MyPage />} />
+
         </Routes>
       </div>
     </BrowserRouter>
