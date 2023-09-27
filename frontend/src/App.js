@@ -1,7 +1,7 @@
 import { React } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
-
+// import GlobalStyle from "./styles/GlobalStyle";
 import FirstMain from './components/Login/FirstMain';
 import AccountCalendar from './pages/AccountCalendar';
 import AccountInput from './pages/AccountInput';
@@ -46,7 +46,6 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <Routes>
-          <Route path="/" element={<Main />} />
           <Route path="/" element={<FirstMain />} />
           <Route path="/calendar" element={<AccountCalendar />} />
           <Route path="/accountinput" element={<AccountInput />} />
