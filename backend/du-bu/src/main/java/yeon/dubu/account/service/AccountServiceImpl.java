@@ -49,23 +49,23 @@ public class AccountServiceImpl implements AccountService{
         accountRepository.save(account);
 
         //총 예적금에 수정
-        Money money = moneyRepository.findByUserId(user.getId()).orElseThrow(
-            () -> new NoSuchMoneyException("해당하는 자산 정보가 없습니다.")
-        );
-        money.setTotalAccount(money.getTotalAccount() + savingAccountReqDto.getStartAmount());
+//        Money money = moneyRepository.findByUserId(user.getId()).orElseThrow(
+//            () -> new NoSuchMoneyException("해당하는 자산 정보가 없습니다.")
+//        );
+//        money.setTotalAccount(money.getTotalAccount() + savingAccountReqDto.getStartAmount());
 
-        //만기일에 income에 추가
-        MoneyIncome moneyIncome = new MoneyIncome();
-        moneyIncome.setTagIncome(tagIncomeRepository.findByTagName("적금 만기").orElseThrow(
-            () -> new NoSuchTagIncomeException("해당하는 태그가 없습니다.")
-        ));
-
-        moneyIncome.setCouple(user.getCouple());
-        moneyIncome.setMemo("적금 만기");
-        moneyIncome.setUserRole(user.getUserRole());
-        moneyIncome.setDate(savingAccountReqDto.getFinalDate());
-        moneyIncome.setAmount(savingAccountReqDto.getFinalAmount());
-        moneyIncomeRepository.save(moneyIncome);
+//        //만기일에 income에 추가
+//        MoneyIncome moneyIncome = new MoneyIncome();
+//        moneyIncome.setTagIncome(tagIncomeRepository.findByTagName("적금 만기").orElseThrow(
+//            () -> new NoSuchTagIncomeException("해당하는 태그가 없습니다.")
+//        ));
+//
+//        moneyIncome.setCouple(user.getCouple());
+//        moneyIncome.setMemo("적금 만기");
+//        moneyIncome.setUserRole(user.getUserRole());
+//        moneyIncome.setDate(savingAccountReqDto.getFinalDate());
+//        moneyIncome.setAmount(savingAccountReqDto.getFinalAmount());
+//        moneyIncomeRepository.save(moneyIncome);
     }
 
     @Override
