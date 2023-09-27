@@ -29,6 +29,7 @@ public class UserServiceImpl implements UserService {
                 .imageUrl(user.getImageUrl())
                 .userRole(user.getUserRole() != null ? user.getUserRole() : UserRole.UNDEFINED)
                 .creditScore(user.getCreditScore() != null ? user.getCreditScore() : -1)
+                .isCouple(user.getCouple() != null ? Boolean.TRUE : Boolean.FALSE )
                 .build();
 
         return userResDto;

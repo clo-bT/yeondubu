@@ -13,14 +13,19 @@ public class UserResDto {
     private String imageUrl;
     private UserRole userRole;
     private Integer creditScore;
+    private Boolean isCouple;
 
     @Builder
-    public UserResDto(Long id, String name, String imageUrl, UserRole userRole, Integer creditScore) {
+    public UserResDto(Long id, String name, String imageUrl, UserRole userRole, Integer creditScore,
+        Boolean isCouple) {
         this.id = id;
         this.name = name;
         this.imageUrl = imageUrl;
         this.userRole = userRole;
         this.creditScore = creditScore;
+        this.isCouple = isCouple;
     }
+
+
 
 }
