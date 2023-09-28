@@ -32,6 +32,8 @@ import MyPage from './pages/MyPage';
 import MyAccount from './pages/MyAccount';
 import MyAccountDetail from './pages/MyAccountDetail';
 import MyProductLike from './pages/MyProductLike';
+import UserWithdraw from './pages/UserWithdraw';
+
 
 
 function App() {
@@ -75,6 +77,8 @@ function App() {
           <Route path="/myaccount" element={<MyAccount />} />
           <Route path="/myaccountdetail" element={<MyAccountDetail />} />
           <Route path="/myproduct" element={<MyProductLike />} />
+          <Route path="/weddingday" element={<WeddingDay />} />
+          <Route path="/userwithdraw" element={<UserWithdraw />} />
 
 
   

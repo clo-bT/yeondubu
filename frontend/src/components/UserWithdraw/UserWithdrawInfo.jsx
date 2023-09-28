@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { AiOutlineInfoCircle } from "react-icons/ai";
+import UserWithdraw from '../../pages/UserWithdraw';
 
 const GoBack = styled.a`
 text-decoration: none;
@@ -52,7 +53,7 @@ margin-right: auto;
 const UserWithdrawInfo = () => {
     return (
         <div>
-        <GoBack href="/" >뒤로가기</GoBack> 
+        <GoBack href="/mypage" >뒤로가기</GoBack> 
         <InfoIcon />
             <p>상대방과 연결을 끊기 전에 꼭 확인해주세요!</p>
         <Content>
@@ -61,7 +62,7 @@ const UserWithdrawInfo = () => {
             <li>연결 끊기 시 부디 신중하게 선택해 주시기 바랍니다.</li>
         </Content>
 
-        <BrokeUpButton>파혼하기</BrokeUpButton>
+        <BrokeUpButton onClick={UserWithdraw}>파혼하기</BrokeUpButton>
         </div>
     );
 };
