@@ -32,6 +32,7 @@ import MyPage from './pages/MyPage';
 import MyAccount from './pages/MyAccount';
 import MyAccountDetail from './pages/MyAccountDetail';
 import MyProductLike from './pages/MyProductLike';
+import MyAccountUpdate from './pages/MyAccountUpdate';
 
 
 function App() {
@@ -75,6 +76,7 @@ function App() {
           <Route path="/myaccount" element={<MyAccount />} />
           <Route path="/myaccountdetail" element={<MyAccountDetail />} />
           <Route path="/myproduct" element={<MyProductLike />} />
+          <Route path="/myaccountupdate" element={<MyAccountUpdate />} />
 
 
   
