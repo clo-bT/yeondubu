@@ -11,9 +11,9 @@ public interface AccountService {
     void insertSaving(Long userId, SavingAccountReqDto savingAccountReqDto);
     void insertDeposit(Long userId, DepositAccountReqDto depositAccountReqDto);
     void updateSaving(Long userId, Long accountId, SavingAccountReqDto savingAccountReqDto);
-    void updateDeposit(Long accountId, DepositAccountReqDto depositAccountReqDto);
-    void deleteSaving(Long accountId);
-    void deleteDeposit(Long accountId);
+    void updateDeposit(Long userId, Long accountId, DepositAccountReqDto depositAccountReqDto);
+    void deleteSaving(Long userId, Long accountId);
+    void deleteDeposit(Long userId, Long accountId);
     List<AccountInfoResDto> searchAccounts(Long userId);
 
     SavingAccountResDto searchSaving(Long accountId);

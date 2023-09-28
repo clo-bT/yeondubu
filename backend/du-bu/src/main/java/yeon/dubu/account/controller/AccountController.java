@@ -51,19 +51,19 @@ public class AccountController {
 
     @PutMapping("/deposit/{accountId}")
     public ResponseEntity<?> updateDeposit(@AuthenticationPrincipal Long userId, @RequestBody DepositAccountReqDto depositAccountReqDto, @PathVariable Long accountId){
-        accountService.updateDeposit(accountId, depositAccountReqDto);
+        accountService.updateDeposit(userId, accountId, depositAccountReqDto);
         return new ResponseEntity<>("", HttpStatus.OK);
     }
 
     @DeleteMapping("/saving/{accountId}")
     public ResponseEntity<?> deleteSaving(@AuthenticationPrincipal Long userId, @PathVariable Long accountId){
-        accountService.deleteSaving(accountId);
+        accountService.deleteSaving(userId, accountId);
         return new ResponseEntity<>("", HttpStatus.OK);
     }
 
     @DeleteMapping("/deposit/{accountId}")
     public ResponseEntity<?> deleteDeposit(@AuthenticationPrincipal Long userId, @PathVariable Long accountId){
-        accountService.deleteDeposit(accountId);
+        accountService.deleteDeposit(userId, accountId);
         return new ResponseEntity<>("", HttpStatus.OK);
     }
 

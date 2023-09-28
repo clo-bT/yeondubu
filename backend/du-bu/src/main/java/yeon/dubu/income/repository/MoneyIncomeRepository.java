@@ -3,8 +3,12 @@ package yeon.dubu.income.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import yeon.dubu.income.domain.MoneyIncome;
+import yeon.dubu.user.enumeration.UserRole;
+
+import java.util.Optional;
 
 @Repository
 public interface MoneyIncomeRepository extends JpaRepository<MoneyIncome, Long> {
 
+    void deleteByCoupleIdAndUserRoleAndMemo(Long CoupleId, UserRole userRole, String memo);
 }
