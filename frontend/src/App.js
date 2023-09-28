@@ -33,6 +33,7 @@ import MyAccount from './pages/MyAccount';
 import MyAccountDetail from './pages/MyAccountDetail';
 import MyProductLike from './pages/MyProductLike';
 import CreditScoreInput from './pages/CreditScoreInput';
+import MyAccountUpdate from './pages/MyAccountUpdate';
 
 
 function App() {
@@ -77,6 +78,7 @@ function App() {
           <Route path="/myaccountdetail" element={<MyAccountDetail />} />
           <Route path="/myproduct" element={<MyProductLike />} />
           <Route path="/input" element={<CreditScoreInput />} />
+          <Route path="/myaccountupdate" element={<MyAccountUpdate />} />
 
 
   
