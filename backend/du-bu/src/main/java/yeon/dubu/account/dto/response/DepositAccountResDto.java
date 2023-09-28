@@ -14,9 +14,8 @@ public class DepositAccountResDto {
     private Integer transferDay;
     private Long transferAmount;
     private LocalDate finalDate;
-    private Long userId;
     @Builder
-    public DepositAccountResDto(String accountName, Long startAmount, Long finalAmount, Integer transferDay, Long transferAmount, LocalDate finalDate, Long userId){
+    public DepositAccountResDto(String accountName, Long startAmount, Long finalAmount, Integer transferDay, Long transferAmount, LocalDate finalDate){
         this.accountName = accountName;
         this.startAmount = startAmount;
         this.finalAmount = finalAmount;
@@ -24,7 +23,7 @@ public class DepositAccountResDto {
         this.transferAmount = transferAmount;
         this.finalDate = finalDate;
     }
-    private static DepositAccountResDto from(Account account){
+    public static DepositAccountResDto from(Account account){
         return DepositAccountResDto.builder()
             .accountName(account.getName())
             .startAmount(account.getStartAmount())
