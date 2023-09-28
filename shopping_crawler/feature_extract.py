@@ -38,6 +38,7 @@ if __name__ == '__main__':
         for category in queries.keys():
             for subcategory, query in queries[category].items():
                 json_data = hdf5_file[category][subcategory]['json'][()]
-                features = feature_list(json_data, fe)
+                # features = feature_list(json_data, fe)
+                features = np.load('./tmp/feature/'+category+subcategory+'.npy')
                 hdf5_file[category][subcategory].create_dataset('npy', data=np.array(features))
     

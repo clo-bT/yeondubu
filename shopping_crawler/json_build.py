@@ -47,11 +47,14 @@ class NaverImageCrawler():
     def category_data(self, ref):
         tmp = {"max_page" : ceil(len(ref)/9 - 1)}
         brand_set = set()
-        max_price = ref[0]["lprice"]
+        min_price = int(ref[0]["lprice"])
+        max_price = int(ref[0]["lprice"])
         for item in ref:
             brand_set.add(item.get("brand"))
-            max_price = max(max_price, item.get("lprice"))
+            min_price = min(min_price, int(item.get("lprice")))
+            max_price = max(max_price, int(item.get("lprice")))
         tmp["brands"] = list(brand_set)
+        tmp["min_price"] = min_price
         tmp["max_price"] = max_price
         return tmp
 
