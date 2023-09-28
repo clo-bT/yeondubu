@@ -11,6 +11,8 @@ import yeon.dubu.account.domain.Account;
 import yeon.dubu.account.dto.request.DepositAccountReqDto;
 import yeon.dubu.account.dto.request.SavingAccountReqDto;
 import yeon.dubu.account.dto.response.AccountInfoResDto;
+import yeon.dubu.account.dto.response.DepositAccountResDto;
+import yeon.dubu.account.dto.response.SavingAccountResDto;
 import yeon.dubu.account.enumeration.AccountType;
 import yeon.dubu.account.exception.NoSuchAccountException;
 import yeon.dubu.account.repository.AccountRepository;
@@ -150,6 +152,26 @@ public class AccountServiceImpl implements AccountService{
             accountInfoResDtoList.add(accountInfoResDto);
         }
         return accountInfoResDtoList;
+    }
+
+    @Override
+    public SavingAccountResDto searchSaving(Long accountId) {
+        Account account = accountRepository.findById(accountId).orElseThrow(
+                () -> new NoSuchAccountException("해당 계좌가 존재하지 않습니다.")
+        );
+        SavingAccountResDto savingAccountResDto = SavingAccountResDto.from(account);
+        return savingAccountResDto;
+
+    }
+
+    @Override
+    public DepositAccountResDto searchDeposit(Long accountId) {
+
+        Account account = accountRepository.findById(accountId).orElseThrow(
+                () -> new NoSuchAccountException("해당 계좌가 존재하지 않습니다.")
+        );
+        DepositAccountResDto depositAccountResDto = DepositAccountResDto.from(account);
+        return depositAccountResDto;
     }
 
     private Long calNowMoney(Account account){

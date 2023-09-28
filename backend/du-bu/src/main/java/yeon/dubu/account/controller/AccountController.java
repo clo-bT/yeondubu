@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import yeon.dubu.account.dto.request.DepositAccountReqDto;
 import yeon.dubu.account.dto.request.SavingAccountReqDto;
 import yeon.dubu.account.dto.response.AccountInfoResDto;
+import yeon.dubu.account.dto.response.DepositAccountResDto;
+import yeon.dubu.account.dto.response.SavingAccountResDto;
 import yeon.dubu.account.service.AccountService;
 
 @Slf4j
@@ -65,6 +67,17 @@ public class AccountController {
         return new ResponseEntity<>("", HttpStatus.OK);
     }
 
+    @GetMapping("/saving/{accountId}")
+    public ResponseEntity<?> searchSaving(@AuthenticationPrincipal Long userId, @PathVariable Long accountId){
+        SavingAccountResDto savingAccountResDto = accountService.searchSaving(accountId);
+        return new ResponseEntity<>("", HttpStatus.OK);
+    }
+
+    @GetMapping("/saving/{accountId}")
+    public ResponseEntity<?> searchDeposit(@AuthenticationPrincipal Long userId, @PathVariable Long accountId){
+        DepositAccountResDto depositAccountResDto = accountService.searchDeposit(accountId);
+        return new ResponseEntity<>("", HttpStatus.OK);
+    }
     @GetMapping
     public ResponseEntity<?> searchAccounts(@AuthenticationPrincipal Long userId){
         List<AccountInfoResDto> accountInfoResDtoList = accountService.searchAccounts(userId);
