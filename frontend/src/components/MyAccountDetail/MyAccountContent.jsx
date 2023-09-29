@@ -109,7 +109,7 @@ const MyAccountContent = () => {
   useEffect(() => {
     if (accessToken) {
       axios
-        .get(`${process.env.REACT_APP_API_ROOT}/api/v1/accounts/saving/{accountId}`, {
+        .get(`${process.env.REACT_APP_API_ROOT}/api/v1/accounts/detail/{accountId}`, {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
@@ -129,9 +129,9 @@ const MyAccountContent = () => {
       <Container>
 
         <AccountItem>
-          <AccountName></AccountName>
+          <AccountName>{accountData.account_name}</AccountName>
 
-              <NowMoney>원</NowMoney>
+              <NowMoney>{accountData.start_amount}원</NowMoney>
             <DetailItem>
               <Header>이체</Header>
               <Detail></Detail>

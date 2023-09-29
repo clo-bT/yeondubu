@@ -23,12 +23,14 @@ margin-bottom: 0px;
 
 `
 const MyPageHeader = () => {
+    const name = localStorage.getItem('name')
+    const image = localStorage.getItem('image')
     return (
         <>
         
         <Container>
-            <MyProfile src={wife}/>
-            <Hi>손예진님, 안녕하세요!</Hi>
+            <MyProfile src={image}/>
+            <Hi>{name}님, 안녕하세요!</Hi>
         </Container>
         </>
     );
