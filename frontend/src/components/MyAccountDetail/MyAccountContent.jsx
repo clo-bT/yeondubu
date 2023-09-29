@@ -1,4 +1,5 @@
-import React from 'react';
+import axios from 'axios';
+import {React, useEffect, useState} from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -97,48 +98,63 @@ margin-left: auto;
 margin-right: auto;
 `
 const MyAccountContent = () => {
-    const dummyData = [
-        {
-        index: 0, 
-        name:'우리 청년 적금', 
-        money:'50,000,000', 
-        이체: '15일',
-        이채금액: '500,000', 
-        만기일 : '2023-10-23', 
-        만기예상금액: '2,000,000'
-        }
-    ]
+  const [accessToken, setAccessToken] = useState('');
+  const [accountData, setAccountData] = useState([]);
+
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+    setAccessToken(token);
+  }, []);
+
+  useEffect(() => {
+    if (accessToken) {
+      axios
+        .get(`${process.env.REACT_APP_API_ROOT}/api/v1/accounts/saving/{accountId}`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        })
+        .then((response) => {
+          console.log('요청 성공:', response);
+          // console.log(response.data);
+          setAccountData(response.data);
+        })
+        .catch((error) => {
+          console.error('요청 실패:', error);
+        });
+    }
+  }, [accessToken]);
     return (
       <>
       <Container>
-      {dummyData.map((item) => (
-        <AccountItem key={item.index}>
-          <AccountName>{item.name}</AccountName>
 
-              <NowMoney>{item.money} 원</NowMoney>
+        <AccountItem>
+          <AccountName></AccountName>
+
+              <NowMoney>원</NowMoney>
             <DetailItem>
               <Header>이체</Header>
-              <Detail>{item.이체}</Detail>
+              <Detail></Detail>
             </DetailItem>
               <UnlineLine />
             <DetailItem>
-              <Header>이채금액</Header>
-              <Detail>{item.이채금액} 원</Detail>
+              <Header>이체금액</Header>
+              <Detail> 원</Detail>
             </DetailItem>
             <UnlineLine />
             <DetailItem>
               <Header>만기일</Header>
-              <Detail>{item.만기일}</Detail>
+              <Detail></Detail>
             </DetailItem>
             <UnlineLine />
             <DetailItem>
               <Header>만기예상금액</Header>
-              <Detail>{item.만기예상금액} 원</Detail>
+              <Detail>원</Detail>
             </DetailItem>
             <UnlineLine />
          
         </AccountItem>
-      ))}
+
     </Container>
       <UpdateButton>수정하기</UpdateButton>
       

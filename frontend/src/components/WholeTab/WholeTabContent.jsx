@@ -41,14 +41,14 @@ const WholeTabContent = () => {
     return ( 
             <Container>
             <Header>추천 메뉴</Header>
-            <Detail href="/">가구 추천</Detail>
-            <Detail href="/">챗봇</Detail>
+            <Detail href="/shopingmallcategory">가구 추천</Detail>
+            <Detail href="/chatbot">챗봇</Detail>
             <HorizontalLine />
             <Header>체크리스트</Header>
             <Detail href="/">체크리스트 수정</Detail>
             <HorizontalLine />
             <Header>고객센터</Header>
-            <Detail href="/">문의하기</Detail>
+            <Detail href="/mooni">문의하기</Detail>
             <HorizontalLine />
         </Container>
 

@@ -37,7 +37,7 @@ transform: translateX(-50%);
 const MonniHeader = () => {
     return (
         <Container>
-            <GetOutButton href=''>나가기</GetOutButton>
+            <GetOutButton href='/wholetab'>나가기</GetOutButton>
             <Monni>문의하기</Monni>
       </Container>
     );

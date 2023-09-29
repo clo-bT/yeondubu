@@ -85,12 +85,12 @@ const WrongButton = styled.div`
 
 const UserProfile = () => {
     const navigate = useNavigate();
-    const accessToken = sessionStorage.getItem("token");
+    const accessToken = localStorage.getItem("token");
     // Local Storage에서 데이터를 가져오기
     // const partnerId = localStorage.getItem('partner_id');
-    const partnerName = localStorage.getItem('partner_name');
-    const partnerImg = localStorage.getItem('partner_img');
-    const role = localStorage.getItem('role');
+    const partnerName = sessionStorage.getItem('partner_name');
+    const partnerImg = sessionStorage.getItem('partner_img');
+    const role = sessionStorage.getItem('role');
     const handleCheck = () => {
         axios.get(`${process.env.REACT_APP_API_ROOT}/api/v1/couples/check1/${role}`, {
             headers: {
@@ -101,15 +101,21 @@ const UserProfile = () => {
                 console.log('요청 성공', response.data);
                 if (response.data === 'waiting') {
                     navigate('/invitepageentercode')
-                    
                 }
                 else if(response.data === 'finish') {
+                    localStorage.setItem('partner_id', response.data.partner_id);
+                    localStorage.setItem('partner_name', response.data.partner_name);
+                    localStorage.setItem('partner_img', response.data.partner_img);
+                    sessionStorage.removeItem('partner_id');
+                    sessionStorage.removeItem('partner_name');
+                    sessionStorage.removeItem('partner_img');
                     navigate('/accountinput')
                 }
                 else {
-                    localStorage.removeItem('partner_id');
-                    localStorage.removeItem('partner_name');
-                    localStorage.removeItem('partner_img');
+                    sessionStorage.removeItem('partner_id');
+                    sessionStorage.removeItem('partner_name');
+                    sessionStorage.removeItem('partner_img');
+                    sessionStorage.removeItem('role');
                     navigate('/invite')
                 }
             })
@@ -124,9 +130,10 @@ const UserProfile = () => {
             }
         }).then(response => {
             console.log('요청 성공', response);
-            localStorage.removeItem('partner_id');
-            localStorage.removeItem('partner_name');
-            localStorage.removeItem('partner_img');
+            sessionStorage.removeItem('partner_id');
+            sessionStorage.removeItem('partner_name');
+            sessionStorage.removeItem('partner_img');
+            sessionStorage.removeItem('role');
         })
         .catch(error => {
             console.error('요청 실패', error);

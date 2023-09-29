@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   margin-top: 20px;
@@ -58,7 +59,7 @@ const MyAccountList = () => {
   const [accountData, setAccountData] = useState([]);
 
   useEffect(() => {
-    const token = sessionStorage.getItem("token");
+    const token = localStorage.getItem("token");
     setAccessToken(token);
   }, []);
 
@@ -81,10 +82,18 @@ const MyAccountList = () => {
     }
   }, [accessToken]);
 
+
+  const navigate = useNavigate();
+
+  const navigateToDetailPage = (accountId) => {
+    navigate(`/myaccountdetail/${accountId}`);
+  };
+  
+
   return (
     <Container>
       {accountData.map((item) => (
-        <AccountItem key={item.id}>
+        <AccountItem key={item.id} onClick={() => navigateToDetailPage(item.id)}>
           <AccountName>{item.name}</AccountName>
           <AccountMoney>{item.price} 원</AccountMoney>
         </AccountItem>
