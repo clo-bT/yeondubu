@@ -95,15 +95,9 @@ class MoneyExpenditureServiceImplTest {
         USER2 = userRepository.save(user2);
 
         String firstTagName = "혼수";
+
         TAG1 = tagFirstExpenditureService.insertFirstTag(firstTagName, USER1.getId());
 
-//        TagFirstExpenditure tagFirstExpenditure = TagFirstExpenditure.builder()
-//                .couple(couple)
-//                .firstTagName("혼수")
-//                .build();
-//
-//
-//        TAG1 = tagFirstExpenditureRepository.save(tagFirstExpenditure);
 
         TagSecondExpenditureReqDto tagSecondExpenditureReqDto = TagSecondExpenditureReqDto.builder()
                 .firstTagId(TAG1.getId())
@@ -112,7 +106,6 @@ class MoneyExpenditureServiceImplTest {
 
         TAG2 = tagSecondExpenditureService.insertSecondTag(tagSecondExpenditureReqDto, USER1.getId());
 
-//        TAG2 = tagSecondExpenditureRepository.save(tagSecondExpenditure);
 
         TagThirdExpenditureReqDto tagThirdExpenditureReqDto = TagThirdExpenditureReqDto.builder()
                 .secondTagId(TAG2.getId())

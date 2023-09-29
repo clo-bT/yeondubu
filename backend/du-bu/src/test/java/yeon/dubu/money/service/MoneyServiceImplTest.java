@@ -17,6 +17,7 @@ import yeon.dubu.expenditure.dto.request.MoneyExpenditureReqDto;
 import yeon.dubu.expenditure.dto.request.TagThirdExpenditureReqDto;
 import yeon.dubu.expenditure.service.TagFirstExpenditureService;
 import yeon.dubu.expenditure.service.TagThirdExpenditureService;
+import yeon.dubu.money.dto.response.MoneyYearMonthResDto;
 import yeon.dubu.money.dto.response.TotalExpectExpenditureResDto;
 import yeon.dubu.expenditure.repository.MoneyExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagFirstExpenditureRepository;
@@ -32,6 +33,7 @@ import yeon.dubu.user.enumeration.UserRole;
 import yeon.dubu.user.repository.UserRepository;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -198,6 +200,29 @@ class MoneyServiceImplTest {
         // then
         Long actualCash = totalCash.getBrideTotalCash() + totalCash.getGroomTotalCash();
         assertThat(actualCash).isEqualTo(3000000L);
+
+    }
+
+    @Test
+    void searchYearMonth() {
+        // given
+        MoneyExpenditureReqDto moneyExpenditureReqDto = MoneyExpenditureReqDto.builder()
+                .thirdTagId(TAG3.getId())
+                .userRole(UserRole.BRIDE)
+                .date(LocalDate.now())
+                .amount(100000L)
+                .memo("침대 샀다")
+                .payComplete(Boolean.FALSE)
+                .build();
+
+        MoneyExpenditure moneyExpenditure = moneyExpenditureService.insertExpenditure(moneyExpenditureReqDto, USER1.getId());
+
+
+        // when
+        MoneyYearMonthResDto yearMonthResult = moneyService.searchYearMonth(YearMonth.now(), USER2.getId());
+        // then
+        System.out.println("1111yearMonthResult = " + yearMonthResult);
+
 
     }
 }
