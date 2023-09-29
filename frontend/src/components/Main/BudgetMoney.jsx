@@ -1,6 +1,6 @@
-import React from 'react';
+import {React, useEffect, useState} from 'react';
 import styled from 'styled-components';
-
+import axios from 'axios';
 const Container = styled.div`
 position: sticky;
 top: 0;
@@ -82,13 +82,39 @@ line-height: normal;
 margin: 20px;
 `
 const BudgetMoney = ({ isBudgetOpen }) => {
+    
+    const [accessToken, setAccessToken] = useState('');
+    const [estimatedMoney, setEstimatedMoney] = useState(''); // 예상 금액 상태 추가
+  
+    useEffect(() => {
+      const token = sessionStorage.getItem("token");
+      setAccessToken(token);
+    }, []);
 
+    useEffect(() => {
+      if (accessToken) {
+        axios
+          .get(`${process.env.REACT_APP_API_ROOT}/api/v1/money/total-expect`, {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          })
+          .then((response) => {
+            console.log('요청 성공:', response);
+            const estimatedMoneyValue = response.datatotal_expect_expenditure; // 응답에서 예상 금액 값을 가져옴
+            setEstimatedMoney(estimatedMoneyValue); // 상태를 업데이트
+          })
+          .catch((error) => {
+            console.error('요청 실패:', error);
+          });
+      }
+    }, [accessToken]);
 
     return (
         <Container isBudgetOpen={isBudgetOpen}>
             <Dday>D-527</Dday>
             <EstimatedMoney>총 예상 금액</EstimatedMoney>
-            <EstimatedMoneyDetail>370,000,000원</EstimatedMoneyDetail>
+            <EstimatedMoneyDetail>{estimatedMoney}원</EstimatedMoneyDetail>
             <WeHave>함께 이만큼 모았어요</WeHave>
             <WeHaveDetail>170,000,000원</WeHaveDetail>
             <WeNeed>앞으로 이만큼 남았어요</WeNeed>
