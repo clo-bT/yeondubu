@@ -71,6 +71,11 @@ const RowContainer = styled.div`
 `
 
 const CoupleImage = ({ setIsBudgetOpen, isBudgetOpen }) => {
+  const name = localStorage.getItem('name')
+  const image = localStorage.getItem('image')
+  const partnername = localStorage.getItem('partner_name')
+  const partnerimage = localStorage.getItem('partner_image')
+  
   const handleClick = () => {
     setIsBudgetOpen(!isBudgetOpen); // BudgetMoney의 높이를 토글
   };
@@ -80,15 +85,15 @@ const CoupleImage = ({ setIsBudgetOpen, isBudgetOpen }) => {
       <CoupleContainer isBudgetOpen={isBudgetOpen} onClick={handleClick}>
         <RowContainer>
           <CoupleContent>
-            <WifeName>손예진</WifeName>
-            <WifeImg src={wife} />
+            <WifeName>{name}</WifeName>
+            <WifeImg src={image} />
           </CoupleContent>
 
           <HeartImg src={heart} />
 
           <CoupleContent>
-            <HusbandName>현빈</HusbandName>
-            <Husband src={husband} />
+            <HusbandName>{partnername}</HusbandName>
+            <Husband src={partnerimage} />
           </CoupleContent>
         </RowContainer>
       </CoupleContainer>
