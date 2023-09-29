@@ -94,9 +94,9 @@ const InvitationCode = () => {
             // console.log(code)
             // 코드 생성이야. 이 사람이 host
             if (response.data.state === 'finish') {
-                sessionStorage.setItem('partner_id', response.data.partner_id);
-                sessionStorage.setItem('partner_name', response.data.partner_name);
-                sessionStorage.setItem('partner_img', response.data.partner_img);
+                localStorage.setItem('partner_id', response.data.partner_id);
+                localStorage.setItem('partner_name', response.data.partner_name);
+                localStorage.setItem('partner_img', response.data.partner_img);
                 sessionStorage.setItem('role', 'host');
                 navigate(`/checkuser`)
             };

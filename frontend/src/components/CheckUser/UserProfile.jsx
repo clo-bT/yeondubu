@@ -88,8 +88,8 @@ const UserProfile = () => {
     const accessToken = localStorage.getItem("token");
     // Local Storage에서 데이터를 가져오기
     // const partnerId = localStorage.getItem('partner_id');
-    const partnerName = sessionStorage.getItem('partner_name');
-    const partnerImg = sessionStorage.getItem('partner_img');
+    const partnerName = localStorage.getItem('partner_name');
+    const partnerImg = localStorage.getItem('partner_img');
     const role = sessionStorage.getItem('role');
     const handleCheck = () => {
         axios.get(`${process.env.REACT_APP_API_ROOT}/api/v1/couples/check1/${role}`, {
@@ -103,18 +103,12 @@ const UserProfile = () => {
                     navigate('/invitepageentercode')
                 }
                 else if(response.data === 'finish') {
-                    localStorage.setItem('partner_id', response.data.partner_id);
-                    localStorage.setItem('partner_name', response.data.partner_name);
-                    localStorage.setItem('partner_img', response.data.partner_img);
-                    sessionStorage.removeItem('partner_id');
-                    sessionStorage.removeItem('partner_name');
-                    sessionStorage.removeItem('partner_img');
                     navigate('/accountinput')
                 }
                 else {
-                    sessionStorage.removeItem('partner_id');
-                    sessionStorage.removeItem('partner_name');
-                    sessionStorage.removeItem('partner_img');
+                    localStorage.removeItem('partner_id');
+                    localStorage.removeItem('partner_name');
+                    localStorage.removeItem('partner_img');
                     sessionStorage.removeItem('role');
                     navigate('/invite')
                 }
@@ -130,9 +124,9 @@ const UserProfile = () => {
             }
         }).then(response => {
             console.log('요청 성공', response);
-            sessionStorage.removeItem('partner_id');
-            sessionStorage.removeItem('partner_name');
-            sessionStorage.removeItem('partner_img');
+            localStorage.removeItem('partner_id');
+            localStorage.removeItem('partner_name');
+            localStorage.removeItem('partner_img');
             sessionStorage.removeItem('role');
         })
         .catch(error => {
