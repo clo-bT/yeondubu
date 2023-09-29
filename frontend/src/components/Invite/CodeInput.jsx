@@ -112,9 +112,9 @@ const CodeInput = () => {
                 // 요청 성공 시 처리
                 console.log('요청 성공:', response.data.state);
                 if (response.data.state === 'success') {
-                    sessionStorage.setItem('partner_id', response.data.partner_id);
-                    sessionStorage.setItem('partner_name', response.data.partner_name);
-                    sessionStorage.setItem('partner_img', response.data.partner_img);
+                    localStorage.setItem('partner_id', response.data.partner_id);
+                    localStorage.setItem('partner_name', response.data.partner_name);
+                    localStorage.setItem('partner_img', response.data.partner_img);
                     sessionStorage.setItem('role', 'guest');
                     navigate(`/checkuser`)
                 };
