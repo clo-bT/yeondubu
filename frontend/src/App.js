@@ -33,7 +33,7 @@ import MyAccount from './pages/MyAccount';
 import MyAccountDetail from './pages/MyAccountDetail';
 import MyProductLike from './pages/MyProductLike';
 import UserWithdraw from './pages/UserWithdraw';
-
+import MyAccountUpdate from './pages/MyAccountUpdate';
 
 
 function App() {
@@ -79,6 +79,7 @@ function App() {
           <Route path="/myproduct" element={<MyProductLike />} />
           <Route path="/weddingday" element={<WeddingDay />} />
           <Route path="/userwithdraw" element={<UserWithdraw />} />
+          <Route path="/myaccountupdate" element={<MyAccountUpdate />} />
 
 
   

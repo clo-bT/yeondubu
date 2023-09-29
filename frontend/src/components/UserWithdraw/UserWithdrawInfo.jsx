@@ -1,7 +1,9 @@
-import React from 'react';
+import {React, useState, useEffect} from 'react';
 import styled from 'styled-components';
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import UserWithdraw from '../../pages/UserWithdraw';
+import axios from 'axios';
+
 
 const GoBack = styled.a`
 text-decoration: none;
@@ -51,6 +53,32 @@ margin-right: auto;
 `
 
 const UserWithdrawInfo = () => {
+    const [accessToken, setAccessToken] = useState('');
+  
+    useEffect(() => {
+      const token = sessionStorage.getItem("token");
+      setAccessToken(token);
+    }, []);
+
+    const UserWithdraw = () => {
+        console.log(accessToken)
+      
+
+        // 여기서 axios 요청을 보내세요.
+        axios.delete(`${process.env.REACT_APP_API_ROOT}/api/v1/couples`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+      
+            },
+        })
+            .then((response) => {
+                console.log('요청 성공:', response);
+
+            })
+            .catch((error) => {
+                console.error('요청 실패:', error);
+            });
+      };
     return (
         <div>
         <GoBack href="/mypage" >뒤로가기</GoBack> 
