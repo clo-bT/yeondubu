@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import wife from '../../assets/Common/wife.svg';
+
 
 const Container = styled.div`
   display: flex;
@@ -41,14 +41,14 @@ line-height: normal;
 margin: 0;
 `
 
-const MyAccount = styled.p`
-color: #6E7781;
-font-size: 12px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;    
-margin: 0;
-`
+// const MyAccount = styled.p`
+// color: #6E7781;
+// font-size: 12px;
+// font-style: normal;
+// font-weight: 400;
+// line-height: normal;    
+// margin: 0;
+// `
 const MyAccountProfile = () => {
   const name = localStorage.getItem('name')
   const image = localStorage.getItem('image')

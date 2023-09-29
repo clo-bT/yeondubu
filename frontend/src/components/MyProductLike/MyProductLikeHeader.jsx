@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import wife from '../../assets/Common/wife.svg';
 
 const Container = styled.div`
   display: flex;
