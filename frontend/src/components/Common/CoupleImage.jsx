@@ -74,7 +74,7 @@ const CoupleImage = ({ setIsBudgetOpen, isBudgetOpen }) => {
   const name = localStorage.getItem('name')
   const image = localStorage.getItem('image')
   const partnername = localStorage.getItem('partner_name')
-  const partnerimage = localStorage.getItem('partner_image')
+  const partnerimage = localStorage.getItem('partner_img')
   
   const handleClick = () => {
     setIsBudgetOpen(!isBudgetOpen); // BudgetMoney의 높이를 토글
