@@ -8,7 +8,7 @@ import yeon.dubu.user.enumeration.UserRole;
 import java.util.Optional;
 
 @Repository
-public interface MoneyIncomeRepository extends JpaRepository<MoneyIncome, Long> {
+public interface MoneyIncomeRepository extends JpaRepository<MoneyIncome, Long>, CustomMoneyIncomeRepository {
 
     void deleteByCoupleIdAndUserRoleAndMemo(Long CoupleId, UserRole userRole, String memo);
 }
