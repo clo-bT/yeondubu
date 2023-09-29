@@ -57,7 +57,7 @@ const Menubar = () => {
     return (
     <Container>
         <div>
-        <a href="/"><HomeIcon /></a>
+        <a href="/main"><HomeIcon /></a>
         <IconDetail>홈</IconDetail>
         </div>
 
@@ -67,17 +67,17 @@ const Menubar = () => {
         </div>
 
         <div>
-        <a href="/"><CalenderIcon/></a>
+        <a href="/calendar"><CalenderIcon/></a>
         <IconDetail>달력</IconDetail>
         </div>
 
         <div>
-        <a href="/"><ProfileIcon/></a>
+        <a href="/mypage"><ProfileIcon/></a>
         <IconDetail>MY</IconDetail>
         </div>
 
         <div>
-        <a href="/"><AllIcon/></a>
+        <a href="/wholetab"><AllIcon/></a>
         <IconDetail>전체</IconDetail>
         </div>
     </Container>
