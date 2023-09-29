@@ -182,7 +182,7 @@ public class AccountServiceImpl implements AccountService{
             accountInfoResDto.setName(account.getName());
             accountInfoResDto.setPrice(price);
             accountInfoResDto.setId(account.getId());
-
+            accountInfoResDto.setAccountType(account.getAccountType());
             accountInfoResDtoList.add(accountInfoResDto);
         }
         return accountInfoResDtoList;
