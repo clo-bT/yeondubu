@@ -87,7 +87,7 @@ const UserProfile = () => {
     const navigate = useNavigate();
     const accessToken = localStorage.getItem("token");
     // Local Storage에서 데이터를 가져오기
-    // const partnerId = sessionStorage.getItem('partner_id');
+    // const partnerId = localStorage.getItem('partner_id');
     const partnerName = sessionStorage.getItem('partner_name');
     const partnerImg = sessionStorage.getItem('partner_img');
     const role = sessionStorage.getItem('role');
