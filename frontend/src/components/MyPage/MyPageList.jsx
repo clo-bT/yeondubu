@@ -42,13 +42,13 @@ const MyPageList = () => {
         <Container>
             {/* <HorizontalLine /> */}
             <Header>내 계좌 관리</Header>
-            <Detail href="/">계좌 조회/수정</Detail>
+            <Detail href="/myaccount">계좌 조회/수정</Detail>
             <HorizontalLine />
             <Header>장바구니</Header>
-            <Detail href="/">내가 찜한 상품</Detail>
+            <Detail href="/myproductlike">내가 찜한 상품</Detail>
             <HorizontalLine />
             <Header>기타 기능</Header>
-            <Detail href="/">파혼하기</Detail>
+            <Detail href="/userwithdraw">파혼하기</Detail>
             <HorizontalLine />
         </Container>
     );

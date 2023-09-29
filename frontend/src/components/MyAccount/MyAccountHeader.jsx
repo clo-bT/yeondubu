@@ -51,7 +51,7 @@ margin: 0;
 const MyAccountHeader = () => {
     return (
         <>
-        <GoBack href="/" >뒤로가기</GoBack>
+        <GoBack href="/mypage" >뒤로가기</GoBack>
         <Container>
             <MyProfile src={wife}/>
             <MyInfo>
