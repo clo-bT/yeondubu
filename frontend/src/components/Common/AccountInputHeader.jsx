@@ -1,5 +1,4 @@
 import React from 'react';
-import wife from '../../assets/Common/wife.svg';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -47,12 +46,14 @@ font-weight: 400;
 line-height: normal;
 `
 const AccountInputHeader = () => {
+    const name = localStorage.getItem('name')
+    const image = localStorage.getItem('image')
     return (
         <Container>
-            <NextLink href="/">다음</NextLink>
+            <NextLink href="/weddingday">다음</NextLink>
             <InfoBox>
-            <WifeImg src={wife}/>
-            <InputAccount>손예진님의 자산을 입력해주세요</InputAccount>
+            <WifeImg src={image}/>
+            <InputAccount>{name}님의 자산을 입력해주세요</InputAccount>
 
             </InfoBox>
         </Container>
