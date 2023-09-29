@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import yeon.dubu.money.dto.response.MoneyAccountResDto;
 import yeon.dubu.money.dto.response.MoneyYearMonthResDto;
 import yeon.dubu.money.dto.response.TotalExpectExpenditureResDto;
 import yeon.dubu.money.domain.Money;
@@ -56,6 +57,15 @@ public class MoneyController {
         MoneyCashResDto totalCash = moneyService.searchTotalCash(userId);
 
         return ResponseEntity.ok(totalCash);
+    }
+
+    @GetMapping("/total-account")
+    public ResponseEntity<?> searchTotalAccount(
+            @AuthenticationPrincipal Long userId
+    ) {
+        MoneyAccountResDto totalAccount = moneyService.searchTotalAccount(userId);
+
+        return ResponseEntity.ok(totalAccount);
     }
 
     @GetMapping("/{yearMonth}")
