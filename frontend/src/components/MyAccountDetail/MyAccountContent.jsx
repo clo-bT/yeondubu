@@ -138,7 +138,7 @@ const MyAccountContent = () => {
             </DetailItem>
               <UnlineLine />
             <DetailItem>
-              <Header>이채금액</Header>
+              <Header>이체금액</Header>
               <Detail> 원</Detail>
             </DetailItem>
             <UnlineLine />
