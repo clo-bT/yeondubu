@@ -22,6 +22,7 @@ margin: 20px;
 const MyProfile = styled.img`
 width: 57px;
 height: 57px;   
+border-radius: 50%;
 `
 const MyInfo = styled.div`
   display: flex;
@@ -49,13 +50,15 @@ line-height: normal;
 margin: 0;
 `
 const MyAccountProfile = () => {
+  const name = localStorage.getItem('name')
+  const image = localStorage.getItem('image')
     return (
         <>
         <GoBack href="/" >뒤로가기</GoBack>
         <Container>
-            <MyProfile src={wife}/>
+            <MyProfile src={image}/>
             <MyInfo>
-                <MyName>손예진님</MyName>
+                <MyName>{name}님</MyName>
             </MyInfo>
 
         </Container>
