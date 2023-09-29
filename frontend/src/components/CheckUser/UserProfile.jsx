@@ -85,12 +85,12 @@ const WrongButton = styled.div`
 
 const UserProfile = () => {
     const navigate = useNavigate();
-    const accessToken = sessionStorage.getItem("token");
+    const accessToken = localStorage.getItem("token");
     // Local Storage에서 데이터를 가져오기
     // const partnerId = localStorage.getItem('partner_id');
-    const partnerName = localStorage.getItem('partner_name');
-    const partnerImg = localStorage.getItem('partner_img');
-    const role = localStorage.getItem('role');
+    const partnerName = sessionStorage.getItem('partner_name');
+    const partnerImg = sessionStorage.getItem('partner_img');
+    const role = sessionStorage.getItem('role');
     const handleCheck = () => {
         axios.get(`${process.env.REACT_APP_API_ROOT}/api/v1/couples/check1/${role}`, {
             headers: {
