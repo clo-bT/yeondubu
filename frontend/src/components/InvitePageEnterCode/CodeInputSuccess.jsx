@@ -80,8 +80,8 @@ const WrongButton = styled.div`
 const CodeInputSuccess = () => {
     const navigate = useNavigate();
     const accessToken = localStorage.getItem("token");
-    const partnerName = sessionStorage.getItem('partner_name');
-    const partnerImg = sessionStorage.getItem('partner_img');
+    const partnerName = localStorage.getItem('partner_name');
+    const partnerImg = localStorage.getItem('partner_img');
     const role = sessionStorage.getItem('role');
     function sendCheck() {
         const accessToken = localStorage.getItem("token");
@@ -93,18 +93,12 @@ const CodeInputSuccess = () => {
             .then(response => {
                 console.log('요청 성공', response.data);
                 if(response.data === 'finish') {
-                    localStorage.setItem('partner_id', response.data.partner_id);
-                    localStorage.setItem('partner_name', response.data.partner_name);
-                    localStorage.setItem('partner_img', response.data.partner_img);
-                    sessionStorage.removeItem('partner_id');
-                    sessionStorage.removeItem('partner_name');
-                    sessionStorage.removeItem('partner_img');
                     navigate('/accountinput')
                 }
                 else if(response.data === 'cancelled') {
-                    sessionStorage.removeItem('partner_id');
-                    sessionStorage.removeItem('partner_name');
-                    sessionStorage.removeItem('partner_img');
+                    localStorage.removeItem('partner_id');
+                    localStorage.removeItem('partner_name');
+                    localStorage.removeItem('partner_img');
                     sessionStorage.removeItem('role');
                     navigate('/invite')
                 }
@@ -153,9 +147,9 @@ const CodeInputSuccess = () => {
             }
         }).then(response => {
             console.log('요청 성공', response);
-            sessionStorage.removeItem('partner_id');
-            sessionStorage.removeItem('partner_name');
-            sessionStorage.removeItem('partner_img');
+            localStorage.removeItem('partner_id');
+            localStorage.removeItem('partner_name');
+            localStorage.removeItem('partner_img');
             sessionStorage.removeItem('role');
             navigate('/invite')
         })
