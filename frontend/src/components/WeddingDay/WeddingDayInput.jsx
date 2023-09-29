@@ -1,11 +1,19 @@
-import {React, useState} from 'react';
+import React,{ useState } from 'react';
 // import Calender from '../../assets/Common/Calender.svg';
 import styled from 'styled-components';
 import DatePicker from 'react-datepicker';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import 'react-datepicker/dist/react-datepicker.css'; 
 import { faAlignCenter } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
 
+
+const Container = styled.div`
+display: flex;
+align-items: center;
+flex-direction: column;
+justify-content: center;
+`
 const StyledDatePicker = styled(DatePicker)`
     width: 254px;
     height: 43px;
@@ -26,15 +34,31 @@ const StyledDatePicker = styled(DatePicker)`
       cursor: pointer;
     }
 `;
+const ImageBox= styled.div`
 
+`
+const Partner = styled.div`
+display: flex;
+flex-direction: column;
+`
+const PartnerName = styled.span``
+const PartnerImg = styled.img`
+border-radius: 218px;
+`
+const Me = styled.div`
+display: flex;
+flex-direction: column;
+`
+const Name = styled.span``
+const Img = styled.img`
+border-radius: 218px;
+`
 const Congrats = styled.p`
 color: #000;
 text-align: center;
 font-size: 18px;
 font-style: normal;
 font-weight: 400;
-line-height: normal;
-margin-top : 50px;
 `
 
 const DateInputDetail = styled.p`
@@ -44,20 +68,33 @@ font-size: 18px;
 font-style: normal;
 font-weight: 400;
 line-height: normal;
-margin-top: 30px;
 `
-
-const InputButton = styled.button`
-color: #FF5A5A;
+const Button = styled.div`
+display:flex;
+flex-direction:column;
+gap:10px;
+margin-top:30px;
+`
+const BrideButton = styled.button`
+color: rgba(255, 101, 101, 0.80);
 text-align: center;
-font-family: Inter;
 font-size: 18px;
 font-style: normal;
-font-weight: 400;
+font-weight: bold;
 line-height: normal;
-padding : 10px 20px;
+padding : 10px 60px;
 border: none;
-margin-top : 60px;
+border-radius: 10px;
+`
+const GroomButton = styled.button`
+color: #4F91F4;
+text-align: center;
+font-size: 18px;
+font-style: normal;
+font-weight: bold;
+line-height: normal;
+padding : 10px 60px;
+border: none;
 border-radius: 10px;
 `
 
@@ -73,6 +110,11 @@ const DateInputContainer = styled.div`
 
 
 const WeddingDayInput = () => {
+    const accessToken = localStorage.getItem('token')
+    const name = localStorage.getItem('name')
+    const image = localStorage.getItem('image')
+    const partner_name = localStorage.getItem('partner_name')
+    const partner_img = localStorage.getItem('partner_img')
     const [selectedDate, setSelectedDate] = useState(null);
     const handleDateChange = (date) => {
         setSelectedDate(date);
@@ -81,11 +123,33 @@ const WeddingDayInput = () => {
     const clearDate = () => {
         setSelectedDate(null);
       };
-
+    const handleSend = (selectedRole) => {
+      axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/couples/info`,
+      {
+        "user_role": selectedRole,
+        "wedding_date": selectedDate
+      },
+      {
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+        }
+    })
+    // console.log(selectedRole)
+    }
     return (
-        <div>
+        <Container>
+            <ImageBox>
+              <Partner>
+                <PartnerName>{partner_name}</PartnerName>
+                <PartnerImg src={partner_img}/>
+              </Partner>
+              <Me>
+                <Name>{name}</Name>
+                <Img src={image}/>
+              </Me>
+            </ImageBox>
             <Congrats>연두부의 커플이 되신것을 <br />축하드립니다</Congrats>
-            <DateInputDetail>현빈 ❤ 손예진 님의 <br />결혼식 날짜를 입력해주세요</DateInputDetail>
+            <DateInputDetail>{partner_name} ❤ {name} 님의 <br />결혼식 날짜를 입력해주세요</DateInputDetail>
             
             <DateInputContainer>
             <StyledDatePicker
@@ -98,9 +162,11 @@ const WeddingDayInput = () => {
             />
             {/* <StyledCalendarIcon src={Calender} onClick={openCalendar} /> */}
             </DateInputContainer>
-            
-            <InputButton>입력하기</InputButton>
-        </div>
+            <Button>
+              <BrideButton onClick={() => handleSend('BRIDE')}>신부 입장</BrideButton>
+              <GroomButton onClick={() => handleSend('GROOM')}>신랑 입장</GroomButton>
+            </Button>
+        </Container>
     );
 };
 

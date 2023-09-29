@@ -101,15 +101,21 @@ const UserProfile = () => {
                 console.log('요청 성공', response.data);
                 if (response.data === 'waiting') {
                     navigate('/invitepageentercode')
-                    
                 }
                 else if(response.data === 'finish') {
+                    localStorage.setItem('partner_id', response.data.partner_id);
+                    localStorage.setItem('partner_name', response.data.partner_name);
+                    localStorage.setItem('partner_img', response.data.partner_img);
+                    sessionStorage.removeItem('partner_id');
+                    sessionStorage.removeItem('partner_name');
+                    sessionStorage.removeItem('partner_img');
                     navigate('/accountinput')
                 }
                 else {
                     sessionStorage.removeItem('partner_id');
                     sessionStorage.removeItem('partner_name');
                     sessionStorage.removeItem('partner_img');
+                    sessionStorage.removeItem('role');
                     navigate('/invite')
                 }
             })
@@ -127,6 +133,7 @@ const UserProfile = () => {
             sessionStorage.removeItem('partner_id');
             sessionStorage.removeItem('partner_name');
             sessionStorage.removeItem('partner_img');
+            sessionStorage.removeItem('role');
         })
         .catch(error => {
             console.error('요청 실패', error);
