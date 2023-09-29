@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import CalendarInput from '../CalendarInputCreate/CalendarInput';
-// import React, { useEffect, useState } from 'react';
-// import axios from 'axios'; 
+import axios from 'axios';
 
 const ModalPage = styled.div`
 display: flex;
@@ -75,50 +74,7 @@ font-size: 15px;
 `;
 
 
-const responseData =
-{
-    "date": "2023-09-18",
-    "incomeList": [
-        {
-            "id": 1,
-            "role": "GROOM",
-            "amount": 1000000,
-            "first_tag_id": 1,
-            "first_tag_name": "용돈",
-            "memo": "할아버지께서 결혼자금 보내주심"
-        },
-        {
-            "id": 2,
-            "role": "BRIDE",
-            "amount": 500000,
-            "first_tag_id": 1,
-            "first_tag_name": "용돈",
-            "memo": "적금 50만원 이체"
-        }
-    ],
-    "expenditureList": [
-        {
-            "id": 1,
-            "role": "BRIDE",
-            "tag_id": 1,
-            "first_tag_name": "혼수",
-            "second_tag_name": "가구",
-            "third_tag_name": "침대",
-            "amount": 400000,
-            "memo": "이케아"
-        },
-        {
-            "id": 2,
-            "role": "GROOM",
-            "tag_id": 2,
-            "first_tag_name": "혼수",
-            "second_tag_name": "가전",
-            "third_tag_name": "냉장고",
-            "amount": 800000,
-            "memo": "비스포크"
-        }
-    ]
-};
+
 
 
 
@@ -135,17 +91,23 @@ const AccountCalendarDetail = ({ formatday }) => {
         setModalOpen(false);
     }
 
-    // const [responseData, setResponseData] = useState([]);
-    // useEffect(() => {
-    //     // 백틱으로 바꾸기
-    //     axios.get($`/api/v1/cash?date={formatday}`)
-    //     .then(response => {
-    //         setResponseData(response.data);
-    //     })
-    //     .catch(error => {
-    //         console.error('Error fetching data:', error);
-    //     });
-    // }, []);
+     const [responseData, setResponseData] = useState([]);
+     useEffect(() => {
+        const accessToken = localStorage.getItem("token");
+         // 백틱으로 바꾸기
+         axios.get(`${process.env.REACT_APP_API_ROOT}/api/v1/money/${formatday}`,{
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            }
+        })
+         .then(response => {
+            console.log(response)
+             setResponseData(response.data);
+         })
+         .catch(error => {
+             console.error('Error fetching data:', error);
+         });
+     }, []);
 
     return (
         <ModalPage>

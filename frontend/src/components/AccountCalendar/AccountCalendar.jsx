@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { format, addMonths, subMonths } from 'date-fns';
 import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from 'date-fns';
 import { isSameMonth, isSameDay, addDays } from 'date-fns';
-// import React, { useEffect, useState } from 'react';
-// import axios from 'axios';
+import axios from 'axios';
 
 const CalendarPage = styled.div`
 /* width: 355px; */
@@ -119,161 +118,6 @@ const NotTodayDot = styled.div`
 
 `
 
-const responseData = [
-    
-    {
-        "date": "2023-09-01",
-        "income": 5000000,
-        "expenditure": 0
-    },
-    {
-        "date": "2023-09-02",
-        "income": 0,
-        "expenditure": 500000
-    },
-    {
-        "date": "2023-09-03",
-        "income": 0,
-        "expenditure": 700000
-    },
-    {
-        "date": "2023-09-04",
-        "income": 0,
-        "expenditure": 2000
-    },
-    {
-        "date": "2023-09-05",
-        "income": 0,
-        "expenditure": 0
-    },
-    {
-        "date": "2023-09-06",
-        "income": 0,
-        "expenditure": 0
-    },
-    {
-        "date": "2023-09-07",
-        "income": 0,
-        "expenditure": 0
-    },
-    {
-        "date": "2023-09-09",
-        "income": 0,
-        "expenditure": 700000
-    },
-    {
-        "date": "2023-09-09",
-        "income": 80000,
-        "expenditure": 0
-    },
-    {
-        "date": "2023-09-10",
-        "income": 0,
-        "expenditure": 0
-    },
-    {
-        "date": "2023-09-11",
-        "income": 270000,
-        "expenditure": 0
-    },
-    {
-        "date": "2023-09-12",
-        "income": 0,
-        "expenditure": 0
-    },
-    {
-        "date": "2023-09-13",
-        "income": 0,
-        "expenditure": 0
-    },
-    {
-        "date": "2023-09-14",
-        "income": 0,
-        "expenditure": 0
-    },
-    {
-        "date": "2023-09-15",
-        "income": 340000,
-        "expenditure": 0
-    },
-    {
-        "date": "2023-09-16",
-        "income": 0,
-        "expenditure": 34000
-    },
-    {
-        "date": "2023-09-17",
-        "income": 0,
-        "expenditure": 0
-    },
-    {
-        "date": "2023-09-18",
-        "income": 0,
-        "expenditure": 0
-    },
-    {
-        "date": "2023-09-19",
-        "income": 0,
-        "expenditure": 0
-    },
-    {
-        "date": "2023-09-20",
-        "income": 0,
-        "expenditure": 680000
-    },
-    {
-        "date": "2023-09-21",
-        "income": 0,
-        "expenditure": 0
-    },
-    {
-        "date": "2023-09-22",
-        "income": 0,
-        "expenditure": 23000
-    },
-    {
-        "date": "2023-09-23",
-        "income": 0,
-        "expenditure": 0
-    },
-    {
-        "date": "2023-09-24",
-        "income": 0,
-        "expenditure": 0
-    },
-    {
-        "date": "2023-09-25",
-        "income": 0,
-        "expenditure": 60000
-    },
-    {
-        "date": "2023-09-26",
-        "income": 0,
-        "expenditure": 0
-    },
-    {
-        "date": "2023-09-27",
-        "income": 0,
-        "expenditure": 0
-    },
-    {
-        "date": "2023-09-28",
-        "income": 1000000,
-        "expenditure": 10000
-    },
-    {
-        "date": "2023-09-29",
-        "income": 0,
-        "expenditure": 4500000
-    },
-    {
-        "date": "2023-09-30",
-        "income": 0,
-        "expenditure": 0
-    }
-    
-
-];
 
 const today = new Date();
 
@@ -282,7 +126,27 @@ const AccountCalendar = ({ onDateClick : handleClick }) => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const days = [];
     const date = ['일', '월', '화', '수', '목', '금', '토'];
-
+        // console.log(currentMonth)
+        const requestData = format(currentMonth, 'yyyy-MM')
+        // console.log('currentYear',requestData)
+        
+         const [responseData, setResponseData] = useState([]);
+         useEffect(() => {
+             // 백틱으로 바꾸기
+             const accessToken = localStorage.getItem("token");
+             axios.get(`${process.env.REACT_APP_API_ROOT}/api/v1/cash/${requestData}`,{
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                }
+             })
+             .then(response => {
+                console.log(response)
+                 setResponseData(response.data);
+             })
+             .catch(error => {
+                 console.error('Error fetching data:', error);
+             });
+         }, []);
     for (let i = 0; i < 7; i++) {
         days.push(
             <div key={i}>
@@ -380,21 +244,7 @@ const AccountCalendar = ({ onDateClick : handleClick }) => {
         // console.log(formatday);
         handleClick(formatday);
     };
-        // console.log(currentMonth)
-        // const requestData = format(currentMonth, 'yyyy-MM')
-        // console.log('currentYear',requestData)
-        
-        // const [responseData, setResponseData] = useState([]);
-        // useEffect(() => {
-        //     // 백틱으로 바꾸기
-        //     axios.get($`/api/v1/cash?yearMonth={yyyy-MM}`)
-        //     .then(response => {
-        //         setResponseData(response.data);
-        //     })
-        //     .catch(error => {
-        //         console.error('Error fetching data:', error);
-        //     });
-        // }, []);
+
         
     return (
         <CalendarPage>
