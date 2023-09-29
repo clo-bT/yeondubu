@@ -4,8 +4,7 @@ import java.util.List;
 import yeon.dubu.account.dto.request.DepositAccountReqDto;
 import yeon.dubu.account.dto.request.SavingAccountReqDto;
 import yeon.dubu.account.dto.response.AccountInfoResDto;
-import yeon.dubu.account.dto.response.DepositAccountResDto;
-import yeon.dubu.account.dto.response.SavingAccountResDto;
+import yeon.dubu.account.dto.response.DetailAccountResDto;
 
 public interface AccountService {
     void insertSaving(Long userId, SavingAccountReqDto savingAccountReqDto);
@@ -16,7 +15,5 @@ public interface AccountService {
     void deleteDeposit(Long userId, Long accountId);
     List<AccountInfoResDto> searchAccounts(Long userId);
 
-    SavingAccountResDto searchSaving(Long accountId);
-
-    DepositAccountResDto searchDeposit(Long accountId);
+    DetailAccountResDto searchDetail(Long accountId);
 }
