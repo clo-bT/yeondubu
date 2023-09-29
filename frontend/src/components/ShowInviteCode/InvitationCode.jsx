@@ -83,7 +83,7 @@ const InvitationCode = () => {
         return randomCode;
     }
     function sendRandomCode() {
-        const accessToken = sessionStorage.getItem("token");
+        const accessToken = localStorage.getItem("token");
         axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/couples/code/${code}`, {}, {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
@@ -94,10 +94,10 @@ const InvitationCode = () => {
             // console.log(code)
             // 코드 생성이야. 이 사람이 host
             if (response.data.state === 'finish') {
-                localStorage.setItem('partner_id', response.data.partner_id);
-                localStorage.setItem('partner_name', response.data.partner_name);
-                localStorage.setItem('partner_img', response.data.partner_img);
-                localStorage.setItem('role', 'host');
+                sessionStorage.setItem('partner_id', response.data.partner_id);
+                sessionStorage.setItem('partner_name', response.data.partner_name);
+                sessionStorage.setItem('partner_img', response.data.partner_img);
+                sessionStorage.setItem('role', 'host');
                 navigate(`/checkuser`)
             };
         })

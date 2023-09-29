@@ -52,7 +52,7 @@ margin-right: auto;
 const UserWithdrawInfo = () => {
     return (
         <div>
-        <GoBack href="/" >뒤로가기</GoBack> 
+        <GoBack href="/mypage" >뒤로가기</GoBack> 
         <InfoIcon />
             <p>상대방과 연결을 끊기 전에 꼭 확인해주세요!</p>
         <Content>

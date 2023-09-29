@@ -35,6 +35,7 @@ import MyProductLike from './pages/MyProductLike';
 import CreditScoreInput from './pages/CreditScoreInput';
 import MyAccountUpdate from './pages/MyAccountUpdate';
 import CheckBoxWhole from './pages/CheckBoxWhole';
+import UserWithdraw from './pages/UserWithdraw';
 
 
 function App() {
@@ -76,12 +77,13 @@ function App() {
           <Route path="/wholetab" element={<WholeTab />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/myaccount" element={<MyAccount />} />
-          <Route path="/myaccountdetail" element={<MyAccountDetail />} />
+          <Route path="/myaccountdetail/:accountId" element={<MyAccountDetail />} />
           <Route path="/myproduct" element={<MyProductLike />} />
           <Route path="/input" element={<CreditScoreInput />} />
+          <Route path="/myproductlike" element={<MyProductLike />} />
           <Route path="/myaccountupdate" element={<MyAccountUpdate />} />
           <Route path="/checkboxwhole" element={<CheckBoxWhole />} />
-
+          <Route path="/userwithdraw" element={<UserWithdraw />} />
 
 
   
