@@ -112,9 +112,7 @@ const DateInputContainer = styled.div`
 const WeddingDayInput = () => {
     const accessToken = localStorage.getItem('token')
     const name = localStorage.getItem('name')
-    const image = localStorage.getItem('image')
     const partner_name = localStorage.getItem('partner_name')
-    const partner_img = localStorage.getItem('partner_img')
     const [selectedDate, setSelectedDate] = useState(null);
     const handleDateChange = (date) => {
         setSelectedDate(date);
@@ -139,14 +137,6 @@ const WeddingDayInput = () => {
     return (
         <Container>
             <ImageBox>
-              <Partner>
-                <PartnerName>{partner_name}</PartnerName>
-                <PartnerImg src={partner_img}/>
-              </Partner>
-              <Me>
-                <Name>{name}</Name>
-                <Img src={image}/>
-              </Me>
             </ImageBox>
             <Congrats>연두부의 커플이 되신것을 <br />축하드립니다</Congrats>
             <DateInputDetail>{partner_name} ❤ {name} 님의 <br />결혼식 날짜를 입력해주세요</DateInputDetail>
