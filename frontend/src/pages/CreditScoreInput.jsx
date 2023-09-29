@@ -5,7 +5,7 @@ import ScoreInput from '../components/CreditScoreInput/ScoreInput';
 const CreditScoreInput = () => {
     return (
         <div>
-            <ScoreInputHeader/>
+            {/* <ScoreInputHeader/> */}
             <ScoreInput />
         </div>
     );

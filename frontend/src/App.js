@@ -28,7 +28,12 @@ import ShowInviteCode from './pages/ShowInviteCode';
 import TagInput from './pages/TagInput';
 import WeddingDay from './pages/WeddingDay';
 import WholeTab from './pages/WholeTab';
-
+import MyPage from './pages/MyPage';
+import MyAccount from './pages/MyAccount';
+import MyAccountDetail from './pages/MyAccountDetail';
+import MyProductLike from './pages/MyProductLike';
+import CreditScoreInput from './pages/CreditScoreInput';
+import MyAccountUpdate from './pages/MyAccountUpdate';
 
 
 function App() {
@@ -36,7 +41,7 @@ function App() {
     let vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty("--vh", `${vh}px`); //"--vh"라는 속성으로 정의해준다.
   }
-
+  
   window.addEventListener('resize', () => setScreenSize());
   return (
     <BrowserRouter>
@@ -68,6 +73,16 @@ function App() {
           <Route path="/taginput" element={<TagInput />} />
           <Route path="/weddingday" element={<WeddingDay />} />
           <Route path="/wholetab" element={<WholeTab />} />
+          <Route path="/mypage" element={<MyPage />} />
+          <Route path="/myaccount" element={<MyAccount />} />
+          <Route path="/myaccountdetail" element={<MyAccountDetail />} />
+          <Route path="/myproduct" element={<MyProductLike />} />
+          <Route path="/input" element={<CreditScoreInput />} />
+          <Route path="/myaccountupdate" element={<MyAccountUpdate />} />
+
+
+  
+
         </Routes>
       </div>
     </BrowserRouter>
