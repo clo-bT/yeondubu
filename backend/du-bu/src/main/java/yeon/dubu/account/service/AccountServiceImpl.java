@@ -11,13 +11,10 @@ import yeon.dubu.account.domain.Account;
 import yeon.dubu.account.dto.request.DepositAccountReqDto;
 import yeon.dubu.account.dto.request.SavingAccountReqDto;
 import yeon.dubu.account.dto.response.AccountInfoResDto;
-import yeon.dubu.account.dto.response.DepositAccountResDto;
-import yeon.dubu.account.dto.response.SavingAccountResDto;
+import yeon.dubu.account.dto.response.DetailAccountResDto;
 import yeon.dubu.account.enumeration.AccountType;
 import yeon.dubu.account.exception.NoSuchAccountException;
 import yeon.dubu.account.repository.AccountRepository;
-import yeon.dubu.couple.domain.Couple;
-import yeon.dubu.couple.exception.NoSuchCoupleException;
 import yeon.dubu.couple.repository.CoupleRepository;
 import yeon.dubu.income.domain.MoneyIncome;
 import yeon.dubu.income.exception.NoSuchTagIncomeException;
@@ -191,24 +188,15 @@ public class AccountServiceImpl implements AccountService{
         return accountInfoResDtoList;
     }
 
-    @Override
-    public SavingAccountResDto searchSaving(Long accountId) {
-        Account account = accountRepository.findById(accountId).orElseThrow(
-                () -> new NoSuchAccountException("해당 계좌가 존재하지 않습니다.")
-        );
-        SavingAccountResDto savingAccountResDto = SavingAccountResDto.from(account);
-        return savingAccountResDto;
-
-    }
 
     @Override
-    public DepositAccountResDto searchDeposit(Long accountId) {
+    public DetailAccountResDto searchDetail(Long accountId) {
 
         Account account = accountRepository.findById(accountId).orElseThrow(
                 () -> new NoSuchAccountException("해당 계좌가 존재하지 않습니다.")
         );
-        DepositAccountResDto depositAccountResDto = DepositAccountResDto.from(account);
-        return depositAccountResDto;
+        DetailAccountResDto detailAccountResDto = DetailAccountResDto.from(account);
+        return detailAccountResDto;
     }
 
     private Long calNowMoney(Account account){
