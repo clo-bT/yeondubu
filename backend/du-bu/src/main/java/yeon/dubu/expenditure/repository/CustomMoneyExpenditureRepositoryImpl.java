@@ -1,5 +1,6 @@
 package yeon.dubu.expenditure.repository;
 
+import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -47,10 +48,28 @@ public class CustomMoneyExpenditureRepositoryImpl implements CustomMoneyExpendit
                 .join(qTagThirdExpenditure).on(qTagSecondExpenditure.id.eq(qTagThirdExpenditure.tagSecondExpenditure.id))
                 .join(qMoneyExpenditure).on(qTagThirdExpenditure.id.eq(qMoneyExpenditure.tagThirdExpenditure.id))
                 .where(qTagFirstExpenditure.couple.id.eq(coupleId)
-                        .and(qMoneyExpenditure.date.between(yearMonth.atDay(0), yearMonth.atEndOfMonth())))
+                        .and(qMoneyExpenditure.date.between(yearMonth.atDay(1), yearMonth.atEndOfMonth())))
                 .fetch();
 
         return yearMonthTags;
+    }
+
+    @Override
+    public Tuple searchMinMax(Long coupleId) {
+        Tuple minMaxDates = queryFactory
+                .select(
+                        qMoneyExpenditure.date.min(),
+                        qMoneyExpenditure.date.max()
+                )
+                .from(qTagFirstExpenditure)
+                .join(qTagFirstExpenditure).on(qCouple.id.eq(qTagFirstExpenditure.couple.id))
+                .join(qTagSecondExpenditure).on(qTagFirstExpenditure.id.eq(qTagSecondExpenditure.tagFirstExpenditure.id))
+                .join(qTagThirdExpenditure).on(qTagSecondExpenditure.id.eq(qTagThirdExpenditure.tagSecondExpenditure.id))
+                .join(qMoneyExpenditure).on(qTagThirdExpenditure.id.eq(qMoneyExpenditure.tagThirdExpenditure.id))
+                .where(qTagFirstExpenditure.couple.id.eq(coupleId))
+                .fetchOne();
+
+        return minMaxDates;
     }
 
 }

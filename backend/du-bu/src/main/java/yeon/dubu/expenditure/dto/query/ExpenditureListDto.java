@@ -23,7 +23,7 @@ public class ExpenditureListDto {
     private Long amount;
     private String memo;
     private Boolean payComplete;
-
+    @Builder
     @QueryProjection
     public ExpenditureListDto(LocalDate date, Long expenditureId, UserRole role, Long firstTagId, Long secondTagId, Long thirdTagId, String firstTagName, String secondTagName, String thirdTagName, Long amount, String memo, Boolean payComplete) {
         this.date = date;

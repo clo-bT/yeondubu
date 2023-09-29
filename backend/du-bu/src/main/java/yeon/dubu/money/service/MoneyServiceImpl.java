@@ -1,6 +1,7 @@
 package yeon.dubu.money.service;
 
 
+import com.querydsl.core.Tuple;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import yeon.dubu.expenditure.repository.MoneyExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagFirstExpenditureRepository;
 import yeon.dubu.income.dto.query.IncomeListDto;
 import yeon.dubu.income.repository.MoneyIncomeRepository;
+import yeon.dubu.money.dto.query.MoneyListDto;
 import yeon.dubu.money.dto.response.MoneyYearMonthResDto;
 import yeon.dubu.money.dto.response.TotalExpectExpenditureResDto;
 import yeon.dubu.money.domain.Money;
@@ -32,6 +34,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Slf4j
 @Service
@@ -120,36 +123,70 @@ public class MoneyServiceImpl implements MoneyService{
         User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
         Couple couple = coupleRepository.findById(user.getCouple().getId()).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
 
-        List<ExpenditureListDto> expenditureList = moneyExpenditureRepository.searchYearMonth(yearMonth, userId);
-        List<IncomeListDto> incomeList = moneyIncomeRepository.searchYearMonth(yearMonth, userId);
-        // date별로 파싱하기
+        // min, max date
+        Tuple incomeMinMax = moneyIncomeRepository.searchMinMax(couple.getId());
+        Tuple expenditureMinMax = moneyExpenditureRepository.searchMinMax(couple.getId());
 
-        // YearMonth의 첫째 날부터 마지막 날까지 반복
-        List<Map<String, Object>> dayDataList = new ArrayList<>();
+        LocalDate incomeMinDate = incomeMinMax.get(0, LocalDate.class);
+        LocalDate expenditureMinDate = expenditureMinMax.get(0, LocalDate.class);
+        LocalDate minDate = (incomeMinDate != null && (expenditureMinDate == null || incomeMinDate.isBefore(expenditureMinDate)))
+                ? incomeMinDate
+                : expenditureMinDate;
+
+
+        LocalDate incomeMaxDate = incomeMinMax.get(1, LocalDate.class);
+        LocalDate expenditureMaxDate = expenditureMinMax.get(1, LocalDate.class);
+        LocalDate maxDate = (incomeMaxDate != null && (expenditureMaxDate == null || incomeMaxDate.isAfter(expenditureMaxDate)))
+                ? incomeMaxDate
+                : expenditureMaxDate;
+
+
+        // moneyList
+        List<IncomeListDto> incomeListDtos = moneyIncomeRepository.searchYearMonth(yearMonth, couple.getId());
+        List<ExpenditureListDto> expenditureListDtos = moneyExpenditureRepository.searchYearMonth(yearMonth, couple.getId());
+        System.out.println("1111expenditureListDtos = " + expenditureListDtos);
+        List<MoneyListDto> moneyListDtos = new ArrayList<>();
         LocalDate startDate = yearMonth.atDay(1);
         LocalDate endDate = yearMonth.atEndOfMonth();
 
         for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
-            List<ExpenditureListDto> expenditureOfDay = expenditureList.stream()
-                    .filter(expenditure -> expenditure.getDate().isEqual(date))
+
+            final LocalDate currentDate = date;
+
+            List<IncomeListDto> incomeOfDay = incomeListDtos.stream()
+                    .filter(income -> income.getDate().equals(currentDate))
                     .collect(Collectors.toList());
 
-            List<IncomeListDto> incomeOfDay = incomeList.stream()
-                    .filter(income -> income.getDate().equals(date))
+            List<ExpenditureListDto> expenditureOfDay = expenditureListDtos.stream()
+                    .filter(expenditure -> expenditure.getDate().isEqual(currentDate))
                     .collect(Collectors.toList());
 
-            Map<String, Object> dayData = new HashMap<>();
-            dayData.put("expenditureList", expenditureOfDay);
-            dayData.put("incomeList", incomeOfDay);
+            Long income = incomeOfDay.stream()
+                    .mapToLong(IncomeListDto::getAmount)
+                    .sum();
 
-            dayDataList.add(dayData);
+            Long expenditure = expenditureOfDay.stream()
+                    .mapToLong(ExpenditureListDto::getAmount)
+                    .sum();
+
+            MoneyListDto moneyListDto = MoneyListDto.builder()
+                    .date(currentDate)
+                    .income(income)
+                    .expenditure(expenditure)
+                    .incomeList(incomeOfDay)
+                    .expenditureList(expenditureOfDay)
+                    .build();
+
+            moneyListDtos.add(moneyListDto);
         }
 
+        // result
+        MoneyYearMonthResDto moneyYearMonthResDto = MoneyYearMonthResDto.builder()
+                .minDate(minDate)
+                .maxDate(maxDate)
+                .moneyList(moneyListDtos)
+                .build();
 
-        // MoneyYearMonthResDto에 결과 설정
-        MoneyYearMonthResDto moneyYearMonthResDto = MoneyYearMonthResDto.builder().build();
-
-
-        return null;
+        return moneyYearMonthResDto;
     }
 }

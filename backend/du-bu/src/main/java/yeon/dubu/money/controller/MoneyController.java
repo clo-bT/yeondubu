@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import yeon.dubu.money.dto.response.MoneyYearMonthResDto;
 import yeon.dubu.money.dto.response.TotalExpectExpenditureResDto;
 import yeon.dubu.money.domain.Money;
 import yeon.dubu.money.dto.request.MoneyCashReqDto;
@@ -12,11 +13,11 @@ import yeon.dubu.money.dto.response.MoneyCashResDto;
 import yeon.dubu.money.service.MoneyService;
 
 import java.net.URISyntaxException;
+import java.time.YearMonth;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = {"http://localhost:3000", "https://localhost:3000"})
 @RequestMapping("/api/v1/money")
 public class MoneyController {
 
@@ -55,5 +56,15 @@ public class MoneyController {
         MoneyCashResDto totalCash = moneyService.searchTotalCash(userId);
 
         return ResponseEntity.ok(totalCash);
+    }
+
+    @GetMapping("/{yearMonth}")
+    public ResponseEntity<?> searchYearMonth(
+            @AuthenticationPrincipal Long userId,
+            @RequestParam YearMonth yearMonth
+            ) {
+        MoneyYearMonthResDto moneyYearMonthResDto = moneyService.searchYearMonth(yearMonth, userId);
+
+        return ResponseEntity.ok(moneyYearMonthResDto);
     }
 }

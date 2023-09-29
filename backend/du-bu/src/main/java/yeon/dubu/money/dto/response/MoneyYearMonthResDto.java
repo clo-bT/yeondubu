@@ -3,6 +3,7 @@ package yeon.dubu.money.dto.response;
 import lombok.*;
 import yeon.dubu.money.dto.query.MoneyListDto;
 
+import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.List;
 
@@ -11,14 +12,14 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 public class MoneyYearMonthResDto {
-    private YearMonth minYearMonth;
-    private YearMonth maxYearMonth;
+    private LocalDate minDate;
+    private LocalDate maxDate;
     private List<MoneyListDto> moneyList;
 
     @Builder
-    public MoneyYearMonthResDto(YearMonth minYearMonth, YearMonth maxYearMonth, List<MoneyListDto> moneyList) {
-        this.minYearMonth = minYearMonth;
-        this.maxYearMonth = maxYearMonth;
+    public MoneyYearMonthResDto(LocalDate minDate, LocalDate maxDate, List<MoneyListDto> moneyList) {
+        this.minDate = minDate;
+        this.maxDate = maxDate;
         this.moneyList = moneyList;
     }
 }
