@@ -33,6 +33,7 @@ import MyAccountDetail from './pages/MyAccountDetail';
 import MyProductLike from './pages/MyProductLike';
 import CreditScoreInput from './pages/CreditScoreInput';
 import MyAccountUpdate from './pages/MyAccountUpdate';
+import CheckBoxWhole from './pages/CheckBoxWhole';
 import UserWithdraw from './pages/UserWithdraw';
 
 
@@ -79,6 +80,7 @@ function App() {
           <Route path="/input" element={<CreditScoreInput />} />
           <Route path="/myproductlike" element={<MyProductLike />} />
           <Route path="/myaccountupdate" element={<MyAccountUpdate />} />
+          <Route path="/checkboxwhole" element={<CheckBoxWhole />} />
           <Route path="/userwithdraw" element={<UserWithdraw />} />
 
 
