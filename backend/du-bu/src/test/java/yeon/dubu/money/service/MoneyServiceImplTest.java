@@ -15,18 +15,18 @@ import yeon.dubu.expenditure.domain.TagSecondExpenditure;
 import yeon.dubu.expenditure.domain.TagThirdExpenditure;
 import yeon.dubu.expenditure.dto.request.MoneyExpenditureReqDto;
 import yeon.dubu.expenditure.dto.request.TagThirdExpenditureReqDto;
-import yeon.dubu.expenditure.service.TagFirstExpenditureService;
-import yeon.dubu.expenditure.service.TagThirdExpenditureService;
-import yeon.dubu.money.dto.response.MoneyYearMonthResDto;
-import yeon.dubu.money.dto.response.TotalExpectExpenditureResDto;
 import yeon.dubu.expenditure.repository.MoneyExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagFirstExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagSecondExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagThirdExpenditureRepository;
 import yeon.dubu.expenditure.service.MoneyExpenditureService;
+import yeon.dubu.expenditure.service.TagFirstExpenditureService;
+import yeon.dubu.expenditure.service.TagThirdExpenditureService;
 import yeon.dubu.money.domain.Money;
 import yeon.dubu.money.dto.request.MoneyCashReqDto;
 import yeon.dubu.money.dto.response.MoneyCashResDto;
+import yeon.dubu.money.dto.response.MoneyYearMonthResDto;
+import yeon.dubu.money.dto.response.TotalExpectExpenditureResDto;
 import yeon.dubu.money.repository.MoneyRepository;
 import yeon.dubu.user.domain.User;
 import yeon.dubu.user.enumeration.UserRole;
@@ -204,6 +204,7 @@ class MoneyServiceImplTest {
     }
 
     @Test
+    @Transactional
     void searchYearMonth() {
         // given
         MoneyExpenditureReqDto moneyExpenditureReqDto = MoneyExpenditureReqDto.builder()
@@ -220,9 +221,10 @@ class MoneyServiceImplTest {
 
         // when
         MoneyYearMonthResDto yearMonthResult = moneyService.searchYearMonth(YearMonth.now(), USER2.getId());
-        // then
-        System.out.println("1111yearMonthResult = " + yearMonthResult);
 
+        // then
+        assertThat(yearMonthResult.getMaxDate()).isEqualTo(LocalDate.now());
 
     }
+
 }

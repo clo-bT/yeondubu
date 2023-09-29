@@ -15,6 +15,7 @@ import yeon.dubu.expenditure.repository.TagFirstExpenditureRepository;
 import yeon.dubu.income.dto.query.IncomeListDto;
 import yeon.dubu.income.repository.MoneyIncomeRepository;
 import yeon.dubu.money.dto.query.MoneyListDto;
+import yeon.dubu.money.dto.response.MoneyAccountResDto;
 import yeon.dubu.money.dto.response.MoneyYearMonthResDto;
 import yeon.dubu.money.dto.response.TotalExpectExpenditureResDto;
 import yeon.dubu.money.domain.Money;
@@ -30,11 +31,8 @@ import yeon.dubu.user.repository.UserRepository;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Slf4j
 @Service
@@ -109,6 +107,27 @@ public class MoneyServiceImpl implements MoneyService{
                 .build();
 
         return moneyCashResDto;
+    }
+
+    // TODO: test code 작성
+    @Override
+    @Transactional
+    public MoneyAccountResDto searchTotalAccount(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
+        Couple couple = coupleRepository.findById(user.getCouple().getId()).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
+
+        User bride = userRepository.findByCoupleIdAndUserRole(couple.getId(), UserRole.BRIDE).orElseThrow(() -> new NoSuchUserException("해당하는 예비 신부 사용자가 없습니다."));
+        User groom = userRepository.findByCoupleIdAndUserRole(couple.getId(), UserRole.GROOM).orElseThrow(() -> new NoSuchUserException("해당하는 예비 신랑 사용자가 없습니다."));
+
+        Money brideMoney = moneyRepository.findByUserId(bride.getId()).orElseThrow(() -> new NoSuchMoneyException("해당하는 사용자의 자산 정보가 없습니다."));
+        Money groomMoney = moneyRepository.findByUserId(groom.getId()).orElseThrow(() -> new NoSuchMoneyException("해당하는 사용자의 자산 정보가 없습니다."));
+
+        MoneyAccountResDto moneyAccountResDto = MoneyAccountResDto.builder()
+                .brideTotalAccount(brideMoney.getTotalAccount())
+                .groomTotalAccount(groomMoney.getTotalAccount())
+                .build();
+
+        return moneyAccountResDto;
     }
 
     /**
@@ -189,4 +208,5 @@ public class MoneyServiceImpl implements MoneyService{
 
         return moneyYearMonthResDto;
     }
+
 }
