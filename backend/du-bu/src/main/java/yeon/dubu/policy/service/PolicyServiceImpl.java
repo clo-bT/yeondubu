@@ -79,4 +79,18 @@ public class PolicyServiceImpl implements PolicyService{
 
         return policyResDtos;
     }
+
+    @Override
+    public void deleteAllPolicies() {
+        policyRepository.deleteAll();
+    }
+
+    /**
+     * DB에 저장된 정책 데이터가 비어있으면 true 반환
+     * @return
+     */
+    @Override
+    public boolean isDbEmpty() {
+        return policyRepository.count() == 0;
+    }
 }
