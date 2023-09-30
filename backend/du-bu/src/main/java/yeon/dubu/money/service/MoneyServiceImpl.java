@@ -9,18 +9,17 @@ import org.springframework.transaction.annotation.Transactional;
 import yeon.dubu.couple.domain.Couple;
 import yeon.dubu.couple.exception.NoSuchCoupleException;
 import yeon.dubu.couple.repository.CoupleRepository;
+import yeon.dubu.expenditure.dto.query.ExpenditureGraphDto;
 import yeon.dubu.expenditure.dto.query.ExpenditureListDto;
 import yeon.dubu.expenditure.repository.MoneyExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagFirstExpenditureRepository;
+import yeon.dubu.income.dto.query.IncomeGraphDto;
 import yeon.dubu.income.dto.query.IncomeListDto;
 import yeon.dubu.income.repository.MoneyIncomeRepository;
 import yeon.dubu.money.dto.query.MoneyListDto;
-import yeon.dubu.money.dto.response.MoneyAccountResDto;
-import yeon.dubu.money.dto.response.MoneyYearMonthResDto;
-import yeon.dubu.money.dto.response.TotalExpectExpenditureResDto;
+import yeon.dubu.money.dto.response.*;
 import yeon.dubu.money.domain.Money;
 import yeon.dubu.money.dto.request.MoneyCashReqDto;
-import yeon.dubu.money.dto.response.MoneyCashResDto;
 import yeon.dubu.money.exception.NoSuchMoneyException;
 import yeon.dubu.money.repository.MoneyRepository;
 import yeon.dubu.user.domain.User;
@@ -30,8 +29,7 @@ import yeon.dubu.user.repository.UserRepository;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -207,6 +205,42 @@ public class MoneyServiceImpl implements MoneyService{
                 .build();
 
         return moneyYearMonthResDto;
+    }
+
+    /**
+     * couple의 수입, 지출
+     * @param userId
+     * @return
+     */
+    @Override
+    @Transactional
+    public List<MoneyGraphResDto> searchGraph(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
+        Couple couple = coupleRepository.findById(user.getCouple().getId()).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
+
+        List<IncomeGraphDto> incomeGraph = moneyIncomeRepository.searchGraph(couple.getId());
+        List<ExpenditureGraphDto> expenditureGraph = moneyExpenditureRepository.searchGraph(couple.getId());
+
+        Map<YearMonth, Long> incomeMap = incomeGraph.stream()
+                .collect(Collectors.toMap(IncomeGraphDto::getYearMonth, IncomeGraphDto::getIncome));
+
+        Map<YearMonth, Long> expenditureMap = expenditureGraph.stream()
+                .collect(Collectors.toMap(ExpenditureGraphDto::getYearMonth, ExpenditureGraphDto::getExpenditure));
+
+        // 모든 yearMonth
+        Set<YearMonth> allYearMonths = new HashSet<>();
+        allYearMonths.addAll(incomeMap.keySet());
+        allYearMonths.addAll(expenditureMap.keySet());
+
+        List<MoneyGraphResDto> moneyGraphResList = allYearMonths.stream()
+                .map(yearMonth -> MoneyGraphResDto.builder()
+                        .yearMonth(yearMonth)
+                        .income(incomeMap.getOrDefault(yearMonth, 0L))
+                        .expenditure(expenditureMap.getOrDefault(yearMonth, 0L))
+                        .build())
+                .collect(Collectors.toList());
+
+        return moneyGraphResList;
     }
 
 }

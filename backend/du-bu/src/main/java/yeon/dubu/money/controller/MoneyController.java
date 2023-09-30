@@ -5,16 +5,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import yeon.dubu.money.dto.response.MoneyAccountResDto;
-import yeon.dubu.money.dto.response.MoneyYearMonthResDto;
-import yeon.dubu.money.dto.response.TotalExpectExpenditureResDto;
+import yeon.dubu.money.dto.response.*;
 import yeon.dubu.money.domain.Money;
 import yeon.dubu.money.dto.request.MoneyCashReqDto;
-import yeon.dubu.money.dto.response.MoneyCashResDto;
 import yeon.dubu.money.service.MoneyService;
 
 import java.net.URISyntaxException;
 import java.time.YearMonth;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -76,5 +74,14 @@ public class MoneyController {
         MoneyYearMonthResDto moneyYearMonthResDto = moneyService.searchYearMonth(yearMonth, userId);
 
         return ResponseEntity.ok(moneyYearMonthResDto);
+    }
+
+    @GetMapping("/graph")
+    public ResponseEntity<?> searchGraph(
+            @AuthenticationPrincipal Long userId
+    ) {
+        List<MoneyGraphResDto> graphResDtos = moneyService.searchGraph(userId);
+
+        return ResponseEntity.ok(graphResDtos);
     }
 }
