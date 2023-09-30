@@ -213,9 +213,14 @@ public class CoupleConnectionServiceImpl implements CoupleConnectionService {
         users.add(host);
         users.add(guest);
         for(User user : users){
-            Money money = new Money();
-            money.setUser(user);
-            moneyRepository.save(money);
+            Optional<Money> existMoney = moneyRepository.findByUserId(user.getId());
+
+            if (existMoney.isEmpty()) {
+                // 사용자의 money가 없는 경우에만 생성
+                Money money = new Money();
+                money.setUser(user);
+                moneyRepository.save(money);
+            }
         }
     }
 
