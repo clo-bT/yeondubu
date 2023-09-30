@@ -1,6 +1,9 @@
-import React from 'react';
+import {React, useState, useEffect} from 'react';
 import styled from 'styled-components';
 import { AiOutlineInfoCircle } from "react-icons/ai";
+import UserWithdraw from '../../pages/UserWithdraw';
+import axios from 'axios';
+
 
 const GoBack = styled.a`
 text-decoration: none;
@@ -50,6 +53,30 @@ margin-right: auto;
 `
 
 const UserWithdrawInfo = () => {
+    const [accessToken, setAccessToken] = useState('');
+  
+    useEffect(() => {
+      const token = localStorage.getItem("token");
+      setAccessToken(token);
+    }, []);
+
+    const handleUserWithdraw = () => {
+        console.log(accessToken);
+    
+        // Axios DELETE 요청을 보내는 부분입니다.
+        axios
+          .delete(`${process.env.REACT_APP_API_ROOT}/api/v1/couples`, {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          })
+          .then((response) => {
+            console.log('요청 성공:', response);
+          })
+          .catch((error) => {
+            console.error('요청 실패:', error);
+          });
+      };
     return (
         <div>
         <GoBack href="/mypage" >뒤로가기</GoBack> 
@@ -61,7 +88,7 @@ const UserWithdrawInfo = () => {
             <li>연결 끊기 시 부디 신중하게 선택해 주시기 바랍니다.</li>
         </Content>
 
-        <BrokeUpButton>파혼하기</BrokeUpButton>
+        <BrokeUpButton onClick={handleUserWithdraw}>파혼하기</BrokeUpButton>
         </div>
     );
 };
