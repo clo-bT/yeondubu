@@ -12,6 +12,7 @@ cors = CORS(app, resources={r"/api/*": {"origins": ["https://j9a307.p.ssafy.io:3
 def home():
     return "okay"
 
+
 @app.route('/api/v1/categories', methods=['GET'])
 def category_list():
     if request.method == 'GET':
@@ -20,26 +21,29 @@ def category_list():
             category_data = ut.product_category(data['category'], data['subcategory'])
             return ut.rspns(data=category_data, status_code=200)
         except Exception as err:
-            return ut.rspns(data={'error' :str(err)}, status_code=400)
+            return ut.rspns(data={'error' : str(err)}, status_code=400)
+
 
 @app.route('/api/v1/paging', methods=['GET'])
 def page_items():
     if request.method == 'GET':
         try:
             data = {key : value for key, value in request.form.items()}
+            if ut.check_keys(data, ['category', 'subcategory', 'hprice', 'lprice', 'category', 'brand', 'count', 'pages']):
+                raise KeyError
+            if data['brand'] == '':
+                data['brand'] = ut.brand_none_included(data)
             filtered_data = ut.range_filter(data)
             return ut.rspns(data = filtered_data, status_code=200)
         except Exception as err:
-            return ut.rspns(data={'error' :str(err) }, status_code=400)
+            return ut.rspns(data={'error' : str(err) }, status_code=400)
+
 
 @app.route('/api/v1/shopping_filter', methods=['POST'])
-# @cross_origin(origin='*localhost',headers=['Content- Type','Authorization','video/x-matroska;codecs=avc1', 'audio/ogg codecs=opus', 'audio/wav'])
 def image_based_recommendations():
     try:
-        if request.headers.get('Content-Type') == 'image/jpeg':
-            data = {key : value for key, value in request.form.items()}
-            if not ut.check_keys(data, ['subcategory', 'hprice', 'lprice', 'category', 'brand', 'count']):
-                raise
+        data = {key : value for key, value in request.form.items()}
+        if not ut.check_keys(data, ['category', 'subcategory', 'hprice', 'lprice', 'category', 'brand', 'count']):
             if data['brand'] == '':
                 data['brand'] = ut.brand_none_included(data)
             img = request.files.get('image')
