@@ -11,8 +11,8 @@ import java.time.YearMonth;
 @ToString
 public class MoneyGraphResDto {
     private YearMonth yearMonth;
-    private Long income;
-    private Long expenditure;
+    private Long income;  // couple의 수입(현금 + 예적금)
+    private Long expenditure;  // couple의 지출
 
     @Builder
     public MoneyGraphResDto(YearMonth yearMonth, Long income, Long expenditure) {
