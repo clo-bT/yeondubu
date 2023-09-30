@@ -25,6 +25,7 @@ import yeon.dubu.expenditure.service.TagThirdExpenditureService;
 import yeon.dubu.money.domain.Money;
 import yeon.dubu.money.dto.request.MoneyCashReqDto;
 import yeon.dubu.money.dto.response.MoneyCashResDto;
+import yeon.dubu.money.dto.response.MoneyGraphResDto;
 import yeon.dubu.money.dto.response.MoneyYearMonthResDto;
 import yeon.dubu.money.dto.response.TotalExpectExpenditureResDto;
 import yeon.dubu.money.repository.MoneyRepository;
@@ -34,6 +35,7 @@ import yeon.dubu.user.repository.UserRepository;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -68,6 +70,8 @@ class MoneyServiceImplTest {
     static TagFirstExpenditure TAG1;
     static TagSecondExpenditure TAG2;
     static TagThirdExpenditure TAG3;
+    static TagThirdExpenditure TAG32;
+    static TagThirdExpenditure TAG33;
 
     @BeforeEach
     void beforeEach() {
@@ -115,6 +119,20 @@ class MoneyServiceImplTest {
                 .build();
 
         TAG3 = tagThirdExpenditureService.insertThirdTag(tagThirdExpenditureReqDto, USER1.getId());
+
+        TagThirdExpenditureReqDto tagThirdExpenditureReqDto2 = TagThirdExpenditureReqDto.builder()
+                .secondTagId(TAG2.getId())
+                .thirdTagName("의자")
+                .build();
+
+        TAG32 = tagThirdExpenditureService.insertThirdTag(tagThirdExpenditureReqDto2, USER1.getId());
+
+        TagThirdExpenditureReqDto tagThirdExpenditureReqDto3 = TagThirdExpenditureReqDto.builder()
+                .secondTagId(TAG2.getId())
+                .thirdTagName("책상")
+                .build();
+
+        TAG33 = tagThirdExpenditureService.insertThirdTag(tagThirdExpenditureReqDto3, USER2.getId());
 
         // TODO: couple 생성 후 money 생기는 로직 작성 후 삭제필요
         Money money = Money.builder()
@@ -227,4 +245,37 @@ class MoneyServiceImplTest {
 
     }
 
+    @Test
+    @Transactional
+    void searchGraph() {
+        // given
+        MoneyExpenditureReqDto moneyExpenditureReqDto = MoneyExpenditureReqDto.builder()
+                .thirdTagId(TAG3.getId())
+                .userRole(UserRole.BRIDE)
+                .date(LocalDate.now())
+                .amount(100000L)
+                .memo("침대 샀다")
+                .payComplete(Boolean.FALSE)
+                .build();
+
+        MoneyExpenditureReqDto moneyExpenditureReqDto2 = MoneyExpenditureReqDto.builder()
+                .thirdTagId(TAG32.getId())
+                .userRole(UserRole.BRIDE)
+                .date(LocalDate.now())
+                .amount(100000L)
+                .memo("의자 샀다")
+                .payComplete(Boolean.TRUE)
+                .build();
+
+
+        MoneyExpenditure moneyExpenditure = moneyExpenditureService.insertExpenditure(moneyExpenditureReqDto, USER1.getId());
+        MoneyExpenditure moneyExpenditure2 = moneyExpenditureService.insertExpenditure(moneyExpenditureReqDto2, USER1.getId());
+
+        // when
+        List<MoneyGraphResDto> graphResult = moneyService.searchGraph(USER2.getId());
+
+        // then
+        assertThat(graphResult.get(0).getExpenditure()).isEqualTo(200000L);
+
+    }
 }

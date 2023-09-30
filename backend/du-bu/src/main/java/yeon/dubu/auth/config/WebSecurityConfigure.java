@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import yeon.dubu.auth.jwt.JwtAuthenticationFilter;
@@ -36,9 +37,10 @@ public class WebSecurityConfigure {
                 .csrf(AbstractHttpConfigurer::disable
                 )
                 .headers((headerConfig) ->
-                        headerConfig.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable
-                        )
+                        headerConfig.cacheControl(HeadersConfigurer.CacheControlConfig::disable)
+                                .frameOptions(HeadersConfigurer.FrameOptionsConfig::disable)
                 )
+                .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .formLogin(AbstractHttpConfigurer::disable);
 
         //요청에 대한 권한 설정
@@ -53,10 +55,10 @@ public class WebSecurityConfigure {
 
         //oauth2Login
         http.oauth2Login(oauth2Login -> oauth2Login
-                // .authorizationEndpoint(authorization -> authorization
-                //         .baseUri("/oauth2/authorization")
-                //         .authorizationRequestRepository(cookieAuthorizationRequestRepository)
-                // )
+                 .authorizationEndpoint(authorization -> authorization
+//                         .baseUri("/oauth2/authorization")
+                         .authorizationRequestRepository(cookieAuthorizationRequestRepository)
+                 )
 //                .redirectionEndpoint(redirection -> redirection
 //                        .baseUri("/login/oauth2/code/kakao") // 소셜 인증 후 redirect url
 //                )
