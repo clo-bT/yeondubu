@@ -65,6 +65,7 @@ public class CoupleServiceImpl implements CoupleService{
     }
 
     @Override
+    @Transactional
     public void deleteCouple(Long userId) {
         Couple couple = getCoupleByUserId(userId);
         coupleRepository.deleteById(couple.getId());
