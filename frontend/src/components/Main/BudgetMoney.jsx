@@ -84,12 +84,13 @@ margin: 20px;
 const BudgetMoney = ({ isBudgetOpen }) => {
     
     const [accessToken, setAccessToken] = useState('');
-    const [estimatedMoney, setEstimatedMoney] = useState(''); // 예상 금액 상태 추가
+    const [estimatedMoney, setEstimatedMoney] = useState(0); // 예상 금액 상태 추가
+    const [cashMoney, setCashMoney] = useState(0); // 예상 금액 상태 추가
+    const [accountMoney, setAccountMoney] = useState(0);
 
     useEffect(() => {
       const token = localStorage.getItem("token");
       setAccessToken(token);
-      console.log(token)
     }, []);
 
     useEffect(() => {
@@ -102,7 +103,7 @@ const BudgetMoney = ({ isBudgetOpen }) => {
           })
           .then((response) => {
             console.log('요청 성공:', response.data);
-            const estimatedMoneyValue = response.data; // 응답에서 예상 금액 값을 가져옴
+            const estimatedMoneyValue = response.data.total_expect_expenditure; 
             setEstimatedMoney(estimatedMoneyValue); // 상태를 업데이트
           })
           .catch((error) => {
@@ -111,15 +112,61 @@ const BudgetMoney = ({ isBudgetOpen }) => {
       }
     }, [accessToken]);
 
+    useEffect(() => {
+        if (accessToken) {
+          axios
+            .get(`${process.env.REACT_APP_API_ROOT}/api/v1/money/total-cash`, {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            })
+            .then((response) => {
+              console.log('요청 성공:', response.data);
+              const estimatedMoneyValue = response.data; 
+              setCashMoney(estimatedMoneyValue); // 상태를 업데이트
+            })
+            .catch((error) => {
+              console.error('요청 실패:', error);
+            });
+        }
+      }, [accessToken]);
+    
+      useEffect(() => {
+        if (accessToken) {
+          axios
+            .get(`${process.env.REACT_APP_API_ROOT}/api/v1/money/total-account`, {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            })
+            .then((response) => {
+              console.log('요청 성공:', response.data);
+              const estimatedMoneyValue = response.data; 
+              setAccountMoney(estimatedMoneyValue); // 상태를 업데이트
+            })
+            .catch((error) => {
+              console.error('요청 실패:', error);
+            });
+        }
+      }, [accessToken]);
+
     return (
         <Container isBudgetOpen={isBudgetOpen}>
             <Dday>D-527</Dday>
             <EstimatedMoney>총 예상 금액</EstimatedMoney>
-            <EstimatedMoneyDetail>{estimatedMoney}원</EstimatedMoneyDetail>
+            <EstimatedMoneyDetail>
+            {typeof estimatedMoney !== 'undefined' ? `${estimatedMoney}원` : '0원'}
+            </EstimatedMoneyDetail>
+
             <WeHave>함께 이만큼 모았어요</WeHave>
-            <WeHaveDetail>170,000,000원</WeHaveDetail>
+            <WeHaveDetail>
+                {cashMoney.bride_total_cash+cashMoney.groom_total_cash
+                +accountMoney.bride_total_account +accountMoney.groom_total_account}원</WeHaveDetail>
             <WeNeed>앞으로 이만큼 남았어요</WeNeed>
-            <WeNeedDetail>200,000,000원</WeNeedDetail>
+            <WeNeedDetail>
+                {estimatedMoney - (cashMoney.bride_total_cash+cashMoney.groom_total_cash
+                +accountMoney.bride_total_account +accountMoney.groom_total_account)}원
+            </WeNeedDetail>
         </Container>
     );
 };
