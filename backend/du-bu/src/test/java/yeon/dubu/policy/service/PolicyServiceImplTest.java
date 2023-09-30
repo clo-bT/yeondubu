@@ -16,6 +16,7 @@ import yeon.dubu.user.repository.UserRepository;
 import java.time.LocalDate;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 class PolicyServiceImplTest {
 
@@ -66,7 +67,7 @@ class PolicyServiceImplTest {
         List<PolicyResDto> policyResDtos = policyService.searchByTag("경기도", USER1.getId());
 
         // then
-        // TODO: assertion 작성
-        System.out.println("policyResDtos = " + policyResDtos);
+        // TODO: assertion 추가
+        assertThat(policyResDtos.get(0).getTag()).isEqualTo("중앙부처");
     }
 }
