@@ -7,12 +7,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yeon.dubu.policy.domain.Policy;
+import yeon.dubu.policy.dto.response.PolicyResDto;
 import yeon.dubu.policy.repository.PolicyRepository;
+import yeon.dubu.user.domain.User;
+import yeon.dubu.user.exception.NoSuchUserException;
+import yeon.dubu.user.repository.UserRepository;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -20,6 +24,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class PolicyServiceImpl implements PolicyService{
 
+    private final UserRepository userRepository;
     private final PolicyRepository policyRepository;
 
 
@@ -51,5 +56,27 @@ public class PolicyServiceImpl implements PolicyService{
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    @Transactional
+    public List<PolicyResDto> searchByTag(String tagName, Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
+
+        List<Policy> policies = policyRepository.findByTagIn(Arrays.asList("중앙부처", tagName));
+
+        List<PolicyResDto> policyResDtos = policies.stream()
+                .map(policy -> {
+                    PolicyResDto dto = new PolicyResDto();
+                    dto.setPolicy(policy.getPolicy());
+                    dto.setShortSummary(policy.getShortSummary());
+                    dto.setTag(policy.getTag());
+                    dto.setSubTag(policy.getSubTag() != null? policy.getPolicy() : "없음");
+                    dto.setUrl(policy.getUrl());
+                    return dto;
+                })
+                .collect(Collectors.toList());
+
+        return policyResDtos;
     }
 }
