@@ -1,8 +1,9 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request
+# from flask import Flask, request, jsonify, make_response
 from flask_cors import CORS, cross_origin
-import os
-import sys
-from utilities import check_keys, image_processor, sim_search
+import utilities as ut
+from PIL import Image
+from io import BytesIO
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/api/*": {"origins": ["https://j9a307.p.ssafy.io:3000/*", "http://localhost:3000/*"]}})
@@ -11,25 +12,52 @@ cors = CORS(app, resources={r"/api/*": {"origins": ["https://j9a307.p.ssafy.io:3
 def home():
     return "okay"
 
-@app.route('/api/imgupload', methods=['POST'])
-# @cross_origin(origin='*localhost',headers=['Content- Type','Authorization','video/x-matroska;codecs=avc1', 'audio/ogg codecs=opus', 'audio/wav'])
-def image_upload():
-    data = request.form
-    check_list = ['category', 'subcategory', 'brand', 'lprice', 'hprice']
+
+@app.route('/api/v1/categories', methods=['GET'])
+def category_list():
+    if request.method == 'GET':
+        try:
+            data = request.form
+            category_data = ut.product_category(data['category'], data['subcategory'])
+            return ut.rspns(data=category_data, status_code=200)
+        except Exception as err:
+            return ut.rspns(data={'error' : str(err)}, status_code=400)
+
+
+@app.route('/api/v1/paging', methods=['GET'])
+def page_items():
+    if request.method == 'GET':
+        try:
+            data = {key : value for key, value in request.form.items()}
+            if ut.check_keys(data, ['category', 'subcategory', 'hprice', 'lprice', 'category', 'brand', 'count', 'pages']):
+                raise KeyError
+            if data['brand'] == '':
+                data['brand'] = ut.brand_none_included(data)
+            filtered_data = ut.range_filter(data)
+            return ut.rspns(data = filtered_data, status_code=200)
+        except Exception as err:
+            return ut.rspns(data={'error' : str(err) }, status_code=400)
+
+
+@app.route('/api/v1/shopping_filter', methods=['POST'])
+def image_based_recommendations():
     try:
-        if check_keys(data, check_list):
-            from PIL import Image
-            from io import BytesIO
+        data = {key : value for key, value in request.form.items()}
+        if not ut.check_keys(data, ['category', 'subcategory', 'hprice', 'lprice', 'category', 'brand', 'count']):
+            if data['brand'] == '':
+                data['brand'] = ut.brand_none_included(data)
             img = request.files.get('image')
             img = img.read()
             img = Image.open(BytesIO(img))
-            img = image_processor(img)
-            sim = sim_search(img, data)
-            return jsonify({'success' : True, 'result': sim})
-    except:
-        return jsonify({'success': False})
-    
-@app.route('/api/loanupload', methods=['POST'])
+            img = ut.image_processor(img)
+            sim = ut.sim_search(img, data)
+            return ut.rspns(data=sim, status_code=200)
+        else:
+            raise KeyError
+    except KeyError as ke:
+        return ut.rspns(data = {'error':str(ke)}, status_code=400)
+
+@app.route('/api/v1/loanupload', methods=['POST'])
 def loan_upload():
     # credit score / necessary money / user token data
     # request.files.get('credit_score')
@@ -46,9 +74,9 @@ def loan_upload():
         '''
         loan_analysis function's return results
         '''
-        return jsonify({'result': True})
+        return ut.rspns(data = {'result':True}, status_code=200)
     else:
-        return jsonify({'success': False})
+        return ut.rspns(data = {'result':False}, status_code=400)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000, host='0.0.0.0')
