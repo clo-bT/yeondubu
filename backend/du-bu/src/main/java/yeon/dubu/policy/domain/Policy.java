@@ -21,8 +21,9 @@ public class Policy extends BaseTimeEntity {
 
     private String policy;
     private String shortSummary;
-    private String firstTag;
-    private String secondTag;
+    private String tag;
+    private String subTag;
     private String url;
+
 
 }
