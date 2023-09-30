@@ -5,7 +5,7 @@ import yeon.dubu.money.domain.Money;
 
 import java.util.Optional;
 
-public interface MoneyRepository extends JpaRepository<Money, Long> {
+public interface MoneyRepository extends JpaRepository<Money, Long>, CustomMoneyRepository {
     Optional<Money> findByUserId(Long userId);
 
 

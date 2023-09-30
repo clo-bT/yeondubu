@@ -50,4 +50,6 @@ public class CustomTagExpenditureRepositoryImpl implements CustomTagExpenditureR
         return allTags;
     }
 
+
+
 }
