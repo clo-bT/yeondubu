@@ -8,4 +8,5 @@ import yeon.dubu.account.domain.Account;
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Long> {
     List<Account> findByUserId(Long userId);
+    List<Account> findByTransferDay(int day);
 }
