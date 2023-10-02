@@ -20,7 +20,7 @@ public class TagFirstExpenditure extends BaseTimeEntity {
     @NotNull
     private String firstTagName;
 
-    @ManyToOne(fetch = LAZY, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = LAZY)
     private Couple couple;
 
     @Builder

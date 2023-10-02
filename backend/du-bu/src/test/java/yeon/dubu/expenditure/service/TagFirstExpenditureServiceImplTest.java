@@ -11,6 +11,7 @@ import yeon.dubu.couple.domain.Couple;
 import yeon.dubu.couple.repository.CoupleRepository;
 import yeon.dubu.expenditure.domain.TagFirstExpenditure;
 import yeon.dubu.expenditure.dto.request.TagFirstExpenditureUpdateDto;
+import yeon.dubu.expenditure.repository.MoneyExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagFirstExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagSecondExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagThirdExpenditureRepository;
@@ -33,6 +34,8 @@ class TagFirstExpenditureServiceImplTest {
     TagSecondExpenditureRepository tagSecondExpenditureRepository;
     @Autowired
     TagThirdExpenditureRepository tagThirdExpenditureRepository;
+    @Autowired
+    MoneyExpenditureRepository moneyExpenditureRepository;
 
     @Autowired
     UserRepository userRepository;
@@ -56,10 +59,7 @@ class TagFirstExpenditureServiceImplTest {
             .userRole(UserRole.BRIDE)
             .roleType(RoleType.USER)
             .build();
-        System.out.println("user1 = " + user1);
         USER1 = userRepository.save(user1);
-
-        System.out.println("USER1 = " + USER1);
 
         User user2 = User.builder()
                 .name("예비신랑")
@@ -104,5 +104,26 @@ class TagFirstExpenditureServiceImplTest {
         // then
         System.out.println("tagFirstExpenditureRepository = " + tagFirstExpenditureRepository.findById(tagFirstExpenditure.getId()).get().getFirstTagName());
         assertThat(tagFirstExpenditureRepository.findById(tagFirstExpenditure.getId()).get().getFirstTagName()).isEqualTo(tagFirstExpenditureUpdateDto.getFirstTagName());
+    }
+
+    @Test
+    @Transactional
+    void deleteFirstTag() {
+        // given
+        String firstTagName = "혼수";
+        TagFirstExpenditure tagFirstExpenditure = tagFirstExpenditureService.insertFirstTag(firstTagName, USER1.getId());
+        Long firstTagId = tagFirstExpenditure.getId();
+        Long secondTagId = tagSecondExpenditureRepository.findByTagFirstExpenditureId(firstTagId).get(0).getId();
+        Long thirdTagId = tagThirdExpenditureRepository.findByTagSecondExpenditureId(secondTagId).get(0).getId();
+
+        // when
+        tagFirstExpenditureService.deleteFirstTag(firstTagId, USER1.getId());
+
+        // then
+        assertThat(tagFirstExpenditureRepository.findById(firstTagId)).isEmpty();
+        assertThat(tagSecondExpenditureRepository.findById(secondTagId)).isEmpty();
+        assertThat(tagThirdExpenditureRepository.findById(thirdTagId)).isEmpty();
+        assertThat(moneyExpenditureRepository.findByTagThirdExpenditureId(thirdTagId)).isEmpty();
+
     }
 }
