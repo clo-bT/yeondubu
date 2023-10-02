@@ -13,6 +13,7 @@ import yeon.dubu.couple.exception.NoSuchCoupleConnectionException;
 import yeon.dubu.couple.exception.NoSuchCoupleException;
 import yeon.dubu.couple.repository.CoupleConnectionRepository;
 import yeon.dubu.couple.repository.CoupleRepository;
+import yeon.dubu.expenditure.service.TagExpenditureService;
 import yeon.dubu.money.domain.Money;
 import yeon.dubu.money.repository.MoneyRepository;
 import yeon.dubu.user.domain.User;
@@ -29,6 +30,7 @@ public class CoupleConnectionServiceImpl implements CoupleConnectionService {
     private final CoupleRepository coupleRepository;
     private final UserRepository userRepository;
     private final MoneyRepository moneyRepository;
+    private final TagExpenditureService tagExpenditureService;
     @Override
     @Transactional
     public User createCoupleConnection(Long userId, Integer code) {
@@ -203,6 +205,9 @@ public class CoupleConnectionServiceImpl implements CoupleConnectionService {
 
         host.setCouple(couple);
         guest.setCouple(couple);
+
+        // couple의 expenditureTags 생성
+        tagExpenditureService.createFirstTags(coupleId);
     }
 
     @Transactional

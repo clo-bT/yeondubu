@@ -240,9 +240,9 @@ class MoneyExpenditureServiceImplTest {
         moneyExpenditureService.deleteExpenditure(findExpenditure.get().getId(), USER2.getId());
 
         // then
-        assertThat(moneyExpenditureRepository.findById(findExpenditure.get().getId())).isEmpty();
         assertThat(moneyRepository.findByUserId(USER1.getId()).get().getExpectExpenditure()).isEqualTo(0L);
         assertThat(moneyRepository.findByUserId(USER1.getId()).get().getCompleteExpenditure()).isEqualTo(0L);
+        assertThat(findExpenditure.get().getAmount()).isEqualTo(0L);
     }
 
     

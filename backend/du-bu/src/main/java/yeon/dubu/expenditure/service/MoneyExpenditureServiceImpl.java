@@ -22,6 +22,7 @@ import yeon.dubu.money.domain.Money;
 import yeon.dubu.money.exception.NoSuchMoneyException;
 import yeon.dubu.money.repository.MoneyRepository;
 import yeon.dubu.user.domain.User;
+import yeon.dubu.user.enumeration.UserRole;
 import yeon.dubu.user.exception.NoSuchUserException;
 import yeon.dubu.user.repository.UserRepository;
 
@@ -212,11 +213,13 @@ public class MoneyExpenditureServiceImpl implements MoneyExpenditureService{
         Money expendMoney = moneyRepository.findByUserId(expendUser.get().getId()).orElseThrow(() -> new NoSuchMoneyException("해당하는 사용자의 자산 정보가 없습니다."));
 
         expendMoney.updateExpenditureByDelete(moneyExpenditure.getAmount(), moneyExpenditure.getPayComplete());  // 자산 정보 업데이트
-        moneyExpenditureRepository.deleteById(expenditureId);
 
+        // 초기 상태로 복귀
+        moneyExpenditure.setDate(null);
+        moneyExpenditure.setUserRole(UserRole.UNDEFINED);
+        moneyExpenditure.setAmount(0L);
+        moneyExpenditure.setMemo("");
+        moneyExpenditure.setPayComplete(Boolean.FALSE);
     }
-
-
-
 
 }
