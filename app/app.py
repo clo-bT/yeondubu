@@ -8,16 +8,18 @@ from io import BytesIO
 app = Flask(__name__)
 cors = CORS(app, resources={r"/api/*": {"origins": ["https://j9a307.p.ssafy.io:3000/*", "http://localhost:3000/*"]}})
 
-@app.route('/api')
-def home():
-    return "okay"
+@app.route('/api', methods=['GET'])
+def health_check():
+    return ut.rspns(data = {'success' : 'server alive'}, status_code=200)
 
 
-@app.route('/api/v1/categories', methods=['GET'])
+@app.route('/api/v1/categories', methods=['POST'])
 def category_list():
-    if request.method == 'GET':
+    if request.method == 'POST':
         try:
-            data = request.form
+            data = {key : value for key, value in request.form.items()}
+            if not data.get('category') or not data.get('subcategory'):
+                raise KeyError
             category_data = ut.product_category(data['category'], data['subcategory'])
             return ut.rspns(data=category_data, status_code=200)
         except Exception as err:
