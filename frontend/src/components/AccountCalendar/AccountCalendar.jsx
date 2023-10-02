@@ -5,8 +5,7 @@ import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from 'date-fns';
 import { isSameMonth, isSameDay, addDays } from 'date-fns';
 import axios from 'axios';
 
-const CalendarPage = styled.div`
-/* width: 355px; */
+const Container = styled.div`
 `
 const CalendarHeader = styled.div`
 /* width: 355px; */
@@ -25,12 +24,9 @@ cursor: pointer;
 
 `
 const TextMonth = styled.span`
-/* width: 355px; */
-font-size: 20px;
-font-weight: bold;
-flex-direction: column;
 
 `
+// DaysClass는 요일 적힌 거
 const DaysClass = styled.div`
 /* width: 355px; */
 display: flex;
@@ -43,10 +39,10 @@ flex-direction: column;
 
 `
 const CellClass = styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;
-width: 50.71px;
+// display: flex;
+// flex-direction: column;
+// align-items: center;
+// width: 50.71px;
 &.not-current-month {
     color: rgba(0, 0, 0, 0.2); /* 전달 및 다음달 날짜의 텍스트 색상을 회색으로 지정 */
 }
@@ -56,15 +52,15 @@ width: 50.71px;
     background: rgba(255, 101, 101, 0.50);
     border-radius: 50%;
     z-index: 1;
-    margin: 0 auto;
+    // margin: 0 auto;
 }
 `
 const TextClass = styled.span`
-display: flex;
-flex-direction: row;
-&.not-valid {
-        color: rgba(0, 0, 0, 0.2); /* 전달 및 다음달 날짜의 텍스트 색상을 회색으로 지정 */
-    }
+// display: flex;
+// flex-direction: row;
+// &.not-valid {
+//         color: rgba(0, 0, 0, 0.2); /* 전달 및 다음달 날짜의 텍스트 색상을 회색으로 지정 */
+//     }
 `
 const Row = styled.span`
 padding-top: .5rem;
@@ -75,18 +71,18 @@ height: 3rem;
 
 `
 const IncomeText = styled.div`
-color: #2663FF; /* 수입 텍스트 색상 */
-/* font-weight: bold; */
-font-size: .1rem;
+// color: #2663FF; /* 수입 텍스트 색상 */
+// /* font-weight: bold; */
+// font-size: .1rem;
 `
 const ExpenditureText = styled.div`
-color: #FF6565; /* 지출 텍스트 색상 */
-/* font-weight: bold; */
-font-size: .1rem;
+// color: #FF6565; /* 지출 텍스트 색상 */
+// /* font-weight: bold; */
+// font-size: .1rem;
 `
 const RowsBody = styled.div`
-display: flex;
-flex-direction: column;
+// display: flex;
+// flex-direction: column;
 
 `
 const TodayDot = styled.div`
@@ -115,7 +111,6 @@ const NotTodayDot = styled.div`
     justify-content: center;
     align-items: center;
     cursor: pointer;
-
 `
 
 
@@ -134,7 +129,7 @@ const AccountCalendar = ({ onDateClick : handleClick }) => {
          useEffect(() => {
              // 백틱으로 바꾸기
              const accessToken = localStorage.getItem("token");
-             axios.get(`${process.env.REACT_APP_API_ROOT}/api/v1/cash/${requestData}`,{
+             axios.get(`${process.env.REACT_APP_API_ROOT}/api/v1/money/${requestData}`,{
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 }
@@ -146,7 +141,7 @@ const AccountCalendar = ({ onDateClick : handleClick }) => {
              .catch(error => {
                  console.error('Error fetching data:', error);
              });
-         }, []);
+         }, [requestData]);
     for (let i = 0; i < 7; i++) {
         days.push(
             <div key={i}>
@@ -201,9 +196,9 @@ const AccountCalendar = ({ onDateClick : handleClick }) => {
                     <TextClass className={textClass}>
                     {isToday ? (
                             <TodayDot>
-                                <div>
+                                {/* <div> */}
                                 {formattedDate.split('-')[2]}
-                                </div>
+                                {/* </div> */}
                             </TodayDot> // 동그란 원 추가
                         ) : 
                             <NotTodayDot>
@@ -247,7 +242,7 @@ const AccountCalendar = ({ onDateClick : handleClick }) => {
 
         
     return (
-        <CalendarPage>
+        <Container>
             <CalendarHeader>
                 <Col>
                     <span onClick={prevMonth}>←</span>
@@ -263,7 +258,7 @@ const AccountCalendar = ({ onDateClick : handleClick }) => {
             <RowsBody>
                 {rows}
             </RowsBody>
-        </CalendarPage>
+        </Container>
     );
 };
 
