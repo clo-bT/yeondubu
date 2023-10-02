@@ -7,7 +7,7 @@ import pandas as pd
 
 app = Flask(__name__)
 # CORS(app)
-cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+cors = CORS(app, resources={r"/api/*": {"origins": ["https://j9a307.p.ssafy.io:3000/*", "http://localhost:3000/*"]}})
 
 
 @app.route('/api')
@@ -48,8 +48,6 @@ def image_upload():
         brand = brand.decode('utf-8')
         cost = request.files.get('cost').read()
         cost = cost.decode('utf-8')
-        user_token = request.files.get('user_token').read()
-        user_token = user_token.decode('utf-8')
         # img_analysis
         img_path = f'./dataset/img_data_{user_token}_1.jpg'
         with open(img_path, 'wb') as f:
@@ -70,24 +68,24 @@ def image_upload():
 def loan_upload():
     # credit score / loans money / user token data
     # request.files.get('salary') # 고정 수입
-    # request.files.get('credit_score') # 신용점수
-    # request.files.get('loans_money') # 대출 금액
-    # request.files.get('loans_period') # 상환 기간
-    # request.files.get('user_token') # 유저 토큰
-    if 'salary' in request.files and 'credit_score' in request.files and 'loans_period' in request.files and 'loans_money' in request.files and 'user_token' in request.files:
-        salary = request.files.get('salary').read()
-        salary = salary.decode('utf-8')
-        credit_score = request.files.get('credit_score').read()
-        credit_score = credit_score.decode('utf-8')
-        loans_money = request.files.get('loans_money').read()
-        loans_money = loans_money.decode('utf-8')
-        loans_period = request.files.get('loans_period').read()
-        loans_period = loans_period.decode('utf-8')
-        user_token = request.files.get('user_token').read()
-        user_token = user_token.decode('utf-8')
+    # request.files.get('creditScore') # 신용점수
+    # request.files.get('surCharge') # 대출 금액
+    # request.files.get('loanPeriod') # 상환 기간
+    # request.files.git('totalAssets') # 총 자산
+    print('일단 들어옴')
+    json_data = request.get_json()
+    if 'salary' in json_data and 'creditScore' in json_data and 'loanPeriod' in json_data and 'surCharge' in json_data:
+        salary = int(json_data['salary']['salary'])
+        creditScore = int(json_data['creditScore']['creditScore'])
+        surCharge = int(json_data['surCharge'])
+        loanPeriod = int(json_data['loanPeriod']['loanPeriod'])
+        totalAssets = int(json_data['totalAssets']['totalAssets'])
         rate = calculate(salary) # 속한 수입 구간의 평균 자산 대비 부채 비율
+        print(rate)
         # loan_analysis
-        results = credit_scores(salary, credit_score, loans_money, loans_period, rate)
+        results = credit_scores(salary, creditScore, surCharge, loanPeriod, rate, totalAssets)
+        print(results)
+        print(11111111111)
         return jsonify({'result': results})
     else:
         return jsonify({'success': False})
