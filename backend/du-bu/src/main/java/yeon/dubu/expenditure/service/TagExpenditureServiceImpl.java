@@ -5,24 +5,28 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import yeon.dubu.common.create.ThirdTagDict;
 import yeon.dubu.couple.domain.Couple;
 import yeon.dubu.couple.exception.NoSuchCoupleException;
 import yeon.dubu.couple.repository.CoupleRepository;
-import yeon.dubu.expenditure.dto.query.AllTagsExpenditureQueryDto;
-import yeon.dubu.expenditure.dto.response.TagAllExpenditureResDto;
+import yeon.dubu.expenditure.domain.MoneyExpenditure;
+import yeon.dubu.expenditure.domain.TagFirstExpenditure;
+import yeon.dubu.expenditure.domain.TagSecondExpenditure;
+import yeon.dubu.expenditure.domain.TagThirdExpenditure;
 import yeon.dubu.expenditure.dto.TagSecondExpenditureDto;
 import yeon.dubu.expenditure.dto.TagThirdExpenditureDto;
+import yeon.dubu.expenditure.dto.query.AllTagsExpenditureQueryDto;
+import yeon.dubu.expenditure.dto.response.TagAllExpenditureResDto;
+import yeon.dubu.expenditure.repository.MoneyExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagFirstExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagSecondExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagThirdExpenditureRepository;
 import yeon.dubu.user.domain.User;
+import yeon.dubu.user.enumeration.UserRole;
 import yeon.dubu.user.exception.NoSuchUserException;
 import yeon.dubu.user.repository.UserRepository;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -35,6 +39,8 @@ public class TagExpenditureServiceImpl implements TagExpenditureService{
     private final TagFirstExpenditureRepository tagFirstExpenditureRepository;
     private final TagSecondExpenditureRepository tagSecondExpenditureRepository;
     private final TagThirdExpenditureRepository tagThirdExpenditureRepository;
+    private final MoneyExpenditureRepository moneyExpenditureRepository;
+    private final ThirdTagDict thirdTagDict;
 
 
     /**
@@ -142,6 +148,83 @@ public class TagExpenditureServiceImpl implements TagExpenditureService{
         return finalResult;
     }
 
+    @Override
+    @Transactional
+    public void createFirstTags(Long coupleId) {
+        Couple couple = coupleRepository.findById(coupleId).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
+
+        List<String> firstTagNames = Arrays.asList("인사", "결혼식", "신혼여행", "신혼집", "혼수", "기타");
+
+        Map<Integer, List<String>> secondTagDict = new HashMap<>();
+        secondTagDict.put(0, Arrays.asList("상견례"));
+        secondTagDict.put(1, Arrays.asList("스튜디오", "예복", "메이크업", "예식장"));
+        secondTagDict.put(2, Arrays.asList("항공권", "숙박", "여행경비","선물 구입비"));
+        secondTagDict.put(3, Arrays.asList("신혼집", "인테리어", "부동산"));
+        secondTagDict.put(4, Arrays.asList("가구", "가전", "생활용품"));
+        secondTagDict.put(5, Arrays.asList("기타"));
+
+        // firstTag
+        for (int i = 0; i < firstTagNames.size(); i++) {
+            String firstTagName = firstTagNames.get(i);
+            TagFirstExpenditure tagFirstExpenditure = new TagFirstExpenditure();
+            tagFirstExpenditure.setFirstTagName(firstTagName);
+            tagFirstExpenditure.setCouple(couple);
+            tagFirstExpenditureRepository.save(tagFirstExpenditure);
+            // secondTag
+            this.createSecondTags(tagFirstExpenditure, i, secondTagDict.get(i), coupleId);
+
+        }
+    }
+
+    @Override
+    @Transactional
+    public void createSecondTags(TagFirstExpenditure tagFirstExpenditure, Integer i, List<String> secondTagNames, Long coupleId) {
+        Couple couple = coupleRepository.findById(coupleId).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
+
+        for (int j = 0; j < secondTagNames.size(); j++) {
+            String secondTagName = secondTagNames.get(j);
+            TagSecondExpenditure tagSecondExpenditure = new TagSecondExpenditure();
+            tagSecondExpenditure.setSecondTagName(secondTagName);
+            tagSecondExpenditure.setTagFirstExpenditure(tagFirstExpenditure);
+            tagSecondExpenditureRepository.save(tagSecondExpenditure);
+
+            // thirdTag
+            this.createThirdTags(tagSecondExpenditure, i, j, coupleId);
+        }
 
 
+    }
+
+    @Override
+    @Transactional
+    public void createThirdTags(TagSecondExpenditure tagSecondExpenditure, Integer i, Integer j, Long coupleId) {
+        Couple couple = coupleRepository.findById(coupleId).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
+
+        List<String> thirdTagNames = new ArrayList<>();
+        if (thirdTagDict.getThirdTagDict().containsKey(i)) {
+            Map<Integer, List<String>> jMap = thirdTagDict.getThirdTagDict().get(i);
+            if (jMap.containsKey(j)) {
+                thirdTagNames.addAll(jMap.get(j));
+            }
+        }
+
+        for (String thirdTagName : thirdTagNames) {
+            TagThirdExpenditure tagThirdExpenditure = new TagThirdExpenditure();
+            tagThirdExpenditure.setThirdTagName(thirdTagName);
+            tagThirdExpenditure.setTagSecondExpenditure(tagSecondExpenditure);
+
+            // money 초기값 설정
+            MoneyExpenditure moneyExpenditure = MoneyExpenditure.builder()
+                    .tagThirdExpenditure(tagThirdExpenditure)
+                    .userRole(UserRole.UNDEFINED)
+                    .amount(0L)
+                    .memo("")
+                    .payComplete(Boolean.FALSE)
+                    .build();
+
+            moneyExpenditureRepository.save(moneyExpenditure);
+            tagThirdExpenditureRepository.save(tagThirdExpenditure);
+
+        }
+    }
 }
