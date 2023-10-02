@@ -49,7 +49,8 @@ class TagExpenditureServiceImplTest {
     CoupleRepository coupleRepository;
     @Autowired
     MoneyRepository moneyRepository;
-
+    
+    static Couple COUPLE1;
     static User USER1;
     static User USER2;
 
@@ -65,11 +66,11 @@ class TagExpenditureServiceImplTest {
                 .weddingDate(LocalDate.of(2024, 05, 25))
                 .build();
 
-        Couple createCouple = coupleRepository.save(couple);
+        COUPLE1 = coupleRepository.save(couple);
 
         User user1 = User.builder()
                 .name("예비신부")
-                .couple(createCouple)
+                .couple(COUPLE1)
                 .userRole(UserRole.BRIDE)
                 .roleType(RoleType.USER)
                 .build();
@@ -78,7 +79,7 @@ class TagExpenditureServiceImplTest {
 
         User user2 = User.builder()
                 .name("예비신랑")
-                .couple(createCouple)
+                .couple(COUPLE1)
                 .userRole(UserRole.GROOM)
                 .roleType(RoleType.USER)
                 .build();
@@ -176,5 +177,18 @@ class TagExpenditureServiceImplTest {
         // then
         System.out.println("allTags.toString() = " + allTags.toString());
 
+    }
+
+    @Test
+    @Transactional
+    void createFirstTags() {
+        // given
+
+        // when
+        tagExpenditureService.createFirstTags(COUPLE1.getId());
+
+        // then
+        List<TagAllExpenditureResDto> allTags = tagExpenditureService.searchAllTags(USER1.getId());
+        System.out.println("allTags = " + allTags);
     }
 }

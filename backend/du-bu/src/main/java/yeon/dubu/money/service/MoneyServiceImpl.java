@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import yeon.dubu.common.calculate.IncomeFromAccounts;
 import yeon.dubu.couple.domain.Couple;
 import yeon.dubu.couple.exception.NoSuchCoupleException;
 import yeon.dubu.couple.repository.CoupleRepository;
@@ -44,6 +45,7 @@ public class MoneyServiceImpl implements MoneyService{
     private final MoneyExpenditureRepository moneyExpenditureRepository;
     private final MoneyIncomeRepository moneyIncomeRepository;
     private final TagFirstExpenditureRepository tagFirstExpenditureRepository;
+    private final IncomeFromAccounts incomeFromAccounts;
 
 
     /**
@@ -233,11 +235,17 @@ public class MoneyServiceImpl implements MoneyService{
         allYearMonths.addAll(expenditureMap.keySet());
 
         List<MoneyGraphResDto> moneyGraphResList = allYearMonths.stream()
-                .map(yearMonth -> MoneyGraphResDto.builder()
-                        .yearMonth(yearMonth)
-                        .income(incomeMap.getOrDefault(yearMonth, 0L))
-                        .expenditure(expenditureMap.getOrDefault(yearMonth, 0L))
-                        .build())
+                .map(yearMonth -> {
+                    Long incomeForMonth = incomeMap.getOrDefault(yearMonth, 0L);
+                    Long savingsForMonth = incomeFromAccounts.calAmountOfMonth(userId, yearMonth.atEndOfMonth());
+                    Long totalIncome = incomeForMonth + savingsForMonth;
+
+                    return MoneyGraphResDto.builder()
+                            .yearMonth(yearMonth)
+                            .income(totalIncome)
+                            .expenditure(expenditureMap.getOrDefault(yearMonth, 0L))
+                            .build();
+                })
                 .collect(Collectors.toList());
 
         return moneyGraphResList;
