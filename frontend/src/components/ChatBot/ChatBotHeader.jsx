@@ -8,7 +8,7 @@ align-items: center;
 margin-top: 10px;
 `
 
-const OutButton = styled.p`
+const OutButton = styled.a`
 color: #000;
 text-align: center;
 font-size: 15px;
@@ -19,6 +19,7 @@ display: inline-flex;
 align-items: center;
 justify-content: center;  
 margin-left: 20px;
+text-decoration: none;
 `
 // const Header = styled.div`  
 // color: #000;
@@ -36,7 +37,7 @@ margin-left: 20px;
 const ChatBotHeader = () => {
     return (
         <Container>
-            <OutButton>나가기</OutButton>
+            <OutButton href='/wholetab'>나가기</OutButton>
             {/* <Header>연두부 Chatbot</Header> */}
         </Container>
     );
