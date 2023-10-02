@@ -57,7 +57,7 @@ const Menubar = () => {
     return (
     <Container>
         <div>
-        <a href="/main"><HomeIcon /></a>
+        <a href="/"><HomeIcon /></a>
         <IconDetail>홈</IconDetail>
         </div>
 
