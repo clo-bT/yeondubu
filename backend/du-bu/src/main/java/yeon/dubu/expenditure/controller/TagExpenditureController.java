@@ -99,5 +99,14 @@ public class TagExpenditureController {
         return new ResponseEntity<>("", HttpStatus.OK);
     }
 
+    @DeleteMapping("/{firstTagId}/{secondTagId}/{thirdTagId}")
+    public ResponseEntity<?> deleteThirdTag(
+            @AuthenticationPrincipal Long userId,
+            @PathVariable Long thirdTagId
+    ) {
+        tagThirdExpenditureService.deleteThirdTag(thirdTagId, userId);
+
+        return new ResponseEntity<>("", HttpStatus.OK);
+    }
 
 }
