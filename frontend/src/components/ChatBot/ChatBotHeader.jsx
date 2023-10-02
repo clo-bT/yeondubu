@@ -20,24 +20,24 @@ align-items: center;
 justify-content: center;  
 margin-left: 20px;
 `
-const Header = styled.div`  
-color: #000;
-text-align: center;
-font-size: 20px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
-display: flex;
-justify-content: center;
-position: absolute;
-left: 50%;
-transform: translateX(-50%);
-`
+// const Header = styled.div`  
+// color: #000;
+// text-align: center;
+// font-size: 20px;
+// font-style: normal;
+// font-weight: 400;
+// line-height: normal;
+// display: flex;
+// justify-content: center;
+// position: absolute;
+// left: 50%;
+// transform: translateX(-50%);
+// `
 const ChatBotHeader = () => {
     return (
         <Container>
             <OutButton>나가기</OutButton>
-            <Header>연두부 Chatbot</Header>
+            {/* <Header>연두부 Chatbot</Header> */}
         </Container>
     );
 };

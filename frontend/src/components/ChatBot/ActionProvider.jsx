@@ -1,5 +1,16 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
+
+const Atag = styled.a`
+  color: black;
+
+`
+const PolicyName = styled.p`
+  font-weight: bold;
+
+`
+
 
 const ActionProvider = ({ createChatBotMessage, setState, children }) => {
     const handleHello = () => {
@@ -18,11 +29,15 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
       const token = localStorage.getItem("token");
       setAccessToken(token);
     }, []);
+    
+
+
   
     const fetchDataForLocation = async (tagName) => {
       console.log(accessToken);
       console.log(tagName);
-  
+      
+
       if (accessToken) {
         try {
           const response = await axios.get(`${process.env.REACT_APP_API_ROOT}/api/v1/policy/${tagName}`, {
@@ -31,18 +46,29 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
             },
           });
   
-          console.log('그래프 요청 성공:', response.data);
-          setData(response.data); // 데이터를 상태에 저장
+          console.log('요청 성공:', response.data);
+          setData(response.data);
   
-          // 데이터를 챗봇 메시지로 표시
+          createChatBotMessage(
+            '네! ${tagNmae}의 최신 정책 알려드릴게요!'
+          )
           response.data.forEach((item) => {
-            const message = createChatBotMessage(`
-              정책: ${item.policy}
-              요약: ${item.short_summary}
-              부처: ${item.tag}
-              하위 부처: ${item.sub_tag}
-              [자세히 보기](${item.url})
-            `);
+            const message = createChatBotMessage(
+              <div>
+                <PolicyName>
+                  {item.policy}
+                </PolicyName>
+                <p>
+                  - {item.tag} {item.sub_tag}
+                </p>
+                <p>
+                  - {item.short_summary}
+                </p>
+                <p>
+                  <Atag href={item.url} target="_blank" rel="noopener noreferrer">자세히 보기</Atag>
+                </p>
+              </div>
+            );
   
             setState((prev) => ({
               ...prev,
