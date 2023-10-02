@@ -85,11 +85,11 @@ public class TagThirdExpenditureServiceImpl implements TagThirdExpenditureServic
     @Transactional
     public void deleteThirdTag(Long thirdTagId, Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
-        Optional<MoneyExpenditure> moneyExpenditure = moneyExpenditureRepository.findByTagThirdExpenditureId(thirdTagId);
-        System.out.println("moneyExpenditure = " + moneyExpenditure);
+        MoneyExpenditure moneyExpenditure = moneyExpenditureRepository.findByTagThirdExpenditureId(thirdTagId).orElseThrow(() -> new NoSuchTagExpenditureException("해당하는 세번째 태그 정보가 없습니다."));
+
         // moneyExpenditure 삭제
-        moneyExpenditureService.deleteExpenditure(moneyExpenditure.get().getId(), userId);
-        moneyExpenditureRepository.deleteById(moneyExpenditure.get().getId());
+        moneyExpenditureService.deleteExpenditure(moneyExpenditure.getId(), userId);
+        moneyExpenditureRepository.deleteById(moneyExpenditure.getId());
         tagThirdExpenditureRepository.deleteById(thirdTagId);
     }
 }
