@@ -6,6 +6,7 @@ import CoupleMoney from '../components/Main/CoupleMoney';
 import LoanRecommend from '../components/Main/LoanRecommend';
 //import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import BudgetGraph from '../components/Main/BudgetGraph';
 
 
 
@@ -35,6 +36,7 @@ const Main = () => {
         <BudgetMoney isBudgetOpen={isBudgetOpen} />
         <CoupleImage setIsBudgetOpen={setIsBudgetOpen} isBudgetOpen={isBudgetOpen}/>
         <CoupleMoney/>
+        <BudgetGraph/>
         <LoanRecommend isLoanOpen={isLoanOpen} toggleLoan={toggleLoan}/>
         <Menubar />
       </div>
