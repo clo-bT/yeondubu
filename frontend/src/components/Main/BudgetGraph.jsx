@@ -52,11 +52,11 @@ const BudgetGraph = () => {
                 /**
                  * chart에 보여질 데이터 key (측정되는 값)
                  */
-                keys={['수입', '지출']}
+                keys={['income', 'expenditure']}
                 /**
                  * keys들을 그룹화하는 index key (분류하는 값)
                  */
-                indexBy="날짜"
+                indexBy='year_month'
                 /**
                  * chart margin
                  */
