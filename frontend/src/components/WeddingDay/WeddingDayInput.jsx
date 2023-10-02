@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import 'react-datepicker/dist/react-datepicker.css'; 
 import { faAlignCenter } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 
 
 const Container = styled.div`
@@ -110,6 +112,7 @@ const DateInputContainer = styled.div`
 
 
 const WeddingDayInput = () => {
+  const navigate = useNavigate();
     const accessToken = localStorage.getItem('token')
     const name = localStorage.getItem('name')
     const image = localStorage.getItem('image')
@@ -117,23 +120,39 @@ const WeddingDayInput = () => {
     const partner_img = localStorage.getItem('partner_img')
     const [selectedDate, setSelectedDate] = useState(null);
     const handleDateChange = (date) => {
-        setSelectedDate(date);
-      };
-
+      setSelectedDate(date);
+    };
+    const formatDate = (date) => {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    };
     const clearDate = () => {
         setSelectedDate(null);
       };
     const handleSend = (selectedRole) => {
-      axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/couples/info`,
-      {
-        "user_role": selectedRole,
-        "wedding_date": selectedDate
-      },
-      {
-        headers: {
-            Authorization: `Bearer ${accessToken}`,
-        }
+      if (selectedDate) {
+        const formattedDate = formatDate(selectedDate);
+        axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/couples/info`,
+        {
+          "user_role": selectedRole,
+          "wedding_date": formattedDate
+        },
+        {
+          headers: {
+              Authorization: `Bearer ${accessToken}`,
+          }
+      }).then(response => {
+        console.log('여기는 웨딩데이',response)
+        navigate('/')
     })
+    .catch(error => {
+        console.error('Error fetching data:', error);
+    });
+  } else {
+    console.log('날짜를 선택해주세요');
+  }
     // console.log(selectedRole)
     }
     return (
