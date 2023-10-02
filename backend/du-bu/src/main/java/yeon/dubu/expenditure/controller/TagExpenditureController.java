@@ -98,6 +98,15 @@ public class TagExpenditureController {
         tagThirdExpenditureService.updateThirdTag(tagThirdExpenditureUpdateDto, userId);
         return new ResponseEntity<>("", HttpStatus.OK);
     }
+    @DeleteMapping("/{firstTagName}/{secondTagId}")
+    public ResponseEntity<?> deleteSecondTag(
+            @AuthenticationPrincipal Long userId,
+            @PathVariable Long secondTagId
+    ) {
+        tagSecondExpenditureService.deleteSecondTag(secondTagId, userId);
+
+        return new ResponseEntity<>("", HttpStatus.OK);
+    }
     @DeleteMapping("/{firstTagName}/{secondTagName}/{thirdTagId}")
     public ResponseEntity<?> deleteThirdTag(
             @AuthenticationPrincipal Long userId,
