@@ -16,6 +16,10 @@ const ChatBot = () => {
                 config={config}
                 messageParser={MessageParser}
                 actionProvider={ActionProvider}
+                headerText='연두부 Chatbot'
+                placeholderText='Input placeholder'
+                runInitialMessagesWithHistory
+                disableScrollToBottom
             />
         </div>
     );
