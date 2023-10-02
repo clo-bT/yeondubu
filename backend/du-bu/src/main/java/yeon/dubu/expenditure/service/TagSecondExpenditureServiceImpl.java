@@ -9,15 +9,19 @@ import yeon.dubu.couple.exception.NoSuchCoupleException;
 import yeon.dubu.couple.repository.CoupleRepository;
 import yeon.dubu.expenditure.domain.TagFirstExpenditure;
 import yeon.dubu.expenditure.domain.TagSecondExpenditure;
+import yeon.dubu.expenditure.domain.TagThirdExpenditure;
 import yeon.dubu.expenditure.dto.request.TagSecondExpenditureReqDto;
 import yeon.dubu.expenditure.dto.request.TagSecondExpenditureUpdateDto;
 import yeon.dubu.expenditure.dto.request.TagThirdExpenditureReqDto;
 import yeon.dubu.expenditure.exception.NoSuchTagExpenditureException;
 import yeon.dubu.expenditure.repository.TagFirstExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagSecondExpenditureRepository;
+import yeon.dubu.expenditure.repository.TagThirdExpenditureRepository;
 import yeon.dubu.user.domain.User;
 import yeon.dubu.user.exception.NoSuchUserException;
 import yeon.dubu.user.repository.UserRepository;
+
+import java.util.List;
 
 @Slf4j
 @Service
@@ -29,6 +33,7 @@ public class TagSecondExpenditureServiceImpl implements TagSecondExpenditureServ
     private final CoupleRepository coupleRepository;
     private final TagFirstExpenditureRepository tagFirstExpenditureRepository;
     private final TagSecondExpenditureRepository tagSecondExpenditureRepository;
+    private final TagThirdExpenditureRepository tagThirdExpenditureRepository;
     private final TagThirdExpenditureService tagThirdExpenditureService;
 
     /**
@@ -68,6 +73,22 @@ public class TagSecondExpenditureServiceImpl implements TagSecondExpenditureServ
         Couple couple = coupleRepository.findById(user.getCouple().getId()).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
         TagSecondExpenditure tagSecondExpenditure = tagSecondExpenditureRepository.findById(tagSecondExpenditureUpdateDto.getSecondTagId()).orElseThrow(() -> new NoSuchTagExpenditureException("해당하는 태그 정보가 없습니다."));
         tagSecondExpenditure.setSecondTagName(tagSecondExpenditureUpdateDto.getSecondTagName());
+    }
+
+    @Override
+    @Transactional
+    public void deleteSecondTag(Long secondTagId, Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
+        Couple couple = coupleRepository.findById(user.getCouple().getId()).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
+
+        List<TagThirdExpenditure> thirdTagList = tagThirdExpenditureRepository.findByTagSecondExpenditureId(secondTagId);
+
+        // thirdTag 모두 삭제
+        for (TagThirdExpenditure tagThirdExpenditure : thirdTagList) {
+            tagThirdExpenditureService.deleteThirdTag(tagThirdExpenditure.getId(), userId);
+        }
+
+        tagSecondExpenditureRepository.deleteById(secondTagId);
     }
 
 }

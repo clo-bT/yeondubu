@@ -12,6 +12,7 @@ import yeon.dubu.expenditure.domain.TagFirstExpenditure;
 import yeon.dubu.expenditure.domain.TagSecondExpenditure;
 import yeon.dubu.expenditure.dto.request.TagSecondExpenditureReqDto;
 import yeon.dubu.expenditure.dto.request.TagSecondExpenditureUpdateDto;
+import yeon.dubu.expenditure.repository.MoneyExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagFirstExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagSecondExpenditureRepository;
 import yeon.dubu.expenditure.repository.TagThirdExpenditureRepository;
@@ -37,6 +38,8 @@ class TagSecondExpenditureServiceImplTest {
     TagSecondExpenditureRepository tagSecondExpenditureRepository;
     @Autowired
     TagThirdExpenditureRepository tagThirdExpenditureRepository;
+    @Autowired
+    MoneyExpenditureRepository moneyExpenditureRepository;
 
     @Autowired
     UserRepository userRepository;
@@ -123,5 +126,26 @@ class TagSecondExpenditureServiceImplTest {
 
         // then
         assertThat(tagSecondExpenditureRepository.findById(tagSecondExpenditure.getId()).get().getSecondTagName()).isEqualTo(tagSecondExpenditureUpdateDto.getSecondTagName());
+    }
+
+    @Test
+    @Transactional
+    void deleteSecondTag() {
+        // given
+        TagSecondExpenditureReqDto secondExpenditureReqDto = TagSecondExpenditureReqDto.builder()
+                .firstTagId(TAG1.getId())
+                .secondTagName("혼수")
+                .build();
+
+        TagSecondExpenditure tagSecondExpenditure = tagSecondExpenditureService.insertSecondTag(secondExpenditureReqDto, USER1.getId());
+        Long secondTagId = tagSecondExpenditure.getId();
+        Long thirdTagId = tagThirdExpenditureRepository.findByTagSecondExpenditureId(secondTagId).get(0).getId();
+        // when
+        tagSecondExpenditureService.deleteSecondTag(secondTagId, USER1.getId());
+
+        // then
+        assertThat(tagSecondExpenditureRepository.findById(secondTagId)).isEmpty();
+        assertThat(tagThirdExpenditureRepository.findByTagSecondExpenditureId(secondTagId)).isEmpty();
+        assertThat(moneyExpenditureRepository.findByTagThirdExpenditureId(thirdTagId)).isEmpty();
     }
 }
