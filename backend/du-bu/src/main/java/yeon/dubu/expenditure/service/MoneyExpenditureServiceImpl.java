@@ -22,6 +22,7 @@ import yeon.dubu.money.domain.Money;
 import yeon.dubu.money.exception.NoSuchMoneyException;
 import yeon.dubu.money.repository.MoneyRepository;
 import yeon.dubu.user.domain.User;
+import yeon.dubu.user.enumeration.UserRole;
 import yeon.dubu.user.exception.NoSuchUserException;
 import yeon.dubu.user.repository.UserRepository;
 
@@ -208,15 +209,21 @@ public class MoneyExpenditureServiceImpl implements MoneyExpenditureService{
         User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
         Couple couple = coupleRepository.findById(user.getCouple().getId()).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
         MoneyExpenditure moneyExpenditure = moneyExpenditureRepository.findById(expenditureId).orElseThrow(() -> new NoSuchExpenditureException("해당하는 지출 정보가 없습니다."));
-        Optional<User> expendUser = userRepository.findByCoupleIdAndUserRole(couple.getId(), moneyExpenditure.getUserRole());
-        Money expendMoney = moneyRepository.findByUserId(expendUser.get().getId()).orElseThrow(() -> new NoSuchMoneyException("해당하는 사용자의 자산 정보가 없습니다."));
 
-        expendMoney.updateExpenditureByDelete(moneyExpenditure.getAmount(), moneyExpenditure.getPayComplete());  // 자산 정보 업데이트
-        moneyExpenditureRepository.deleteById(expenditureId);
+        UserRole expendUserRole = moneyExpenditure.getUserRole();
+        if (expendUserRole != UserRole.UNDEFINED) {
+            Optional<User> expendUser = userRepository.findByCoupleIdAndUserRole(couple.getId(), expendUserRole);
+            Money expendMoney = moneyRepository.findByUserId(expendUser.get().getId()).orElseThrow(() -> new NoSuchMoneyException("해당하는 사용자의 자산 정보가 없습니다."));
 
+            expendMoney.updateExpenditureByDelete(moneyExpenditure.getAmount(), moneyExpenditure.getPayComplete());  // 자산 정보 업데이트
+        }
+
+        // 초기 상태로 복귀
+        moneyExpenditure.setDate(null);
+        moneyExpenditure.setUserRole(UserRole.UNDEFINED);
+        moneyExpenditure.setAmount(0L);
+        moneyExpenditure.setMemo("");
+        moneyExpenditure.setPayComplete(Boolean.FALSE);
     }
-
-
-
 
 }

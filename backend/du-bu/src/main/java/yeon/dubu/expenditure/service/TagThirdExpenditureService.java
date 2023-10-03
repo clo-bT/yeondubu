@@ -8,5 +8,5 @@ public interface TagThirdExpenditureService {
     TagThirdExpenditure insertThirdTag(TagThirdExpenditureReqDto tagThirdExpenditureReqDto, Long userId);
     void updateThirdTag(TagThirdExpenditureUpdateDto tagThirdExpenditureUpdateDto, Long userId);
 
-
+    void deleteThirdTag(Long thirdTagId, Long userId);
 }

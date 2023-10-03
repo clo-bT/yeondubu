@@ -10,6 +10,12 @@ import yeon.dubu.couple.domain.Couple;
 import yeon.dubu.couple.dto.request.CoupleInfoReqDto;
 import yeon.dubu.couple.exception.NoSuchCoupleException;
 import yeon.dubu.couple.repository.CoupleRepository;
+import yeon.dubu.expenditure.domain.TagFirstExpenditure;
+import yeon.dubu.expenditure.repository.TagFirstExpenditureRepository;
+import yeon.dubu.expenditure.service.TagFirstExpenditureService;
+import yeon.dubu.income.domain.MoneyIncome;
+import yeon.dubu.income.repository.MoneyIncomeRepository;
+import yeon.dubu.income.service.MoneyIncomeService;
 import yeon.dubu.user.domain.User;
 import yeon.dubu.user.enumeration.UserRole;
 import yeon.dubu.user.exception.NoSuchUserException;
@@ -22,6 +28,10 @@ import yeon.dubu.user.repository.UserRepository;
 public class CoupleServiceImpl implements CoupleService{
     private final CoupleRepository coupleRepository;
     private final UserRepository userRepository;
+    private final TagFirstExpenditureRepository tagFirstExpenditureRepository;
+    private final TagFirstExpenditureService tagFirstExpenditureService;
+    private final MoneyIncomeRepository moneyIncomeRepository;
+    private final MoneyIncomeService moneyIncomeService;
     @Override
     @Transactional
     public void insertInfo(Long userId, CoupleInfoReqDto coupleInfoReqDto) {
@@ -65,9 +75,25 @@ public class CoupleServiceImpl implements CoupleService{
     }
 
     @Override
+    @Transactional
     public void deleteCouple(Long userId) {
         Couple couple = getCoupleByUserId(userId);
-        coupleRepository.delete(couple);
+
+        // couple의 지출 태그 전체 삭제
+        List<TagFirstExpenditure> firstTagList = tagFirstExpenditureRepository.findByCoupleId(couple.getId());
+
+        for (TagFirstExpenditure tagFirstExpenditure : firstTagList) {
+            tagFirstExpenditureService.deleteFirstTag(tagFirstExpenditure.getId(), userId);
+        }
+
+        // couple의 income 전체 삭제
+        List<MoneyIncome> incomeList = moneyIncomeRepository.findByCoupleId(couple.getId());
+
+        for (MoneyIncome moneyIncome : incomeList) {
+            moneyIncomeService.deleteIncome(moneyIncome.getId());
+        }
+
+        coupleRepository.deleteById(couple.getId());
     }
 
     public Couple getCoupleByUserId(Long userId){
