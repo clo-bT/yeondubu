@@ -55,7 +55,7 @@ function App() {
           <Route path="/airlinerecommend" element={<AirlineRecommend />} />
           <Route path="/airlinerecommendfilter" element={<AirlineRecommendFilter />} />
           <Route path="/budgetcheckbox" element={<BudgetCheckBox />} />
-          <Route path="/calendarinputcreate" element={<CalendarInputCreate />} />
+          <Route path="/calendarinput" element={<CalendarInputCreate />} />
           <Route path="/chatbot" element={<ChatBot />} />
           <Route path="/checkbox" element={<CheckBox />} />
           <Route path="/checkuser" element={<CheckUser />} />
