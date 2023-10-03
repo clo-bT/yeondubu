@@ -133,6 +133,48 @@ const MyAccountContent = () => {
     }
   }, [accessToken, accountId]);
 
+  const DeleteSavingAccount = () => {
+    console.log(accessToken)
+    console.log(accountId)
+
+    // 여기서 axios 요청을 보내세요.
+    axios.delete(`${process.env.REACT_APP_API_ROOT}/api/v1/accounts/saving/${accountId}`, {
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+  
+        },
+    })
+        .then((response) => {
+            console.log('요청 성공:', response);
+            alert('계좌가 삭제되었습니다!');
+            navigate('/myaccount');
+        })
+        .catch((error) => {
+            console.error('요청 실패:', error);
+        });
+  };
+
+  const DeleteDepositAccount = () => {
+    console.log(accessToken)
+    console.log(accountId)
+
+    // 여기서 axios 요청을 보내세요.
+    axios.delete(`${process.env.REACT_APP_API_ROOT}/api/v1/accounts/deposit/${accountId}`, {
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+  
+        },
+    })
+        .then((response) => {
+            console.log('요청 성공:', response);
+            alert('계좌가 삭제되었습니다!');
+            navigate('/myaccount');
+        })
+        .catch((error) => {
+            console.error('요청 실패:', error);
+        });
+  };
+
     // account_type에 따라 다른 화면 렌더링
     const renderAccountContent = () => {
       if (accountData.account_type === 'DEPOSIT') {
@@ -140,18 +182,21 @@ const MyAccountContent = () => {
         return (
           <AccountItem>
           <AccountName>{accountData.account_name}</AccountName>
-              <NowMoney>{accountData.start_amount}원</NowMoney>
+              <NowMoney>{accountData.final_amount}원</NowMoney>
             <DetailItem>
               <Header>만기일</Header>
               <Detail>{accountData.final_date}</Detail>
             </DetailItem>
             <UnlineLine />
             <DetailItem>
-              <Header>만기예상금액</Header>
-              <Detail>{accountData.final_amount}원</Detail>
+              <Header>현재금액</Header>
+              <Detail>{accountData.start_amount}원</Detail>
             </DetailItem>
             <UnlineLine />
-         
+            <Box>
+              <UpdateButton onClick={() => navigate(`/myaccountupdate/${accountId}`)}>수정하기</UpdateButton>
+              <UpdateButton onClick={DeleteDepositAccount}>삭제하기</UpdateButton>
+            </Box>
         </AccountItem>
         );
       } else if (accountData.account_type === 'SAVINGS') {
@@ -159,7 +204,7 @@ const MyAccountContent = () => {
         return (
           <AccountItem>
           <AccountName>{accountData.account_name}</AccountName>
-              <NowMoney>{accountData.start_amount}원</NowMoney>
+              <NowMoney>{accountData.final_amount}원</NowMoney>
           <DetailItem>
          
             <Header>이체일</Header>
@@ -177,12 +222,16 @@ const MyAccountContent = () => {
             </DetailItem>
             <UnlineLine />
             <DetailItem>
-              <Header>만기예상금액</Header>
-              <Detail>{accountData.final_amount}원</Detail>
+              <Header>현재금액</Header>
+              <Detail>{accountData.start_amount}원</Detail>
             </DetailItem>
             <UnlineLine />
-         
+            <Box>
+              <UpdateButton onClick={() => navigate(`/myaccountupdate/${accountId}`)}>수정하기</UpdateButton>
+              <UpdateButton onClick={DeleteSavingAccount}>삭제하기</UpdateButton>
+            </Box>
         </AccountItem>
+        
         );
       } else {
         // 다른 account_type에 대한 처리
@@ -196,8 +245,7 @@ const MyAccountContent = () => {
       {renderAccountContent()}
     </Container>
     <Box>
-      <UpdateButton onClick={() => navigate(`/myaccountupdate/${accountId}`)}>수정하기</UpdateButton>
-      <UpdateButton>삭제하기</UpdateButton>
+     
     </Box>
  
       
