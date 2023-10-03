@@ -1,6 +1,8 @@
 import axios from 'axios';
 import {React, useEffect, useState} from 'react';
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
+import { useNavigate  } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -79,12 +81,9 @@ margin-right: 35px;
 `
 
 const UpdateButton = styled.button`
-display: flex;
 width: 100px;
 height: 35px;
 padding: 3px 20px;
-justify-content: center;
-align-items: center;
 color: #FF5A5A;
 text-align: center;
 font-size: 15px;
@@ -94,69 +93,161 @@ line-height: normal;
 border: none;
 border-radius: 10px;
 margin-top: 30px;
-margin-left: auto;
-margin-right: auto;
+`
+
+const Box = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
 `
 const MyAccountContent = () => {
   const [accessToken, setAccessToken] = useState('');
   const [accountData, setAccountData] = useState([]);
+  const { accountId } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const token = sessionStorage.getItem("token");
+    const token = localStorage.getItem("token");
     setAccessToken(token);
   }, []);
 
   useEffect(() => {
     if (accessToken) {
       axios
-        .get(`${process.env.REACT_APP_API_ROOT}/api/v1/accounts/detail/{accountId}`, {
+        .get(`${process.env.REACT_APP_API_ROOT}/api/v1/accounts/detail/${accountId}`, {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
         })
         .then((response) => {
           console.log('요청 성공:', response);
-          // console.log(response.data);
+          console.log(response.data);
+          console.log(accountId)
           setAccountData(response.data);
         })
         .catch((error) => {
           console.error('요청 실패:', error);
         });
     }
-  }, [accessToken]);
-    return (
-      <>
-      <Container>
+  }, [accessToken, accountId]);
 
-        <AccountItem>
+  const DeleteSavingAccount = () => {
+    console.log(accessToken)
+    console.log(accountId)
+
+    // 여기서 axios 요청을 보내세요.
+    axios.delete(`${process.env.REACT_APP_API_ROOT}/api/v1/accounts/saving/${accountId}`, {
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+  
+        },
+    })
+        .then((response) => {
+            console.log('요청 성공:', response);
+            alert('계좌가 삭제되었습니다!');
+            navigate('/myaccount');
+        })
+        .catch((error) => {
+            console.error('요청 실패:', error);
+        });
+  };
+
+  const DeleteDepositAccount = () => {
+    console.log(accessToken)
+    console.log(accountId)
+
+    // 여기서 axios 요청을 보내세요.
+    axios.delete(`${process.env.REACT_APP_API_ROOT}/api/v1/accounts/deposit/${accountId}`, {
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+  
+        },
+    })
+        .then((response) => {
+            console.log('요청 성공:', response);
+            alert('계좌가 삭제되었습니다!');
+            navigate('/myaccount');
+        })
+        .catch((error) => {
+            console.error('요청 실패:', error);
+        });
+  };
+
+    // account_type에 따라 다른 화면 렌더링
+    const renderAccountContent = () => {
+      if (accountData.account_type === 'DEPOSIT') {
+        // Deposit 화면을 렌더링하는 JSX
+        return (
+          <AccountItem>
           <AccountName>{accountData.account_name}</AccountName>
-
-              <NowMoney>{accountData.start_amount}원</NowMoney>
-            <DetailItem>
-              <Header>이체</Header>
-              <Detail></Detail>
-            </DetailItem>
-              <UnlineLine />
-            <DetailItem>
-              <Header>이체금액</Header>
-              <Detail> 원</Detail>
-            </DetailItem>
-            <UnlineLine />
+              <NowMoney>{accountData.final_amount}원</NowMoney>
             <DetailItem>
               <Header>만기일</Header>
-              <Detail></Detail>
+              <Detail>{accountData.final_date}</Detail>
             </DetailItem>
             <UnlineLine />
             <DetailItem>
-              <Header>만기예상금액</Header>
-              <Detail>원</Detail>
+              <Header>현재금액</Header>
+              <Detail>{accountData.start_amount}원</Detail>
             </DetailItem>
             <UnlineLine />
-         
+            <Box>
+              <UpdateButton onClick={() => navigate(`/myaccountupdate/${accountId}`)}>수정하기</UpdateButton>
+              <UpdateButton onClick={DeleteDepositAccount}>삭제하기</UpdateButton>
+            </Box>
         </AccountItem>
+        );
+      } else if (accountData.account_type === 'SAVINGS') {
+        // Saving 화면을 렌더링하는 JSX
+        return (
+          <AccountItem>
+          <AccountName>{accountData.account_name}</AccountName>
+              <NowMoney>{accountData.final_amount}원</NowMoney>
+          <DetailItem>
+         
+            <Header>이체일</Header>
+            <Detail>매달 {accountData.transfer_day}일</Detail>
+          </DetailItem>
+          <DetailItem>
+          <UnlineLine />
+            <Header>이체금액</Header>
+            <Detail>{accountData.transfer_amount}원</Detail>
+          </DetailItem>
+            <DetailItem>
+            <UnlineLine />
+              <Header>만기일</Header>
+              <Detail>{accountData.final_date}</Detail>
+            </DetailItem>
+            <UnlineLine />
+            <DetailItem>
+              <Header>현재금액</Header>
+              <Detail>{accountData.start_amount}원</Detail>
+            </DetailItem>
+            <UnlineLine />
+            <Box>
+              <UpdateButton onClick={() => navigate(`/myaccountupdate/${accountId}`)}>수정하기</UpdateButton>
+              <UpdateButton onClick={DeleteSavingAccount}>삭제하기</UpdateButton>
+            </Box>
+        </AccountItem>
+        
+        );
+      } else {
+        // 다른 account_type에 대한 처리
+        return null;
+      }
+    };
 
+    return (
+      <>
+    <Container>
+      {renderAccountContent()}
     </Container>
-      <UpdateButton>수정하기</UpdateButton>
+    <Box>
+     
+    </Box>
+ 
       
       </>
     );
