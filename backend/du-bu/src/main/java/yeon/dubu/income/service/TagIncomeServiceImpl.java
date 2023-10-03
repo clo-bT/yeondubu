@@ -16,13 +16,6 @@ import yeon.dubu.income.repository.TagIncomeRepository;
 @RequiredArgsConstructor
 public class TagIncomeServiceImpl implements TagIncomeService{
     private final TagIncomeRepository tagIncomeRepository;
-    @Override
-    @Transactional
-    public void insertTag(String tagName) {
-        TagIncome tagIncome = new TagIncome();
-        tagIncome.setTagName(tagName);
-        tagIncomeRepository.save(tagIncome);
-    }
 
     @Override
     public List<TagIncomeResDto> searchTag() {
