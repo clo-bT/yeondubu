@@ -69,7 +69,8 @@ public class AccountController {
     @GetMapping("/detail/{accountId}")
     public ResponseEntity<?> searchDetail(@AuthenticationPrincipal Long userId, @PathVariable Long accountId){
         DetailAccountResDto detailAccountResDto = accountService.searchDetail(accountId);
-        return new ResponseEntity<>("", HttpStatus.OK);
+
+        return ResponseEntity.ok(detailAccountResDto);
     }
 
     @GetMapping
