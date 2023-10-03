@@ -10,12 +10,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 import yeon.dubu.BaseTimeEntity;
 import yeon.dubu.account.dto.request.DepositAccountReqDto;
 import yeon.dubu.account.dto.request.SavingAccountReqDto;
 import yeon.dubu.account.enumeration.AccountType;
 import yeon.dubu.user.domain.User;
-
+@DynamicInsert
 @Entity
 @Getter
 @Setter
