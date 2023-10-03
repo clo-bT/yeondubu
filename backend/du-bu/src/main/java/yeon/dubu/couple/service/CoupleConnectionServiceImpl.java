@@ -211,13 +211,6 @@ public class CoupleConnectionServiceImpl implements CoupleConnectionService {
 
         // couple의 expenditureTags 생성
         tagExpenditureService.createFirstTags(coupleId);
-
-        // couple의 incomeTags 생성
-        tagIncomeService.insertTag("적금 만기");
-        tagIncomeService.insertTag("예금 만기");
-        tagIncomeService.insertTag("월급/급여");
-        tagIncomeService.insertTag("용돈");
-        tagIncomeService.insertTag("기타");
     }
 
     @Transactional

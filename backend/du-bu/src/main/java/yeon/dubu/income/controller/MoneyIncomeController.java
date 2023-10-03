@@ -46,15 +46,4 @@ public class MoneyIncomeController {
         return new ResponseEntity<>("", HttpStatus.OK);
     }
 
-    @GetMapping("/month/{year}/{month}")
-    public ResponseEntity<?> selectIncomeByYearMonth(@AuthenticationPrincipal Long userId, @PathVariable int year, @PathVariable int month){
-        List<MoneyIncomeResDto> moneyIncomeResDtos = moneyIncomeService.selectByYearMonth(userId, year, month);
-        return new ResponseEntity<>(moneyIncomeResDtos, HttpStatus.OK);
-    }
-
-    @GetMapping("/date/{date}")
-    public ResponseEntity<?> selectIncomeByDate(@AuthenticationPrincipal Long userId, @PathVariable LocalDate date){
-        List<MoneyIncomeResDto> moneyIncomeResDtos = moneyIncomeService.selectByDate(userId, date);
-        return new ResponseEntity<>(moneyIncomeResDtos, HttpStatus.OK);
-    }
 }

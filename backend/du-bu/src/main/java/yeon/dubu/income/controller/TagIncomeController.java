@@ -20,11 +20,6 @@ import yeon.dubu.income.service.TagIncomeService;
 @RequiredArgsConstructor
 public class TagIncomeController {
     private final TagIncomeService tagIncomeService;
-    @PostMapping("/{tagName}")
-    public ResponseEntity<?> insertTag(@PathVariable String tagName){
-        tagIncomeService.insertTag(tagName);
-        return new ResponseEntity<>("", HttpStatus.OK);
-    }
 
     @GetMapping
     public ResponseEntity<?> searchTag(){
