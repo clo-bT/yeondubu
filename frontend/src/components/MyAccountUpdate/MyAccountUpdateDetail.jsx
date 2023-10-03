@@ -1,5 +1,7 @@
-import React from 'react';
+import axios from 'axios';
+import {React, useState, useEffect} from 'react';
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -100,49 +102,144 @@ margin-left: auto;
 margin-right: auto;
 `
 const MyAccountUpdateDetail = () => {
-    const dummyData = [
-        {
-        index: 0, 
-        name:'우리 청년 적금', 
-        money:'50,000,000', 
-        이체: '15일',
-        이채금액: '500,000', 
-        만기일 : '2023-10-23', 
-        만기예상금액: '2,000,000'
-        }
-    ]
+  const [accessToken, setAccessToken] = useState('');
+  const [accountName, setAccountName] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [nowMoney, setnowMoney] = useState('');
+  const [expectMoney, setExpectMoney] = useState('');
+  const [outDate, setOutDate] = useState('');
+  const [outMoney, setoutMoney] = useState('');
+  const { accountId } = useParams();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setAccessToken(token)
+  },[])
+
+  const handleName = (event) => {
+    const newName = event.target.value;
+    setAccountName(newName);
+  };
+  const handleEndDate = (event) => {
+    const newEndDate = event.target.value;
+    setEndDate(newEndDate);
+  };
+  const handleMoney = (event) => {
+    const newMoney = event.target.value;
+    setnowMoney(newMoney);
+  };
+  const handleExpectMoney = (event) => {
+    const expectMoney = event.target.value;
+    setExpectMoney(expectMoney);
+  };
+  const handleOutDate = (event) => {
+    const outDate = event.target.value;
+    setOutDate(outDate);
+  };
+  const handleOutMoney = (event) => {
+    const outMoney = event.target.value;
+    setoutMoney(outMoney);
+  };
+
+
+  const SavingAccount = () => {
+    console.log(accessToken)
+  
+    const requestBody = {
+      account_name: accountName,
+      transfer_day: outDate,
+      transfer_amount: outMoney,
+      final_date: endDate,
+      start_amount: nowMoney,
+      final_amount: expectMoney
+    };
+    // 여기서 axios 요청을 보내세요.
+    axios.put(`${process.env.REACT_APP_API_ROOT}/api/v1/accounts/saving/${accountId}`,requestBody, {
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+  
+        },
+    })
+        .then((response) => {
+            console.log('요청 성공:', response);
+            console.log(requestBody);
+            alert('계좌가 등록되었습니다!')
+        })
+        .catch((error) => {
+            console.error('요청 실패:', error);
+        });
+  };
+  
+  // const DepositAccount = () => {
+  //   console.log(accessToken)
+  
+  //   const requestBody = {
+  //     account_name: accountName,
+  //     final_date: endDate,
+  //     start_amount: nowMoney,
+  //     final_amount: expectMoney
+  // }
+  //   // 여기서 axios 요청을 보내세요.
+  //   axios.put(`${process.env.REACT_APP_API_ROOT}/api/v1/accounts/deposit/{accountId}`,requestBody, {
+  //       headers: {
+  //           Authorization: `Bearer ${accessToken}`,
+  
+  //       },
+  //   })
+  //       .then((response) => {
+  //           console.log('요청 성공:', response);
+  //           console.log(requestBody);
+  //           alert('계좌가 등록되었습니다!')
+  //       })
+  //       .catch((error) => {
+  //           console.error('요청 실패:', error);
+  //       });
+  // };
+  
     return (
       <>
       <Container>
-      {dummyData.map((item) => (
-        <AccountItem key={item.index}>
-          <AccountName>{item.name}</AccountName>
 
-              <NowMoney>{item.money} 원</NowMoney>
+        <AccountItem>
+          <AccountName>99</AccountName>
+
+              <NowMoney>원</NowMoney>
             <DetailItem>
               <Header>이체</Header>
-              <Detail type="day" placeholder={item.이체} />
+              <Detail 
+              type='text'
+              onChange={handleOutDate}
+              value={outDate} />
             </DetailItem>
               <UnlineLine />
             <DetailItem>
               <Header>이채금액</Header>
-              <Detail type="number" placeholder={item.이채금액} />
+              <Detail 
+              type='text'
+              onChange={handleOutMoney}
+              value={outMoney} /> 
             </DetailItem>
             <UnlineLine />
             <DetailItem>
               <Header>만기일</Header>
-              <Detail type="date" placeholder={item.만기일} />
+              <Detail
+              type='text'
+              onChange={handleEndDate}
+              value={endDate} />
+
             </DetailItem>
             <UnlineLine />
             <DetailItem>
               <Header>만기예상금액</Header>
-              <Detail type="number" placeholder={item.만기예상금액} />
+              <Detail 
+              type='text'
+              onChange={handleExpectMoney}
+              value={expectMoney} />
             </DetailItem>
             <UnlineLine />
         </AccountItem>
-      ))}
     </Container>
-      <UpdateButton>저장</UpdateButton>
+      <UpdateButton onClick={SavingAccount}>저장</UpdateButton>
       
       </>
     );

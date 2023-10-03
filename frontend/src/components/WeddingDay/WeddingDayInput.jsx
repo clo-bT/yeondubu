@@ -15,6 +15,7 @@ display: flex;
 align-items: center;
 flex-direction: column;
 justify-content: center;
+margin-top: 30px;
 `
 const StyledDatePicker = styled(DatePicker)`
     width: 254px;
@@ -158,7 +159,7 @@ const WeddingDayInput = () => {
     }
     return (
         <Container>
-            <ImageBox>
+            {/* <ImageBox>
               <Partner>
                 <PartnerName>{partner_name}</PartnerName>
                 <PartnerImg src={partner_img}/>
@@ -167,9 +168,9 @@ const WeddingDayInput = () => {
                 <Name>{name}</Name>
                 <Img src={image}/>
               </Me>
-            </ImageBox>
+            </ImageBox> */}
             <Congrats>연두부의 커플이 되신것을 <br />축하드립니다</Congrats>
-            <DateInputDetail>{partner_name} ❤ {name} 님의 <br />결혼식 날짜를 입력해주세요</DateInputDetail>
+            <DateInputDetail>{name} ❤ {partner_name} 님의 <br />결혼식 날짜를 입력해주세요</DateInputDetail>
             
             <DateInputContainer>
             <StyledDatePicker

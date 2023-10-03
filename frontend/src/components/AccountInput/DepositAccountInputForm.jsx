@@ -275,6 +275,7 @@ const SavingAccount = () => {
       .then((response) => {
           console.log('요청 성공:', response);
           console.log(requestBody);
+          alert('계좌가 등록되었습니다!')
       })
       .catch((error) => {
           console.error('요청 실패:', error);
@@ -300,6 +301,7 @@ const DepositAccount = () => {
       .then((response) => {
           console.log('요청 성공:', response);
           console.log(requestBody);
+          alert('계좌가 등록되었습니다!')
       })
       .catch((error) => {
           console.error('요청 실패:', error);
@@ -322,6 +324,7 @@ const CashAccount = () => {
       .then((response) => {
           console.log('요청 성공:', response);
           console.log(requestBody);
+          alert('계좌가 등록되었습니다!')
       })
       .catch((error) => {
           console.error('요청 실패:', error);
