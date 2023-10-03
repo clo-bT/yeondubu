@@ -13,6 +13,9 @@ import yeon.dubu.couple.repository.CoupleRepository;
 import yeon.dubu.expenditure.domain.TagFirstExpenditure;
 import yeon.dubu.expenditure.repository.TagFirstExpenditureRepository;
 import yeon.dubu.expenditure.service.TagFirstExpenditureService;
+import yeon.dubu.income.domain.MoneyIncome;
+import yeon.dubu.income.repository.MoneyIncomeRepository;
+import yeon.dubu.income.service.MoneyIncomeService;
 import yeon.dubu.user.domain.User;
 import yeon.dubu.user.enumeration.UserRole;
 import yeon.dubu.user.exception.NoSuchUserException;
@@ -27,6 +30,8 @@ public class CoupleServiceImpl implements CoupleService{
     private final UserRepository userRepository;
     private final TagFirstExpenditureRepository tagFirstExpenditureRepository;
     private final TagFirstExpenditureService tagFirstExpenditureService;
+    private final MoneyIncomeRepository moneyIncomeRepository;
+    private final MoneyIncomeService moneyIncomeService;
     @Override
     @Transactional
     public void insertInfo(Long userId, CoupleInfoReqDto coupleInfoReqDto) {
@@ -74,11 +79,18 @@ public class CoupleServiceImpl implements CoupleService{
     public void deleteCouple(Long userId) {
         Couple couple = getCoupleByUserId(userId);
 
-        // couple의 태그 전체 삭제
+        // couple의 지출 태그 전체 삭제
         List<TagFirstExpenditure> firstTagList = tagFirstExpenditureRepository.findByCoupleId(couple.getId());
 
         for (TagFirstExpenditure tagFirstExpenditure : firstTagList) {
             tagFirstExpenditureService.deleteFirstTag(tagFirstExpenditure.getId(), userId);
+        }
+
+        // couple의 income 전체 삭제
+        List<MoneyIncome> incomeList = moneyIncomeRepository.findByCoupleId(couple.getId());
+
+        for (MoneyIncome moneyIncome : incomeList) {
+            moneyIncomeService.deleteIncome(moneyIncome.getId());
         }
 
         coupleRepository.deleteById(couple.getId());
