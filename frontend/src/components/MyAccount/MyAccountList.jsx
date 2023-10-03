@@ -102,7 +102,6 @@ const MyAccountList = () => {
         <AccountItem key={item.id} onClick={() => navigateToDetailPage(item.id)}>
           <AccountName>{item.name}</AccountName>
           <AccountMoney>{item.price} 원</AccountMoney>
-          {/* <DeleteButton>x</DeleteButton> */}
         </AccountItem>
       ))}
       <AddAccount href="/accountinput">+</AddAccount>

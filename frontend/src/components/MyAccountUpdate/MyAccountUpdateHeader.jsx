@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -52,9 +53,11 @@ margin: 0;
 const MyAccountUpdateHeader = () => {
   const name = localStorage.getItem('name')
   const image = localStorage.getItem('image')
+  const { accountId } = useParams();
+
     return (
         <>
-        <GoBack href="/myaccountdetail/:accountId" >뒤로가기</GoBack>
+        <GoBack href={`/myaccountdetail/${accountId}`} >뒤로가기</GoBack>
         <Container>
             <MyProfile src={image}/>
             <MyInfo>
