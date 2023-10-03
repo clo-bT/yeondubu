@@ -17,7 +17,6 @@ const AccountItem = styled.div`
   flex-direction: column;
   align-items: flex-start;
   width: 300px;
-  height: 90px;
   border-radius: 10px;
   background: rgba(255, 168, 168, 0.20);
   margin-bottom: 20px;
@@ -53,6 +52,13 @@ const AddAccount = styled.a`
   align-items: center;
   justify-content: center;
 `;
+
+// const DeleteButton = styled.span`
+// display: flex;
+// flex-direction: column;
+// align-items: right;
+
+// `
 
 const MyAccountList = () => {
   const [accessToken, setAccessToken] = useState('');
@@ -98,7 +104,7 @@ const MyAccountList = () => {
           <AccountMoney>{item.price} 원</AccountMoney>
         </AccountItem>
       ))}
-      <AddAccount href="/">+</AddAccount>
+      <AddAccount href="/accountinput">+</AddAccount>
     </Container>
   );
 };

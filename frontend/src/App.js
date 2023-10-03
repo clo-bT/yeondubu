@@ -82,7 +82,7 @@ function App() {
           <Route path="/myproduct" element={<MyProductLike />} />
           <Route path="/input" element={<CreditScoreInput />} />
           <Route path="/myproductlike" element={<MyProductLike />} />
-          <Route path="/myaccountupdate" element={<MyAccountUpdate />} />
+          <Route path="/myaccountupdate/:accountId" element={<MyAccountUpdate />} />
           <Route path="/checkboxwhole" element={<CheckBoxWhole />} />
           <Route path="/userwithdraw" element={<UserWithdraw />} />
 
