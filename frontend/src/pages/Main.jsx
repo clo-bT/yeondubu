@@ -15,11 +15,15 @@ const Main = () => {
   useEffect(() => {
     const accessToken = localStorage.getItem("token");
     const partner_id = localStorage.getItem("partner_id");
+    const role = localStorage.getItem("role");
     if (!accessToken) {
       navigate('/login')
     }
     else if (!partner_id) {
       navigate('/invite')
+    }
+    else if (!role) {
+      navigate('/weddingday')
     }
     
   },[navigate])
