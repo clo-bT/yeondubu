@@ -1,7 +1,6 @@
 import {React, useState, useEffect} from 'react';
 import styled from 'styled-components';
 import { AiOutlineInfoCircle } from "react-icons/ai";
-import UserWithdraw from '../../pages/UserWithdraw';
 import axios from 'axios';
 
 
