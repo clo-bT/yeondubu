@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.antlr.v4.runtime.misc.NotNull;
+import org.hibernate.annotations.ColumnDefault;
 import yeon.dubu.BaseTimeEntity;
 import yeon.dubu.account.dto.request.DepositAccountReqDto;
 import yeon.dubu.account.dto.request.SavingAccountReqDto;
@@ -32,9 +33,9 @@ public class Account extends BaseTimeEntity {
     private Long startAmount;
     @NotNull
     private Long finalAmount;
-    @NotNull
+    @ColumnDefault("0")
     private Integer transferDay;
-    @NotNull
+    @ColumnDefault("0")
     private Long transferAmount;
     @NotNull
     private LocalDate finalDate;
