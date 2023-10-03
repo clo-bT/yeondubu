@@ -58,6 +58,7 @@ function App() {
           <Route path="/calendarinput" element={<CalendarInputCreate />} />
           <Route path="/chatbot" element={<ChatBot />} />
           <Route path="/checkbox" element={<CheckBox />} />
+          <Route path="/checkboxwhole" element={<CheckBoxWhole />} />
           <Route path="/checkuser" element={<CheckUser />} />
           <Route path="/invite" element={<Invite />} />
           <Route path="/invitepageentercode" element={<InvitePageEnterCode />} />
