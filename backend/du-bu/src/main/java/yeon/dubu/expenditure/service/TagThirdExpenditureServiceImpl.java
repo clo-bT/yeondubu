@@ -23,6 +23,8 @@ import yeon.dubu.user.enumeration.UserRole;
 import yeon.dubu.user.exception.NoSuchUserException;
 import yeon.dubu.user.repository.UserRepository;
 
+import java.util.Optional;
+
 @Slf4j
 @Service
 @Transactional(readOnly = true)
@@ -77,5 +79,17 @@ public class TagThirdExpenditureServiceImpl implements TagThirdExpenditureServic
         Couple couple = coupleRepository.findById(user.getCouple().getId()).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
         TagThirdExpenditure tagThirdExpenditure = tagThirdExpenditureRepository.findById(tagThirdExpenditureUpdateDto.getThirdTagId()).orElseThrow(() -> new NoSuchTagExpenditureException("해당하는 태그 정보가 없습니다."));
         tagThirdExpenditure.setThirdTagName(tagThirdExpenditureUpdateDto.getThirdTagName());
+    }
+
+    @Override
+    @Transactional
+    public void deleteThirdTag(Long thirdTagId, Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
+        MoneyExpenditure moneyExpenditure = moneyExpenditureRepository.findByTagThirdExpenditureId(thirdTagId).orElseThrow(() -> new NoSuchTagExpenditureException("해당하는 세번째 태그 정보가 없습니다."));
+
+        // moneyExpenditure 삭제
+        moneyExpenditureService.deleteExpenditure(moneyExpenditure.getId(), userId);
+        moneyExpenditureRepository.deleteById(moneyExpenditure.getId());
+        tagThirdExpenditureRepository.deleteById(thirdTagId);
     }
 }
