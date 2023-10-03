@@ -1,14 +1,6 @@
 import h5py
 import json
 import numpy as np
-from flask import jsonify
-from pprint import pprint 
-
-def rspns(data, status_code):
-    response = jsonify(data)
-    response.status_code = status_code
-    return response
-
 
 def product_category(category, subcategory):
     with h5py.File('./data/data.h5', 'r') as db:

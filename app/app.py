@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 # from flask import Flask, request, jsonify, make_response
 from flask_cors import CORS, cross_origin
 import utilities as ut
@@ -6,24 +6,24 @@ from PIL import Image
 from io import BytesIO
 
 app = Flask(__name__)
-cors = CORS(app, resources={r"/api/*": {"origins": ["https://j9a307.p.ssafy.io:3000/*", "http://localhost:3000/*"]}})
+cors = CORS(app, resources={r"/api/*": {"origins": ["https://j9a307.p.ssafy.io:3000/*", "http://localhost:3000/*", "http://localhost*"]}})
 
 @app.route('/api', methods=['GET'])
 def health_check():
     return ut.rspns(data = {'success' : 'server alive'}, status_code=200)
 
 
-@app.route('/api/v1/categories', methods=['POST'])
+@app.route('/api/v1/categories', methods=['GET'])
 def category_list():
-    if request.method == 'POST':
+    if request.method == 'GET':
         try:
-            data = {key : value for key, value in request.form.items()}
-            if not data.get('category') or not data.get('subcategory'):
-                raise KeyError
-            category_data = ut.product_category(data['category'], data['subcategory'])
-            return ut.rspns(data=category_data, status_code=200)
+            category = request.args.get('category')
+            subcategory = request.args.get('subcategory')
+            category_data = ut.product_category(category = category, subcategory = subcategory)
+            print(category_data)
+            return jsonify(category_data), 200
         except Exception as err:
-            return ut.rspns(data={'error' : str(err)}, status_code=400)
+            return jsonify({'error' : str(err)}), 400
 
 
 @app.route('/api/v1/paging', methods=['GET'])
@@ -36,9 +36,9 @@ def page_items():
             if data['brand'] == '':
                 data['brand'] = ut.brand_none_included(data)
             filtered_data = ut.range_filter(data)
-            return ut.rspns(data = filtered_data, status_code=200)
+            return jsonify(filtered_data), 200
         except Exception as err:
-            return ut.rspns(data={'error' : str(err) }, status_code=400)
+            return jsonify({'error' : str(err)}), 400
 
 
 @app.route('/api/v1/shopping_filter', methods=['POST'])
@@ -53,11 +53,11 @@ def image_based_recommendations():
             img = Image.open(BytesIO(img))
             img = ut.image_processor(img)
             sim = ut.sim_search(img, data)
-            return ut.rspns(data=sim, status_code=200)
+            return jsonify(sim), 200
         else:
             raise KeyError
     except KeyError as ke:
-        return ut.rspns(data = {'error':str(ke)}, status_code=400)
+        return jsonify({'error':str(ke)}), 400
 
 @app.route('/api/v1/loanupload', methods=['POST'])
 def loan_upload():
