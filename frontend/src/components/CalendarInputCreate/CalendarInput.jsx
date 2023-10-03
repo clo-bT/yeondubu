@@ -142,11 +142,11 @@ const CalendarInput = () => {
     const handleSave = () => {
         axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/income`,
         {
-          "user_role": role,
-          "date": date,
-          "amount": amount,
-          "memo": memo,
-          "tag_id": tagId,
+          "user_role": 'BRIDE',
+          "date": '2023-10-04',
+          "amount": 2000000,
+          "memo": 'memo',
+          "tag_id": 2,
         },
         {
           headers: {
@@ -155,10 +155,10 @@ const CalendarInput = () => {
         }).then(response => {
             console.log('여기는 캘린더에서 추가하기',response)
         })
-    .catch(error => {
-        console.error('Error fetching data:', error);
-    });
-    };
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        },[]);
+        };
     
     return (
         <Container>

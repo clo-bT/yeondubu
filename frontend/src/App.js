@@ -9,6 +9,7 @@ import AirlineRecommend from './pages/AirlineRecommend';
 import AirlineRecommendFilter from './pages/AirlineRecommendFilter';
 import BudgetCheckBox from './pages/BudgetCheckBox';
 import CalendarInputCreate from './pages/CalendarInputCreate';
+import CalendarInputUpdate from './pages/CalendarInputUpdate';
 import ChatBot from './pages/ChatBot';
 import CheckBox from './pages/CheckBox';
 import CheckUser from './pages/CheckUser';
@@ -56,6 +57,7 @@ function App() {
           <Route path="/airlinerecommendfilter" element={<AirlineRecommendFilter />} />
           <Route path="/budgetcheckbox" element={<BudgetCheckBox />} />
           <Route path="/calendarinput" element={<CalendarInputCreate />} />
+          <Route path="/calendarupdate" element={<CalendarInputUpdate />} />
           <Route path="/chatbot" element={<ChatBot />} />
           <Route path="/checkbox" element={<CheckBox />} />
           <Route path="/checkboxwhole" element={<CheckBoxWhole />} />
