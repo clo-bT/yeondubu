@@ -103,6 +103,7 @@ border: none;
 border-radius: 10px;
 /* margin-top: 10px; */
 margin-bottom: 10px;
+margin-top: 10px;
 `
 
 const CustomCheckbox = styled.input`
@@ -210,6 +211,8 @@ const CashNowMoneyInput = styled.input`
 `
 const DepositAccountInputForm = () => {
   // const navigate = useNavigate();
+
+  const [errorMessage, setErrorMessage] = useState(''); 
   const [accessToken, setAccessToken] = useState('');
   const [accountName, setAccountName] = useState('');
   const [endDate, setEndDate] = useState('');
@@ -255,6 +258,10 @@ const handleCash = (event) => {
 
   
 const SavingAccount = () => {
+  if (!accountName || !endDate || !nowMoney || !expectMoney || !outDate || !outMoney) {
+    setErrorMessage('모든 입력란을 채워주세요.'); // 에러 메시지 설정
+    return;
+  }
   console.log(accessToken)
 
   const requestBody = {
@@ -275,13 +282,19 @@ const SavingAccount = () => {
       .then((response) => {
           console.log('요청 성공:', response);
           console.log(requestBody);
+          alert('계좌가 등록되었습니다!')
       })
       .catch((error) => {
           console.error('요청 실패:', error);
       });
+      setErrorMessage('');
 };
 
 const DepositAccount = () => {
+  if (!accountName || !endDate || !nowMoney || !expectMoney) {
+    setErrorMessage('모든 입력란을 채워주세요.'); // 에러 메시지 설정
+    return;
+  }
   console.log(accessToken)
 
   const requestBody = {
@@ -300,13 +313,21 @@ const DepositAccount = () => {
       .then((response) => {
           console.log('요청 성공:', response);
           console.log(requestBody);
+          alert('계좌가 등록되었습니다!')
       })
       .catch((error) => {
           console.error('요청 실패:', error);
       });
-};
-
+      
+      setErrorMessage('');
+    };
+    
 const CashAccount = () => {
+  if (!cashMoney) {
+    setErrorMessage('모든 입력란을 채워주세요.'); // 에러 메시지 설정
+    return;
+  }
+
   console.log(accessToken)
 
   const requestBody = {
@@ -322,10 +343,12 @@ const CashAccount = () => {
       .then((response) => {
           console.log('요청 성공:', response);
           console.log(requestBody);
+          alert('계좌가 등록되었습니다!')
       })
       .catch((error) => {
           console.error('요청 실패:', error);
       });
+      setErrorMessage('');
 };
 
 
@@ -446,6 +469,7 @@ const CashAccount = () => {
             value={outMoney}
             />
           </IconWithText>
+          {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>} {/* 에러 메시지 표시 */}
           <InputButton onClick={SavingAccount}>입력하기</InputButton>
     </Box>
       )}
@@ -490,6 +514,7 @@ const CashAccount = () => {
             value={expectMoney}
             />
           </IconWithText>
+          {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>} {/* 에러 메시지 표시 */}
           <InputButton onClick={DepositAccount}>입력하기</InputButton>
         </Box>
       )}
@@ -505,6 +530,7 @@ const CashAccount = () => {
             value={cashMoney}
             />
           </IconWithText>
+          {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>} {/* 에러 메시지 표시 */}
           <InputButton onClick={CashAccount}>입력하기</InputButton>
 
         </Box>

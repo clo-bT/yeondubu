@@ -1,13 +1,13 @@
 import React from 'react';
 import Menubar from '../components/Common/Menubar';
-import MyAccountProfile from '../components/Common/MyAccountProfile';
 import MyAccountUpdateDetail from '../components/MyAccountUpdate/MyAccountUpdateDetail';
+import MyAccountUpdateHeader from '../components/MyAccountUpdate/MyAccountUpdateHeader';
 
 
 const MyAccountUpdate = () => {
     return (
         <div>
-            <MyAccountProfile />
+            <MyAccountUpdateHeader />
             <MyAccountUpdateDetail />
             <Menubar />
         </div>
