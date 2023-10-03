@@ -14,4 +14,5 @@ public interface MoneyIncomeRepository extends JpaRepository<MoneyIncome, Long>,
 
     void deleteByCoupleIdAndUserRoleAndMemo(Long CoupleId, UserRole userRole, String memo);
     List<MoneyIncome> findByDate(LocalDate date);
+    List<MoneyIncome> findByCoupleId(Long coupleId);
 }
