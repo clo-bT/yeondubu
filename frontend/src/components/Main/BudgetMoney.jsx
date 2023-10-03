@@ -1,6 +1,7 @@
 import {React, useEffect, useState} from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 const Container = styled.div`
 position: sticky;
 top: 0;
@@ -82,16 +83,53 @@ line-height: normal;
 margin: 20px;
 `
 const BudgetMoney = ({ isBudgetOpen }) => {
-    
+    const navigate = useNavigate();
     const [accessToken, setAccessToken] = useState('');
     const [estimatedMoney, setEstimatedMoney] = useState(0); // 예상 금액 상태 추가
     const [cashMoney, setCashMoney] = useState(0); // 예상 금액 상태 추가
     const [accountMoney, setAccountMoney] = useState(0);
-
+    const [weddingDate, setWeddingDate] = useState("");
     useEffect(() => {
       const token = localStorage.getItem("token");
       setAccessToken(token);
     }, []);
+
+    useEffect(() => {
+      if(accessToken){
+      axios.get(`${process.env.REACT_APP_API_ROOT}/api/v1/couples/info`,{
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+        .then((response) => {
+          console.log('여기는 디데이 계산',response)
+          setWeddingDate(response.data);
+        })
+        .catch((error) => {
+          console.error("여기는 디데이 계산", error);
+          navigate('/weddingday')
+        });
+      }
+    }, [accessToken,navigate]); 
+
+    const calculateDDay = (weddingDate) => {
+      const today = new Date();
+      const weddingDay = new Date(weddingDate);
+      const timeDiff = weddingDay.getTime() - today.getTime();
+      const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+      return daysDiff;
+    };
+    const dDay = calculateDDay(weddingDate);
+    const formatDDay = (days) => {
+      if (days === 0) {
+        return "D-Day";
+      } else if (days > 0) {
+        return `D-${days}`;
+      } else {
+        return `D+${Math.abs(days)}`;
+      }
+    };
+    const dDayLabel = formatDDay(dDay);
 
     useEffect(() => {
       if (accessToken) {
@@ -152,7 +190,7 @@ const BudgetMoney = ({ isBudgetOpen }) => {
 
     return (
         <Container isBudgetOpen={isBudgetOpen}>
-            <Dday>D-527</Dday>
+            <Dday>{dDayLabel}</Dday>
             <EstimatedMoney>총 예상 금액</EstimatedMoney>
             <EstimatedMoneyDetail>
             {typeof estimatedMoney !== 'undefined' ? `${estimatedMoney}원` : '0원'}
