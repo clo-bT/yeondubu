@@ -5,11 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import yeon.dubu.stuff.dto.response.StuffLikesResDto;
 import yeon.dubu.stuff.service.StuffLikesService;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -17,7 +17,6 @@ import yeon.dubu.stuff.service.StuffLikesService;
 @RequestMapping("/api/v1/expenditure/marriage-stuffs")
 public class StuffLikesController {
     private final StuffLikesService stuffLikesService;
-
 
     @PostMapping("/{category}/{subCategory}")
     public ResponseEntity<?> createStuffLikes(
@@ -28,5 +27,14 @@ public class StuffLikesController {
         stuffLikesService.createStuffLikes(category, subCategory, userId);
 
         return new ResponseEntity<>("", HttpStatus.OK);
+    }
+
+    @GetMapping("/likes")
+    public ResponseEntity<?> searchStuffLikes(
+            @AuthenticationPrincipal Long userId
+    ) {
+        List<StuffLikesResDto> stuffLikesResDtos = stuffLikesService.searchStuffLikes(userId);
+
+        return ResponseEntity.ok(stuffLikesResDtos);
     }
 }

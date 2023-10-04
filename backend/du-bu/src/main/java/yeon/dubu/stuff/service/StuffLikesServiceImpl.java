@@ -9,7 +9,7 @@ import yeon.dubu.couple.exception.NoSuchCoupleException;
 import yeon.dubu.couple.repository.CoupleRepository;
 import yeon.dubu.stuff.domain.Stuff;
 import yeon.dubu.stuff.domain.StuffLikes;
-import yeon.dubu.stuff.dto.request.StuffLikesReqDto;
+import yeon.dubu.stuff.dto.response.StuffLikesResDto;
 import yeon.dubu.stuff.exception.NoSuchStuffException;
 import yeon.dubu.stuff.repository.StuffLikesRepository;
 import yeon.dubu.stuff.repository.StuffRepository;
@@ -17,7 +17,7 @@ import yeon.dubu.user.domain.User;
 import yeon.dubu.user.exception.NoSuchUserException;
 import yeon.dubu.user.repository.UserRepository;
 
-import java.util.Optional;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -51,6 +51,18 @@ public class StuffLikesServiceImpl implements StuffLikesService{
 
         stuffLikesRepository.save(stuffLikes);
 
+    }
+
+    @Override
+    @Transactional
+    public List<StuffLikesResDto> searchStuffLikes(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
+        Couple couple = coupleRepository.findById(user.getCouple().getId()).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
+
+        // 커플이 좋아요 누른 모든 혼수 조회
+        List<StuffLikesResDto> stuffLikesList = stuffLikesRepository.searchLikes(couple.getId());
+
+        return stuffLikesList;
     }
 
 }
