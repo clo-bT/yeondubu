@@ -1,146 +1,103 @@
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { AiFillMinusCircle } from "react-icons/ai";
+import axios from 'axios';
 
 const Container = styled.div`
-margin-top:-25px;
-display: flex;
-flex-direction: column;
-align-items: flex-start;
-margin-left: 20px;
-`
+  margin-top: -25px;
+  margin-left: 20px;
+  margin-bottom: 100px;
+  
+`;
+
 const FirstTag = styled.p`
-color: #000;
-text-align: left;
-font-size: 18px;
-font-style: normal;
-font-weight: 700;
-line-height: normal;    
-margin-top:40px;
-`
+  color: #000;
+  text-align: left;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin-top: 40px;
+`;
+
 const SecondTag = styled.p`
-color: #000;
-text-align: left;
-font-size: 15px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;    
+  color: #000;
+  text-align: left;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 
-`
+`;
 
-const ThirdTagContainer = styled.div`
+const ThirdTag = styled.p`
+  color: #676767;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-wrap: wrap; /* 부모 요소를 가로로 나열하고 넘칠 경우 줄 바꿈 */
+  gap: 20px;
  
-`
-const MinusIcon = styled(AiFillMinusCircle)`
-color: #FF937D4D;
-cursor: pointer;
-margin-left: 7px;
+`;
+
+const ThirdBox = styled.div`
+  background-color: #ffebeb;
+  padding: 10px;
+  border-radius: 8px;
+  flex-basis: calc(33.33% - 20px); /* 한 행에 3개의 ThirdBox가 나오도록 너비 조절 */
+  box-sizing: border-box; 
+
 `
 
 const CheckListUpdate = () => {
-  const [dummyData, setDummyData] = useState([
-    {
-      index: 0,
-      firstTag: '혼수',
-      secondTag: '가구',
-      thirdTag: [
-        '침대',
-        '장롱',
-        '쇼파',
-        '식탁',
-      ],
-    },
-    {
-      index: 1,
-      firstTag: '혼수',
-      secondTag: '가전',
-      thirdTag: [
-        'TV',
-        '세탁기',
-        '청소기',
-        '냉장고',
-      ],
-    },
-    {
-      index: 2,
-      firstTag: '혼수',
-      secondTag: '기타',
-      thirdTag: [
-        '냄비',
-        '수저',
-        '그릇',
-        '도마',
-      ],
-    },
-    {
-      index: 3,
-      firstTag: '결혼식',
-      secondTag: '스튜디오',
-      thirdTag: [
-        '냄비',
-        '수저',
-        '그릇',
-        '도마',
-      ],
-    },
-    {
-      index: 4,
-      firstTag: '결혼식',
-      secondTag: '드레스',
-      thirdTag: [
-        '드레스',
-        '한복',
-      ],
-    },
-    {
-      index: 5,
-      firstTag: '결혼식',
-      secondTag: '메이크업',
-      thirdTag: [
-        '혼주 메이크업',
-      ],
-    },
-    {
-      index: 6,
-      firstTag: '결혼식',
-      secondTag: '예식장',
-      thirdTag: [
-        '웨딩홀 대관',
-        '사회',
-        '축가',
-      ],
-    },
-  ]);
+  const [accessToken, setAccessToken] = useState('');
+  const [data, setData] = useState([]);
 
-  const uniqueFirstTags = {}; // 고유한 firstTag를 추적하기 위한 객체
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setAccessToken(token);
+  }, []);
 
-  const removeThirdTag = (firstTagIndex, thirdTagIndex) => {
-    const updatedDummyData = [...dummyData];
-    updatedDummyData[firstTagIndex].thirdTag.splice(thirdTagIndex, 1);
-    setDummyData(updatedDummyData);
-  };
+  useEffect(() => {
+    if (accessToken) {
+      axios
+        .get(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/tags/all`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        })
+        .then((response) => {
+          console.log('요청 성공:', response.data);
+          setData(response.data);
+        })
+        .catch((error) => {
+          console.error('요청 실패:', error);
+        });
+    }
+  }, [accessToken]);
+
+  
 
   return (
     <Container>
-      {dummyData.map((item, firstTagIndex) => (
-        <div key={item.index}>
-            {/* 첫 번째 발견시에만 FirstTag를 조건부로 렌더링합니다 */}
-            {uniqueFirstTags[item.firstTag] === undefined && (
-              <FirstTag>{item.firstTag}</FirstTag>
-            )}
-          <SecondTag>{item.secondTag}</SecondTag>
-          <ThirdTagContainer>
-            {item.thirdTag.map((thirdItem, thirdTagIndex) => (
-              <div key={thirdTagIndex}>
-                <MinusIcon onClick={() => removeThirdTag(firstTagIndex, thirdTagIndex)} /> {thirdItem}
-              </div>
-            ))}
-          </ThirdTagContainer>
-          {/* 이제 해당 firstTag를 본 것으로 표시하여 미래에 다시 렌더링되지 않도록 합니다 */}
-          {uniqueFirstTags[item.firstTag] = true}
+      {data.map((item, firstTagIndex) => (
+        <div key={item.first_tag_id}>
+          <FirstTag>{item.first_tag_name}</FirstTag>
+          {item.tag_second_expenditure_dto_list.map((secondItem, secondTagIndex) => (
+            <div key={secondItem.second_tag_id}>
+              <SecondTag>{secondItem.second_tag_name}</SecondTag>
+      
+              <ThirdTag>
+                {secondItem.tag_third_expenditure_dto_list.map((thirdItem, thirdTagIndex) => (
+                  <ThirdBox key={thirdItem.third_tag_id}>
+                    {thirdItem.third_tag_name}
+                  </ThirdBox>
+                ))}
+              </ThirdTag>
+
+            </div>
+          ))}
         </div>
       ))}
     </Container>
