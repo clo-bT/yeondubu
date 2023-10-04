@@ -142,12 +142,12 @@ const CalendarInput = () => {
     const handleSave = () => {
         axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/money`,
         {
-            "third_tag_id": 8,
+            "third_tag_id": 9,
             "user_role": "GROOM",
-            "date": "2023-10-04",
+            "date": "2023-10-19",
             "amount": 100000,
-            "memo": "침대 구매",
-            "pay_complete": false
+            "memo": "성원2 구매",
+            "pay_complete": true
     },
         {
           headers: {
