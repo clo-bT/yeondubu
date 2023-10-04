@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { BsFill1CircleFill,BsFill2CircleFill,BsFill3CircleFill,
     BsFill4CircleFill,BsFill5CircleFill,BsFill6CircleFill,BsFill7CircleFill } from "react-icons/bs";
 import axios from 'axios';
+import Swal from "sweetalert2";
 
 const Container = styled.div`
 display: flex;
@@ -282,8 +283,20 @@ const SavingAccount = () => {
       .then((response) => {
           console.log('요청 성공:', response);
           console.log(requestBody);
-          alert('계좌가 등록되었습니다!')
-      })
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: true,
+          })
+          
+          Toast.fire({
+            icon: 'success',
+            title: '적금계좌가 등록되었습니다!'
+          })
+   
+        
+    })
+     
       .catch((error) => {
           console.error('요청 실패:', error);
       });
@@ -313,7 +326,16 @@ const DepositAccount = () => {
       .then((response) => {
           console.log('요청 성공:', response);
           console.log(requestBody);
-          alert('계좌가 등록되었습니다!')
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: true,
+          })
+          
+          Toast.fire({
+            icon: 'success',
+            title: '예금계좌가 등록되었습니다!'
+          })
       })
       .catch((error) => {
           console.error('요청 실패:', error);
@@ -343,7 +365,16 @@ const CashAccount = () => {
       .then((response) => {
           console.log('요청 성공:', response);
           console.log(requestBody);
-          alert('계좌가 등록되었습니다!')
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: true,
+          })
+          
+          Toast.fire({
+            icon: 'success',
+            title: '현금이 등록되었습니다!'
+          })
       })
       .catch((error) => {
           console.error('요청 실패:', error);

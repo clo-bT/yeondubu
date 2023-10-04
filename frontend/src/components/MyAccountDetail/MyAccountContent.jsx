@@ -3,6 +3,7 @@ import {React, useEffect, useState} from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import { useNavigate  } from 'react-router-dom';
+import Swal from "sweetalert2";
 
 const Container = styled.div`
   display: flex;
@@ -147,7 +148,16 @@ const MyAccountContent = () => {
     })
         .then((response) => {
             console.log('요청 성공:', response);
-            alert('계좌가 삭제되었습니다!');
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: true,
+            })
+            
+            Toast.fire({
+              icon: 'success',
+              title: '계좌가 삭제되었습니다!'
+            })
             navigate('/myaccount');
         })
         .catch((error) => {
@@ -168,7 +178,16 @@ const MyAccountContent = () => {
     })
         .then((response) => {
             console.log('요청 성공:', response);
-            alert('계좌가 삭제되었습니다!');
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: true,
+            })
+            
+            Toast.fire({
+              icon: 'success',
+              title: '계좌가 삭제되었습니다!'
+            })
             navigate('/myaccount');
         })
         .catch((error) => {
