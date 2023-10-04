@@ -57,7 +57,7 @@ function App() {
           <Route path="/airlinerecommendfilter" element={<AirlineRecommendFilter />} />
           <Route path="/budgetcheckbox" element={<BudgetCheckBox />} />
           <Route path="/calendarinput" element={<CalendarInputCreate />} />
-          <Route path="/calendarupdate" element={<CalendarInputUpdate />} />
+          <Route path="/calendarupdate/:tagId" element={<CalendarInputUpdate />} />
           <Route path="/chatbot" element={<ChatBot />} />
           <Route path="/checkbox" element={<CheckBox />} />
           <Route path="/checkboxwhole" element={<CheckBoxWhole />} />
