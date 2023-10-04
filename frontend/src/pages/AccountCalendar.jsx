@@ -1,24 +1,12 @@
-import React, { useState } from 'react';
-import { format } from 'date-fns';
-import AccountCalendar from '../components/AccountCalendar/AccountCalendar';
-import AccountCalendarDetail from '../components/AccountCalendar/AccountCalendarDetail';
+import React from 'react';
+import AccountCalendarcomp from '../components/AccountCalendar/AccountCalendar';
 
-const CalendarPage = () => {
-    const today = new Date();
-    const formattedday = format(today, 'yyyy-MM-dd');
-
-    const [formatday, setFormatday] = useState(formattedday);
-
-    const handleDateClick = (formatday) => {
-        setFormatday(formatday);
-    };
-
+const AccountCalendar = () => {
     return (
         <div>
-            <AccountCalendar onDateClick={handleDateClick} />
-            <AccountCalendarDetail formatday={formatday} />
+            <AccountCalendarcomp/>
         </div>
     );
 };
 
-export default CalendarPage;
+export default AccountCalendar;
