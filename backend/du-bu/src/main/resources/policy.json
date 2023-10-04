@@ -1,0 +1,639 @@
+{
+    "0": {
+        "policy": "통합공공임대",
+        "short_summary": "최저소득 계층, 저소득 서민, 젊은 층 및 장애인/국가유공자 등 사회 취약계층 등의 주거안정을 위해 공공임대주택을 공급합니다 ",
+        "tag": "중앙부처",
+        "sub_tag": "국토교통부 공공주택정책과",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004663&wlfareInfoReldBztpCd=01"
+    },
+    "1": {
+        "policy": "국민임대주택공급",
+        "short_summary": "무주택 저소득(소득 1~4분위 계층의) 위해 국민임대주택을 공급합니다.",
+        "tag": "중앙부처",
+        "sub_tag": "국토교통부 공공주택정책과",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003244&wlfareInfoReldBztpCd=01"
+    },
+    "2": {
+        "policy": "행복주택 공급",
+        "short_summary": "청년, (예비)신혼부부, 한부모가족, 대학생 등 젊은 층의 주거 안정을 위해 대중교통이 편리하거나 직주근접이 가능한 부지에 주변 시세보…",
+        "tag": "중앙부처",
+        "sub_tag": "국토교통부 공공주택정책과",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004649&wlfareInfoReldBztpCd=01"
+    },
+    "3": {
+        "policy": "내집마련 디딤돌 대출",
+        "short_summary": "무주택 세대주가 주택구입 자금을 빌릴 수 있도록 지원하여 주거 안정을 돕습니다.",
+        "tag": "중앙부처",
+        "sub_tag": "국토교통부 주택기금과",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003271&wlfareInfoReldBztpCd=01"
+    },
+    "4": {
+        "policy": "버팀목전세자금대출",
+        "short_summary": "무주택세대주의 주택전세자금 융자를 통해 주거안정을 지원합니다.",
+        "tag": "중앙부처",
+        "sub_tag": "국토교통부 주택기금과",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003222&wlfareInfoReldBztpCd=01"
+    },
+    "5": {
+        "policy": "기존주택등 매입임대주택 지원사업",
+        "short_summary": "저소득층 국민이 도심 내에 안정적으로 거주할 수 있도록 기존주택 등을 매입하여 저렴하게 공급합니다.",
+        "tag": "중앙부처",
+        "sub_tag": "국토교통부 주거복지지원과",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00000062&wlfareInfoReldBztpCd=01"
+    },
+    "6": {
+        "policy": "기존주택 전세임대주택 지원사업",
+        "short_summary": "도심 내 저소득층이 현 생활권에서 안정적으로 거주할 수 있도록 임대료가 저렴한 임대주택을 지원합니다.",
+        "tag": "중앙부처",
+        "sub_tag": "국토교통부 주거복지지원과",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003269&wlfareInfoReldBztpCd=01"
+    },
+    "7": {
+        "policy": "공공분양",
+        "short_summary": "저소득층의 주거안정 및 무주택자의 내 집 마련 기회를 제공합니다.",
+        "tag": "중앙부처",
+        "sub_tag": "국토교통부 공공주택정책과",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00000057&wlfareInfoReldBztpCd=01"
+    },
+    "8": {
+        "policy": "가평군 신혼부부 주거자금 대출이자 지원사업",
+        "short_summary": "주택마련 비용 부담을 경감하여 결혼 결정에 긍정적인 영향을 주고, 주거비 부담 완화를 통한 출산여건 개선으로, 출생아수 감소 등 초저출 ...",
+        "tag": "경기도",
+        "sub_tag": "가평군",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004881&wlfareInfoReldBztpCd=02"
+    },
+    "9": {
+        "policy": "신혼부부 주택전세자금 대출이자 지원",
+        "short_summary": "관내 거주하는 무주택 신혼부부에게 주택전세자금 대출이자를 지원함으로써 주거비 부담을 경감시키고, 생애주기별 출산장려 정책을 추진하여 초 ...",
+        "tag": "경기도",
+        "sub_tag": "과천시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00001512&wlfareInfoReldBztpCd=02"
+    },
+    "10": {
+        "policy": "거제시 신혼부부·미혼모부 주택 전세자금 대출 이자 지원 사업 ",
+        "short_summary": "거제시 신혼부부 및 미혼모부 세대 주거 안정 도모 및 지역 내 정착 유도",
+        "tag": "경상남도",
+        "sub_tag": "거제시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00001851&wlfareInfoReldBztpCd=02"
+    },
+    "11": {
+        "policy": "거창군 청년 결혼축하금 지원",
+        "short_summary": "결혼에 따른 청년 신혼부부의 경제적 부담을 경감하고 안정적인 정착지원을 돕기 위한 사업입니다.",
+        "tag": "경상남도",
+        "sub_tag": "거창군",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004891&wlfareInfoReldBztpCd=02"
+    },
+    "12": {
+        "policy": "결혼축하금 지원 사업",
+        "short_summary": "결혼장려 분위기를 조성하고 신혼부부에게 경제적 지원",
+        "tag": "경상남도",
+        "sub_tag": "진주시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004841&wlfareInfoReldBztpCd=02"
+    },
+    "13": {
+        "policy": "결혼비용 정착 지원사업",
+        "short_summary": "혼인가정의 경제적 지원으로 혼인율 증가유도, 정주인구 확보,증가",
+        "tag": "강원특별자치도",
+        "sub_tag": "영월군",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00001483&wlfareInfoReldBztpCd=02"
+    },
+    "14": {
+        "policy": "신혼부부 주거비용 대출이자 지원",
+        "short_summary": "무주택 신혼부부 주거비용 대출이자 지원으로 경제적 부담 경감 및 안정된 정주 여건 조성으로 지역 내 정착을 통한 결혼 출산 장려 및 실 ...",
+        "tag": "전라남도",
+        "sub_tag": "완도군",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003993&wlfareInfoReldBztpCd=02"
+    },
+    "15": {
+        "policy": "신혼부부·다자녀가정 전세자금 대출이자 지원사업",
+        "short_summary": "우리군에 거주하는 신혼부부와 다자녀가정에 주택 전세자금 대출이자 일부를 지원하여 아기 낳고 기르기 좋은 환경 조성",
+        "tag": "전라남도",
+        "sub_tag": "영광군",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00001824&wlfareInfoReldBztpCd=02"
+    },
+    "16": {
+        "policy": "통영시 신혼부부 주택 전세자금 대출이자 지원사업",
+        "short_summary": "통영시 신혼부부 주택 전세자금 대출이자 지원",
+        "tag": "경상남도",
+        "sub_tag": "통영시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004848&wlfareInfoReldBztpCd=02"
+    },
+    "17": {
+        "policy": "신혼부부 전세대출금 이자지원 사업",
+        "short_summary": "상대적 주거취약계층인 신혼부부 가정에 전세대출금 이자지원을 통해 결혼이 두렵지 않은 신혼부부, 개인의 삶이 업그레이드되는 시흥을 추구",
+        "tag": "경기도",
+        "sub_tag": "시흥시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00002500&wlfareInfoReldBztpCd=02"
+    },
+    "18": {
+        "policy": "군포시 신혼부부 무주택자 전월세 보증금 대출이자 지원사업",
+        "short_summary": "군포시에 정착하는 신혼부부의 주거비 부담을 완화하여 자립기반을 강화하고 안정된 정주여건을 조성",
+        "tag": "경기도",
+        "sub_tag": "군포시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00002049&wlfareInfoReldBztpCd=02"
+    },
+    "19": {
+        "policy": "신혼부부 임대주택 주거비 지원사업",
+        "short_summary": "나주시 저출산 고령사회 대응에 관한조례 제정과 관련 나주시에 거주하며 무주택 신혼부부에게 주거비 일부를 지원함으로써 신혼초기 주거 정착 ...",
+        "tag": "전라남도",
+        "sub_tag": "나주시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003714&wlfareInfoReldBztpCd=02"
+    },
+    "20": {
+        "policy": "청년 신혼부부 주택 전세자금 대출이자 지원",
+        "short_summary": "청년층의 주거 안정화에 기여하며 정주여건 개선 ",
+        "tag": "경기도",
+        "sub_tag": "여주시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004163&wlfareInfoReldBztpCd=02"
+    },
+    "21": {
+        "policy": "신혼부부 결혼장려금 지원사업",
+        "short_summary": "저출생에 따른 인구감소 대응을 위한 청년층 결혼 장려 정책 필요 청년세대 유입·정착 지원정책을 강화하여 취약한 인구구조 개선",
+        "tag": "전라남도",
+        "sub_tag": "진도군",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004707&wlfareInfoReldBztpCd=02"
+    },
+    "22": {
+        "policy": "청년주택자금 대출이자 지원사업",
+        "short_summary": "신혼부부·청년 부채의 높은 비중을 차지하는 주택마련 주거비용의 경감을 위해 대출이자를 지원하여 주거안정 도모",
+        "tag": "전라남도",
+        "sub_tag": "광양시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00002121&wlfareInfoReldBztpCd=02"
+    },
+    "23": {
+        "policy": "신혼부부 주택임차보증금 대출이자 지원사업",
+        "short_summary": "저출산 및 혼인기피 현상에 따른 사회문제 해소를 위한 무주택 신혼부부의 주택임차보증금 대출이자를 일부 지원하여 경제적 자립기반 마련 및 ...",
+        "tag": "경기도",
+        "sub_tag": "의왕시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005027&wlfareInfoReldBztpCd=02"
+    },
+    "24": {
+        "policy": "무주택 신혼부부 전월세자금 대출이자 지원 사업",
+        "short_summary": "주거지원 필요계층인 신혼부부의 주거비 부담 완화로 안정된 주거환경을 조성하여 결혼과 출산을 장려하고 주거안정을 도모함",
+        "tag": "인천광역시",
+        "sub_tag": "남동구",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004033&wlfareInfoReldBztpCd=02"
+    },
+    "25": {
+        "policy": "구리시 무주택 신혼부부 전월세자금 대출이자 지원",
+        "short_summary": "무주택 신혼부부의 주거비 부담 완화 및 안정된 거주여건 조성하고자 함.",
+        "tag": "경기도",
+        "sub_tag": "구리시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00002385&wlfareInfoReldBztpCd=02"
+    },
+    "26": {
+        "policy": "신혼부부 전세자금 대출이자 지원 사업",
+        "short_summary": "관내 무주택 신혼부부에게 주택전세자금 대출이자를 지원하여 결혼장려 및 저출산 대응",
+        "tag": "전라북도",
+        "sub_tag": "정읍시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00000020&wlfareInfoReldBztpCd=02"
+    },
+    "27": {
+        "policy": "예비,신혼부부 및 임부 검사",
+        "short_summary": "예비,신혼부부 및 임부의 건강상태를 확인하는 기회를 제공하기 위한 검사비를 지원하여 건강한 출산 도모 및 저출산 극복에 기여하고자 함",
+        "tag": "충청남도",
+        "sub_tag": "공주시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00001970&wlfareInfoReldBztpCd=02"
+    },
+    "28": {
+        "policy": "무주택 신혼부부 전세자금 대출이자 지원사업",
+        "short_summary": "무주택 신혼부부에게 전세자금 대출이자를 지원하여 주거 마련 비용 부담을 완화하고 신혼부부의 안정적인 정착과 결혼 및 출산에 대한 인식 ...",
+        "tag": "인천광역시",
+        "sub_tag": "강화군",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004745&wlfareInfoReldBztpCd=02"
+    },
+    "29": {
+        "policy": "청년 주택임차보증금 이자지원사업",
+        "short_summary": "청년들의 주거부담 완화 및 안정적인 주거생활 지원",
+        "tag": "세종특별자치시",
+        "sub_tag": null,
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005320&wlfareInfoReldBztpCd=02"
+    },
+    "30": {
+        "policy": "논산 예비맘 임신 전 건강검진사업",
+        "short_summary": "결혼을 앞둔 논산 예비맘의 건강임신을 위한 건강검진 지원",
+        "tag": "충천남도",
+        "sub_tag": "논산시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00001663&wlfareInfoReldBztpCd=02"
+    },
+    "31": {
+        "policy": "신혼부부 전세자금 대출이자 지원사업",
+        "short_summary": "결혼을 고려하고 있는 젊은 층의 신혼집 마련 비용 부담을 완화하고, 신혼부부에게 아이 낳아 기르기 좋은 주거환경을 제공하여 지역의 주거 ...",
+        "tag": "대구광역시",
+        "sub_tag": null,
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005291&wlfareInfoReldBztpCd=02"
+    },
+    "32": {
+        "policy": "신혼부부 임차보증금 지원사업",
+        "short_summary": "신혼부부의 주거비 부담 경감 및 주거안정성 강화를 위해 임차보증금 대출을 지원하여 주거배려 계층의 주거디딤돌 역할 마련",
+        "tag": "서울특별시",
+        "sub_tag": null,
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00002617&wlfareInfoReldBztpCd=02"
+    },
+    "33": {
+        "policy": "신혼(예비)부부 건강검진비 지원",
+        "short_summary": "건강관리 서비스 제공 및 경제적 지원으로 건강증진 도모",
+        "tag": "강원특별자치도",
+        "sub_tag": "영월군",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00001421&wlfareInfoReldBztpCd=02"
+    },
+    "34": {
+        "policy": "산전검진비 지원",
+        "short_summary": "임신 가정의 경제적 부담 경감 및 출산 친화적 환경조성",
+        "tag": "강원특별자치도",
+        "sub_tag": "삼척시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00002971&wlfareInfoReldBztpCd=02"
+    },
+    "35": {
+        "policy": "청년 및 신혼부부 임대보증금 지원",
+        "short_summary": "김제시의 무주택청년과 신혼부부를 위한 임대보증금 지원에 필요한 사항을 정함으로써 시민의 주거안정과 주거수준 향샹에 이바지하고자함",
+        "tag": "전라북도",
+        "sub_tag": "김제시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003978&wlfareInfoReldBztpCd=02"
+    },
+    "36": {
+        "policy": "신혼부부 전세자금대출 이자지원사업 ",
+        "short_summary": "우리시에 거주하는 신혼부부의 다양한 수요에 맞춰 맞춤형 주거지원과 관련하여 신혼부부 전세자금 대출이자지원으로 경제적 부담을 덜어 주거안 ...",
+        "tag": "경기도",
+        "sub_tag": "안산시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00002686&wlfareInfoReldBztpCd=02"
+    },
+    "37": {
+        "policy": "예비,신혼부부 건강검진비 지원 ",
+        "short_summary": "- 저출산 시대 예비(신혼)부부 등 무료 건강검진을 통해 출산장려 분위기 조성 - 여성과 남성 모두 검진대상으로 남성의 건강한 임신 출 ...",
+        "tag": "경상남도",
+        "sub_tag": "함양군",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00001613&wlfareInfoReldBztpCd=02"
+    },
+    "38": {
+        "policy": "신혼부부 주택 전월세자금 대출이자 지원 사업",
+        "short_summary": "-무주택 청년 신혼부부에게 주택 전월세자금 대출이자를 일부 지원하여 주거부담 완화 및 정주여건 개선",
+        "tag": "경기도",
+        "sub_tag": "이천시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005188&wlfareInfoReldBztpCd=02"
+    },
+    "39": {
+        "policy": "밀양시 신혼부부 전세자금 대출이자 지원",
+        "short_summary": "신혼부부 전세자금 대출이자 지원을 통한 주거비 부담을 완화하여 안정된 주거여건 조성",
+        "tag": "경상남도",
+        "sub_tag": "밀양시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004941&wlfareInfoReldBztpCd=02"
+    },
+    "40": {
+        "policy": "신혼부부 전세자금 대출이자 지원",
+        "short_summary": "신혼부부 주거비 부담완화와 안정된 정주 여건 조성",
+        "tag": "경상남도",
+        "sub_tag": "김해시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004870&wlfareInfoReldBztpCd=02"
+    },
+    "41": {
+        "policy": "신혼부부 주택 전세자금 대출이자 지원 사업",
+        "short_summary": "여수시 관내 거주 무주택 신혼부부 주택 임차료 지원을 통해 안정적인 지역 내 정착 유도 및 인구유출 방지",
+        "tag": "전라남도",
+        "sub_tag": "여수시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004610&wlfareInfoReldBztpCd=02"
+    },
+    "42": {
+        "policy": "고성군 신혼부부 주거자금 대출이자 지원사업 ",
+        "short_summary": "고성군 신혼부부 주거자금 대출이자 지원사업 ",
+        "tag": "경상남도",
+        "sub_tag": "고성군",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004229&wlfareInfoReldBztpCd=02"
+    },
+    "43": {
+        "policy": "청년 및 신혼부부 전세자금 대출이자 지원",
+        "short_summary": "관내 거주하는 청년 및 신혼부부에게 인구정책 지원의 일환으로 주택전세자금 대출이자를 지원해줌으로서 주거비 부담완화 및 안정된 정주여건을 ...",
+        "tag": "전라북도",
+        "sub_tag": "김제시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004201&wlfareInfoReldBztpCd=02"
+    },
+    "44": {
+        "policy": "진주시 신혼부부 주택전세자금 대출이자 지원",
+        "short_summary": "무주택 신혼부부에게 주택 전세자금 대출이자를 지원하여 주거비 부담완화",
+        "tag": "경상남도",
+        "sub_tag": "진주시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003988&wlfareInfoReldBztpCd=02"
+    },
+    "45": {
+        "policy": "신혼부부 주택 매입.전세자금 대출이자 지원 안내",
+        "short_summary": "신혼부부 가구에게 대출이자 지원을 통해 울주군 조기정착 및 인구유입에 기여하고자 함.",
+        "tag": "울산광역시",
+        "sub_tag": "울주군",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003982&wlfareInfoReldBztpCd=02"
+    },
+    "46": {
+        "policy": "신혼부부 주거비용 지원",
+        "short_summary": "저출산 문제가 심각하여 신혼부부의 주거비용을 지원하고 경제적인 부담을 덜어 결혼과 출산을 장려함",
+        "tag": "울산광역시",
+        "sub_tag": "울주군",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00000741&wlfareInfoReldBztpCd=02"
+    },
+    "47": {
+        "policy": "신혼(예비)부부 엽산제 지원",
+        "short_summary": "신혼부부 엽산제 지원하여 건강증진",
+        "tag": "경상남도",
+        "sub_tag": "밀양시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004003&wlfareInfoReldBztpCd=02"
+    },
+    "48": {
+        "policy": "청년 주거자금 대출이자 지원사업",
+        "short_summary": "청년층 출산가정, 신혼부부, 전입세대의 주거비 부담 완화 및 안정된 정주 여건 조성으로 인구 감소 문제 해결과 군민 삶의 질 향상을 위 ...",
+        "tag": "경상남도",
+        "sub_tag": "산청군",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004902&wlfareInfoReldBztpCd=02"
+    },
+    "49": {
+        "policy": "거제시 주택 전세보증금 반환보증료 지원사업",
+        "short_summary": "청년·신혼부부 이외에도 다양한 사회취약계층(노년층, 소년·소녀가장 등)의 전세보증금 반환사고 예방 및 주거 안정 보장",
+        "tag": "경상남도",
+        "sub_tag": "거제시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005225&wlfareInfoReldBztpCd=02"
+    },
+    "50": {
+        "policy": "결혼축하금 지원사업",
+        "short_summary": "인구절벽을 극복하고 결혼과 출산을 장려하는 사회 분위기를 조성하고 신혼 초 안정적인 결혼생활 정착 도모 ",
+        "tag": "전라북도",
+        "sub_tag": "김제시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004475&wlfareInfoReldBztpCd=02"
+    },
+    "51": {
+        "policy": "작은결혼식 지원",
+        "short_summary": "예비부부에게 검소하고 의미 있는 결혼식 지원을 통해 합리적인 결혼문화를 조성하고 나아가 출산 장려에 기여하고자 합니다.",
+        "tag": "울산광역시",
+        "sub_tag": "울주군",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00002031&wlfareInfoReldBztpCd=02"
+    },
+    "52": {
+        "policy": "신혼부부 임대주택 임대보증금 지원사업",
+        "short_summary": "주거지원이 필요한 무주택 신혼부부가 장기임대주택에 거주할 수 있도록 임대보증금을 지원하여 주거안정과 주거수준 향상 기여",
+        "tag": "전라북도",
+        "sub_tag": null,
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005121&wlfareInfoReldBztpCd=02"
+    },
+    "53": {
+        "policy": "군산시 청년 및 신혼부부 임대주택 임대보증금 지원사업",
+        "short_summary": "신혼부부의 지역 정착 유도 및 안정적인 가정을 꾸릴 수 있는 기회 제공으로 결혼 초기 주거 안정 및 출산 장려 분위기 확산 도모",
+        "tag": "전라북도",
+        "sub_tag": "군산시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004813&wlfareInfoReldBztpCd=02"
+    },
+    "54": {
+        "policy": "군산시 신혼부부 주택 전세자금 대출이자 지원",
+        "short_summary": "신혼부부의 지역 정착 유도 및 안정적인 가정을 꾸릴 수 있는 기회 제공으로 결혼 초기 주거 안정 및 출산 장려 분위기 확산 도모",
+        "tag": "전라북도",
+        "sub_tag": "군산시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004807&wlfareInfoReldBztpCd=02"
+    },
+    "55": {
+        "policy": "신혼부부의 지역 정착 유도 및 안정적인 가정을 꾸릴 수 있는 기회 제공으로 결혼 초기 주거 안정 및 출산 장려 분위기 확산 도모",
+        "short_summary": "신혼부부의 건강검진으로 건강위험요소를 사전에 발견하여 질병을 예방함으로써 건강검진사업을 아래와 같이 건강한 결혼생활과 행복한 출산 장려 ...",
+        "tag": "전라남도",
+        "sub_tag": "무안군",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004577&wlfareInfoReldBztpCd=02"
+    },
+    "56": {
+        "policy": "신혼부부 및 청년 주택 전세자금 대출이자 지원사업",
+        "short_summary": "무주택 신혼부부 및 청년의 주거비 부담 완화, 주거비 부담경감 및 안정된 정주여건 조성으로 혼인과 저출산 문제 해소",
+        "tag": "전라북도",
+        "sub_tag": "남원시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00001441&wlfareInfoReldBztpCd=02"
+    },
+    "57": {
+        "policy": "익산시 신혼부부 청년 주택 구입자금 대출이자 지원사업",
+        "short_summary": "무주택 청년 신혼부부의 초기 정착에 따른 주거비용 부담을 해소하여 장기적 주거여건 형성 및 인구유출 방지",
+        "tag": "전라북도",
+        "sub_tag": "익산시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005167&wlfareInfoReldBztpCd=02"
+    },
+    "58": {
+        "policy": "신혼부부 주택전세자급 대출이자 지원",
+        "short_summary": "청년 신혼부부의 주택전세자금대출건에 대한 이자지원을 통해 경제적 부담완화",
+        "tag": "충청남도",
+        "sub_tag": "태안군",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004869&wlfareInfoReldBztpCd=02"
+    },
+    "59": {
+        "policy": "사천시 신혼부부 주택 전세자금 대출이자 지원",
+        "short_summary": "사천시 신혼부부의 주거비 부담 완화 및 안정된 정주여건 조성",
+        "tag": "경상남도",
+        "sub_tag": "사천시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004164&wlfareInfoReldBztpCd=02"
+    },
+    "60": {
+        "policy": "신혼부부 전세자금 대출 이자 지원 사업",
+        "short_summary": "일정 소득 이하 무주택 신혼부부 가정에 전세자금 대출이자를 일부 지원하여 주거안정과 삶의 질 향상 기여",
+        "tag": "경기도",
+        "sub_tag": "용인시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00001807&wlfareInfoReldBztpCd=02"
+    },
+    "61": {
+        "policy": "결혼축하금",
+        "short_summary": "장성군 거주 청년부부 결혼축하금 지원",
+        "tag": "전라남도",
+        "sub_tag": "장성군",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004875&wlfareInfoReldBztpCd=02"
+    },
+    "62": {
+        "policy": "신혼부부 및 청년 전월세 대출이자 지원사업",
+        "short_summary": "광명시에 정착하는 신혼부부 및 청년의 주거비 부담을 완화하여 안정된 주거환경 조성하고자 신혼부부 및 청년 무주택자에게 전월세 보증금 대 ...",
+        "tag": "경기도",
+        "sub_tag": "광명시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004233&wlfareInfoReldBztpCd=02"
+    },
+    "63": {
+        "policy": "신혼부부 전세자금 대출이자 지원",
+        "short_summary": "주거비 마련 부담때문에 결혼을 고민하는 청년층과 아이낳이 키우기 좋은 환경에서 아이를 키우고 싶은 신혼부부의 주거안정을 위해 전세자금 ...",
+        "tag": "광주광역시",
+        "sub_tag": null,
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004697&wlfareInfoReldBztpCd=02"
+    },
+    "64": {
+        "policy": "익산시 신혼부부 청년 주택 전세보증금 대출이자 지원사업",
+        "short_summary": "무주택 청년 신혼부부의 초기 정착에 따른 주거비용 부담을 해소하여 장기적 주거여건 형성 및 인구유출 방지",
+        "tag": "전라북도",
+        "sub_tag": "익산시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00001853&wlfareInfoReldBztpCd=02"
+    },
+    "65": {
+        "policy": "신혼부부 주택 매입·전세자금 대출이자 지원",
+        "short_summary": "주거마련에 대한 부담 증가로 혼인인구 감소 및 출산기피현상이 지속됨에 따라 관내 거주하는 신혼부부에게 주거비 부담을 완화하여 더 나은 ...",
+        "tag": "경기도",
+        "sub_tag": "안양시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00001041&wlfareInfoReldBztpCd=02"
+    },
+    "66": {
+        "policy": "신혼부부 주거자금 대출이자 지원사업",
+        "short_summary": "신혼부부 주거자금 대출이자 지원",
+        "tag": "강원특별자치도",
+        "sub_tag": null,
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005056&wlfareInfoReldBztpCd=02"
+    },
+    "67": {
+        "policy": "신혼부부 결혼 축하 바우처 지원 ",
+        "short_summary": "신혼부부에게 관내 숙박권을 제공하여 결혼을 축하하고 여행을 통해 부부 상호간 소통의 기회와 출산 장려 분위기 조성",
+        "tag": "대구광역시",
+        "sub_tag": "달성군",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004711&wlfareInfoReldBztpCd=02"
+    },
+    "68": {
+        "policy": "예비·신혼부부 엽산제 및 건강검진 지원",
+        "short_summary": "임신계획단계부터 엽산제, 건강검진의 지원으로 사전 건강문제를 파악하여 건강한 임신과 출산 도모",
+        "tag": "경상북도",
+        "sub_tag": "영천시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004929&wlfareInfoReldBztpCd=02"
+    },
+    "69": {
+        "policy": "공공임대주택 임대차보증금 지원사업",
+        "short_summary": "최근 제주지역은 각종 개발호재와 귀농 귀촌 등으로 인한 인구증가로 주택가격이 상승함에 따라 전월세 부담으로 어려움을 겪는 저소득층, 사 ...",
+        "tag": "제주특별자치도",
+        "sub_tag": null,
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00001672&wlfareInfoReldBztpCd=02"
+    },
+    "70": {
+        "policy": "주택 연월세 자금 대출이자 지원사업",
+        "short_summary": "주택 연·월세 자금 대출이자 지원을 통한 서민 주거 안정 도모",
+        "tag": "제주특별자치도",
+        "sub_tag": null,
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004898&wlfareInfoReldBztpCd=02"
+    },
+    "71": {
+        "policy": "결혼축하금 지원사업",
+        "short_summary": "결혼은 출산을 결정하는 전제조건이므로 결혼은 곧 축복이라는 사회적인 격려와 지원정책을 통해 결혼을 장려하고 출산율을 높여 인구감소로 인 …",
+        "tag": "전라북도",
+        "sub_tag": "완주군",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004151&wlfareInfoReldBztpCd=02"
+    },
+    "72": {
+        "policy": "울산 신혼부부 주거지원사업",
+        "short_summary": "신혼가구의 주거비 부담은 혼인기피, 출산포기 등 저출산의 주요 원인입니다. 주거비 무상 지원으로 저출산 극복과 내집마련 마중물 역할 ...",
+        "tag": "울산광역시",
+        "sub_tag": null,
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00001715&wlfareInfoReldBztpCd=02"
+    },
+    "73": {
+        "policy": "신혼부부, 다자녀가정 보금자리 지원사업",
+        "short_summary": "신혼부부, 다자녀가정 경제적부담 완화를 통한 출산, 양육하기 좋은 환경 조성",
+        "tag": "전라남도",
+        "sub_tag": null,
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004998&wlfareInfoReldBztpCd=02"
+    },
+    "74": {
+        "policy": "신혼부부 주택융자 및 대출이자 지원사업",
+        "short_summary": "신혼부부 주거비 부담 경감으로 결혼 출산 친화환경 조성",
+        "tag": "부산광역시",
+        "sub_tag": null,
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00002713&wlfareInfoReldBztpCd=02"
+    },
+    "75": {
+        "policy": "신혼부부 주택자금 대출이자 지원사업",
+        "short_summary": "주택마련 비용 부담을 경감하여 결혼 결정에 긍정적인 영향을 주고, 주거비 부담 완화를 통한 출산여건 개선으로, 출생아수 감소 등 초저출 ...",
+        "tag": "충천북도",
+        "sub_tag": "청주시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004966&wlfareInfoReldBztpCd=02"
+    },
+    "76": {
+        "policy": "예비부모 영양제 지원",
+        "short_summary": "임신을 준비하는 가임기 여성에게 영양제 제공으로 임신을 위한 건강상태 준비 및 건강한 태아 출산 도모",
+        "tag": "전라남도",
+        "sub_tag": "담양군",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00000334&wlfareInfoReldBztpCd=02"
+    },
+    "77": {
+        "policy": "신혼부부 및 자녀출산 가정 주택자금 대출이자 지원",
+        "short_summary": "신혼부부 및 자녀출산 가정에 대한 주거비용 부담 완화로 결혼 및 출산장려 분위기 조성",
+        "tag": "경상남도",
+        "sub_tag": "함안군",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003367&wlfareInfoReldBztpCd=02"
+    },
+    "78": {
+        "policy": "신혼부부 주택전세자금 대출이자 지원사업",
+        "short_summary": "『신혼부부 주택전세자금 대출이자 지원 사업』의 대상자 모집 및 선정, 지원내용, 지원절차 등 필요한 제반사항을 정하여 동 사업을 체계적 ...",
+        "tag": "전라남도",
+        "sub_tag": "순천시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004541&wlfareInfoReldBztpCd=02"
+    },
+    "79": {
+        "policy": "창원시 신혼부부 전세자금 대출이자 지원",
+        "short_summary": "신혼부부의 주거비 부담 완화 및 안정된 정주여건 조성으로 혼인과 저출산 문제를 해결",
+        "tag": "경상남도",
+        "sub_tag": "창원시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003833&wlfareInfoReldBztpCd=02"
+    },
+    "80": {
+        "policy": "신혼부부 보금자리 대출 이자 지원",
+        "short_summary": "신혼부부의 신혼집 마련에 따른 경제적 부담경감으로 결혼과 출산 장려",
+        "tag": "전라남도",
+        "sub_tag": "해남군",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003743&wlfareInfoReldBztpCd=02"
+    },
+    "81": {
+        "policy": "신혼부부 주택 전세자금 대출이자 지원",
+        "short_summary": null,
+        "tag": "강원특별자치도",
+        "sub_tag": "홍천군",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004822&wlfareInfoReldBztpCd=02"
+    },
+    "82": {
+        "policy": "영천시 예식비(결혼장려금) 지원 사업",
+        "short_summary": "영천시 인구증가 및 신혼부부 결혼 장려",
+        "tag": "경상북도",
+        "sub_tag": "영천시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004844&wlfareInfoReldBztpCd=02"
+    },
+    "83": {
+        "policy": "횡성군 신혼부부 주거자금 대출이자 지원사업",
+        "short_summary": "신혼부부 주거자금 완화 및 출산율 제고",
+        "tag": "강원특별자치도",
+        "sub_tag": "횡성군",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003916&wlfareInfoReldBztpCd=02"
+    },
+    "84": {
+        "policy": "청년·신혼부부 전세보증금 반환보증 보증료 지원사업",
+        "short_summary": "ㅇ새 임대차법 시행으로 재계약 세입자 증가에 따른 전세 품귀현상 심화와 역전세난 위험이 커지면서 전세보증금 반환분쟁 증가 우려 ㅇ전세보 ...",
+        "tag": "경상남도",
+        "sub_tag": null,
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004725&wlfareInfoReldBztpCd=02"
+    },
+    "85": {
+        "policy": "예비 신혼 부부를 위한 건강검진",
+        "short_summary": "결혼과 임신 전 건강검진을 통해 본인의 건강 확인 및 감염성 질환을 미리 알고 대처함으로써 건강한 가정, 건강한 아기 출산을 준비 할 ...",
+        "tag": "경기도",
+        "sub_tag": "수원시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00001376&wlfareInfoReldBztpCd=02"
+    },
+    "86": {
+        "policy": "영암 우리집 이자안심 사업",
+        "short_summary": "영암군에 거주하는 신혼부부와 다자녀가정에게 주택마련에 따른 대출이자 일부를 지원하여 출산 양육하기 좋은 환경 조성",
+        "tag": "전라남도",
+        "sub_tag": "영암군",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004809&wlfareInfoReldBztpCd=02"
+    },
+    "87": {
+        "policy": "건강한 아이를 위한 예비부모 엽산제 지원",
+        "short_summary": "임신 전 예비부모 건강관리로 선천성기형아 출산 등 사전 유해 환경을 차단하고 건강한 태아를 위한 안전한 임신·출산 환경을 제공하여 건강 ...",
+        "tag": "전라남도",
+        "sub_tag": "순천시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00002869&wlfareInfoReldBztpCd=02"
+    },
+    "88": {
+        "policy": "난임부부 진단 검사비 지원",
+        "short_summary": "난임으로 고민하고 있는 가정의 경제적 부담감소 및 저출산 극복에 적극 대응",
+        "tag": "전라남도",
+        "sub_tag": "순천시",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004735&wlfareInfoReldBztpCd=02"
+    },
+    "89": {
+        "policy": "신혼부부 주택자금 대출이자 지원사업",
+        "short_summary": "신혼부부 주거비용 부담 완화 및 결혼, 출산 장려",
+        "tag": "충청북도",
+        "sub_tag": "음성군",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003872&wlfareInfoReldBztpCd=02"
+    },
+    "90": {
+        "policy": "무주택 신혼부부 전월세자금 대출이자 지원 사업",
+        "short_summary": null,
+        "tag": "인천광역시",
+        "sub_tag": "남동구",
+        "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004130&wlfareInfoReldBztpCd=02"
+    }
+}

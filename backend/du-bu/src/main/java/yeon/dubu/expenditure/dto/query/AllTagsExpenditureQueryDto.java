@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import yeon.dubu.user.enumeration.UserRole;
 
 @Getter
 @Setter
@@ -19,10 +20,11 @@ public class AllTagsExpenditureQueryDto {
     private String thirdTagName;
     private Long moneyExpenditureId;
     private Long amount;
+    private UserRole userRole;
     private Boolean payComplete;
 
     @QueryProjection
-    public AllTagsExpenditureQueryDto(Long firstTagId, String firstTagName, Long secondTagId, String secondTagName, Long thirdTagId, String thirdTagName, Long moneyExpenditureId, Long amount, Boolean payComplete) {
+    public AllTagsExpenditureQueryDto(Long firstTagId, String firstTagName, Long secondTagId, String secondTagName, Long thirdTagId, String thirdTagName, Long moneyExpenditureId, Long amount, UserRole userRole, Boolean payComplete) {
         this.firstTagId = firstTagId;
         this.firstTagName = firstTagName;
         this.secondTagId = secondTagId;
@@ -31,6 +33,7 @@ public class AllTagsExpenditureQueryDto {
         this.thirdTagName = thirdTagName;
         this.moneyExpenditureId = moneyExpenditureId;
         this.amount = amount;
+        this.userRole = userRole;
         this.payComplete = payComplete;
     }
 }
