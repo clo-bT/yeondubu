@@ -5,8 +5,16 @@ import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from 'date-fns';
 import { isSameMonth, isSameDay, addDays } from 'date-fns';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { ko } from 'date-fns/locale';
 
 const Container = styled.div`
+`
+
+const Box = styled.div`
+display: flex;
+flex-direction: column;
+margin-left: 20px;
+margin-right: 20px;
 `
 const CalendarHeader = styled.div`
 /* width: 355px; */
@@ -17,34 +25,35 @@ font-size: 18px;
 font-weight: bold;
 
 `
-const Col = styled.div`
-flex: 1;
-padding: 5px;
-cursor: pointer;
-/* text-align: left; */
+const Col = styled.p`
+margin-left: 20px;
+margin-right: 20px;
 
 `
-const TextMonth = styled.span`
 
-`
 // DaysClass는 요일 적힌 거
 const DaysClass = styled.div`
-/* width: 355px; */
 display: flex;
 justify-content: space-between;
+/* margin-left: 7px; */
+/* margin-right: 7px; */
 
 `
 
 const IncomeExpenditure = styled.div`
+/* display: flex;
 flex-direction: column;
+width: 100%;
+justify-content: space-between;
+align-items: left; */
 
 `
 const IncomeRow = styled.div`
 display: flex;
 justify-content: space-between;
-align-items: center;
-width: 300px;
-margin-bottom: 10px;
+margin-bottom: 9px;
+margin-right:20px;
+margin-left: 3px;
 cursor: pointer;
 
 &::before {
@@ -52,7 +61,7 @@ cursor: pointer;
     position: absolute;
     left: 21px;
     width: 2px; /* 세로 줄의 너비 설정 */
-    height: 5%; /* 부모 요소의 높이에 맞게 설정 */
+    height: 6%; /* 부모 요소의 높이에 맞게 설정 */
     background-color: #FF6565; /* 세로 줄의 색상 설정 */
   }
 
@@ -65,13 +74,14 @@ flex-direction: column;
 
 
 `;
-const IncomeTag = styled.div``;
-const IncomeWho = styled.div`
-font-size: .5rem;
-margin-top: 2px;
+const IncomeTag = styled.p`
+margin-left: 30px;
+/* display: flex; */
 `;
-const IncomeMoney = styled.div`
+
+const IncomeMoney = styled.p`
 font-size: 15px;
+/* display: flex; */
 `;
 const ExpenditureRow = styled.div`
 display: flex;
@@ -100,10 +110,10 @@ font-size: 15px;
 `;
 
 const CellClass = styled.div`
-// display: flex;
-// flex-direction: column;
-// align-items: center;
-// width: 50.71px;
+display: flex;
+flex-direction: column;
+align-items: center;
+/* width: 50.71px; */
 &.not-current-month {
     color: rgba(0, 0, 0, 0.2); /* 전달 및 다음달 날짜의 텍스트 색상을 회색으로 지정 */
 }
@@ -113,10 +123,11 @@ const CellClass = styled.div`
     background: rgba(255, 101, 101, 0.50);
     border-radius: 50%;
     z-index: 1;
-    // margin: 0 auto;
+    /* margin: 0 auto; */
 }
 `
 const TextClass = styled.span`
+width: 35px;
 // display: flex;
 // flex-direction: row;
 // &.not-valid {
@@ -126,19 +137,21 @@ const TextClass = styled.span`
 const Row = styled.span`
 padding-top: .5rem;
 display: flex;
-flex-direction: row;
 justify-content: space-between;
 height: 3rem;
 
 `
 const IncomeText = styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;
 color: #2663FF; /* 수입 텍스트 색상 */
-font-weight: bold;
+/* font-weight: bold; */
 font-size: .1rem;
 `
 const ExpenditureText = styled.div`
 color: #FF6565; /* 지출 텍스트 색상 */
-font-weight: bold;
+/* font-weight: bold; */
 font-size: .1rem;
 `
 const RowsBody = styled.div`
@@ -146,9 +159,14 @@ const RowsBody = styled.div`
 // flex-direction: column;
 
 `
-const AddButton = styled.div`
-cursor:pointer;
+const AddButton = styled.p`
+
+display: flex;
+flex-direction: column;
+align-items: right;
+margin-right: 20px;
 `
+
 const TodayDot = styled.div`
     width: 30px;
     height: 30px;
@@ -161,7 +179,7 @@ const TodayDot = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
+
 `
 
 const NotTodayDot = styled.div`
@@ -176,8 +194,21 @@ const NotTodayDot = styled.div`
     align-items: center;
     cursor: pointer;
 `
-
-
+const TodayDate = styled.p`
+color: #000;
+text-align: left;
+font-size: 20px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;   
+margin-left: 18px;
+`
+const Horizonline = styled.div`
+background: rgba(0, 0, 0, 0.20);
+margin-top: 20px;
+width: 100%;
+height: 1.5px;
+`
 const today = new Date();
 
 const AccountCalendar = () => {
@@ -185,7 +216,7 @@ const AccountCalendar = () => {
     const [currentMonth, setCurrentMonth] = useState(new Date());
     const [selectedDate, setSelectedDate] = useState(today);
     const days = [];
-    const date = ['일', '월', '화', '수', '목', '금', '토'];
+    const date = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
     // console.log(currentMonth)
     const requestData = format(currentMonth, 'yyyy-MM')
     const [responseData, setResponseData] = useState([]);
@@ -210,6 +241,8 @@ const AccountCalendar = () => {
             console.error('Error fetching data:', error);
         });
     }, [requestData]);
+
+    
     for (let i = 0; i < 7; i++) {
         days.push(
             <div key={i}>
@@ -281,12 +314,12 @@ const AccountCalendar = () => {
                         <div>{formattedDate.split('-')[2]}</div>
                             </NotTodayDot>
                         }
-                    </TextClass>
 
                     <IncomeExpenditure>
                         <IncomeText>{income > 0 ? `+${income.toLocaleString()}` : ''}</IncomeText>
                         <ExpenditureText>{expenditure > 0 ? `-${expenditure.toLocaleString()}` : ''}</ExpenditureText>
                     </IncomeExpenditure>
+                    </TextClass>
 
                 </CellClass>,
             );
@@ -316,36 +349,58 @@ const AccountCalendar = () => {
     return (
         <Container>
             <CalendarHeader>
-            <AddButton onClick={()=>navigate('/calendarinput')}>추가하기</AddButton>
                 <Col>
                     <span onClick={prevMonth}>←</span>
-                    <TextMonth>
                         {format(currentMonth, 'M')}월
-                    </TextMonth>
                     <span onClick={nextMonth}>→</span>
                 </Col>
+            <AddButton onClick={()=>navigate('/calendarinput')}>추가하기</AddButton>
             </CalendarHeader>
+            <Box>
             <DaysClass>
                 {days}
             </DaysClass>
             <RowsBody>
                 {rows}
-            </RowsBody>
-            <div>
-                <h2>클릭한 날짜: {format(selectedDate, 'yyyy-MM-dd')}</h2>
-                <h3>Income Items:</h3>
-                <ul>
+            </RowsBody>   
+            </Box>
+
+
+            <Horizonline />
+                <TodayDate>{format(selectedDate, 'dd.eee요일', { locale: ko })}</TodayDate>
+                <IncomeExpenditure>
                     {income_list.map(item => (
-                        <li key={item.income_id}>{item.tag_name} - {item.amount.toLocaleString()}</li>
+                        <IncomeRow key={item.income_id}>
+                            {/* <TagAndWho> */}
+                                <IncomeTag>{item.tag_name} </IncomeTag>
+                            {/* </TagAndWho> */}
+                            <IncomeMoney>{item.amount.toLocaleString()}원</IncomeMoney>
+                        </IncomeRow>
+
+
                     ))}
-                </ul>
+                </IncomeExpenditure>
+
+                <IncomeExpenditure>
+                    {expenditure_list.map(item => (
+                        <IncomeRow key={item.expenditure_id}>
+                            {/* <TagAndWho> */}
+                                <IncomeTag>{item.tag_name} </IncomeTag>
+                            {/* </TagAndWho> */}
+                            <IncomeMoney>{item.amount.toLocaleString()}원</IncomeMoney>
+                        </IncomeRow>
+
+
+                    ))}
+                </IncomeExpenditure>
+   
                 <h3>Expenditure Items:</h3>
                 <ul>
                     {expenditure_list.map(item => (
                         <li key={item.expenditure_id}>{item.first_tag_name}, {item.second_tag_name}, {item.third_tag_name} - {item.amount.toLocaleString()}</li>
                     ))}
                 </ul>
-            </div>
+        
             
             {/* <IncomeExpenditure>
             {responseData && responseData.income_list.map((incomeItem) => (
