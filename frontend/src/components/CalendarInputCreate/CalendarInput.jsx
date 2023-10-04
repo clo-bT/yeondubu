@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -173,7 +173,7 @@ border: 1px solid #D9D9D9;
 background: #FFF;
 padding:6px;
 `
-const TagButton = styled.button`
+const TagSelect = styled.select`
 color: #000;
 text-align: center;
 font-size: 16px;
@@ -243,6 +243,8 @@ const CalendarInput = () => {
     const navigate = useNavigate();
     const accessToken = localStorage.getItem('token');
     //const role = localStorage.getItem('role');
+    const [incomeTags, setIncomeTags] = useState([]);
+    const [expendTags, setExpendTags] = useState([]);
     const [role, setRole] = useState('')
     const [type, setType] = useState('')
     const [date, setDate] = useState('')
@@ -264,15 +266,45 @@ const CalendarInput = () => {
     const handleMemo = (event) => {
         setMemo(event.target.value);
     };
-    const handleTagId = (event) => {
-        setTagId(event.target.value);
-    };
 
+    useEffect(()=>{
+        axios.get(`${process.env.REACT_APP_API_ROOT}/api/v1/income/tag`,{
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            }
+            })
+        .then(response => {
+            console.log('income 태그 받기',response.data)
+          setIncomeTags(response.data); // 서버 응답에서 태그 데이터 설정
+        })
+        .catch(error => {
+          console.error('income 태그 받기', error);
+        });
+    },[])
+    useEffect(()=>{
+        axios.get(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/tags/all`,{
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            }
+            })
+        .then(response => {
+            console.log('지출 태그 받기',response.data)
+            setExpendTags(response.data); // 서버 응답에서 태그 데이터 설정
+        })
+        .catch(error => {
+          console.error('지출 태그 받기', error);
+        });
+    },[])
+    
+    const handleThirdTagChange = (event) => {
+        const selectedThirdTagId = event.target.value;
+        setTagId(selectedThirdTagId);
+    };
     const handleSave = () => {
         if (type === 'income') {
             axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/income`,
         {
-            "tag_id":4,
+            "tag_id":tagId,
             "user_role": role,
             "date": date,
             "amount":amount,
@@ -293,7 +325,7 @@ const CalendarInput = () => {
         else if (type === 'expenditure') {
             axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/money`,
         {
-            "third_tag_id":1,
+            "third_tag_id":tagId,
             "user_role": role,
             "date": date,
             "amount":amount,
@@ -317,7 +349,7 @@ const CalendarInput = () => {
         if (type === 'income') {
             axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/income`,
         {
-            "tag_id":4,
+            "tag_id": tagId,
             "user_role": role,
             "date": date,
             "amount":amount,
@@ -325,8 +357,8 @@ const CalendarInput = () => {
 
     },
         {
-          headers: {
-              Authorization: `Bearer ${accessToken}`,
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
             }
         }).then(response => {
             console.log('여기는 캘린더에서 수입 추가하기',response)
@@ -338,7 +370,7 @@ const CalendarInput = () => {
         else if (type === 'expenditure') {
             axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/money`,
         {
-            "third_tag_id":1,
+            "third_tag_id":tagId,
             "user_role": role,
             "date": date,
             "amount":amount,
@@ -346,14 +378,14 @@ const CalendarInput = () => {
             "pay_complete": true
     },
         {
-          headers: {
-              Authorization: `Bearer ${accessToken}`,
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
             }
         }).then(response => {
             console.log('여기는 캘린더에서 지출 추가하기',response)
         })
         .catch(error => {
-            console.error('Error fetching data:', error);
+            console.error('여기는 캘린더에서 지출 추가하기', error);
         },[type]);
         };
         
@@ -399,11 +431,27 @@ const CalendarInput = () => {
               </InputWho>
         
               <InputTag>
-              <Title>태그</Title>
-                <TagButton value={tagId} onChange={handleTagId}>
-                  태그
-                </TagButton>
-              </InputTag>
+                <Title>태그 </Title>
+                <TagSelect onChange={handleThirdTagChange}>
+                    <option value="">태그를 선택하세요</option>
+                    
+                    {type === 'income'
+                    ? incomeTags.map(tag => (
+                        <option key={tag.id} value={tag.id}>
+                            {tag.tag_name}
+                        </option>
+                        ))
+                    : expendTags.map(firstTag => (
+                        firstTag.tag_second_expenditure_dto_list.map(secondTag => (
+                        secondTag.tag_third_expenditure_dto_list.map(thirdTag => (
+                            <option key={thirdTag.third_tag_id} value={thirdTag.third_tag_id}>
+                            {thirdTag.third_tag_name}
+                            </option>
+                        ))
+                        ))
+                    ))}
+      </TagSelect>
+    </InputTag>
         
               <InputDate>
               <Title>날짜</Title>
