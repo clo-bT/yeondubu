@@ -24,6 +24,8 @@ justify-content: space-between;
 /* padding: 10px; */
 font-size: 18px;
 font-weight: bold;
+margin-top:10px;
+margin-bottom:10px;
 
 `
 const Col = styled.p`
@@ -181,11 +183,12 @@ const RowsBody = styled.div`
 
 `
 const AddButton = styled.p`
-
+color: #FF6565;
 display: flex;
 flex-direction: column;
 align-items: right;
 margin-right: 20px;
+font-size: 17px;
 `
 
 const TodayDot = styled.div`
