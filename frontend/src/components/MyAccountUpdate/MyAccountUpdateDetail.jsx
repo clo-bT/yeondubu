@@ -221,7 +221,7 @@ const MyAccountUpdateDetail = () => {
       start_amount: nowMoney,
       final_amount: expectMoney,
       transfer_day: outDate,
-      transfer_ammount: outMoney,
+      transfer_amount: outMoney,
       final_date: endDate
     };
 
@@ -345,7 +345,7 @@ const MyAccountUpdateDetail = () => {
                   {/* <UnlineLine /> */}
                   
                 <DetailItem>
-                  <Header>이채금액</Header>
+                  <Header>이체금액</Header>
                   <OutMoneyDetail 
                   type='number'
                   onChange={handleOutMoney}
