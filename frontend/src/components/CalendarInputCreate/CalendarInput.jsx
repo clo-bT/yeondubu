@@ -141,10 +141,10 @@ const CalendarInput = () => {
     };
 
     const handleSave = () => {
-        if (type === '수입') {
+        if (type === 'income') {
             axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/income`,
         {
-            "tag_id":tagId,
+            "tag_id":4,
             "user_role": role,
             "date": date,
             "amount":amount,
@@ -155,16 +155,16 @@ const CalendarInput = () => {
               Authorization: `Bearer ${accessToken}`,
             }
         }).then(response => {
-            console.log('여기는 캘린더에서 추가하기',response)
+            console.log('여기는 캘린더에서 수입 추가하기',response)
         })
         .catch(error => {
             console.error('Error fetching data:', error);
         },[]);
         }
-        else if (type === '지출') {
+        else if (type === 'expenditure') {
             axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/money`,
         {
-            "third_tag_id":tagId,
+            "third_tag_id":10,
             "user_role": role,
             "date": date,
             "amount":amount,
@@ -176,17 +176,15 @@ const CalendarInput = () => {
               Authorization: `Bearer ${accessToken}`,
             }
         }).then(response => {
-            console.log('여기는 캘린더에서 추가하기',response)
+            console.log('여기는 캘린더에서 지출 추가하기',response)
         })
         .catch(error => {
             console.error('Error fetching data:', error);
-        },[]);
+        },[type]);
         };
         
         };
-    const openModal = () => {
-        
-    }
+    
     return (
         <Container>
              <InputType>
@@ -219,7 +217,7 @@ const CalendarInput = () => {
                             예비 신부
                         </InputWhoBride>
                     </InputWho>
-                    <InputTag onClick={openModal}>
+                    <InputTag>
                         <InputSpan>태그 </InputSpan>
                         <TagButton value={tagId} onChange = {handleTagId}>태그</TagButton>
                     </InputTag>

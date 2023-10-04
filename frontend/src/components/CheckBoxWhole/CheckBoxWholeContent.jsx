@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -90,10 +91,12 @@ const DeleteButton = styled.button`
 `;
 
 const CheckBoxWholeContent = () => {
+  const navigate = useNavigate();
   const accessToken = localStorage.getItem('token');
   const [data, setData] = useState([]);
   const [isSelected, setIsSelected] = useState(0);
   const [tagId, setTagId] = useState(0);
+  const [secondtagId, setSecondTagId] = useState(0);
   const [selectedData, setSelectedData] = useState(null);
   const [selectedName, setSelectedName] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -125,10 +128,12 @@ const CheckBoxWholeContent = () => {
     setFirstName(first_tag_name)
     setTagId(id)
   }
-  const handleClick =  (data, second_tag_name) => {
+  const handleClick =  (data, second_tag_name,tagId) => {
     setIsSelected(2)
     setSelectedData(data)
     setSelectedName(second_tag_name)
+    setSecondName(second_tag_name)
+    setSecondTagId(tagId)
   }
   const handleAddTag = () => {
     setIsAddingTag(true);
@@ -143,6 +148,7 @@ const CheckBoxWholeContent = () => {
         inputRef.current.blur(); 
       }
     };
+
     const handleSaveClick = () => {
     
       if (isSelected === 0) {
@@ -186,15 +192,17 @@ const CheckBoxWholeContent = () => {
 
           });
       } else if (isSelected === 2) {
-        axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/tags/${firstName}/${secondName}/${newTagName}`, {}, {
+        axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/tags/${firstName}/${secondName}/${newTagName}`, {
+          "first_tag_id": tagId,
+          "second_tag_id": secondtagId,
+          "third_tag_name": newTagName
+      }, {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           }
         })
           .then(response => {
             console.log('새로운 태그 추가', response);
-            console.log('새로운 태그 추가 firstName', firstName);
-            console.log('새로운 태그 추가 secondName', secondName);
             setIsAddingTag(false);
             setNewTagName('');
             window.location.reload();
@@ -203,6 +211,7 @@ const CheckBoxWholeContent = () => {
             console.error('새로운 태그 추가', error);
             console.log('새로운 태그 추가 firstName', firstName);
             console.log('새로운 태그 추가 secondName', secondName);
+            console.log('새로운 태그 추가 newTagName', newTagName);
           });
 
       }
@@ -224,6 +233,7 @@ const CheckBoxWholeContent = () => {
 
     } catch (error) {
       console.error('Error updating data:', error);
+      
     }
   };
     const handleDeleteFirstTag = (event, firstTagId) => {
@@ -277,7 +287,7 @@ const CheckBoxWholeContent = () => {
         <div>
           <FirstTag onClick={()=>setIsSelected(0)}>{selectedName}</FirstTag>
         {selectedData.map((data) => (
-        <TagBox key={data.second_tag_id} onClick={() => handleClick(data.tag_third_expenditure_dto_list,data.second_tag_name) && setSecondName(data.second_tag_name)}>
+        <TagBox key={data.second_tag_id} onClick={() => handleClick(data.tag_third_expenditure_dto_list,data.second_tag_name,data.second_tag_id)}>
           {isEditMode && (
         <DeleteButton onClick={(e) => handleDeleteFirstTag(e, data.second_tag_id)}>X</DeleteButton>
       )}
@@ -297,14 +307,19 @@ const CheckBoxWholeContent = () => {
         <div>
           <FirstTag onClick={()=>setIsSelected(0)}>{selectedName}</FirstTag>
         {selectedData.map((data) => (
-          <div key={data.third_tag_id}>
+          <div key={data.third_tag_id} onClick={()=>navigate(`/calendarupdate/${data.third_tag_id}`)}>
             <TagList>
               <FirstTag>{data.third_tag_name}</FirstTag>
-              <FirstTag>{data.amount}</FirstTag>
+              <FirstTag>{data.amount === 0 ? '예산 입력' : data.amount}</FirstTag>
               <CheckBox
                 type="checkbox"
                 checked={data.pay_complete}
-                onChange={() => handleCheckboxChange(data)}
+                onChange={() => {
+                  if (data.amount !== 0 && data.user_role !== undefined) {
+                    handleCheckboxChange(data);
+                  }
+                }}
+                disabled={data.amount === 0 || data.user_role === undefined}
               />
             </TagList>
         </div>
