@@ -10,7 +10,7 @@ import yeon.dubu.couple.domain.Couple;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Likes extends BaseTimeEntity {
+public class StuffLikes extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +18,6 @@ public class Likes extends BaseTimeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Couple couple;
-
-    private Long stuffImageUrl;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Stuff stuff;
 }
