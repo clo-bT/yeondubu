@@ -70,14 +70,14 @@ const CheckListUpdateHeader = () => {
     };
     return (
         <div>
-            <Box>
+            {/* <Box>
             <AddTag onClick={openModal}>추가하기</AddTag>
             <SaveAtag href="/">적용하기</SaveAtag>
 
-            </Box>
+            </Box> */}
             <CheckHeader>우리 부부를 위한 체크리스트
                 <CheckIcon>✔</CheckIcon></CheckHeader>
-            <CheckDetail>우리 부부의 결혼식에 필요한 <br />모든 것들을 직접 입력해보세요</CheckDetail>
+            <CheckDetail>우리 부부의 결혼식에 필요한 <br />모든 것들을 한눈에 확인해보세요</CheckDetail>
             <HorizonLine />
             <TagSelect isOpen={isModalOpen} onClose={closeModal} />
         </div>
