@@ -4,13 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import yeon.dubu.policy.service.PolicyService;
 import yeon.dubu.stuff.service.StuffService;
-
-import java.nio.file.*;
 
 @SpringBootApplication
 public class DuBuApplication implements CommandLineRunner {
@@ -31,16 +28,16 @@ public class DuBuApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		String policyFilePath = "classpath:policy.json";
-		String stuffFilePath = "classpath:stuff.json";
+		String policyFilePath = "policy.json";
+		String stuffFilePath = "stuff.json";
 
 		boolean isPolicyDbEmpty = policyService.isPolicyDbEmpty();
 		boolean isStuffDbEmpty = stuffService.isStuffDbEmpty();
 
 		// 이전에 저장된 파일의 수정 시간 가져오기
-		Resource policyResource = resourceLoader.getResource(policyFilePath);
+		Resource policyResource = resourceLoader.getResource("classpath:" + policyFilePath);
 		long previousPolicyModifiedTime = policyResource.lastModified();
-		Resource stuffResource = resourceLoader.getResource(stuffFilePath);
+		Resource stuffResource = resourceLoader.getResource("classpath:" + stuffFilePath);
 		long previousStuffModifiedTime = stuffResource.lastModified();
 
 		// 5초 대기
