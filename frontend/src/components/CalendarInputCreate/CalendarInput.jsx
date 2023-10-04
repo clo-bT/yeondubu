@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
-const Container = styled.div``
+const Container = styled.div`
+
+`
 const InputType = styled.div`
 display: flex;
 align-items: center;
@@ -164,7 +166,7 @@ const CalendarInput = () => {
         else if (type === 'expenditure') {
             axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/money`,
         {
-            "third_tag_id":10,
+            "third_tag_id":1,
             "user_role": role,
             "date": date,
             "amount":amount,

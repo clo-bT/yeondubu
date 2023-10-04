@@ -62,7 +62,7 @@ const Menubar = () => {
         </div>
 
         <div>
-        <a href="/"><WalletIcon /></a>
+        <a href="/checkbox"><WalletIcon /></a>
         <IconDetail>예산</IconDetail>
         </div>
 
