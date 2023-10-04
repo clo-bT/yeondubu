@@ -4,16 +4,34 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
+margin-top : 20px;
+  text-align: left;
+
 `;
 
-const InputType = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
+const Box = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: center;
+margin-left:20px;
+
+
+`
+const Title = styled.p`
+color: rgba(0, 0, 0, 0.80);
+text-align: center;
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+text-transform: uppercase;
+display:inline-flex;
+margin-right: 30px;
+`
+const InputType = styled.p`
+
+  margin-right: 10px;
+
 `;
 
 const InputTypeIncome = styled.button.attrs(props => ({
@@ -27,7 +45,17 @@ const InputTypeIncome = styled.button.attrs(props => ({
   padding: 7px 15px;
   border-radius: 10px;
   background: #FFF;
-  cursor: pointer;
+  color: #000;
+text-align: center;
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+text-transform: uppercase;
+border-radius: 10px;
+border: 1px solid #D9D9D9;
+background: #FFF;
+margin-right:10px;
 `;
 
 const InputTypeExpend = styled.button.attrs(props => ({
@@ -42,12 +70,22 @@ const InputTypeExpend = styled.button.attrs(props => ({
   border-radius: 10px;
   background: #FFF;
   cursor: pointer;
+  color: #000;
+text-align: center;
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+text-transform: uppercase;
+border-radius: 10px;
+border: 1px solid #D9D9D9;
+background: #FFF;
+
 `;
 
-const InputWho = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
+const InputWho = styled.p`
+
+
 `;
 
 const InputWhoGroom = styled.button.attrs(props => ({
@@ -63,6 +101,17 @@ const InputWhoGroom = styled.button.attrs(props => ({
   border-radius: 10px;
   background: #FFF;
   cursor: pointer;
+  color: #000;
+text-align: center;
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+text-transform: uppercase;
+border-radius: 10px;
+border: 1px solid #D9D9D9;
+background: #FFF;
+margin-right:10px;
 `;
 
 const InputWhoBride = styled.button.attrs(props => ({
@@ -78,15 +127,60 @@ const InputWhoBride = styled.button.attrs(props => ({
   border-radius: 10px;
   background: #FFF;
   cursor: pointer;
+  color: #000;
+text-align: center;
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+text-transform: uppercase;
+border-radius: 10px;
+border: 1px solid #D9D9D9;
+background: #FFF;
 `;
-const InputTag = styled.div``
-const InputDate = styled.div``
-const InputMoney = styled.div``
-const InputMemo = styled.div``
-const DateInput = styled.input``
-const MoneyInput = styled.input``
-const MemoInput = styled.input``
+const InputTag = styled.p`
+
+
+
+`
+const InputDate = styled.p`
+
+`
+
+const InputMoney = styled.p`
+align-items: left;
+
+`
+const InputMemo = styled.p`
+/* display:flex;
+align-items: left; */
+`
+const DateInput = styled.input`
+border-radius: 10px;
+border: 1px solid #D9D9D9;
+background: #FFF;
+padding:6px;
+`
+const MoneyInput = styled.input`
+border-radius: 10px;
+border: 1px solid #D9D9D9;
+background: #FFF;
+padding:6px;
+`
+const MemoInput = styled.input`
+border-radius: 10px;
+border: 1px solid #D9D9D9;
+background: #FFF;
+padding:6px;
+`
 const TagButton = styled.button`
+color: #000;
+text-align: center;
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+text-transform: uppercase;
   width: 87px;
   height: 38px;
   padding: 6px 4px;
@@ -97,12 +191,53 @@ const TagButton = styled.button`
 `;
 
 const SaveButton = styled.button`
+display: flex;
+width: 80px;
+height: 45px;
+padding: 3px 20px;
+justify-content: center;
+align-items: center;
+color: #FF5A5A;
+text-align: center;
+font-size: 18px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+text-transform: uppercase;
   cursor: pointer;
+  border: none;
+  border-radius: 10px;
 `;
 
 const CompleteButton = styled.button`
+color: #FFF;
+text-align: center;
+font-size: 16px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+text-transform: uppercase;
   cursor: pointer;
+  display: flex;
+width: 80px;
+height: 45px;
+padding: 3px 8px;
+justify-content: center;
+align-items: center;
+border-radius: 10px;
+background: rgba(255, 101, 101, 0.80);
+border: none;
 `;
+
+const ButtonBox = styled.div`
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 20px;
+`
+const BoxHeader = styled.span`
+margin-right: 10px;
+`
 
 const CalendarInput = () => {
     const navigate = useNavigate();
@@ -226,14 +361,16 @@ const CalendarInput = () => {
     
         return (
             <Container>
+            <Box>
               <InputType>
-              분류
+              <Title>분류</Title>
                 <InputTypeIncome
                   checked={type === 'income'}
                   onClick={() => handleType('income')}
                 >
                   수입
                 </InputTypeIncome>
+     
                 <InputTypeExpend
                   checked={type === 'expenditure'}
                   onClick={() => handleType('expenditure')}
@@ -243,7 +380,9 @@ const CalendarInput = () => {
               </InputType>
         
               <InputWho>
-              결제
+              <Title>결제</Title>
+              <BoxHeader>
+              
                 <InputWhoGroom
                   checked={role === 'GROOM'}
                   onClick={() => handleRole('GROOM')}
@@ -256,33 +395,41 @@ const CalendarInput = () => {
                 >
                   예비 신부
                 </InputWhoBride>
+              </BoxHeader>
               </InputWho>
         
               <InputTag>
-              태그
+              <Title>태그</Title>
                 <TagButton value={tagId} onChange={handleTagId}>
                   태그
                 </TagButton>
               </InputTag>
         
-              <InputDate>날짜
+              <InputDate>
+              <Title>날짜</Title>
                 <DateInput type="date" value={date} onChange={handleDate} />
               </InputDate>
         
-              <InputMoney>가격
+              <InputMoney>
+              <Title>가격</Title>
                 <MoneyInput type="number" value={amount} onChange={handleAmount} />원
               </InputMoney>
         
-              <InputMemo>메모
+              <InputMemo>
+              <Title>메모</Title>
                 <MemoInput type="text" value={memo} onChange={handleMemo} />
               </InputMemo>
-        
+              </Box>
               <div>
-                <SaveButton onClick={()=> navigate('/calendar')}>삭제</SaveButton>
-                <SaveButton onClick={handleSave}>저장</SaveButton>
-                {type === 'expenditure' && (
-                  <CompleteButton onClick={handleComplete}>구매완료</CompleteButton>
-                )}
+
+              <ButtonBox>
+              
+              <SaveButton onClick={()=> navigate('/calendar')}>삭제</SaveButton>
+              <SaveButton onClick={handleSave}>저장</SaveButton>
+              {type === 'expenditure' && (
+                <CompleteButton onClick={handleComplete}>구매완료</CompleteButton>
+              )}
+              </ButtonBox>
               </div>
             </Container>
           );
