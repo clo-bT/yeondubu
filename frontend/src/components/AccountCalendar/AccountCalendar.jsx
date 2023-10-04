@@ -86,9 +86,9 @@ font-size: 15px;
 const ExpenditureRow = styled.div`
 display: flex;
 justify-content: space-between;
-align-items: center;
-width: 300px;
-margin-bottom: 10px;
+margin-bottom: 9px;
+margin-right:20px;
+margin-left: 3px;
 cursor: pointer;
 
 &::before {
@@ -96,14 +96,18 @@ cursor: pointer;
     position: absolute;
     left: 21px;
     width: 2px; /* 세로 줄의 너비 설정 */
-    height: 5%; /* 부모 요소의 높이에 맞게 설정 */
+    height: 6%; /* 부모 요소의 높이에 맞게 설정 */
     background-color: #2663FF; /* 세로 줄의 색상 설정 */
   }
 `;
-const ExpenditureTag = styled.div``;
+const ExpenditureTag = styled.p`
+margin-left: 30px;
+`
+
 const ExpenditureWho = styled.div`
 font-size: .5rem;
 margin-top: 2px;
+
 `;
 const ExpenditureMoney = styled.div`
 font-size: 15px;
@@ -145,12 +149,13 @@ const IncomeText = styled.div`
 display: flex;
 flex-direction: column;
 align-items: center;
-color: #2663FF; /* 수입 텍스트 색상 */
+color: #FF6565; /* 지출 텍스트 색상 */
+
 /* font-weight: bold; */
 font-size: .1rem;
 `
 const ExpenditureText = styled.div`
-color: #FF6565; /* 지출 텍스트 색상 */
+color: #2663FF; /* 수입 텍스트 색상 */
 /* font-weight: bold; */
 font-size: .1rem;
 `
@@ -383,23 +388,17 @@ const AccountCalendar = () => {
 
                 <IncomeExpenditure>
                     {expenditure_list.map(item => (
-                        <IncomeRow key={item.expenditure_id}>
+                        <ExpenditureRow key={item.expenditure_id}>
                             {/* <TagAndWho> */}
-                                <IncomeTag>{item.tag_name} </IncomeTag>
+                                <ExpenditureTag>{item.third_tag_name} </ExpenditureTag>
                             {/* </TagAndWho> */}
                             <IncomeMoney>{item.amount.toLocaleString()}원</IncomeMoney>
-                        </IncomeRow>
+                        </ExpenditureRow>
 
 
                     ))}
                 </IncomeExpenditure>
    
-                <h3>Expenditure Items:</h3>
-                <ul>
-                    {expenditure_list.map(item => (
-                        <li key={item.expenditure_id}>{item.first_tag_name}, {item.second_tag_name}, {item.third_tag_name} - {item.amount.toLocaleString()}</li>
-                    ))}
-                </ul>
         
             
             {/* <IncomeExpenditure>
