@@ -30,7 +30,7 @@ public class CustomStuffLikesRepositoryImpl implements CustomStuffLikesRepositor
                         qStuff.category,
                         qStuff.subCategory
                 ))
-                .from(qStuff)
+                .from(qStuffLikes)
                 .join(qStuffLikes).on(qCouple.id.eq(qStuffLikes.couple.id))
                 .join(qStuffLikes).on(qStuff.id.eq(qStuffLikes.stuff.id))
                 .where(qStuffLikes.couple.id.eq(coupleId))
