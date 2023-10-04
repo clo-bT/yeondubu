@@ -88,7 +88,7 @@ public class AccountServiceImpl implements AccountService{
             () -> new NoSuchAccountException("해당 계좌가 존재하지 않습니다.")
         );
         account.setId(savedAccount.getId());
-
+        account.setUser(user);
 
         //총 예적금에 수정
         updateMoneyTotalAccount(user, - savedAccount.getStartAmount());
@@ -118,7 +118,7 @@ public class AccountServiceImpl implements AccountService{
             () -> new NoSuchAccountException("해당 계좌가 존재하지 않습니다.")
         );
         account.setId(savedAccount.getId());
-
+        account.setUser(user);
         //총 예적금에 수정
         updateMoneyTotalAccount(user, - savedAccount.getStartAmount());
         updateMoneyTotalAccount(user, depositAccountReqDto.getStartAmount());
