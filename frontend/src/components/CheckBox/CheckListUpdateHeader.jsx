@@ -2,31 +2,31 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import TagSelect from '../TagInput/TagSelect';
 
-const Box = styled.div`
-display: flex;
-justify-content: space-between;
-`
-const SaveAtag = styled.a`
-color: #FF6565;
-font-size: 15px;
-font-style: normal;
-font-weight: 600;
-line-height: normal;    
-text-decoration: none;
-margin-top: 20px;
-margin-right: 20px;
-`
+// const Box = styled.div`
+// display: flex;
+// justify-content: space-between;
+// `
+// const SaveAtag = styled.a`
+// color: #FF6565;
+// font-size: 15px;
+// font-style: normal;
+// font-weight: 600;
+// line-height: normal;    
+// text-decoration: none;
+// margin-top: 20px;
+// margin-right: 20px;
+// `
 
-const AddTag = styled.a`
-color: #FF6565;
-font-size: 15px;
-font-style: normal;
-font-weight: 600;
-line-height: normal;   
-text-decoration: none;
-margin-left: 20px;
-margin-top: 20px;
-`
+// const AddTag = styled.a`
+// color: #FF6565;
+// font-size: 15px;
+// font-style: normal;
+// font-weight: 600;
+// line-height: normal;   
+// text-decoration: none;
+// margin-left: 20px;
+// margin-top: 20px;
+// `
 const CheckHeader = styled.p`
 color: #000;
 text-align: center;
@@ -61,9 +61,9 @@ height: 1.5px;
 const CheckListUpdateHeader = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const openModal = () => {
-      setIsModalOpen(true);
-    };
+    // const openModal = () => {
+    //   setIsModalOpen(true);
+    // };
   
     const closeModal = () => {
       setIsModalOpen(false);
