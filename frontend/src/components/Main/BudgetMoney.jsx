@@ -140,8 +140,8 @@ const BudgetMoney = ({ isBudgetOpen }) => {
             },
           })
           .then((response) => {
-            console.log('요청 성공:', response.data);
-            const estimatedMoneyValue = response.data.total_expect_expenditure; 
+            console.log('예상금액 요청 성공:', response.data);
+            const estimatedMoneyValue = response.data.total_expenditure; 
             setEstimatedMoney(estimatedMoneyValue); // 상태를 업데이트
           })
           .catch((error) => {
@@ -159,7 +159,7 @@ const BudgetMoney = ({ isBudgetOpen }) => {
               },
             })
             .then((response) => {
-              console.log('요청 성공:', response.data);
+              console.log('현금 요청 성공:', response.data);
               const estimatedMoneyValue = response.data; 
               setCashMoney(estimatedMoneyValue); // 상태를 업데이트
             })
@@ -178,7 +178,7 @@ const BudgetMoney = ({ isBudgetOpen }) => {
               },
             })
             .then((response) => {
-              console.log('요청 성공:', response.data);
+              console.log('토탈 계좌 요청 성공:', response.data);
               const estimatedMoneyValue = response.data; 
               setAccountMoney(estimatedMoneyValue); // 상태를 업데이트
             })
