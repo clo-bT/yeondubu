@@ -4,23 +4,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import yeon.dubu.policy.service.PolicyService;
 import yeon.dubu.stuff.service.StuffService;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 
 @SpringBootApplication
 public class DuBuApplication implements CommandLineRunner {
 
 	private final PolicyService policyService;
 	private final StuffService stuffService;
+	private final ResourceLoader resourceLoader;
 
 	@Autowired
-	public DuBuApplication(PolicyService policyService, StuffService stuffService) {
+	public DuBuApplication(PolicyService policyService, StuffService stuffService, ResourceLoader resourceLoader) {
 		this.policyService = policyService;
 		this.stuffService = stuffService;
+		this.resourceLoader = resourceLoader;
 	}
 	public static void main(String[] args) {
 		SpringApplication.run(DuBuApplication.class, args);
@@ -28,24 +31,25 @@ public class DuBuApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		String policyFilePath = "../data/policy.json";
-		String stuffFilePath = "../../stuff/data/stuff.json";
+		String policyFilePath = "classpath:policy.json";
+		String stuffFilePath = "classpath:stuff.json";
 
 		boolean isPolicyDbEmpty = policyService.isPolicyDbEmpty();
 		boolean isStuffDbEmpty = stuffService.isStuffDbEmpty();
 
 		// 이전에 저장된 파일의 수정 시간 가져오기
-		Path policyPath = Paths.get(policyFilePath);
-		long previousPolicyModifiedTime = Files.getLastModifiedTime(policyPath).toMillis();
-		Path stuffPath = Paths.get(stuffFilePath);
-		long previousStuffModifiedTime = Files.getLastModifiedTime(stuffPath).toMillis();
+		Resource policyResource = resourceLoader.getResource(policyFilePath);
+		long previousPolicyModifiedTime = policyResource.lastModified();
+		Resource stuffResource = resourceLoader.getResource(stuffFilePath);
+		long previousStuffModifiedTime = stuffResource.lastModified();
 
 		// 5초 대기
 		Thread.sleep(5000);
 
+
 		// 수정된 시간과 이전에 저장된 시간 비교하여 업데이트 여부 확인
-		long currentPolicyModifiedTime = Files.getLastModifiedTime(policyPath).toMillis();
-		long currentStuffModifiedTime = Files.getLastModifiedTime(stuffPath).toMillis();
+		long currentPolicyModifiedTime = policyResource.lastModified();
+		long currentStuffModifiedTime = stuffResource.lastModified();
 
 		if (currentPolicyModifiedTime > previousPolicyModifiedTime || isPolicyDbEmpty) {
 			policyService.deleteAllPolicies(); // 이전 데이터 삭제
@@ -58,9 +62,9 @@ public class DuBuApplication implements CommandLineRunner {
 		if (currentStuffModifiedTime > previousStuffModifiedTime || isStuffDbEmpty) {
 			stuffService.deleteAllStuffs(); // 이전 데이터 삭제
 			stuffService.saveStuffsFromJsonFile(stuffFilePath);
-			System.out.println("가구 추천 파일이 업데이트 되었습니다.");
+			System.out.println("혼수 추천 파일이 업데이트 되었습니다.");
 		} else {
-			System.out.println("파일이 업데이트되지 않았으므로 가구 추천 파일을 실행하지 않습니다.");
+			System.out.println("파일이 업데이트되지 않았으므로 혼수 추천 파일을 실행하지 않습니다.");
 		}
 	}
 
