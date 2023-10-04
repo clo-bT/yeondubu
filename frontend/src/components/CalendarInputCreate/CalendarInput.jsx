@@ -142,7 +142,7 @@ const CalendarInput = () => {
     const handleSave = () => {
         axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/money`,
         {
-            "third_tag_id": 9,
+            "third_tag_id": 115,
             "user_role": "GROOM",
             "date": "2023-10-19",
             "amount": 100000,
