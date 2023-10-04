@@ -4,6 +4,7 @@ import { format, addMonths, subMonths } from 'date-fns';
 import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from 'date-fns';
 import { isSameMonth, isSameDay, addDays } from 'date-fns';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
 `
@@ -131,19 +132,22 @@ height: 3rem;
 
 `
 const IncomeText = styled.div`
-// color: #2663FF; /* 수입 텍스트 색상 */
-// /* font-weight: bold; */
-// font-size: .1rem;
+color: #2663FF; /* 수입 텍스트 색상 */
+font-weight: bold;
+font-size: .1rem;
 `
 const ExpenditureText = styled.div`
-// color: #FF6565; /* 지출 텍스트 색상 */
-// /* font-weight: bold; */
-// font-size: .1rem;
+color: #FF6565; /* 지출 텍스트 색상 */
+font-weight: bold;
+font-size: .1rem;
 `
 const RowsBody = styled.div`
 // display: flex;
 // flex-direction: column;
 
+`
+const AddButton = styled.div`
+cursor:pointer;
 `
 const TodayDot = styled.div`
     width: 30px;
@@ -177,6 +181,7 @@ const NotTodayDot = styled.div`
 const today = new Date();
 
 const AccountCalendar = () => {
+    const navigate = useNavigate();
     const [currentMonth, setCurrentMonth] = useState(new Date());
     const [selectedDate, setSelectedDate] = useState(today);
     const days = [];
@@ -184,6 +189,8 @@ const AccountCalendar = () => {
     // console.log(currentMonth)
     const requestData = format(currentMonth, 'yyyy-MM')
     const [responseData, setResponseData] = useState([]);
+    const [maxDate, setMaxDate] = useState(new Date());
+    const [minDate, setMinDate] = useState(new Date());
 
     useEffect(() => {
         // 백틱으로 바꾸기
@@ -195,7 +202,9 @@ const AccountCalendar = () => {
         })
         .then(response => {
         console.log(response)
-        setResponseData(response.data);
+        setResponseData(response.data.money_list);
+        setMaxDate(response.data.max_date);
+        setMinDate(response.data.min_date);
         })
         .catch(error => {
             console.error('Error fetching data:', error);
@@ -212,18 +221,26 @@ const AccountCalendar = () => {
     const monthEnd = endOfMonth(monthStart);
     const startDate = startOfWeek(monthStart);
     const endDate = endOfWeek(monthEnd);
-
-
+    const rows = [];
     const dataMap = responseData.reduce((map, item) => {
         map[item.date] = item;
         return map;
     }, {});
 
-    const rows = [];
     let dates = [];
     let day = startDate;
     let formattedDate = '';
-
+    const findItemsForSelectedDate = (selectedDate) => {
+        const formattedSelectedDate = format(selectedDate, 'yyyy-MM-dd');
+        const selectedDateData = responseData.find(item => item.date === formattedSelectedDate) || {
+            income_list: [],
+            expenditure_list: []
+        };
+        return selectedDateData;
+      };
+    
+      const selectedDateData = findItemsForSelectedDate(selectedDate);
+      const { income_list, expenditure_list } = selectedDateData;
     while (day <= endDate) {
         for (let i = 0; i < 7; i++) {
             formattedDate = format(day, 'yyyy-MM-dd');
@@ -231,6 +248,7 @@ const AccountCalendar = () => {
             const isToday = isSameDay(day, today); 
             const income = dataMap[formattedDate]?.income || 0;
             const expenditure = dataMap[formattedDate]?.expenditure || 0;
+
             const cellClass = `
                 ${!isSameMonth(day, monthStart) ? 'disabled' : ''}
                 ${isSameDay(day, selectedDate) ? 'selected' : ''}
@@ -255,18 +273,14 @@ const AccountCalendar = () => {
                     <TextClass className={textClass}>
                     {isToday ? (
                             <TodayDot>
-                                {/* <div> */}
                                 {formattedDate.split('-')[2]}
-                                {/* </div> */}
                             </TodayDot> // 동그란 원 추가
                         ) : 
                             <NotTodayDot>
 
                         <div>{formattedDate.split('-')[2]}</div>
                             </NotTodayDot>
-                        
                         }
-                    
                     </TextClass>
 
                     <IncomeExpenditure>
@@ -298,18 +312,11 @@ const AccountCalendar = () => {
         // console.log(formatday);
         //handleClick(formatday);
     };
-    // const selectedDateData = responseData.find(item => item.date === format(selectedDate, 'yyyy-MM-dd')) || {
-    //     income: 0,
-    //     expenditure: 0,
-    //     income_list: [],
-    //     expenditure_list: []
-    // };
 
-    // const { income, expenditure, income_list, expenditure_list } = selectedDateData;
-        
     return (
         <Container>
             <CalendarHeader>
+            <AddButton onClick={()=>navigate('/calendarinput')}>추가하기</AddButton>
                 <Col>
                     <span onClick={prevMonth}>←</span>
                     <TextMonth>
@@ -324,11 +331,8 @@ const AccountCalendar = () => {
             <RowsBody>
                 {rows}
             </RowsBody>
-            {/*
             <div>
                 <h2>클릭한 날짜: {format(selectedDate, 'yyyy-MM-dd')}</h2>
-                <div>Income: {income.toLocaleString()}</div>
-                <div>Expenditure: {expenditure.toLocaleString()}</div>
                 <h3>Income Items:</h3>
                 <ul>
                     {income_list.map(item => (
@@ -342,9 +346,9 @@ const AccountCalendar = () => {
                     ))}
                 </ul>
             </div>
-            */}
-            <IncomeExpenditure>
-            {responseData.income_list.map((incomeItem) => (
+            
+            {/* <IncomeExpenditure>
+            {responseData && responseData.income_list.map((incomeItem) => (
             <IncomeRow key={incomeItem.income_id}>
               <TagAndWho>
                 <IncomeTag>{incomeItem.tag_name}</IncomeTag>
@@ -353,7 +357,7 @@ const AccountCalendar = () => {
               <IncomeMoney>+{incomeItem.amount.toLocaleString()}</IncomeMoney>
             </IncomeRow>
           ))}
-          {responseData.expenditure_list.map((expenditureItem) => (
+          {responseData && responseData.expenditure_list.map((expenditureItem) => (
             <ExpenditureRow key={expenditureItem.expenditure_id}>
               <TagAndWho>
                 <ExpenditureTag>{expenditureItem.first_tag_name}</ExpenditureTag>
@@ -362,7 +366,7 @@ const AccountCalendar = () => {
               <ExpenditureMoney>-{expenditureItem.amount.toLocaleString()}</ExpenditureMoney>
             </ExpenditureRow>
           ))}
-        </IncomeExpenditure>
+        </IncomeExpenditure> */}
       
         </Container>
     );

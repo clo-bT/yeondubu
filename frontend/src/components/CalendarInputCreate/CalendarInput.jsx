@@ -140,14 +140,15 @@ const CalendarInput = () => {
     };
 
     const handleSave = () => {
-        axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/income`,
+        axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/money`,
         {
-          "user_role": 'BRIDE',
-          "date": '2023-10-04',
-          "amount": 2000000,
-          "memo": 'memo',
-          "tag_id": 2,
-        },
+            "third_tag_id": 8,
+            "user_role": "GROOM",
+            "date": "2023-10-04",
+            "amount": 100000,
+            "memo": "침대 구매",
+            "pay_complete": false
+    },
         {
           headers: {
               Authorization: `Bearer ${accessToken}`,
