@@ -60,12 +60,10 @@ public class TagExpenditureServiceImpl implements TagExpenditureService{
         Map<Long, TagAllExpenditureResDto> firstTagMap = new LinkedHashMap<>();
 
         for (AllTagsExpenditureQueryDto dto : allTags) {
-
             Long firstTagId = dto.getFirstTagId();
 
             // firstTagMap에 존재하지 않으면
             if (!firstTagMap.containsKey(firstTagId)) {
-
                 // 첫번째 만들기
                 TagAllExpenditureResDto firstTagDto = TagAllExpenditureResDto.builder()
                         .firstTagId(dto.getFirstTagId())
@@ -73,74 +71,41 @@ public class TagExpenditureServiceImpl implements TagExpenditureService{
                         .tagSecondExpenditureDtoList(new ArrayList<>())
                         .build();
 
+                firstTagMap.put(firstTagId, firstTagDto);  // firstTagMap에 담기
+            }
+
+            TagAllExpenditureResDto existingFirstTagDto = firstTagMap.get(firstTagId);
+
+            // 두 번째 태그 생성 또는 가져오기
+            TagSecondExpenditureDto secondTagDto = null;
+            for (TagSecondExpenditureDto tag : existingFirstTagDto.getTagSecondExpenditureDtoList()) {
+                if (tag.getSecondTagId().equals(dto.getSecondTagId())) {
+                    secondTagDto = tag;
+                    break;
+                }
+            }
+
+            if (secondTagDto == null) {
                 // 두번째 만들기
-                TagSecondExpenditureDto secondTagDto = TagSecondExpenditureDto.builder()
+                secondTagDto = TagSecondExpenditureDto.builder()
                         .secondTagId(dto.getSecondTagId())
                         .secondTagName(dto.getSecondTagName())
                         .tagThirdExpenditureDtoList(new ArrayList<>())
                         .build();
-
-                // 세번째 만들기
-                TagThirdExpenditureDto thirdTagDto = TagThirdExpenditureDto.builder()
-                        .thirdTagId(dto.getThirdTagId())
-                        .thirdTagName(dto.getThirdTagName())
-                        .moneyExpenditureId(dto.getMoneyExpenditureId())
-                        .amount(dto.getAmount())
-                        .payComplete(dto.getPayComplete())
-                        .build();
-
-                // 세번째 담기, 두번째 담기
-                secondTagDto.getTagThirdExpenditureDtoList().add(thirdTagDto);
-                firstTagDto.getTagSecondExpenditureDtoList().add(secondTagDto);
-                firstTagMap.put(firstTagId, firstTagDto);  // firstTagMap에 담기
-
-            } else {
-
-                TagAllExpenditureResDto existingFirstTagDto = firstTagMap.get(firstTagId);
-                // 첫번째 태그가 이미 존재한다면
-                // 두 번째 태그가 이미 존재하는지 확인
-                boolean isSecondTagExists = false;
-
-                for (TagSecondExpenditureDto secondTagDto : existingFirstTagDto.getTagSecondExpenditureDtoList() ) {
-                    if (secondTagDto.getSecondTagId().equals(dto.getSecondTagId())) {
-                        isSecondTagExists = true;
-                        // 이미 존재하면
-                        // 세 번째 태그 추가
-                        TagThirdExpenditureDto thirdTagDto = TagThirdExpenditureDto.builder()
-                                .thirdTagId(dto.getThirdTagId())
-                                .thirdTagName(dto.getThirdTagName())
-                                .moneyExpenditureId(dto.getMoneyExpenditureId())
-                                .amount(dto.getAmount())
-                                .payComplete(dto.getPayComplete())
-                                .build();
-
-                        secondTagDto.getTagThirdExpenditureDtoList().add(thirdTagDto);
-                        break;
-                    }
-                }
-
-                // 두 번째 태그가 이미 존재하지 않는 경우 생성하여 추가
-                if (!isSecondTagExists) {
-                    // 두번째 만들기
-                    TagSecondExpenditureDto secondTagDto = TagSecondExpenditureDto.builder()
-                            .secondTagId(dto.getSecondTagId())
-                            .secondTagName(dto.getSecondTagName())
-                            .tagThirdExpenditureDtoList(new ArrayList<>())
-                            .build();
-
-                    // 세번째 만들기
-                    TagThirdExpenditureDto thirdTagDto = TagThirdExpenditureDto.builder()
-                            .thirdTagId(dto.getThirdTagId())
-                            .thirdTagName(dto.getThirdTagName())
-                            .moneyExpenditureId(dto.getMoneyExpenditureId())
-                            .amount(dto.getAmount())
-                            .payComplete(dto.getPayComplete())
-                            .build();
-
-                    secondTagDto.getTagThirdExpenditureDtoList().add(thirdTagDto);
-                }
-
+                existingFirstTagDto.getTagSecondExpenditureDtoList().add(secondTagDto);
             }
+
+            // 세 번째 태그 생성
+            TagThirdExpenditureDto thirdTagDto = TagThirdExpenditureDto.builder()
+                    .thirdTagId(dto.getThirdTagId())
+                    .thirdTagName(dto.getThirdTagName())
+                    .moneyExpenditureId(dto.getMoneyExpenditureId())
+                    .amount(dto.getAmount())
+                    .userRole(dto.getUserRole())
+                    .payComplete(dto.getPayComplete())
+                    .build();
+
+            secondTagDto.getTagThirdExpenditureDtoList().add(thirdTagDto);
         }
 
         List<TagAllExpenditureResDto> finalResult = new ArrayList<>(firstTagMap.values());

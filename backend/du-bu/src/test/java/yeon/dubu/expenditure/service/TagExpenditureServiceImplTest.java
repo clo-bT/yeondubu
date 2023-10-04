@@ -56,8 +56,10 @@ class TagExpenditureServiceImplTest {
 
     static TagFirstExpenditure TAG1;
     static TagSecondExpenditure TAG2;
+    static TagSecondExpenditure TAG22;
     static TagThirdExpenditure TAG31;
     static TagThirdExpenditure TAG32;
+    static TagThirdExpenditure TAG33;
     static Money MONEY1;
     static Money MONEY2;
     @BeforeEach
@@ -127,7 +129,7 @@ class TagExpenditureServiceImplTest {
                 .secondTagName("가전")
                 .build();
 
-        tagSecondExpenditureRepository.save(tagSecondExpenditure2);
+        TAG22 = tagSecondExpenditureRepository.save(tagSecondExpenditure2);
 
         TagThirdExpenditure tagThirdExpenditure = TagThirdExpenditure.builder()
                 .tagSecondExpenditure(TAG2)
@@ -141,6 +143,13 @@ class TagExpenditureServiceImplTest {
                 .build();
 
         TAG32 = tagThirdExpenditureRepository.save(tagThirdExpenditure2);
+
+        TagThirdExpenditure thirdExpenditure3 = TagThirdExpenditure.builder()
+                .tagSecondExpenditure(TAG22)
+                .thirdTagName("에어컨")
+                .build();
+
+        TAG33 = tagThirdExpenditureRepository.save(thirdExpenditure3);
 
 
     }
@@ -169,6 +178,16 @@ class TagExpenditureServiceImplTest {
                 .build();
 
         moneyExpenditureRepository.save(moneyExpenditure2);
+
+        MoneyExpenditure moneyExpenditure3 = MoneyExpenditure.builder()
+                .tagThirdExpenditure(TAG33)
+                .date(LocalDate.of(2023, 6, 9))
+                .userRole(UserRole.BRIDE)
+                .amount(10000L)
+                .payComplete(Boolean.FALSE)
+                .build();
+
+        moneyExpenditureRepository.save(moneyExpenditure3);
 
         // when
         List<TagAllExpenditureResDto> allTags = tagExpenditureService.searchAllTags(USER1.getId());
