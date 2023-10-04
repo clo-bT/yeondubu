@@ -37,4 +37,14 @@ public class StuffLikesController {
 
         return ResponseEntity.ok(stuffLikesResDtos);
     }
+
+    @DeleteMapping("/likes/{likesId}")
+    public ResponseEntity<?> deleteStuffLikes(
+            @AuthenticationPrincipal Long userId,
+            @PathVariable Long likesId
+    ) {
+        stuffLikesService.deleteStuffLikes(likesId, userId);
+
+        return new ResponseEntity<>("", HttpStatus.OK);
+    }
 }

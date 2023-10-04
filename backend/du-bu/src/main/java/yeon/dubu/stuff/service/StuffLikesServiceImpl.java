@@ -65,4 +65,19 @@ public class StuffLikesServiceImpl implements StuffLikesService{
         return stuffLikesList;
     }
 
+    /**
+     * 좋아요 삭제
+     * @param stuffId
+     * @param userId
+     */
+    @Override
+    @Transactional
+    public void deleteStuffLikes(Long stuffId, Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
+        Couple couple = coupleRepository.findById(user.getCouple().getId()).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
+
+        stuffLikesRepository.deleteById(stuffId);
+
+    }
+
 }

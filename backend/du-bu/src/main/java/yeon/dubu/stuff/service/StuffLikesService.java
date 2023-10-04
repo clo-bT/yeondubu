@@ -8,4 +8,5 @@ public interface StuffLikesService {
     void createStuffLikes(String category, String subCategory, Long userId);
 
     List<StuffLikesResDto> searchStuffLikes (Long userId);
+    void deleteStuffLikes(Long stuffId, Long userId);
 }
