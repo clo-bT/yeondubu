@@ -70,22 +70,22 @@ def cos_sim_search():
 
 @app.route('/api/v1/loanupload', methods=['POST'])
 def loan_upload():
-    # credit score / necessary money / user token data
-    # request.files.get('credit_score')
-    # request.files.get('necessary_money')
-    # request.files.get('user_token')
-    if 'credit_score' in request.files and 'necessary_money' in request.files and 'user_token' in request.files:
-        credit_score = request.files.get('credit_score').read()
-        credit_score = credit_score.decode('utf-8')
-        necessary_money = request.files.get('necessary_money').read()
-        necessary_money = necessary_money.decode('utf-8')
-        user_token = request.files.get('user_token').read()
-        user_token = user_token.decode('utf-8')
-        # loan_analysis
-        '''
-        loan_analysis function's return results
-        '''
-        return ut.rspns(data = {'result':True}, status_code=200)
+    if request.method == 'POST':
+        try:
+            json_data = request.get_json()
+            try:
+                salary = int(json_data['salary']['salary'])
+                creditScore = int(json_data['creditScore']['creditScore'])
+                surCharge = int(json_data['surCharge'])
+                loanPeriod = int(json_data['loanPeriod']['loanPeriod'])
+                totalAssets = int(json_data['totalAssets']['totalAssets'])
+            except:
+                raise KeyError
+            rate = calculate(salary) # 속한 수입 구간의 평균 자산 대비 부채 비율
+            results = credit_scores(salary, creditScore, surCharge, loanPeriod, rate, totalAssets)
+            return jsonify({'result': results})
+        except Exception as err:
+            return ut.rspns(data = {'result':True}, status_code=200)
     else:
         return ut.rspns(data = {'result':False}, status_code=400)
 
