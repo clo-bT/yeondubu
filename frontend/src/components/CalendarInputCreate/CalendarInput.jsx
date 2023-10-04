@@ -1,52 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 
-const CalendarInputPage = styled.div`
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    z-index: 1000;
-`
-
-const Modal = styled.div`
-    background: #fff;
-    border-radius: 10px;
-    padding: 20px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    height: 80%;
-    justify-content: space-between;
-    align-items: center;
-
-`
-const ModalContent = styled.div`
-    display: flex;
-    gap:10px;
-    flex-direction: column;
-`
-const CloseModal = styled.div`
-    display: flex;
-    justify-content: end;
-`
-const CloseButton = styled.button`
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 20px;
-`
+const Container = styled.div``
 const InputType = styled.div`
 display: flex;
 align-items: center;
 `
-
 const InputTypeIncome = styled.button.attrs(props => ({
     style: {
         color: props.checked ? "#FF937D" : "#000", 
@@ -113,7 +73,13 @@ const InputWhoBride = styled.button.attrs(props => ({
     cursor: pointer;
 
 `
-
+const InputSpan = styled.span`
+margin-right: 30px;
+`
+const InputMemo = styled.div`
+display: flex;
+align-items: center;
+`
 const InputTag = styled.div`
 display: flex;
 align-items: center;
@@ -122,100 +88,92 @@ const InputDate = styled.div`
 display: flex;
 align-items: center;
 `
-const BoldSpan = styled.span`
-    font-weight: bold;
+const DateInput = styled.input``
+const MoneyInput = styled.input``
+const MemoInput = styled.input``
+const TagButton = styled.button`
+
+width: 87px;
+height: 38px;
+padding: 6px 4px;
+gap: 10px;
+border-radius: 10px;
+background: #FFF;
+cursor: pointer;
+border: 2px solid #D9D9D9;
 `
+
 const InputMoney = styled.div`
 display: flex;
 align-items: center;
 `
-const InputSpan = styled.span`
-margin-right: 30px;
-`
-const InputMemo = styled.div`
-display: flex;
-align-items: center;
-`
-const CalendarFooter = styled.div`
-width: 90%;
-display: flex;
-gap:10px;
-justify-content:center;
-align-items:center;
-`
-const UpdateButton = styled.button`
-    width: 87px;
-    height: 38px;
-    padding: 6px 4px;
-    gap: 10px;
-    border: 2px solid #D9D9D9;
-    border-radius: 10px;
-    background: #D9D9D9;
-    cursor: pointer;
-    font-weight: bold;
-`
-const SaveButton = styled.button`
-    width: 87px;
-    height: 38px;
-    padding: 6px 4px;
-    border: 2px solid #D9D9D9;
-    gap: 10px;
-    border-radius: 10px;
-    background: #D9D9D9;
-    cursor: pointer;
-    font-weight: bold;
-
-`
-const CompleteButton = styled.button`
-    width: 87px;
-    height: 38px;
-    padding: 6px 4px;
-    gap: 10px;
-    color: white;
-    border: 2px solid #FF937D;
-    border-radius: 10px;
-    background: #FF937D;
-    cursor: pointer;
-    font-weight: bold;
-
-`
 
 
+const SaveButton = styled.div``
 
-// const TagCreatePage = styled.div``
-const CalendarInput = ({ isOpen, content, formatday, closeModal }) => {
-    const [selectedWho, setSelectedWho] = useState(''); 
-    const [selectedType, setSelectType] = useState(''); 
-
-    const handleSelectWho = (who) => {
-        setSelectedWho(who); // 선택된 결제자 업데이트
+const CalendarInput = () => {
+    const accessToken = localStorage.getItem('token');
+    //const role = localStorage.getItem('role');
+    const [role, setRole] = useState('')
+    const [type, setType] = useState('')
+    const [date, setDate] = useState('')
+    const [amount, setAmount] = useState(0)
+    const [memo, setMemo] = useState('')
+    const [tagId, setTagId] = useState(0)
+    const handleRole = (who) => {
+        setRole(who); 
     };
-    const handleSelectType = (type) => {
-        setSelectType(type); // 선택된 결제자 업데이트
+    const handleType = (type) => {
+        setType(type); 
     };
-    if (!isOpen) {
-        return null; // 모달이 닫혀있으면 아무것도 렌더링하지 않음
-    }
-    const handleModalClick = (e) => {
-        e.stopPropagation(); // 이벤트 버블링 중단
+    const handleDate = (event) => {
+        setDate(event.target.value);
+    };
+    const handleAmount = (event) => {
+        setAmount(event.target.value);
+    };
+    const handleMemo = (event) => {
+        setMemo(event.target.value);
+    };
+    const handleTagId = (event) => {
+        setTagId(event.target.value);
     };
 
+    const handleSave = () => {
+        axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/money`,
+        {
+            "third_tag_id": 8,
+            "user_role": "GROOM",
+            "date": "2023-10-04",
+            "amount": 100000,
+            "memo": "침대 구매",
+            "pay_complete": false
+    },
+        {
+          headers: {
+              Authorization: `Bearer ${accessToken}`,
+            }
+        }).then(response => {
+            console.log('여기는 캘린더에서 추가하기',response)
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        },[]);
+        };
+    
     return (
-        <CalendarInputPage onClick={closeModal}>
-            <Modal onClick={handleModalClick}>
-            <ModalContent>
-            <CloseModal><CloseButton onClick={closeModal}>X</CloseButton></CloseModal>
-                    <InputType>
+        <Container>
+             <InputType>
                         <InputSpan>분류 </InputSpan>
                         <InputTypeIncome
-                            checked={selectedType === '수입'}
-                            onClick={() => handleSelectType('수입')}
+                            checked={type === '수입'}
+                            onClick={() => handleType('income')}
                         >
                             수입
                         </InputTypeIncome>
                         <InputTypeExpend
-                            checked={selectedType === '지출'}
-                            onClick={() => handleSelectType('지출')}
+                            checked={type === '지출'}
+                            onClick={() => handleType('expenditure')}
                         >
                             지출
                         </InputTypeExpend>
@@ -223,31 +181,37 @@ const CalendarInput = ({ isOpen, content, formatday, closeModal }) => {
                     
                     <InputWho><InputSpan>결제 </InputSpan>
                         <InputWhoGroom
-                            checked={selectedWho === '예비신랑'}
-                            onClick={() => handleSelectWho('예비신랑')}
+                            checked={role === 'GROOM'}
+                            onClick={() => handleRole('GROOM')}
                         >
-                            예비신랑
+                            예비 신랑
                         </InputWhoGroom>
                         <InputWhoBride
-                            checked={selectedWho === '예비신부'}
-                            onClick={() => handleSelectWho('예비신부')}
+                            checked={role === 'BRIDE'}
+                            onClick={() => handleRole('BRIDE')}
                         >
-                            예비신부
+                            예비 신부
                         </InputWhoBride>
                     </InputWho>
-
-                    <InputTag><InputSpan>태그 </InputSpan><BoldSpan>침대</BoldSpan></InputTag>
-                    <InputDate><InputSpan>날짜 </InputSpan> <BoldSpan>{formatday}</BoldSpan></InputDate>
-                    <InputMoney><InputSpan>가격 </InputSpan> <BoldSpan>{content.amount.toLocaleString()} </BoldSpan>원</InputMoney>
-                    <InputMemo><InputSpan>메모 </InputSpan></InputMemo>
-                </ModalContent>
-                <CalendarFooter>
-                    <UpdateButton>수정</UpdateButton>
-                    <SaveButton>저장</SaveButton>
-                    <CompleteButton>구매완료</CompleteButton>
-                </CalendarFooter>
-            </Modal>
-        </CalendarInputPage>
+                    <InputTag>
+                        <InputSpan>태그 </InputSpan>
+                        <TagButton value={tagId} onChange = {handleTagId}>태그</TagButton>
+                    </InputTag>
+                    <InputDate>
+                        <InputSpan>날짜 </InputSpan> 
+                        <DateInput type="date" value={date} onChange={handleDate} />
+                    </InputDate>
+                    <InputMoney>
+                        <InputSpan>가격 </InputSpan> 
+                        <MoneyInput type="number" value={amount} onChange={handleAmount} />원
+                    </InputMoney>
+                    <InputMemo>
+                        <InputSpan>메모 </InputSpan>
+                        <MemoInput type="text" value={memo} onChange={handleMemo} />
+                    </InputMemo>
+               
+            <SaveButton onClick={handleSave}>저장</SaveButton>
+        </Container>
     );
 };
 
