@@ -90,14 +90,14 @@ const DeleteButton = styled.button`
 `;
 
 const CheckBoxWholeContent = () => {
-  const accessToken = localStorage.getItem('token')
-  const [data, setData] = useState([])
-  const [isSelected, setIsSelected] = useState(0)
-  const [tagId, setTagId] = useState(0)
-  const [selectedData, setSelectedData] = useState(null)
-  const [selectedName, setSelectedName] = useState('')
-  const [firstName, setFirstName] = useState('')
-  const [secondName, setSecondName] = useState('')
+  const accessToken = localStorage.getItem('token');
+  const [data, setData] = useState([]);
+  const [isSelected, setIsSelected] = useState(0);
+  const [tagId, setTagId] = useState(0);
+  const [selectedData, setSelectedData] = useState(null);
+  const [selectedName, setSelectedName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [secondName, setSecondName] = useState('');
   const [newTagName, setNewTagName] = useState('');
   const inputRef = useRef(null);
   const [isAddingTag, setIsAddingTag] = useState(false);

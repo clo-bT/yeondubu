@@ -192,13 +192,13 @@ const CalendarInput = () => {
              <InputType>
                         <InputSpan>분류 </InputSpan>
                         <InputTypeIncome
-                            checked={type === '수입'}
+                            checked={type === 'income'}
                             onClick={() => handleType('income')}
                         >
                             수입
                         </InputTypeIncome>
                         <InputTypeExpend
-                            checked={type === '지출'}
+                            checked={type === 'expenditure'}
                             onClick={() => handleType('expenditure')}
                         >
                             지출
