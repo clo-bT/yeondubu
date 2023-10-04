@@ -424,7 +424,7 @@ const CashAccount = () => {
             <CountIcon3 />
             <Text>만기일</Text>
             <EndDateInput 
-            type='text'
+            type='date'
             onChange={handleEndDate}
             value={endDate}
             />
@@ -489,7 +489,7 @@ const CashAccount = () => {
             <CountIcon3 />
             <Text>만기일</Text>
             <DepositEndDateInput 
-            type="text"
+            type="date"
             onChange={handleEndDate}
             value={endDate}
             />
