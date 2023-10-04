@@ -147,6 +147,7 @@ padding: 5px;
 
 const MyAccountUpdateDetail = () => {
   const [accessToken, setAccessToken] = useState('');
+  const [accountData, setAccountData] = useState([]);
   const [accountName, setAccountName] = useState('');
   const [endDate, setEndDate] = useState('');
   const [nowMoney, setnowMoney] = useState('');
@@ -154,13 +155,38 @@ const MyAccountUpdateDetail = () => {
   const [outDate, setOutDate] = useState('');
   const [outMoney, setoutMoney] = useState('');
 
-  const { accountId } = useParams();
+
+  const { accountType, accountId} = useParams();
+
   const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     setAccessToken(token)
   },[])
+
+  // 전체 계좌 조회
+  useEffect(() => {
+    if (accessToken) {
+      axios
+        .get(`${process.env.REACT_APP_API_ROOT}/api/v1/accounts`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        })
+        .then((response) => {
+          console.log('요청 성공:', response);
+          // console.log(response.data);
+          setAccountData(response.data);
+
+        })
+        .catch((error) => {
+          console.error('요청 실패:', error);
+        });
+    }
+  }, [accessToken]);
+
+
 
   const handleName = (event) => {
     const newName = event.target.value;
@@ -188,122 +214,179 @@ const MyAccountUpdateDetail = () => {
   };
 
 
-  const SavingAccount = () => {
-    console.log(accessToken)
-    console.log(accountId)
-    const requestBody = {
+  const handleSave = () => {
+    // saving account와 deposit account의 request body 구조를 각각 정의합니다.
+    const savingRequestBody = {
       account_name: accountName,
-      transfer_day: outDate,
-      transfer_amount: outMoney,
-      final_date: endDate,
       start_amount: nowMoney,
-      final_amount: expectMoney
+      final_amount: expectMoney,
+      transfer_day: outDate,
+      transfer_ammount: outMoney,
+      final_date: endDate
     };
-    // 여기서 axios 요청을 보내세요.
-    axios.put(`${process.env.REACT_APP_API_ROOT}/api/v1/accounts/saving/${accountId}`,requestBody, {
-        headers: {
+
+    const depositRequestBody = {
+      account_name: accountName,
+      start_amount: nowMoney,
+      final_amount: expectMoney,
+      final_date: endDate
+    };
+
+      if (accountType === 'DEPOSIT') {
+        console.log('예금들어옴')
+        // accountType이 'deposit'인 경우, deposit account용 request body로 PUT 요청을 보냅니다.
+        axios.put(`${process.env.REACT_APP_API_ROOT}/api/v1/accounts/deposit/${accountId}`, depositRequestBody, {
+          headers: {
             Authorization: `Bearer ${accessToken}`,
-  
-        },
-    })
+          },
+        })
         .then((response) => {
-            console.log('요청 성공:', response);
-            console.log(requestBody);
-            // alert('계좌가 업데이트되었습니다!');
-            navigate(`/myaccountdetail/${accountId}`);
+          console.log('요청 성공:', response);
+          console.log(depositRequestBody);
+          navigate(`/myaccountdetail/${accountId}`);
         })
         .catch((error) => {
-            console.error('요청 실패:', error);
+          console.error('요청 실패:', error);
         });
-  };
-  
-  // const DepositAccount = () => {
-  //   console.log(accessToken)
-  
-  //   const requestBody = {
-  //     account_name: accountName,
-  //     final_date: endDate,
-  //     start_amount: nowMoney,
-  //     final_amount: expectMoney
-  // }
-  //   // 여기서 axios 요청을 보내세요.
-  //   axios.put(`${process.env.REACT_APP_API_ROOT}/api/v1/accounts/deposit/{accountId}`,requestBody, {
-  //       headers: {
-  //           Authorization: `Bearer ${accessToken}`,
-  
-  //       },
-  //   })
-  //       .then((response) => {
-  //           console.log('요청 성공:', response);
-  //           console.log(requestBody);
-  //           alert('계좌가 등록되었습니다!')
-  //       })
-  //       .catch((error) => {
-  //           console.error('요청 실패:', error);
-  //       });
+      } else if (accountType === 'SAVINGS') {
+
+        // accountType이 'saving'인 경우, saving account용 request body로 PUT 요청을 보냅니다.
+        axios.put(`${process.env.REACT_APP_API_ROOT}/api/v1/accounts/saving/${accountId}`, savingRequestBody, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        })
+        .then((response) => {
+          console.log('요청 성공:', response);
+          console.log(savingRequestBody);
+          navigate(`/myaccountdetail/${accountId}`);
+        })
+        .catch((error) => {
+          console.error('요청 실패:', error);
+        });
+      }
+    }
   // };
+
+
+      // account_type에 따라 다른 화면 렌더링
+      const renderAccountContent = () => {
+        if (accountType === 'DEPOSIT') {
+          // Deposit 화면을 렌더링하는 JSX
+          return (
+            <AccountItem>
+            <DetailItem>
+    
+              <Header>계좌이름</Header>
+              <AccountName
+              type='text'
+              onChange={handleName}
+              value={accountName} 
+              />
+            </DetailItem>
+              <DetailItem>
+    
+            <Header>현재금액</Header>
+              <NowMoney 
+              type='number'
+              onChange={handleMoney}
+              value={nowMoney}/>
+              </DetailItem>
+    
+              <DetailItem>
+              <Header>만기일</Header>
+              <EndDateDetail
+              type='date'
+              onChange={handleEndDate}
+              value={endDate} />
+  
+              </DetailItem>
+              {/* <UnlineLine /> */}
+  
+              <DetailItem>
+                <Header>만기예상금액</Header>
+                <ExpectMoneyDetail 
+                type='number'
+                onChange={handleExpectMoney}
+                value={expectMoney} />
+              </DetailItem>
+              {/* <UnlineLine /> */}
+            </AccountItem>
+          );
+        } else if (accountType === 'SAVINGS') {
+          // Saving 화면을 렌더링하는 JSX
+          return (
+            <AccountItem>
+            <DetailItem>
+    
+              <Header>계좌이름</Header>
+              <AccountName
+              type='text'
+              onChange={handleName}
+              value={accountName} 
+              />
+            </DetailItem>
+              <DetailItem>
+    
+            <Header>현재금액</Header>
+              <NowMoney 
+              type='number'
+              onChange={handleMoney}
+              value={nowMoney}/>
+              </DetailItem>
+                <DetailItem>
+    
+                  <Header>이체일</Header>
+                  <OutDateDetail 
+                  type='number'
+                  onChange={handleOutDate}
+                  value={outDate} />
+                </DetailItem>
+                  {/* <UnlineLine /> */}
+                  
+                <DetailItem>
+                  <Header>이채금액</Header>
+                  <OutMoneyDetail 
+                  type='number'
+                  onChange={handleOutMoney}
+                  value={outMoney} /> 
+                </DetailItem>
+                {/* <UnlineLine /> */}
+    
+                <DetailItem>
+                  <Header>만기일</Header>
+                  <EndDateDetail
+                  type='date'
+                  onChange={handleEndDate}
+                  value={endDate} />
+    
+                </DetailItem>
+                {/* <UnlineLine /> */}
+    
+                <DetailItem>
+                  <Header>만기예상금액</Header>
+                  <ExpectMoneyDetail 
+                  type='number'
+                  onChange={handleExpectMoney}
+                  value={expectMoney} />
+                </DetailItem>
+                {/* <UnlineLine /> */}
+            </AccountItem>
+          
+          );
+        } else {
+          // 다른 account_type에 대한 처리
+          return (console.log('실패'));
+        }
+      };
+    
   
     return (
       <>
       <Container>
-        <AccountItem>
-        <DetailItem>
-
-          <Header>계좌이름</Header>
-          <AccountName
-          type='text'
-          onChange={handleName}
-          value={accountName} 
-          />
-        </DetailItem>
-          <DetailItem>
-
-        <Header>현재금액</Header>
-          <NowMoney 
-          type='number'
-          onChange={handleMoney}
-          value={nowMoney}/>
-          </DetailItem>
-            <DetailItem>
-
-              <Header>이체일</Header>
-              <OutDateDetail 
-              type='number'
-              onChange={handleOutDate}
-              value={outDate} />
-            </DetailItem>
-              {/* <UnlineLine /> */}
-              
-            <DetailItem>
-              <Header>이채금액</Header>
-              <OutMoneyDetail 
-              type='number'
-              onChange={handleOutMoney}
-              value={outMoney} /> 
-            </DetailItem>
-            {/* <UnlineLine /> */}
-
-            <DetailItem>
-              <Header>만기일</Header>
-              <EndDateDetail
-              type='text'
-              onChange={handleEndDate}
-              value={endDate} />
-
-            </DetailItem>
-            {/* <UnlineLine /> */}
-
-            <DetailItem>
-              <Header>만기예상금액</Header>
-              <ExpectMoneyDetail 
-              type='number'
-              onChange={handleExpectMoney}
-              value={expectMoney} />
-            </DetailItem>
-            {/* <UnlineLine /> */}
-        </AccountItem>
-    </Container>
-      <UpdateButton onClick={SavingAccount}>저장</UpdateButton>
+        {renderAccountContent()}
+      </Container>
+      <UpdateButton onClick={handleSave}>저장</UpdateButton>
       
       </>
     );

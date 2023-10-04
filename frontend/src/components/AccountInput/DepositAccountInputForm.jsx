@@ -486,6 +486,16 @@ const CashAccount = () => {
           </IconWithText>
 
           <IconWithText>
+            <CountIcon4 />
+            <Text>현재금액</Text>
+            <DepositNowMoneyInput 
+            type="number"
+            onChange={handleMoney}
+            value={nowMoney}
+            />
+          </IconWithText>
+          
+          <IconWithText>
             <CountIcon3 />
             <Text>만기일</Text>
             <DepositEndDateInput 
@@ -495,15 +505,6 @@ const CashAccount = () => {
             />
           </IconWithText>
 
-          <IconWithText>
-            <CountIcon4 />
-            <Text>현재금액</Text>
-            <DepositNowMoneyInput 
-            type="number"
-            onChange={handleMoney}
-            value={nowMoney}
-            />
-          </IconWithText>
 
           <IconWithText>
             <CountIcon5 />

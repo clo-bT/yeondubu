@@ -105,6 +105,7 @@ const Box = styled.div`
 const MyAccountContent = () => {
   const [accessToken, setAccessToken] = useState('');
   const [accountData, setAccountData] = useState([]);
+
   const { accountId } = useParams();
   const navigate = useNavigate();
 
@@ -175,8 +176,11 @@ const MyAccountContent = () => {
         });
   };
 
+  const accountType = accountData.account_type
+  console.log(accountType)
     // account_type에 따라 다른 화면 렌더링
     const renderAccountContent = () => {
+      
       if (accountData.account_type === 'DEPOSIT') {
         // Deposit 화면을 렌더링하는 JSX
         return (
@@ -194,7 +198,7 @@ const MyAccountContent = () => {
             </DetailItem>
             <UnlineLine />
             <Box>
-              <UpdateButton onClick={() => navigate(`/myaccountupdate/${accountId}`)}>수정하기</UpdateButton>
+              <UpdateButton onClick={() => navigate(`/myaccountupdate/${accountType}/${accountId}`)}>수정하기</UpdateButton>
               <UpdateButton onClick={DeleteDepositAccount}>삭제하기</UpdateButton>
             </Box>
         </AccountItem>
@@ -227,7 +231,7 @@ const MyAccountContent = () => {
             </DetailItem>
             <UnlineLine />
             <Box>
-              <UpdateButton onClick={() => navigate(`/myaccountupdate/${accountId}`)}>수정하기</UpdateButton>
+              <UpdateButton onClick={() => navigate(`/myaccountupdate/${accountType}/${accountId}`)}>수정하기</UpdateButton>
               <UpdateButton onClick={DeleteSavingAccount}>삭제하기</UpdateButton>
             </Box>
         </AccountItem>
@@ -235,7 +239,7 @@ const MyAccountContent = () => {
         );
       } else {
         // 다른 account_type에 대한 처리
-        return null;
+        return console.log('실패');
       }
     };
 
