@@ -1,5 +1,6 @@
 package yeon.dubu.stuff.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,5 +21,6 @@ public class Stuff extends BaseTimeEntity {
     private Long id;
 
     private String category;
-    private String sub_category;
+    @JsonProperty("sub_category")
+    private String subCategory;
 }

@@ -1,6 +1,7 @@
 package yeon.dubu.stuff.domain;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,4 +21,11 @@ public class StuffLikes extends BaseTimeEntity {
     private Couple couple;
     @ManyToOne(fetch = FetchType.LAZY)
     private Stuff stuff;
+
+    @Builder
+    public StuffLikes(Long id, Couple couple, Stuff stuff) {
+        this.id = id;
+        this.couple = couple;
+        this.stuff = stuff;
+    }
 }
