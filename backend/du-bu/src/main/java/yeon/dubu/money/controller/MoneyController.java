@@ -69,7 +69,7 @@ public class MoneyController {
     @GetMapping("/{yearMonth}")
     public ResponseEntity<?> searchYearMonth(
             @AuthenticationPrincipal Long userId,
-            @RequestParam YearMonth yearMonth
+            @PathVariable YearMonth yearMonth
             ) {
         MoneyYearMonthResDto moneyYearMonthResDto = moneyService.searchYearMonth(yearMonth, userId);
 
