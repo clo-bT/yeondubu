@@ -81,6 +81,7 @@ public class PolicyServiceImpl implements PolicyService{
     }
 
     @Override
+    @Transactional
     public void deleteAllPolicies() {
         policyRepository.deleteAll();
     }
@@ -90,7 +91,7 @@ public class PolicyServiceImpl implements PolicyService{
      * @return
      */
     @Override
-    public boolean isDbEmpty() {
+    public boolean isPolicyDbEmpty() {
         return policyRepository.count() == 0;
     }
 }
