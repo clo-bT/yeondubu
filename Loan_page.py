@@ -1,3 +1,22 @@
+def calculate(mon): # 자산 대비 부채 비율
+    import pandas as pd
+    year = mon * 12
+    lia_df = pd.read_csv("preprocess_liabilities.csv", header=None) # 부채
+    ass_df = pd.read_csv("preprocess_assets.csv", header=None) # 자산
+    if year < 10000000:
+        return 100 * lia_df.iloc[0][1] / ass_df.iloc[0][1]
+    elif year < 30000000:
+        return 100 * lia_df.iloc[1][1] / ass_df.iloc[1][1]
+    elif year < 50000000:
+        return 100 * lia_df.iloc[2][1] / ass_df.iloc[2][1]
+    elif year < 70000000:
+        return 100 * lia_df.iloc[3][1] / ass_df.iloc[3][1]
+    elif year < 100000000:
+        return 100 * lia_df.iloc[4][1] / ass_df.iloc[4][1]
+    else:
+        return 100 * lia_df.iloc[5][1] / ass_df.iloc[5][1]
+
+
 def credit_scores(salary, score, loan_money, period, ratio, totalAssets):
     # parameter - salary, score, loan_money, period, ratio == (월급, 신용점수, 대출금액, 상환기간, 속한 구간의 자산 대비 부채 비율)
     import json
@@ -52,9 +71,9 @@ def credit_scores(salary, score, loan_money, period, ratio, totalAssets):
         # 자산 대비 상환 금액
         # my_repay_ratio = 100 * month_repay / salary # 나의 자산대비 매달 상환금액 비율
         if ratio > my_total_ratio: 
-            da['comment'] = f'평균보다 {round(ratio - my_total_ratio, 2)}%만큼 낮아요'
+            da['comment'] = f'{round(ratio - my_total_ratio, 2)}%만큼 낮아요'
         else:
-            da['comment'] = f'평균보다 {round(my_total_ratio - ratio, 2)}%만큼 높아요'
+            da['comment'] = f'{round(my_total_ratio - ratio, 2)}%만큼 높아요'
         
         # DSR
         if loan_money > 100000000: # 대출금이 1억이 넘어가는 경우 DSR에 걸림
@@ -71,6 +90,4 @@ def credit_scores(salary, score, loan_money, period, ratio, totalAssets):
         else:
             result.append(da)
 
-        
-        
     return result
