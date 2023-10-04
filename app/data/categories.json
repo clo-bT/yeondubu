@@ -1,0 +1,96 @@
+[
+    {
+        "tagName": "가구",
+        "items": [
+            {
+                "name": "소파",
+                "image": "sofa"
+            },
+            {
+                "name": "책상",
+                "image": "desk"
+            },
+            {
+                "name": "서랍장",
+                "image": "drawer"
+            },
+            {
+                "name": "침대",
+                "image": "bed"
+            },
+            {
+                "name": "화장대",
+                "image": "dressing_table"
+            },
+            {
+                "name": "식탁",
+                "image": "table"
+            },
+            {
+                "name": "장식장",
+                "image": "cabinet"
+            },
+            {
+                "name": "장롱",
+                "image": "wardrobe"
+            },
+            {
+                "name": "의자",
+                "image": "chair"
+            }
+        ]
+    },
+    {
+        "tagName": "가전",
+        "items": [
+            {
+                "name": "냉장고",
+                "image": "refrigerator"
+            },
+            {
+                "name": "건조기",
+                "image": "dryer"
+            },
+            {
+                "name": "공기청정기",
+                "image": "air_cleaner"
+            },
+            {
+                "name": "밥솥",
+                "image": "rice_cooker"
+            },
+            {
+                "name": "전자레인지",
+                "image": "microwave"
+            },
+            {
+                "name": "에어컨",
+                "image": "air_conditioner"
+            },
+            {
+                "name": "스타일러",
+                "image": "styler"
+            },
+            {
+                "name": "선풍기",
+                "image": "fan"
+            },
+            {
+                "name": "세탁기",
+                "image": "washing_machine"
+            },
+            {
+                "name": "로봇청소기",
+                "image": "robot_vacuum_cleaner"
+            },
+            {
+                "name": "청소기",
+                "image": "vacuum_cleaner"
+            },
+            {
+                "name": "에어프라이어",
+                "image": "air_fryer"
+            }
+        ]
+    }
+]
