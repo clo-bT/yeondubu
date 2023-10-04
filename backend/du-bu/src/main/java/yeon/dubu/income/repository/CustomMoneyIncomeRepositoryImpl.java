@@ -35,7 +35,8 @@ public class CustomMoneyIncomeRepositoryImpl implements CustomMoneyIncomeReposit
                         qTagIncome.id,
                         qTagIncome.tagName,
                         qMoneyIncome.amount,
-                        qMoneyIncome.memo
+                        qMoneyIncome.memo,
+                        qMoneyIncome.userRole
                         ))
                 .from(qMoneyIncome)
                 .join(qMoneyIncome).on(qCouple.id.eq(qMoneyIncome.couple.id))
