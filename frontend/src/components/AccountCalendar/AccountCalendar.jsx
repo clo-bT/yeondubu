@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { ko } from 'date-fns/locale';
 
 const Container = styled.div`
+margin-bottom: 90px;
 `
 
 const Box = styled.div`
@@ -23,6 +24,8 @@ justify-content: space-between;
 /* padding: 10px; */
 font-size: 18px;
 font-weight: bold;
+margin-top:10px;
+margin-bottom:10px;
 
 `
 const Col = styled.p`
@@ -54,33 +57,46 @@ justify-content: space-between;
 margin-bottom: 9px;
 margin-right:20px;
 margin-left: 3px;
-cursor: pointer;
 
 &::before {
     content: '';
     position: absolute;
     left: 21px;
-    width: 2px; /* 세로 줄의 너비 설정 */
-    height: 6%; /* 부모 요소의 높이에 맞게 설정 */
-    background-color: #FF6565; /* 세로 줄의 색상 설정 */
+    width: 2px; 
+    height: 9%; 
+    background-color: #FF6565; 
   }
 
 `;
 
 const TagAndWho = styled.div`
-  display: flex;
-  align-items: flex-start;
-flex-direction: column;
+/* display: flex; */
 
 
+
+`;
+const TagAndWho1 = styled.div`
+/* display: flex; */
+
+
+
+`;
+const RoleIncomeTag = styled.p`
+margin-left: 30px;
+text-align: start;
+font-size: 10px;
+/* display: flex; */
 `;
 const IncomeTag = styled.p`
 margin-left: 30px;
+text-align: start;
+font-size: 15px;
 /* display: flex; */
+
 `;
 
 const IncomeMoney = styled.p`
-font-size: 15px;
+font-size: 20px;
 /* display: flex; */
 `;
 const ExpenditureRow = styled.div`
@@ -95,13 +111,15 @@ cursor: pointer;
     content: '';
     position: absolute;
     left: 21px;
-    width: 2px; /* 세로 줄의 너비 설정 */
-    height: 6%; /* 부모 요소의 높이에 맞게 설정 */
-    background-color: #2663FF; /* 세로 줄의 색상 설정 */
+    width: 2px; 
+    height: 9%; 
+    background-color: #2663FF; 
   }
 `;
 const ExpenditureTag = styled.p`
 margin-left: 30px;
+text-align: start;
+font-size: 15px;
 `
 
 const ExpenditureWho = styled.div`
@@ -165,11 +183,12 @@ const RowsBody = styled.div`
 
 `
 const AddButton = styled.p`
-
+color: #FF6565;
 display: flex;
 flex-direction: column;
 align-items: right;
 margin-right: 20px;
+font-size: 17px;
 `
 
 const TodayDot = styled.div`
@@ -376,10 +395,11 @@ const AccountCalendar = () => {
                 <IncomeExpenditure>
                     {income_list.map(item => (
                         <IncomeRow key={item.income_id}>
-                            {/* <TagAndWho> */}
-                                <IncomeTag>{item.tag_name} </IncomeTag>
-                            {/* </TagAndWho> */}
-                            <IncomeMoney>{item.amount.toLocaleString()}원</IncomeMoney>
+                            <TagAndWho>
+                                <IncomeTag>{item.tag_name}</IncomeTag>
+                                <RoleIncomeTag>{item.user_role === 'BRIDE' ? '예비 신부' : '예비 신랑'} </RoleIncomeTag>
+                            </TagAndWho>
+                            <IncomeMoney>+ {item.amount.toLocaleString()}원</IncomeMoney>
                         </IncomeRow>
 
 
@@ -389,39 +409,17 @@ const AccountCalendar = () => {
                 <IncomeExpenditure>
                     {expenditure_list.map(item => (
                         <ExpenditureRow key={item.expenditure_id}>
-                            {/* <TagAndWho> */}
+                            <TagAndWho1>
                                 <ExpenditureTag>{item.third_tag_name} </ExpenditureTag>
-                            {/* </TagAndWho> */}
-                            <IncomeMoney>{item.amount.toLocaleString()}원</IncomeMoney>
+                                <RoleIncomeTag>{item.role === 'BRIDE' ? '예비 신부' : '예비 신랑'} </RoleIncomeTag>
+                            </TagAndWho1>
+                            <IncomeMoney>- {item.amount.toLocaleString()}원</IncomeMoney>
                         </ExpenditureRow>
 
 
                     ))}
                 </IncomeExpenditure>
    
-        
-            
-            {/* <IncomeExpenditure>
-            {responseData && responseData.income_list.map((incomeItem) => (
-            <IncomeRow key={incomeItem.income_id}>
-              <TagAndWho>
-                <IncomeTag>{incomeItem.tag_name}</IncomeTag>
-                <IncomeWho>{incomeItem.role === 'BRIDE' ? '예비신부' : '예비신랑'}</IncomeWho>
-              </TagAndWho>
-              <IncomeMoney>+{incomeItem.amount.toLocaleString()}</IncomeMoney>
-            </IncomeRow>
-          ))}
-          {responseData && responseData.expenditure_list.map((expenditureItem) => (
-            <ExpenditureRow key={expenditureItem.expenditure_id}>
-              <TagAndWho>
-                <ExpenditureTag>{expenditureItem.first_tag_name}</ExpenditureTag>
-                <ExpenditureWho>{expenditureItem.role === 'BRIDE' ? '예비신부' : '예비신랑'}</ExpenditureWho>
-              </TagAndWho>
-              <ExpenditureMoney>-{expenditureItem.amount.toLocaleString()}</ExpenditureMoney>
-            </ExpenditureRow>
-          ))}
-        </IncomeExpenditure> */}
-      
         </Container>
     );
 };
