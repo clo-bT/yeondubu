@@ -28,8 +28,8 @@ public class DuBuApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		String policyFilePath = "../data/policy.json";
-		String stuffFilePath = "../../stuff/data/stuff.json";
+		String policyFilePath = "src/main/resources/policy.json";
+		String stuffFilePath = "src/main/resources/stuff.json";
 
 		boolean isPolicyDbEmpty = policyService.isPolicyDbEmpty();
 		boolean isStuffDbEmpty = stuffService.isStuffDbEmpty();
