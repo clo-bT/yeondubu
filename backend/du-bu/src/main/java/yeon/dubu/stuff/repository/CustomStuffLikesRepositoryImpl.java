@@ -26,6 +26,7 @@ public class CustomStuffLikesRepositoryImpl implements CustomStuffLikesRepositor
         List<StuffLikesResDto> stuffLikesList = queryFactory
                 .select(Projections.constructor(StuffLikesResDto.class,
                         qStuff.id,
+                        qStuffLikes.id,
                         qStuff.category,
                         qStuff.subCategory
                 ))
