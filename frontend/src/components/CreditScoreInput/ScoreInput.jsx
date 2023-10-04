@@ -1,7 +1,7 @@
 import  React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
     
@@ -148,7 +148,8 @@ const ScoreInput = () => {
     const [dataSent, setDataSent] = useState(false); // 데이터 전송 여부 상태 추가
     const [expandedItems, setExpandedItems] = useState([]);
 
-    const navigate = useNavigate(); // useNavigate 훅 사용
+  // const navigate = useNavigate();
+  // useNavigate 훅 사용
 
     const [accessToken, setAccessToken] = useState('');
     const [estimatedMoney, setEstimatedMoney] = useState(0); // 예상 금액 상태 추가
