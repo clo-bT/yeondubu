@@ -109,7 +109,8 @@ align-items: center;
 `
 
 
-const SaveButton = styled.div``
+const SaveButton = styled.div`
+cursor: pointer;`
 
 const CalendarInput = () => {
     const accessToken = localStorage.getItem('token');
@@ -140,13 +141,34 @@ const CalendarInput = () => {
     };
 
     const handleSave = () => {
-        axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/money`,
+        if (type === '수입') {
+            axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/income`,
         {
-            "third_tag_id": 8,
-            "user_role": "GROOM",
-            "date": "2023-10-04",
-            "amount": 100000,
-            "memo": "침대 구매",
+            "tag_id":tagId,
+            "user_role": role,
+            "date": date,
+            "amount":amount,
+            "memo": memo,
+    },
+        {
+          headers: {
+              Authorization: `Bearer ${accessToken}`,
+            }
+        }).then(response => {
+            console.log('여기는 캘린더에서 추가하기',response)
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        },[]);
+        }
+        else if (type === '지출') {
+            axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/money`,
+        {
+            "third_tag_id":tagId,
+            "user_role": role,
+            "date": date,
+            "amount":amount,
+            "memo": memo,
             "pay_complete": false
     },
         {
@@ -160,7 +182,11 @@ const CalendarInput = () => {
             console.error('Error fetching data:', error);
         },[]);
         };
-    
+        
+        };
+    const openModal = () => {
+        
+    }
     return (
         <Container>
              <InputType>
@@ -193,7 +219,7 @@ const CalendarInput = () => {
                             예비 신부
                         </InputWhoBride>
                     </InputWho>
-                    <InputTag>
+                    <InputTag onClick={openModal}>
                         <InputSpan>태그 </InputSpan>
                         <TagButton value={tagId} onChange = {handleTagId}>태그</TagButton>
                     </InputTag>

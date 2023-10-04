@@ -43,7 +43,7 @@ cursor: pointer;
 `
 const Tag = styled.div`
 display:flex;
-gap:5px
+gap:5px;
 `
 const TagBox = styled.div`
 border-radius: 10px;
@@ -57,7 +57,7 @@ flex-direction: column;
 justify-content: center;
 align-items: center;
 cursor: pointer;
-`;
+`
 const FirstTag = styled.p`
 color: #000;
 text-align: center;
@@ -76,7 +76,11 @@ font-style: normal;
 font-weight: 400;
 line-height: normal;
 `
-
+const TagList = styled.div`
+display:flex;
+gap:80px;
+`
+const CheckBox = styled.input``
 const DeleteButton = styled.button`
   background: none;
   border: none;
@@ -89,8 +93,11 @@ const CheckBoxWholeContent = () => {
   const accessToken = localStorage.getItem('token')
   const [data, setData] = useState([])
   const [isSelected, setIsSelected] = useState(0)
+  const [tagId, setTagId] = useState(0)
   const [selectedData, setSelectedData] = useState(null)
   const [selectedName, setSelectedName] = useState('')
+  const [firstName, setFirstName] = useState('')
+  const [secondName, setSecondName] = useState('')
   const [newTagName, setNewTagName] = useState('');
   const inputRef = useRef(null);
   const [isAddingTag, setIsAddingTag] = useState(false);
@@ -111,10 +118,12 @@ const CheckBoxWholeContent = () => {
   },[accessToken])
 
 
-  const handleSelect =  (data, first_tag_name) => {
+  const handleSelect =  (data, first_tag_name,id) => {
     setIsSelected(1)
     setSelectedData(data)
     setSelectedName(first_tag_name)
+    setFirstName(first_tag_name)
+    setTagId(id)
   }
   const handleClick =  (data, second_tag_name) => {
     setIsSelected(2)
@@ -135,21 +144,88 @@ const CheckBoxWholeContent = () => {
       }
     };
     const handleSaveClick = () => {
-      axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/tags/${newTagName}`,{},{
-        headers: {
+    
+      if (isSelected === 0) {
+        axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/tags/${newTagName}`, {}, {
+          headers: {
             Authorization: `Bearer ${accessToken}`,
           }
-      })
-        .then(response => {
-          console.log('새로운 태그 추가', response);
-          setIsAddingTag(false);
-          setNewTagName('');
-          window.location.reload();
         })
-        .catch(error => {
-          console.error('새로운 태그 추가', error);
-        });
+          .then(response => {
+            console.log('새로운 태그 추가', response);
+            setIsAddingTag(false);
+            setNewTagName('');
+            window.location.reload();
+          })
+          .catch(error => {
+            console.error('새로운 태그 추가', error);
+          });
+      } else if (isSelected === 1) {
+        axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/tags/${firstName}/${newTagName}`, {
+          first_tag_id: tagId,
+          second_tag_name:newTagName
+        }, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          }
+        },[tagId])
+          .then(response => {
+            console.log('새로운 태그 추가', response);
+            console.log('새로운 태그 추가 firstName', firstName);
+            console.log('새로운 태그 추가v newTagName', newTagName);
+            console.log('새로운 태그 추가v tagId', tagId);
+            setIsAddingTag(false);
+            setNewTagName('');
+            window.location.reload();
+          })
+          .catch(error => {
+            console.error('새로운 태그 추가', error);
+            console.log('새로운 태그 추가 firstName', firstName);
+            console.log('새로운 태그 추가v newTagName', newTagName);
+            console.log('새로운 태그 추가v tagId', tagId);
+
+          });
+      } else if (isSelected === 2) {
+        axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/tags/${firstName}/${secondName}/${newTagName}`, {}, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          }
+        })
+          .then(response => {
+            console.log('새로운 태그 추가', response);
+            console.log('새로운 태그 추가 firstName', firstName);
+            console.log('새로운 태그 추가 secondName', secondName);
+            setIsAddingTag(false);
+            setNewTagName('');
+            window.location.reload();
+          })
+          .catch(error => {
+            console.error('새로운 태그 추가', error);
+            console.log('새로운 태그 추가 firstName', firstName);
+            console.log('새로운 태그 추가 secondName', secondName);
+          });
+
+      }
+    
+      
     };
+  const handleCheckboxChange = async (data) => {
+    try {
+      const updatedData = { ...data, pay_complete: !data.pay_complete };
+      console.log('updatedData',updatedData)
+
+      await axios.put(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/money/${data.money_expenditure_id}`, updatedData, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        }
+      });
+      const updatedSelectedData = selectedData.map(item => (item.third_tag_id === data.third_tag_id ? updatedData : item));
+      setSelectedData(updatedSelectedData);
+
+    } catch (error) {
+      console.error('Error updating data:', error);
+    }
+  };
     const handleDeleteFirstTag = (event, firstTagId) => {
       event.stopPropagation(); 
       axios.delete(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/tags/${firstTagId}`, {
@@ -165,7 +241,8 @@ const CheckBoxWholeContent = () => {
         .catch((error) => {
           console.error('태그 삭제', error);
         });
-    };
+  };
+  
     return (
         <div>
             <Box>
@@ -175,7 +252,7 @@ const CheckBoxWholeContent = () => {
             </Box>
         <Container>
         {(isSelected===0 )&& data.map((firstTag) => (
-        <TagBox key={firstTag.first_tag_id} onClick={() => handleSelect(firstTag.tag_second_expenditure_dto_list,firstTag.first_tag_name)}>
+          <TagBox key={firstTag.first_tag_id} onClick={() => handleSelect(firstTag.tag_second_expenditure_dto_list, firstTag.first_tag_name,firstTag.first_tag_id)}>
                 {isEditMode && (
         <DeleteButton onClick={(e) => handleDeleteFirstTag(e, firstTag.first_tag_id)}>X</DeleteButton>
       )}
@@ -200,7 +277,7 @@ const CheckBoxWholeContent = () => {
         <div>
           <FirstTag onClick={()=>setIsSelected(0)}>{selectedName}</FirstTag>
         {selectedData.map((data) => (
-        <TagBox key={data.second_tag_id} onClick={() => handleClick(data.tag_third_expenditure_dto_list,data.second_tag_name)}>
+        <TagBox key={data.second_tag_id} onClick={() => handleClick(data.tag_third_expenditure_dto_list,data.second_tag_name) && setSecondName(data.second_tag_name)}>
           {isEditMode && (
         <DeleteButton onClick={(e) => handleDeleteFirstTag(e, data.second_tag_id)}>X</DeleteButton>
       )}
@@ -220,9 +297,17 @@ const CheckBoxWholeContent = () => {
         <div>
           <FirstTag onClick={()=>setIsSelected(0)}>{selectedName}</FirstTag>
         {selectedData.map((data) => (
-        <TagBox key={data.third_tag_id}>
-          <FirstTag>{data.third_tag_name}</FirstTag>
-        </TagBox>
+          <div key={data.third_tag_id}>
+            <TagList>
+              <FirstTag>{data.third_tag_name}</FirstTag>
+              <FirstTag>{data.amount}</FirstTag>
+              <CheckBox
+                type="checkbox"
+                checked={data.pay_complete}
+                onChange={() => handleCheckboxChange(data)}
+              />
+            </TagList>
+        </div>
         ))}
         </div>
       )}
