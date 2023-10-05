@@ -28,7 +28,6 @@ display: flex;
 align-items: center;
 justify-content: space-between;
 width: 100%;
-margin-bottom: 50px;
 
 `
 const GetOutButton = styled.a`
@@ -56,20 +55,10 @@ font-size: 23px;
 font-style: normal;
 font-weight: 700;
 line-height: normal;
-margin-left: 20px;
-// margin-top: -30px;
+margin-top : 0px;
+margin-bottom: 0px;
 `
-const Filter = styled.a`
-color: #000;
-text-align: center;
-font-size: 12px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
-text-decoration: none;
-margin-left: auto;
 
-`
 
 const ShopCategoryHeader = () => {
     const {category, subcategory} = useParams();
@@ -95,12 +84,9 @@ const ShopCategoryHeader = () => {
                 <GetOutButton>나가기</GetOutButton>
             </Link>
             <Box>
-            <ProductInfo>
-                <TagName>{headerTitle}</TagName>
-                <Link to = {`/shoppingfilter/${category}/${subcategory}`} >
-                    <Filter>필터 설정하기</Filter>
-                </Link>
-            </ProductInfo>
+                <ProductInfo>
+                    <TagName>{headerTitle}</TagName>
+                </ProductInfo>
             </Box>
         </Container>
     );

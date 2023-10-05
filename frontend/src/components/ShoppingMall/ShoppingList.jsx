@@ -1,11 +1,12 @@
 import {React, useState, useEffect} from 'react';
 import styled from 'styled-components';
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 
 const Container = styled.div`                      
 margin-left: 20px;
+margin-right: 20px;
 margin-bottom: 100px;
 
 `
@@ -47,6 +48,7 @@ width: 100px;
 `
 
 const ImgDetail = styled.div`
+  width:31%;
   margin-right: 5px;
   display: flex;
   align-items: center; 
@@ -94,6 +96,36 @@ margin-bottom: 30px;
 margin-left: 10px;
 `
 
+const Filter = styled.a`
+color: #000;
+text-align: center;
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+text-decoration: none;
+margin-left: auto;
+
+`
+
+const Band = styled.div`
+display: flex;
+align-items: center;
+justify-content: space-between;
+width: 100%;
+`
+
+const SmallHeader = styled.p`
+color: #000;
+font-size: 15px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+margin-top : 5px;
+margin-bottom: 5px;
+`
+
+
 const ShoppingList = () => {
     // user token
     const accessToken = localStorage.getItem("token");
@@ -125,8 +157,8 @@ const ShoppingList = () => {
     }, [subcategory]);  
 
     useEffect(() => {
-        // axios.get(`${process.env.REACT_APP_API_ROOT}/api/v1/marriage-stuff/likes`, {
-        axios.get(`https://j9a307.p.ssafy.io/api/v1/marriage-stuff/likes`, {
+        // axios.get(`${process.env.REACT_APP_API_ROOT}/api/v1/marriage-stuffs/likes`, {
+        axios.get(`https://j9a307.p.ssafy.io/api/v1/marriage-stuffs/likes`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
             }
@@ -176,8 +208,8 @@ const ShoppingList = () => {
     }, [category, subcategory, filterData]);
 
     const likeItem = (event) => {
-        axios.post(`https://j9a307.p.ssafy.io/api/v1/marriage-stuff/likes`, {
-        // axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/marriage-stuff/likes`, {
+        axios.post(`https://j9a307.p.ssafy.io/api/v1/marriage-stuffs/likes`, {
+        // axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/marriage-stuffs/likes`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
             }
@@ -192,7 +224,7 @@ const ShoppingList = () => {
       
     const unlikeItem = (event) => {
         // axios.delete(`${process.env.REACT_APP_API_ROOT}/api/v1/marriage-stuff/likes/${event.id}`, {
-        axios.delete(`https://j9a307.p.ssafy.io/api/v1/marriage-stuff/likes/${event.id}`, {
+        axios.delete(`https://j9a307.p.ssafy.io/api/v1/marriage-stuffs/likes/${event.id}`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
             }
@@ -217,11 +249,18 @@ const ShoppingList = () => {
                     </ImgDetail>
                 ))}
               </LikedContainer>
-          <LikeProduct>추천 상품</LikeProduct>
+          <Band>
+            <SmallHeader>추천 상품</SmallHeader>
+            <Link to = {`/shoppingfilter/${category}/${subcategory}`} >
+                <Filter>필터 설정하기</Filter>
+            </Link>
+          </Band>
             <Recommendation>
                 {items.map((item, index) => (
                   <ImgDetail key={index}>
-                    <RecommendationImg src={item.image} />
+                    <a href={item.link}>
+                      <RecommendationImg src={item.image} />
+                    </a>
                     <ImgDetailRow>
                       <Price>{item.lprice}</Price>
                     </ImgDetailRow>
