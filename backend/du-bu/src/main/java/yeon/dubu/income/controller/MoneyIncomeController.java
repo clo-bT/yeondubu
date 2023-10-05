@@ -7,14 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import yeon.dubu.income.dto.request.MoneyIncomeReqDto;
 import yeon.dubu.income.dto.request.MoneyIncomeUpdateReqDto;
 import yeon.dubu.income.dto.response.MoneyIncomeResDto;
@@ -25,6 +18,7 @@ import yeon.dubu.income.service.MoneyIncomeService;
 @RestController
 @RequestMapping("/api/v1/income")
 @RequiredArgsConstructor
+@CrossOrigin(origins = {"http://localhost:3000", "https://j9a307.p.ssafy.io:3000", "https://j9a307.p.ssafy.io"})
 public class MoneyIncomeController {
     private final MoneyIncomeService moneyIncomeService;
 
