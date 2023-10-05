@@ -514,7 +514,7 @@ const CalendarInput = () => {
 
               <ButtonBox>
               
-              <SaveButton onClick={()=> navigate('/calendar')}>삭제</SaveButton>
+              <SaveButton>삭제</SaveButton>
               <SaveButton onClick={handleSave}>저장</SaveButton>
               {type === 'expenditure' && (
                 <CompleteButton onClick={handleComplete}>구매완료</CompleteButton>
