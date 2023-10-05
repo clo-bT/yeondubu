@@ -93,6 +93,13 @@ public class CoupleServiceImpl implements CoupleService{
             moneyIncomeService.deleteIncome(moneyIncome.getId());
         }
 
+        // user와의 관계 삭제
+        User bride = userRepository.findByCoupleIdAndUserRole(couple.getId(), UserRole.BRIDE).orElseThrow(() -> new NoSuchUserException("해당하는 예비 신부가 없습니다."));
+        User groom = userRepository.findByCoupleIdAndUserRole(couple.getId(), UserRole.GROOM).orElseThrow(() -> new NoSuchUserException("해당하는 예비 신랑이 없습니다."));
+
+        bride.setCouple(null);
+        groom.setCouple(null);
+
         coupleRepository.deleteById(couple.getId());
     }
 
