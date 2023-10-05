@@ -310,7 +310,7 @@ const CalendarInput = () => {
         setMemo(event.target.value);
     };
     const handleDelete = () => {
-      axios.delete(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/money/${expenditureId}`,{
+      axios.delete(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/tags/${expenditureId}`,{
         headers: {
                     Authorization: `Bearer ${accessToken}`,
                 }
@@ -344,9 +344,9 @@ const CalendarInput = () => {
     //     },[]);
     //     }
     //     else if (type === 'expenditure') {
-            axios.put(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/money/${expenditureId}`,
+            axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/money`,
         {
-            "expenditure_id":expenditureId,
+            "third_tag_id":expenditureId,
             "user_role": role,
             "date": date,
             "amount":amount,
@@ -364,7 +364,7 @@ const CalendarInput = () => {
         })
         .catch(error => {
             console.error('Update에서 지출 수정(저장)', error);
-        },[]);
+        },);
         };
       // }
         
@@ -391,9 +391,9 @@ const CalendarInput = () => {
     //     },[]);
     //     }
     //     else if (type === 'expenditure') {
-            axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/money/${expenditureId}`,
+            axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/money`,
         {
-            "expenditure_id":expenditureId,
+            "third_tag_id":expenditureId,
             "user_role": role,
             "date": date,
             "amount":amount,

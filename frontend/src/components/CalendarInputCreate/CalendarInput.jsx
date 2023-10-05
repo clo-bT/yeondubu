@@ -324,6 +324,7 @@ const CalendarInput = () => {
             }
         }).then(response => {
             console.log('여기는 캘린더에서 수입 추가하기',response)
+            navigate('/calendar')
         })
         .catch(error => {
             console.error('Error fetching data:', error);
@@ -345,6 +346,8 @@ const CalendarInput = () => {
             }
         }).then(response => {
             console.log('여기는 캘린더에서 지출 추가하기',response)
+            navigate('/calendar')
+
         })
         .catch(error => {
             console.error('Error fetching data:', error);
@@ -369,6 +372,8 @@ const CalendarInput = () => {
             }
         }).then(response => {
             console.log('여기는 캘린더에서 수입 추가하기',response)
+            navigate('/calendar')
+
         })
         .catch(error => {
             console.error('Error fetching data:', error);
@@ -390,6 +395,8 @@ const CalendarInput = () => {
             }
         }).then(response => {
             console.log('여기는 캘린더에서 지출 추가하기',response)
+            navigate('/calendar')
+
         })
         .catch(error => {
             console.error('여기는 캘린더에서 지출 추가하기', error);
@@ -528,7 +535,7 @@ const CalendarInput = () => {
 
               <ButtonBox>
               
-              <SaveButton onClick={()=> navigate('/calendar')}>취소</SaveButton>
+              <SaveButton onClick={()=> navigate(-1)}>취소</SaveButton>
               <SaveButton onClick={handleSave}>저장</SaveButton>
               {type === 'expenditure' && (
                 <CompleteButton onClick={handleComplete}>구매완료</CompleteButton>

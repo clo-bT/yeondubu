@@ -214,7 +214,7 @@ const ScoreInput = () => {
       }, [accessToken]);
 
     const onChangeSalary = (e) => {
-        const defaultvalue = e.target.value
+        // const defaultvalue = e.target.value
         const rawValue = e.target.value.replace(/,/g, ''); // 입력된 콤마 제거
         const formattedValue = rawValue.replace(/\B(?=(\d{3})+(?!\d))/g, ','); // 천 단위 콤마 추가
         e.target.value = formattedValue; // 콤마가 추가된 값을 입력 필드에 반영
