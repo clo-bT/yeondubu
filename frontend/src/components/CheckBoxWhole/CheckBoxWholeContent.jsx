@@ -3,16 +3,23 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+
+const BigContainer = styled.div`
+  display: flex;
+  justify-content: center; /* 가로축 가운데 정렬 */
+  margin-bottom: 90px;
+`;
+
 const Container = styled.div`
   display: flex;
   flex-wrap: wrap; 
   gap: 10px;
-  align-items: center;
-  justify-content: center;
   margin-top: 30px;
-`
-const Income = styled.div``
-const Expend = styled.div``
+  justify-content: center; /* 가로축 가운데 정렬 */
+`;
+
+
+
 const Box = styled.div`
 display: flex;
 justify-content: flex-end;
@@ -31,8 +38,14 @@ cursor: pointer;
 
 `
 const NewTag = styled.input`
-width: 83px;
-
+display: flex;
+flex-direction: column;
+width: 90px;
+height: 20px;
+margin-bottom: 20px;
+margin-top: 20px;
+border: 2px solid #b2c2eb;
+border-radius: 5px;
 `
 const EditButton = styled.a`
 color: #000;
@@ -47,38 +60,44 @@ cursor: pointer;
 const Tag = styled.div`
 display:flex;
 gap:5px;
+display: flex;
+justify-content: center;
+
+
 `
 const TagBox = styled.div`
 border-radius: 10px;
-border: 2px solid #2663FF;
+border: 2px solid #97b3f8;
 background: rgba(255, 255, 255, 0.50);
-display: flex;
-width: 83px;
-height: 83px;
-padding: 14px 8px;
-flex-direction: column;
-justify-content: center;
-align-items: center;
+padding: 17px 17px;
 cursor: pointer;
+width: 90px;
+height: 90px;
+
 `
 const FirstTag = styled.p`
-color: #000;
-text-align: center;
-font-size: 18px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;   
-cursor: pointer;
-`
+
+  color: #000;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  cursor: pointer;
+margin-top: 10px;
+`;
+
 
 const SecondTag = styled.p`
-color: rgba(0, 0, 0, 0.50);
-text-align: center;
-font-size: 12px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
-`
+  color: rgba(0, 0, 0, 0.50);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+  white-space: nowrap; 
+`;
+
 const TagList = styled.div`
 display:flex;
 gap:80px;
@@ -92,6 +111,10 @@ const DeleteButton = styled.button`
   top: 0;
 `;
 
+const FirstTagHeader = styled.p`
+
+
+`
 const CheckBoxWholeContent = () => {
   const navigate = useNavigate();
   const accessToken = localStorage.getItem('token');
@@ -244,24 +267,25 @@ const CheckBoxWholeContent = () => {
   };
   
     return (
-
-        <div>
-         
-        <Expend><Box>
+<div>
+        <Box>
 
         <AddButton onClick={handleAddTag}>추가</AddButton>
         {!isEditMode && <EditButton onClick={()=>setIsEditMode(true)}>편집</EditButton>}
         {isEditMode && <EditButton onClick={()=>setIsEditMode(false)}>저장</EditButton>}
         </Box>
+        
+    <BigContainer>
     <Container>
     {(isSelected===0 )&& data.map((firstTag) => (
-      <TagBox key={firstTag.first_tag_id} onClick={() => handleSelect(firstTag.tag_second_expenditure_dto_list, firstTag.first_tag_name,firstTag.first_tag_id)}>
+      <TagBox>
+      <div key={firstTag.first_tag_id} onClick={() => handleSelect(firstTag.tag_second_expenditure_dto_list, firstTag.first_tag_name,firstTag.first_tag_id)}>
             {isEditMode && (
     <DeleteButton onClick={(e) => handleDeleteFirstTag(e, firstTag.first_tag_id)}>X</DeleteButton>
   )}
       <FirstTag>{firstTag.first_tag_name}</FirstTag>
-      <div>
-        {firstTag.tag_second_expenditure_dto_list.map((secondTag) => (
+
+        {firstTag.tag_second_expenditure_dto_list.slice(0,2).map((secondTag) => (
           <SecondTag key={secondTag.second_tag_id}>
             {secondTag.second_tag_name}
             {/*
@@ -273,12 +297,15 @@ const CheckBoxWholeContent = () => {
             */}
           </SecondTag>
         ))}
-      </div>
+        </div>
     </TagBox>
   ))}
+    </Container>
+  
+<Container>
+        <FirstTagHeader onClick={()=>setIsSelected(0)}>{selectedName}</FirstTagHeader>
   {(isSelected===1) && (
     <div>
-      <FirstTag onClick={()=>setIsSelected(0)}>{selectedName}</FirstTag>
     {selectedData.map((data) => (
     <TagBox key={data.second_tag_id} onClick={() => handleClick(data.tag_third_expenditure_dto_list,data.second_tag_name,data.second_tag_id)}>
       {isEditMode && (
@@ -286,7 +313,7 @@ const CheckBoxWholeContent = () => {
   )}
       <FirstTag>{data.second_tag_name}</FirstTag>
       <Tag>
-        {data.tag_third_expenditure_dto_list.map((thirdTag) => (
+        {data.tag_third_expenditure_dto_list.slice(0,2).map((thirdTag) => (
           <SecondTag key={thirdTag.second_tag_id}>
             {thirdTag.third_tag_name}
           </SecondTag>
@@ -294,8 +321,10 @@ const CheckBoxWholeContent = () => {
       </Tag>
     </TagBox>
     ))}
-    </div>
+      </div>
   )}
+</Container>
+
   {(isSelected===2) && (
     <div>
       <FirstTag onClick={()=>setIsSelected(0)}>{selectedName}</FirstTag>
@@ -319,6 +348,7 @@ const CheckBoxWholeContent = () => {
     ))}
     </div>
   )}
+
   {isAddingTag && (
   <TagBox>
     <NewTag
@@ -334,12 +364,12 @@ const CheckBoxWholeContent = () => {
     </Tag>
   </TagBox>
     )}
-    </Container></Expend>
-        
+
+    
             
 
-    </div>
+    </BigContainer>
+        </div>
         );
         };
-
 export default CheckBoxWholeContent;
