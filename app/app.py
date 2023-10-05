@@ -82,21 +82,23 @@ def loan_upload():
                 print('jsonfile 이미 있음')
             json_data = request.get_json()
             try:
-                salary = json_data['salary']['salary']
-                salary = int(''.join(salary.split(',')))
+                salary = int(''.join(json_data['salary']['salary'].split(',')))
                 creditScore = int(json_data['creditScore']['creditScore'])
                 surCharge = int(json_data['surCharge']) 
                 loanPeriod = int(json_data['loanPeriod']['loanPeriod'])
-                totalAssets = json_data['totalAssets']['totalAssets']
-                totalAssets = int(''.join(totalAssets.split(',')))
+                totalAssets = int(''.join(json_data['totalAssets']['totalAssets'].split(',')))
             except:
+                print('첫 excep에서 걸림')
                 raise KeyError
             rate = calculate(salary) # 속한 수입 구간의 평균 자산 대비 부채 비율
             results = credit_scores(salary, creditScore, surCharge, loanPeriod, rate, totalAssets)
+            print(results)
             return jsonify({'result': results})
         except Exception as err:
+            print('두 번째 except에서 걸림')
             return jsonify({'result':str(err)}), 300
     else:
+        print('마지막에서 걸림')
         return jsonify({'result':False}), 400
 
 if __name__ == '__main__':
