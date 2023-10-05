@@ -119,6 +119,7 @@ const LoanTableTitle = styled.th`
   padding: 6px;
   text-align: left;
   background-color: #f2f2f2;
+  background-color: #f2f2f2;
 `;
 const LoanTableHeader = styled.th`
   border: 1px solid #ddd;
@@ -219,7 +220,7 @@ const ScoreInput = () => {
         e.target.value = formattedValue; // 콤마가 추가된 값을 입력 필드에 반영
         setSalary({
             ...salary,
-            salary: defaultvalue,
+            salary: e.target.value,
         });
     };
     const onChangeloanPeriod = (e) => {
@@ -267,7 +268,11 @@ const ScoreInput = () => {
       setsurcharge(usemoney)
     }, [usemoney]);
     const sendDataToServer = () => {
-          
+        const usemoney = estimatedMoney - (cashMoney.bride_total_cash+cashMoney.groom_total_cash
+            +accountMoney.bride_total_account +accountMoney.groom_total_account);
+        setsurcharge(usemoney)
+        console.log(surCharge)
+        console.log(salary)
         if (!salary || !loanPeriod || !creditScore || !totalAssets) {
             setNoInputError('모든 정보를 입력해주세요');
             return; // 정보가 누락된 경우 함수 종료
