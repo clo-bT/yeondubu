@@ -4,7 +4,7 @@ import PictureInput from '../../assets/PutShoppingImage/PictureInput.svg';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 
 const Container = styled.div`
@@ -106,51 +106,33 @@ flex-wrap: wrap;
 `
 
 const ShoppingFilter = () => {
-    const defaultFilter = {
-      lprice : 0,
-      hprice : 1000000000,
-      brand : ''
-    };
+  const navigate = useNavigate();
     const {category, subcategory} = useParams();
     const [brands, setBrands] = useState([]);
     const [selectedImage, setSelectedImage] = useState(null);
     const [priceRange, setPriceRange] = useState([0, 1000]);
-    const [currentPriceRange, setCurrentPriceRange] = useState(priceRange); // 현재 구간 값을 저장할 상태
-    const [filterData, setFilterData] = useState(defaultFilter);
-    const [uploadImage, setUploadImage] = useState(null);    
-    // useEffect(() => {
-    //   const filterData = localStorage.getItem();
-    //   setFilter(filterData);
-    // }, []);
+    const [currentPriceRange, setCurrentPriceRange] = useState([0, 1000]); // 현재 구간 값을 저장할 상태
+    const [filterData, setFilterData] = useState(null);
+    const [uploadImage, setUploadImage] = useState(null);
 
     useEffect(() => {
       const defaultData = {
-        category : category,
-        subcategory : subcategory,
         lprice : 0,
         hprice : 1000000000,
         brand : ''
       };
-      let storedData = localStorage.getItem('filterData');
+      // let storedData = JSON.parse(localStorage.getItem(subcategory));
+      let storedData = JSON.parse(localStorage.getItem(subcategory));
       console.log(storedData);
       if (!storedData) {
-        localStorage.setItem('filterData', JSON.stringify([defaultData, ]));
-        storedData = [defaultData, ];
+        localStorage.setItem(subcategory, JSON.stringify(defaultData));
+        storedData = defaultData;
       };
-      const parsedData = JSON.parse(storedData);
-      const categoryFilter = parsedData.filter(item => item.category === category && item.subcategory === subcategory);
-      if (categoryFilter) {
-        setFilterData(categoryFilter);
-      } else {
-        storedData.append(defaultData);
-        localStorage.setItem('filterData', JSON.stringify(storedData));
-        setFilterData(defaultData);
-      };
-      console.log(filterData);
-    }, [category, subcategory]);
+      setFilterData(storedData);
+    }, [subcategory]);  
 
     useEffect(() => {
-        const baseURL = 'http://localhost:5000'
+        const baseURL = `${process.env.REACT_APP_FLASK_ROOT}`
         const URL = '/api/v1/marriage-stuffs/category_detail'
         const params = {
             category : category,
@@ -165,10 +147,10 @@ const ShoppingFilter = () => {
                 handleSliderAfterChange([minPrice, maxPrice]);
             })
             .catch ((error) => {
-                console.error('Error fetching default values:', error);
+              console.error('Error fetching default values:', error);
             });
     }, [category, subcategory]);
-    
+          
     // 브랜드 클릭 상태를 관리하는 배열
     const [brandClickStates, setBrandClickStates] = useState(
         new Array(brands.length).fill(false)
@@ -180,39 +162,37 @@ const ShoppingFilter = () => {
         const scrollPosition = (value[0] / 1000) * document.documentElement.scrollHeight;
         window.scrollTo(0, scrollPosition);
     };
-    // 이미지를 선택했을 때 처리하는 함수
-    const handleImageSelect = (event) => {
-        const file = event.target.files[0]; // 선택한 파일
-        if (file) {
-            const imageUrl = URL.createObjectURL(file); // 파일의 URL 생성
-            setSelectedImage(imageUrl); // 선택한 이미지를 상태에 저장
-            setUploadImage(event.target.files[0])
-        }
-    };
 
-    const CustomSliderHandle = Slider.Handle;
-    
     const handleSliderAfterChange = (value) => {
         setCurrentPriceRange(value);
         console.log('슬라이더 구간 값:', value);
     };
+            // 이미지를 선택했을 때 처리하는 함수
+      const handleImageSelect = (event) => {
+          const file = event.target.files[0]; // 선택한 파일
+          if (file) {
+              const imageUrl = URL.createObjectURL(file); // 파일의 URL 생성
+              setSelectedImage(imageUrl); // 선택한 이미지를 상태에 저장
+              setUploadImage(event.target.files[0])
+          }
+    };
+
+    const CustomSliderHandle = Slider.Handle;
+    
 
     // 클릭한 브랜드의 클릭 상태를 토글 
     const handleBrandClick = (index) => {
-      const updatedClickStates = [...brandClickStates];
-      updatedClickStates[index] = !updatedClickStates[index];
-      setBrandClickStates(updatedClickStates);
-      
-      // 클릭한 브랜드 정보 배열 업데이트
-      const clickedBrands = [];
-      updatedClickStates.forEach((clicked, index) => {
-        if (clicked) {
-          clickedBrands.push(brands[index]);
-        }
-      });
-
-      // 클릭한 브랜드 배열 출력
-      console.log('클릭한 브랜드들:', clickedBrands);
+        const updatedClickStates = [...brandClickStates];
+        updatedClickStates[index] = !updatedClickStates[index];
+        setBrandClickStates(updatedClickStates);
+        
+        // 클릭한 브랜드 정보 배열 업데이트
+        const clickedBrands = [];
+        updatedClickStates.forEach((clicked, index) => {
+            if (clicked) {
+                clickedBrands.push(brands[index]);
+            }
+        });
     };
     
     const handleSubmit = async (e) => {
@@ -225,34 +205,14 @@ const ShoppingFilter = () => {
         }
       });
       const ArrayToString = clickedBrands.join(', ');
-      // const updateFilter = {
-      //   category : category,
-      //   subcategory : subcategory,
-      //   brand : ArrayToString,
-      //   lprice: currentPriceRange[0],
-      //   hprice: currentPriceRange[1]
-      // }
-      // setFilterData(updateFilter);
-  
-      // const existingData = JSON.parse(localStorage.getItem('filterData'));
-      // console.log(existingData, 'where is this')
-      // const indexToUpdate = existingData.findIndex((item) => {
-      //   return item.category === category && item.subcategory === subcategory;
-      // });
-      // existingData[indexToUpdate].lprice = currentPriceRange[0];
-      // existingData[indexToUpdate].hprice = currentPriceRange[1];
-      // existingData[indexToUpdate].brand = ArrayToString;
-      // localStorage.setItem('filterData', JSON.stringify(existingData));
-
+      let newFilterData = {
+          brand  : ArrayToString,
+          lprice : currentPriceRange[0],
+          hprice : currentPriceRange[1],
+      };
+      localStorage.setItem(subcategory, JSON.stringify(newFilterData));
       if (selectedImage) {
           const formData = new FormData();
-          // const params = {
-          //     'category'    : category,
-          //     'subcategory' : subcategory,
-          //     'brand'       : filterData.brand,
-          //     'lprice'      : filterData.lprice,
-          //     'hprice'      : filterData.hprice,
-          // };
           const data = {
               'category'    : category,
               'subcategory' : subcategory,
@@ -266,13 +226,14 @@ const ShoppingFilter = () => {
             formData.append(key, data[key]);
           }
           try {
-            axios.post('http://localhost:5000/api/v1/marriage-stuffs/img_search', formData, {
+            axios.post(`${process.env.REACT_APP_FLASK_ROOT}/api/v1/marriage-stuffs/img_search`, formData, {
               headers: {
                 'Content-Type': 'multipart/form-data',
               },
             })
             .then (res => {
-              console.log(res.data);
+              localStorage.setItem('img_search', JSON.stringify(res.data));
+              navigate(`/shoppingrecommendation/${category}/${subcategory}`)
             })
             .catch(err => {
               console.log(err)
@@ -280,14 +241,15 @@ const ShoppingFilter = () => {
         } catch (error) {
             console.error('Upload failed:', error);
         }
+      } else {
+        navigate(`/shoppingmall/${category}/${subcategory}`);
       }
-      // history.push(`/shoppingmall/${category}/${subcategory}`)
     };
 
     return (
         <Container>
             <Box>
-                <GetOutButton href="/shoppingmall/:category/:subcategory">나가기</GetOutButton>
+                <GetOutButton onClick={()=>navigate(`/shoppingmall/${category}/${subcategory}`)}>나가기</GetOutButton>
                 <EnterButton type="submit" onClick={handleSubmit} onSubmit={handleSubmit}>적용하기</EnterButton>
             </Box>
         <InputPicture
