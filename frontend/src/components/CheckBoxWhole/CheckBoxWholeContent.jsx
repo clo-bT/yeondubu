@@ -11,7 +11,7 @@ const Container = styled.div`
   justify-content: center;
   margin-top: 30px;
 `
-const Income = styled.div``
+// const Income = styled.div``
 const Expend = styled.div``
 const Box = styled.div`
 display: flex;

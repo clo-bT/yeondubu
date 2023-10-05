@@ -23,7 +23,8 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
     };
   
     const [accessToken, setAccessToken] = useState('');
-    const [data, setData] = useState([]); // 데이터를 저장할 상태 추가
+  // const [data, setData] = useState([]);
+  // 데이터를 저장할 상태 추가
   
     useEffect(() => {
       const token = localStorage.getItem("token");
@@ -47,10 +48,10 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
           });
   
           console.log('요청 성공:', response.data);
-          setData(response.data);
+          // setData(response.data);
   
           createChatBotMessage(
-            '네! ${tagNmae}의 최신 정책 알려드릴게요!'
+            `네! ${tagName}의 최신 정책 알려드릴게요!`
           )
           response.data.forEach((item) => {
             const message = createChatBotMessage(

@@ -25,11 +25,11 @@ line-height: normal;
 margin-top: 0px;
 `
 
-const Box = styled.div`
-display: flex;
+// const Box = styled.div`
+// display: flex;
 
 
-`
+// `
 
 const CoupleMoney = () => {
   const [accessToken, setAccessToken] = useState('');

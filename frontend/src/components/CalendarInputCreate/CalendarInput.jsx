@@ -280,7 +280,7 @@ const CalendarInput = () => {
         .catch(error => {
           console.error('income 태그 받기', error);
         });
-    },[])
+    },[accessToken])
     useEffect(()=>{
         axios.get(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/tags/all`,{
             headers: {
@@ -294,7 +294,7 @@ const CalendarInput = () => {
         .catch(error => {
           console.error('지출 태그 받기', error);
         });
-    },[])
+    },[accessToken])
     
     const handleThirdTagChange = (event) => {
         const selectedThirdTagId = event.target.value;

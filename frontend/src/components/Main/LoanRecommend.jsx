@@ -44,12 +44,12 @@ margin-left: 30px;
 margin-bottom: 20px;
 `
 
-const BankImg = styled.img`
-// width: 40px;
-// height: 40px;
-flex-shrink: 0;
-border-radius: 5px;
-`
+// const BankImg = styled.img`
+// // width: 40px;
+// // height: 40px;
+// flex-shrink: 0;
+// border-radius: 5px;
+// `
 
 
 const InputButton = styled.button`
