@@ -223,6 +223,16 @@ const DepositAccountInputForm = () => {
   const [outMoney, setoutMoney] = useState('');
   const [cashMoney, setcashMoney] = useState('');
   
+  const resetFields = () => {
+    setAccountName('');
+    setEndDate('');
+    setnowMoney('');
+    setExpectMoney('');
+    setOutDate('');
+    setoutMoney('');
+    setcashMoney('');
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     setAccessToken(token)
@@ -301,6 +311,7 @@ const SavingAccount = () => {
           console.error('요청 실패:', error);
       });
       setErrorMessage('');
+      resetFields();
 };
 
 const DepositAccount = () => {
@@ -342,6 +353,7 @@ const DepositAccount = () => {
       });
       
       setErrorMessage('');
+      resetFields();
     };
     
 const CashAccount = () => {
@@ -380,6 +392,7 @@ const CashAccount = () => {
           console.error('요청 실패:', error);
       });
       setErrorMessage('');
+      resetFields();
 };
 
 
