@@ -99,6 +99,11 @@ def credit_scores(salary, score, loan_money, period, ratio, totalAssets):
             result.append(da)
             # if salary * 0.4 > month_repay: # 1억이 넘어가면서 40%가 넘지 않는 경우만 필터링
         else:
+            limit_amount_40 = '1억 이상 대출 시 DSR이 적용됩니다.'
+            limit_amount_70 = '1억 이상 대출 시 DSR이 적용됩니다.'
+            limit_amount_90 = '1억 이상 대출 시 DSR이 적용됩니다.'
+            limit_amount = [limit_amount_40, limit_amount_70, limit_amount_90]
+            da['limit_amount'] = limit_amount
             result.append(da)
 
     return result
