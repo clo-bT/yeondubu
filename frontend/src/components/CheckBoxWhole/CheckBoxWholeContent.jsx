@@ -5,16 +5,24 @@ import { useNavigate } from 'react-router-dom';
 
 const VeryBigContainer = styled.div`
 margin-bottom: 90px;
+display: flex;
+flex-direction: column;
+/* justify-content: center; */
 `
 
 const BigContainer = styled.div`
-  display: flex;
+  /* display: flex;
+  flex-direction: column;
+  align-items: center; */
   justify-content: center; /* 가로축 가운데 정렬 */
   /* margin-bottom: 90px; */
 `;
 
 const Container = styled.div`
   display: flex;
+  /* flex-direction: column; */
+  align-items: center;
+  justify-content: center;
   flex-wrap: wrap; 
   gap: 10px;
   margin-top: 30px;
