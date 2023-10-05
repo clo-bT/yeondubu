@@ -45,7 +45,7 @@ const WholeTabContent = () => {
             <Detail href="/chatbot">챗봇</Detail>
             <HorizontalLine />
             <Header>체크리스트</Header>
-            <Detail href="/">체크리스트 수정</Detail>
+            <Detail href="/checkboxwhole">체크리스트 수정</Detail>
             <HorizontalLine />
             <Header>고객센터</Header>
             <Detail href="/mooni">문의하기</Detail>

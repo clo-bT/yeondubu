@@ -3,15 +3,23 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+const VeryBigContainer = styled.div`
+margin-bottom: 90px;
+`
+
+const BigContainer = styled.div`
+  display: flex;
+  justify-content: center; /* 가로축 가운데 정렬 */
+  /* margin-bottom: 90px; */
+`;
+
 const Container = styled.div`
   display: flex;
   flex-wrap: wrap; 
   gap: 10px;
-  align-items: center;
-  justify-content: center;
   margin-top: 30px;
 `
-// const Income = styled.div``
+const Income = styled.div``
 const Expend = styled.div``
 const Box = styled.div`
 display: flex;
@@ -31,8 +39,14 @@ cursor: pointer;
 
 `
 const NewTag = styled.input`
-width: 83px;
 
+width: 90px;
+height: 20px;
+margin-bottom: 20px;
+margin-top: 20px;
+border: 2px solid #fab9b9;
+border-radius: 5px;
+color: #000;
 `
 const EditButton = styled.a`
 color: #000;
@@ -47,41 +61,54 @@ cursor: pointer;
 const Tag = styled.div`
 display:flex;
 gap:5px;
+display: flex;
+justify-content: center;
+
+
 `
 const TagBox = styled.div`
 border-radius: 10px;
-border: 2px solid #2663FF;
+border: 1px solid #FF5A5A;
 background: rgba(255, 255, 255, 0.50);
-display: flex;
-width: 83px;
-height: 83px;
-padding: 14px 8px;
-flex-direction: column;
-justify-content: center;
-align-items: center;
+padding: 17px 17px;
 cursor: pointer;
+width: 90px;
+height: 90px;
+/* gap: 10px; */
+
 `
 const FirstTag = styled.p`
-color: #000;
-text-align: center;
-font-size: 18px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;   
-cursor: pointer;
-`
+
+  color: #000;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  cursor: pointer;
+margin-top: 10px;
+`;
+
 
 const SecondTag = styled.p`
-color: rgba(0, 0, 0, 0.50);
-text-align: center;
-font-size: 12px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
-`
+  color: rgba(0, 0, 0, 0.50);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+  white-space: nowrap; 
+`;
+
 const TagList = styled.div`
 display:flex;
-gap:80px;
+/* width: 90%; */
+margin-left: 10px;
+margin-right: 10px;
+align-items: center;
+justify-content: space-between;
+
+/* gap:80px; */
 `
 const CheckBox = styled.input``
 const DeleteButton = styled.button`
@@ -92,7 +119,67 @@ const DeleteButton = styled.button`
   top: 0;
 `;
 
+const SecondContainer = styled.p`
+  display: flex;
+  flex-wrap: wrap; 
+  gap: 10px;
+  justify-content: center; 
+
+`
+
+const ModalContainer = styled.div`
+  display: ${(props) => (props.isopen ? 'block' : 'none')};
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+`;
+
+const ModalContent = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+`;
+
+const ModalCloseButton = styled.button`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+`;
+
+const HorizonLine = styled.p`
+  width:100%;
+  height: 1px;
+  background: #FF5A5A;
+
+`
 const CheckBoxWholeContent = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
+  
+
+  const openModal = (content) => {
+    setIsModalOpen(true);
+    setModalContent(content);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setModalContent(null);
+  };
+  
   const navigate = useNavigate();
   const accessToken = localStorage.getItem('token');
   const [data, setData] = useState([]);
@@ -137,19 +224,46 @@ const CheckBoxWholeContent = () => {
     setSecondName(second_tag_name)
     setSecondTagId(tagId)
   }
-  const handleAddTag = () => {
-    setIsAddingTag(true);
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
+
+  const handleInputChange = (e) => {
+    const tmp = e.target.value
+    setNewTagName(tmp);
+  };
+    const handleAddTag = () => {
+      const modalContent = (
+        <ModalContent>
+          <ModalCloseButton onClick={closeModal}>X</ModalCloseButton>
+          <NewTag
+            type="text"
+            // value={newTagName}
+            onChange={handleInputChange}
+  
+            ref={inputRef}
+          />
+ 
+          <Tag>
+            {/* <FirstTag onClick={handleCancelClick}>취소</FirstTag> */}
+            <FirstTag
+              onClick={() => {
+                handleSaveClick();
+                closeModal();
+              }}
+            >
+              저장
+            </FirstTag>
+          </Tag>
+        </ModalContent>
+      );
+    
+      openModal(modalContent);
     };
-    const handleCancelClick = () => {
-      setIsAddingTag(false);
-      setNewTagName(''); 
-      if (inputRef.current) {
-        inputRef.current.blur(); 
-      }
-    };
+    // const handleCancelClick = () => {
+    //   setIsAddingTag(false);
+    //   setNewTagName(''); 
+    //   if (inputRef.current) {
+    //     inputRef.current.blur(); 
+    //   }
+    // };
 
     const handleSaveClick = () => {
     
@@ -244,24 +358,24 @@ const CheckBoxWholeContent = () => {
   };
   
     return (
-
-        <div>
-         
-        <Expend><Box>
-
+<VeryBigContainer>
+<Box>
         <AddButton onClick={handleAddTag}>추가</AddButton>
-        {!isEditMode && <EditButton onClick={()=>setIsEditMode(true)}>편집</EditButton>}
-        {isEditMode && <EditButton onClick={()=>setIsEditMode(false)}>저장</EditButton>}
-        </Box>
+        {!isEditMode && <EditButton onClick={() => setIsEditMode(true)}>편집</EditButton>}
+        {isEditMode && <EditButton onClick={() => setIsEditMode(false)}>저장</EditButton>}
+      </Box>
+        
+    <BigContainer>
     <Container>
     {(isSelected===0 )&& data.map((firstTag) => (
-      <TagBox key={firstTag.first_tag_id} onClick={() => handleSelect(firstTag.tag_second_expenditure_dto_list, firstTag.first_tag_name,firstTag.first_tag_id)}>
+      <TagBox>
+      <div key={firstTag.first_tag_id} onClick={() => handleSelect(firstTag.tag_second_expenditure_dto_list, firstTag.first_tag_name,firstTag.first_tag_id)}>
             {isEditMode && (
     <DeleteButton onClick={(e) => handleDeleteFirstTag(e, firstTag.first_tag_id)}>X</DeleteButton>
   )}
       <FirstTag>{firstTag.first_tag_name}</FirstTag>
-      <div>
-        {firstTag.tag_second_expenditure_dto_list.map((secondTag) => (
+
+        {firstTag.tag_second_expenditure_dto_list.slice(0,2).map((secondTag) => (
           <SecondTag key={secondTag.second_tag_id}>
             {secondTag.second_tag_name}
             {/*
@@ -273,12 +387,18 @@ const CheckBoxWholeContent = () => {
             */}
           </SecondTag>
         ))}
-      </div>
+        </div>
     </TagBox>
   ))}
+    </Container>
+    </BigContainer>
+    {/* </BigContainer> */}
+
+  
+
+        {/* <FirstTagHeader onClick={()=>setIsSelected(0)}>{selectedName}</FirstTagHeader> */}
   {(isSelected===1) && (
-    <div>
-      <FirstTag onClick={()=>setIsSelected(0)}>{selectedName}</FirstTag>
+    <SecondContainer>
     {selectedData.map((data) => (
     <TagBox key={data.second_tag_id} onClick={() => handleClick(data.tag_third_expenditure_dto_list,data.second_tag_name,data.second_tag_id)}>
       {isEditMode && (
@@ -286,19 +406,24 @@ const CheckBoxWholeContent = () => {
   )}
       <FirstTag>{data.second_tag_name}</FirstTag>
       <Tag>
-        {data.tag_third_expenditure_dto_list.map((thirdTag) => (
+        {data.tag_third_expenditure_dto_list.slice(0,2).map((thirdTag) => (
           <SecondTag key={thirdTag.second_tag_id}>
             {thirdTag.third_tag_name}
-          </SecondTag>
+
+            </SecondTag>
         ))}
       </Tag>
     </TagBox>
     ))}
-    </div>
+      </SecondContainer>
   )}
+
+
+
   {(isSelected===2) && (
     <div>
       <FirstTag onClick={()=>setIsSelected(0)}>{selectedName}</FirstTag>
+<HorizonLine />
     {selectedData.map((data) => (
       <div key={data.third_tag_id} onClick={()=>navigate(`/calendarupdate/${data.third_tag_id}`)}>
         <TagList>
@@ -319,7 +444,8 @@ const CheckBoxWholeContent = () => {
     ))}
     </div>
   )}
-  {isAddingTag && (
+
+  {/* {isAddingTag && (
   <TagBox>
     <NewTag
       type="text"
@@ -333,13 +459,18 @@ const CheckBoxWholeContent = () => {
     <FirstTag onClick={handleSaveClick}>저장</FirstTag>
     </Tag>
   </TagBox>
-    )}
-    </Container></Expend>
-        
+    )} */}
+
+    
+{isModalOpen && (
+        <ModalContainer isopen={isModalOpen}>
+          {modalContent}
+        </ModalContainer>
+      )}
             
 
-    </div>
+</VeryBigContainer>
+      
         );
-        };
-
+      };
 export default CheckBoxWholeContent;
