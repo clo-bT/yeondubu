@@ -37,6 +37,7 @@ import CreditScoreInput from './pages/CreditScoreInput';
 import MyAccountUpdate from './pages/MyAccountUpdate';
 import CheckBoxWhole from './pages/CheckBoxWhole';
 import UserWithdraw from './pages/UserWithdraw';
+import MyPageAccountInput from './pages/MyPageAccountInput';
 
 
 function App() {
@@ -87,6 +88,7 @@ function App() {
           <Route path="/myaccountupdate/:accountType/:accountId" element={<MyAccountUpdate />} />
           <Route path="/checkboxwhole" element={<CheckBoxWhole />} />
           <Route path="/userwithdraw" element={<UserWithdraw />} />
+          <Route path="/mypageaccountinput" element={<MyPageAccountInput />} />
         </Routes>
       </div>
     </BrowserRouter>
