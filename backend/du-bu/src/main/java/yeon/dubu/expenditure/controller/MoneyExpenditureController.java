@@ -18,6 +18,7 @@ import java.net.URISyntaxException;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/expenditure/money")
+@CrossOrigin(origins = {"http://localhost:3000", "https://j9a307.p.ssafy.io:3000", "https://j9a307.p.ssafy.io"})
 public class MoneyExpenditureController {
 
     private final MoneyExpenditureService moneyExpenditureService;
