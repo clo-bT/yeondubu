@@ -31,7 +31,7 @@ public class StuffServiceImpl implements StuffService {
     public void saveStuffsFromJsonFile(String filePath) {
         try {
 
-            InputStream is = new ClassPathResource(filePath).getInputStream();
+            InputStream is = new ClassPathResource("BOOT-INF/classes/" + filePath).getInputStream();
             ObjectMapper objectMapper = new ObjectMapper();
 //            Resource resource = resourceLoader.getResource(filePath);
 //            InputStream inputStream = resource.getInputStream();

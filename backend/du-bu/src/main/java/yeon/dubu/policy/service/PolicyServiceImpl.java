@@ -41,7 +41,7 @@ public class PolicyServiceImpl implements PolicyService{
             ObjectMapper objectMapper = new ObjectMapper();
 //            Resource resource = resourceLoader.getResource(filePath);
 
-            InputStream is = new ClassPathResource(filePath).getInputStream();
+            InputStream is = new ClassPathResource("BOOT-INF/classes/" + filePath).getInputStream();
 
             JsonNode rootNode = objectMapper.readTree(is);
             Iterator<Map.Entry<String, JsonNode>> fieldsIterator = rootNode.fields();
