@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import yeon.dubu.user.exception.NoSuchUserException;
 import yeon.dubu.user.repository.UserRepository;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -37,9 +39,11 @@ public class PolicyServiceImpl implements PolicyService{
     public void savePoliciesFromJsonFile(String filePath) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            Resource resource = resourceLoader.getResource(filePath);
+//            Resource resource = resourceLoader.getResource(filePath);
 
-            JsonNode rootNode = objectMapper.readTree(resource.getInputStream());
+            InputStream is = new ClassPathResource(filePath).getInputStream();
+
+            JsonNode rootNode = objectMapper.readTree(is);
             Iterator<Map.Entry<String, JsonNode>> fieldsIterator = rootNode.fields();
             while (fieldsIterator.hasNext()) {
                 Map.Entry<String, JsonNode> entry = fieldsIterator.next();
