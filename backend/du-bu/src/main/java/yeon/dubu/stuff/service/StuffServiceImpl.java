@@ -30,11 +30,8 @@ public class StuffServiceImpl implements StuffService {
     @Transactional
     public void saveStuffsFromJsonFile(String filePath) {
         try {
-
-            InputStream is = new ClassPathResource("BOOT-INF/classes/" + filePath).getInputStream();
+            InputStream is = new ClassPathResource(filePath).getInputStream();
             ObjectMapper objectMapper = new ObjectMapper();
-//            Resource resource = resourceLoader.getResource(filePath);
-//            InputStream inputStream = resource.getInputStream();
 
             List<Stuff> stuffList = objectMapper.readValue(is, new TypeReference<List<Stuff>>() {});
 
