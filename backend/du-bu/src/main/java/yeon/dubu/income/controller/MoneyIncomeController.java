@@ -40,4 +40,10 @@ public class MoneyIncomeController {
         return new ResponseEntity<>("", HttpStatus.OK);
     }
 
+    @GetMapping("/{incomeId}")
+    public ResponseEntity<?> searchIncome(@AuthenticationPrincipal Long userId, @PathVariable Long incomeId){
+        MoneyIncomeResDto moneyIncomeResDto = moneyIncomeService.searchIncome(userId, incomeId);
+        return new ResponseEntity<>(moneyIncomeResDto, HttpStatus.OK);
+    }
+
 }
