@@ -193,17 +193,17 @@ const BudgetMoney = ({ isBudgetOpen }) => {
             <Dday>{dDayLabel}</Dday>
             <EstimatedMoney>총 예상 금액</EstimatedMoney>
             <EstimatedMoneyDetail>
-            {typeof estimatedMoney !== 'undefined' ? `${estimatedMoney}원` : '0원'}
+            {typeof estimatedMoney !== 'undefined' ? estimatedMoney.toLocaleString() + '원' : '0원'}
             </EstimatedMoneyDetail>
 
             <WeHave>함께 이만큼 모았어요</WeHave>
             <WeHaveDetail>
-                {cashMoney.bride_total_cash+cashMoney.groom_total_cash
-                +accountMoney.bride_total_account +accountMoney.groom_total_account}원</WeHaveDetail>
+                {(cashMoney.bride_total_cash+cashMoney.groom_total_cash
+                +accountMoney.bride_total_account +accountMoney.groom_total_account).toLocaleString() +'원'}</WeHaveDetail>
             <WeNeed>앞으로 이만큼 남았어요</WeNeed>
             <WeNeedDetail>
-                {estimatedMoney - (cashMoney.bride_total_cash+cashMoney.groom_total_cash
-                +accountMoney.bride_total_account +accountMoney.groom_total_account)}원
+                {(estimatedMoney - (cashMoney.bride_total_cash+cashMoney.groom_total_cash
+                +accountMoney.bride_total_account +accountMoney.groom_total_account)).toLocaleString() +'원'}
             </WeNeedDetail>
         </Container>
     );

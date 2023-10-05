@@ -104,7 +104,7 @@ const MyAccountList = () => {
           <AccountMoney>{item.price} 원</AccountMoney>
         </AccountItem>
       ))}
-      <AddAccount href="/accountinput">+</AddAccount>
+      <AddAccount href="/mypageaccountinput">+</AddAccount>
     </Container>
   );
 };
