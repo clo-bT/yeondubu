@@ -133,6 +133,7 @@ const ShoppingFilter = () => {
 
     useEffect(() => {
         const baseURL = `${process.env.REACT_APP_FLASK_ROOT}`
+        // const baseURL = 'http://j9a307.p.ssafy.io:5000'
         const URL = '/api/v1/marriage-stuffs/category_detail'
         const params = {
             category : category,
