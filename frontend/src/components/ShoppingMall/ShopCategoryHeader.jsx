@@ -75,7 +75,7 @@ const ShopCategoryHeader = () => {
     const {category, subcategory} = useParams();
     const [headerTitle, setHeaderTitle] = useState(null);
     useEffect(() => {
-        const baseURL = 'http://localhost:5000'
+        const baseURL = `${process.env.REACT_APP_FLASK_ROOT}`
         const URL = '/api/v1/marriage-stuffs/category'
         const params = {
             category: category,
@@ -97,9 +97,6 @@ const ShopCategoryHeader = () => {
             <Box>
             <ProductInfo>
                 <TagName>{headerTitle}</TagName>
-                <Link to = {`/shoppingfilter/${category}/${subcategory}`} >
-                    <Filter>사진으로 검색</Filter>
-                </Link>
                 <Link to = {`/shoppingfilter/${category}/${subcategory}`} >
                     <Filter>필터 설정하기</Filter>
                 </Link>
