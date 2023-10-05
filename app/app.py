@@ -67,6 +67,7 @@ def liked_items():
 def item_catalogue():
     try:
         category, subcategory, hprice, lprice, brand, page = ut.get_params(request)
+        print("where?")
         filtered_data = ut.range_filter(category, subcategory, hprice, lprice, brand, page)
         if not filtered_data:
             return jsonify({'result' : 'end of list'}), 204
