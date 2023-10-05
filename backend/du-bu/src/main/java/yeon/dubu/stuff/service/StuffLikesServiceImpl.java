@@ -11,6 +11,7 @@ import yeon.dubu.stuff.domain.Stuff;
 import yeon.dubu.stuff.domain.StuffLikes;
 import yeon.dubu.stuff.dto.response.StuffLikesResDto;
 import yeon.dubu.stuff.exception.NoSuchStuffException;
+import yeon.dubu.stuff.exception.NoSuchStuffLikesException;
 import yeon.dubu.stuff.repository.StuffLikesRepository;
 import yeon.dubu.stuff.repository.StuffRepository;
 import yeon.dubu.user.domain.User;
@@ -76,6 +77,7 @@ public class StuffLikesServiceImpl implements StuffLikesService{
     public void deleteStuffLikes(Long likesId, Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
         Couple couple = coupleRepository.findById(user.getCouple().getId()).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
+        stuffLikesRepository.findById(likesId).orElseThrow(() -> new NoSuchStuffLikesException("해당하는 혼수 좋아요가 없습니다."));
 
         stuffLikesRepository.deleteById(likesId);
 
