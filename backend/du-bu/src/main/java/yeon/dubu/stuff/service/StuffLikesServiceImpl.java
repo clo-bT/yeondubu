@@ -39,7 +39,7 @@ public class StuffLikesServiceImpl implements StuffLikesService{
      */
     @Override
     @Transactional
-    public void createStuffLikes(String category, String subCategory, Long userId) {
+    public void createStuffLikes(String category, String subCategory, Long itemId, Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
         Couple couple = coupleRepository.findById(user.getCouple().getId()).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
         Stuff stuff = stuffRepository.findByCategoryAndSubCategory(category, subCategory).orElseThrow(() -> new NoSuchStuffException("해당하는 혼수 추천 카테고리가 없습니다."));
@@ -47,6 +47,7 @@ public class StuffLikesServiceImpl implements StuffLikesService{
         StuffLikes stuffLikes = StuffLikes.builder()
                 .couple(couple)
                 .stuff(stuff)
+                .itemId(itemId)
                 .build();
 
         stuffLikesRepository.save(stuffLikes);

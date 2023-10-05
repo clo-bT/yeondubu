@@ -72,9 +72,10 @@ class StuffLikesServiceImplTest {
         // given
         String category = "appliances";
         String subCategory = "refrigerator";
+        Long itemId = 1L;
 
         // when
-        stuffLikesService.createStuffLikes(category, subCategory, USER1.getId());
+        stuffLikesService.createStuffLikes(category, subCategory, itemId, USER1.getId());
 
         // then
         assertThat(stuffLikesRepository.findByCoupleId(COUPLE.getId()).get(0).getStuff().getCategory()).isEqualTo(category);
@@ -89,18 +90,21 @@ class StuffLikesServiceImplTest {
         // given
         String category1 = "appliances";
         String subCategory1 = "refrigerator";
-        stuffLikesService.createStuffLikes(category1, subCategory1, USER1.getId());
+        Long itemId1 = 1L;
+        stuffLikesService.createStuffLikes(category1, subCategory1, itemId1, USER1.getId());
 
         String category2 = "furniture";
         String subCategory2 = "bed";
-        stuffLikesService.createStuffLikes(category2, subCategory2, USER1.getId());
+        Long itemId2 = 2L;
+        stuffLikesService.createStuffLikes(category2, subCategory2, itemId2, USER1.getId());
 
         // when
         List<StuffLikesResDto> stuffLikesList = stuffLikesService.searchStuffLikes(USER1.getId());
         List<StuffLikes> likesList = stuffLikesRepository.findByCoupleId(COUPLE.getId());
-
+        System.out.println("stuffLikesList = " + stuffLikesList);
+        System.out.println("likesList = " + likesList);
         // then
-        assertThat(likesList.size()).isEqualTo(2);
+        assertThat(stuffLikesList.size()).isEqualTo(2);
 
     }
 
@@ -110,7 +114,8 @@ class StuffLikesServiceImplTest {
         // given
         String category1 = "appliances";
         String subCategory1 = "refrigerator";
-        stuffLikesService.createStuffLikes(category1, subCategory1, USER1.getId());
+        Long itemId1 = 1L;
+        stuffLikesService.createStuffLikes(category1, subCategory1, itemId1, USER1.getId());
 
         // when
         List<StuffLikes> byCoupleId = stuffLikesRepository.findByCoupleId(COUPLE.getId());

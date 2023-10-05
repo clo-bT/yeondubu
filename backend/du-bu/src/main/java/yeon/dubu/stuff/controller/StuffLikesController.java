@@ -19,13 +19,14 @@ import java.util.List;
 public class StuffLikesController {
     private final StuffLikesService stuffLikesService;
 
-    @PostMapping("/{category}/{subCategory}")
+    @PostMapping("/{category}/{subCategory}/{item-id}")
     public ResponseEntity<?> createStuffLikes(
             @AuthenticationPrincipal Long userId,
             @PathVariable String category,
-            @PathVariable String subCategory
+            @PathVariable String subCategory,
+            @PathVariable Long itemId
     ) {
-        stuffLikesService.createStuffLikes(category, subCategory, userId);
+        stuffLikesService.createStuffLikes(category, subCategory, itemId, userId);
 
         return new ResponseEntity<>("", HttpStatus.OK);
     }
