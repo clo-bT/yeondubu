@@ -5,10 +5,12 @@ import numpy as np
 def get_params(request):
     category = request.args.get('category')
     subcategory = request.args.get('subcategory')
-    hprice = request.args.get('hprice')
-    lprice = request.args.get('lprice')
-    brand = None if request.args.get('brand') == '' else request.args.get('brand')
-    page = request.args.get('page')
+    lprice = int(request.args.get('lprice')) if request.args.get('lprice') else None
+    hprice = int(request.args.get('hprice')) if request.args.get('lprice') else None
+    brand_data = request.args.get('brand')
+    brand_data = brand_data.split(',')
+    brand = brand_data if brand_data != [] else None
+    page = int(request.args.get('page'))
     return category, subcategory, hprice, lprice, brand, page
 
 
@@ -36,7 +38,7 @@ def check_keys(data, check_list):
 
 
 def filter_items(json_data, hprice, lprice, brand):
-    if brand:
+    if brand and brand != ['']:
         filtered_items = [item for item in json_data 
                         if lprice <= int(item["lprice"]) <= hprice 
                         and item["brand"] in brand]
@@ -73,6 +75,7 @@ def sim_search(query, category, subcategory, hprice, lprice, brand):
 
     
 def range_filter(category, subcategory, hprice, lprice, brand, page):
+    cnt = 30
     with h5py.File('./data/data.h5', 'r') as db:
         product_data = db[category][subcategory]['json'][()]
         product_data = json.loads(product_data)
@@ -80,14 +83,9 @@ def range_filter(category, subcategory, hprice, lprice, brand, page):
             filtered_items = filter_items(product_data, hprice, lprice, brand)
         else:
             filtered_items = product_data
-        mx_cnt = int(len(filtered_items) / 9)
-        page_btm = (page-2) if (page-2) > 0 else 0
-        page_top = (page+3) if (page+3) < mx_cnt else mx_cnt
-
+        mx_cnt = int(len(filtered_items))
         lst = []
-        for idx in range(page_btm, page_top):
-            dct = {'page' : idx}
-            dct = {'products' : filtered_items[idx * 9 : (idx + 1) * 9]}
-            lst.append(dct)
-        
-        return filtered_items
+        if (page+1)*cnt > mx_cnt:
+            return lst
+        dct = {'products' : filtered_items[page * cnt : (page + 1) * cnt]}
+        return dct
