@@ -1,7 +1,3 @@
-import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-
-// import App from './shared/App';
-
 import { React } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
@@ -98,4 +94,3 @@ function App() {
 
 export default App;
 
-serviceWorkerRegistration.register();
