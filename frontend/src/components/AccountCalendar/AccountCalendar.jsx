@@ -408,7 +408,7 @@ const AccountCalendar = () => {
 
                 <IncomeExpenditure>
                     {expenditure_list.map(item => (
-                        <ExpenditureRow key={item.expenditure_id}>
+                        <ExpenditureRow key={item.expenditure_id} onClick={()=>navigate(`/calendarupdate/${item.expenditure_id}`)}>
                             <TagAndWho1>
                                 <ExpenditureTag>{item.third_tag_name} </ExpenditureTag>
                                 <RoleIncomeTag>{item.role === 'BRIDE' ? '예비 신부' : '예비 신랑'} </RoleIncomeTag>
