@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
@@ -29,16 +30,13 @@ public class StuffServiceImpl implements StuffService {
     @Transactional
     public void saveStuffsFromJsonFile(String filePath) {
         try {
-//            ObjectMapper objectMapper = new ObjectMapper();
-//            List<Stuff> stuffList = objectMapper.readValue(new File(filePath), new TypeReference<List<Stuff>>() {});
-//
-//            stuffRepository.saveAll(stuffList);
 
+            InputStream is = new ClassPathResource(filePath).getInputStream();
             ObjectMapper objectMapper = new ObjectMapper();
-            Resource resource = resourceLoader.getResource(filePath);
-            InputStream inputStream = resource.getInputStream();
+//            Resource resource = resourceLoader.getResource(filePath);
+//            InputStream inputStream = resource.getInputStream();
 
-            List<Stuff> stuffList = objectMapper.readValue(inputStream, new TypeReference<List<Stuff>>() {});
+            List<Stuff> stuffList = objectMapper.readValue(is, new TypeReference<List<Stuff>>() {});
 
             stuffRepository.saveAll(stuffList);
 
