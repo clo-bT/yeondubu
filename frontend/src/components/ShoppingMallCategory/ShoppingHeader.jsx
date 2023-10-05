@@ -57,7 +57,7 @@ const ShoppingHeader = () => {
             <GetoutButton href="/wholetab">나가기</GetoutButton>
             <RecommendHeader>맞춤형 제품 추천</RecommendHeader>
             <RecommendDetail>손예진님에게 맞춤형 가구/가전/예물을 추천해드려요</RecommendDetail>
-        </Container>
+            </Container>
             <HorizontalLine />
         </>
    
