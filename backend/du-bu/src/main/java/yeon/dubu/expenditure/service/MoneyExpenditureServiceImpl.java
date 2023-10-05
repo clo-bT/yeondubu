@@ -206,6 +206,7 @@ public class MoneyExpenditureServiceImpl implements MoneyExpenditureService{
     }
 
     @Override
+    @Transactional
     public void deleteExpenditure(Long expenditureId, Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchUserException("해당하는 회원 정보가 없습니다."));
         Couple couple = coupleRepository.findById(user.getCouple().getId()).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
