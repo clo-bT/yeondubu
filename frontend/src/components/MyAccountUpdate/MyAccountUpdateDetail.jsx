@@ -178,13 +178,13 @@ const MyAccountUpdateDetail = () => {
           console.log('요청 성공:', response);
           // console.log(response.data);
           setAccountData(response.data);
-
+          console.log(accountData)
         })
         .catch((error) => {
           console.error('요청 실패:', error);
         });
     }
-  }, [accessToken]);
+  }, [accessToken,accountData]);
 
 
 

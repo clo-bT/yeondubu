@@ -37,25 +37,25 @@ const StyledDatePicker = styled(DatePicker)`
       cursor: pointer;
     }
 `;
-const ImageBox= styled.div`
+// const ImageBox= styled.div`
 
-`
-const Partner = styled.div`
-display: flex;
-flex-direction: column;
-`
-const PartnerName = styled.span``
-const PartnerImg = styled.img`
-border-radius: 218px;
-`
-const Me = styled.div`
-display: flex;
-flex-direction: column;
-`
-const Name = styled.span``
-const Img = styled.img`
-border-radius: 218px;
-`
+// `
+// const Partner = styled.div`
+// display: flex;
+// flex-direction: column;
+// `
+// const PartnerName = styled.span``
+// const PartnerImg = styled.img`
+// border-radius: 218px;
+// `
+// const Me = styled.div`
+// display: flex;
+// flex-direction: column;
+// `
+// const Name = styled.span``
+// const Img = styled.img`
+// border-radius: 218px;
+// `
 const Congrats = styled.p`
 color: #000;
 text-align: center;
@@ -116,9 +116,9 @@ const WeddingDayInput = () => {
   const navigate = useNavigate();
     const accessToken = localStorage.getItem('token')
     const name = localStorage.getItem('name')
-    const image = localStorage.getItem('image')
+    // const image = localStorage.getItem('image')
     const partner_name = localStorage.getItem('partner_name')
-    const partner_img = localStorage.getItem('partner_img')
+    // const partner_img = localStorage.getItem('partner_img')
     const [selectedDate, setSelectedDate] = useState(null);
     const handleDateChange = (date) => {
       setSelectedDate(date);

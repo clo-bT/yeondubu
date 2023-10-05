@@ -18,12 +18,9 @@ const Container = styled.div`
   flex-wrap: wrap; 
   gap: 10px;
   margin-top: 30px;
-  justify-content: center; /* 가로축 가운데 정렬 */
- 
-`;
-
-
-
+`
+const Income = styled.div``
+const Expend = styled.div``
 const Box = styled.div`
 display: flex;
 justify-content: flex-end;

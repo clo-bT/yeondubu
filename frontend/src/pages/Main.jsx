@@ -25,6 +25,10 @@ const Main = () => {
     else if (!role) {
       navigate('/weddingday')
     }
+    else {
+      navigate('/')
+
+    }
     
   },[navigate])
   const [isBudgetOpen, setIsBudgetOpen] = useState(true);
