@@ -4,19 +4,21 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
-margin-top : 20px;
-  text-align: left;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items:center;
+margin-left:20px;
 
 `;
 
 const Box = styled.div`
-display: flex;
-flex-direction: column;
-justify-content: center;
-margin-left:20px;
-
+text-align:left;
+margin-top: 80px;
+gap:20px;
 
 `
+
 const Title = styled.p`
 color: rgba(0, 0, 0, 0.80);
 text-align: center;
@@ -28,7 +30,7 @@ text-transform: uppercase;
 display:inline-flex;
 margin-right: 30px;
 `
-const InputType = styled.p`
+const InputType = styled.div`
 
   margin-right: 10px;
 
@@ -83,9 +85,7 @@ background: #FFF;
 
 `;
 
-const InputWho = styled.p`
-
-
+const InputWho = styled.div`
 `;
 
 const InputWhoGroom = styled.button.attrs(props => ({
@@ -138,36 +138,39 @@ border-radius: 10px;
 border: 1px solid #D9D9D9;
 background: #FFF;
 `;
-const InputTag = styled.p`
-
-
-
+const InputTag = styled.div`
+display:flex;
 `
-const InputDate = styled.p`
+const InputDate = styled.div`
 
 `
 
-const InputMoney = styled.p`
+const InputMoney = styled.div`
 align-items: left;
 
 `
-const InputMemo = styled.p`
+const InputMemo = styled.div`
 /* display:flex;
 align-items: left; */
 `
 const DateInput = styled.input`
+  font-size:16px;
 border-radius: 10px;
 border: 1px solid #D9D9D9;
 background: #FFF;
-padding:6px;
+padding:6px 0px;
+width:222px;
 `
 const MoneyInput = styled.input`
 border-radius: 10px;
 border: 1px solid #D9D9D9;
 background: #FFF;
 padding:6px;
+font-size:16px;
 `
 const MemoInput = styled.input`
+/* height:30px; */
+font-size:16px;
 border-radius: 10px;
 border: 1px solid #D9D9D9;
 background: #FFF;
@@ -180,8 +183,8 @@ font-size: 16px;
 font-style: normal;
 font-weight: 400;
 line-height: normal;
+
 text-transform: uppercase;
-  width: 87px;
   height: 38px;
   padding: 6px 4px;
   border-radius: 10px;
@@ -189,7 +192,10 @@ text-transform: uppercase;
   cursor: pointer;
   border: 2px solid #D9D9D9;
 `;
-
+const TagBox = styled.div`
+  display:flex;
+  flex-direction:column;
+`
 const SaveButton = styled.button`
 display: flex;
 width: 80px;
@@ -234,6 +240,7 @@ display: flex;
 align-items: center;
 justify-content: center;
 gap: 20px;
+margin-top: 70px;
 `
 const BoxHeader = styled.span`
 margin-right: 10px;
@@ -296,7 +303,7 @@ const CalendarInput = () => {
         });
     },[accessToken])
     
-    const handleThirdTagChange = (event) => {
+    const handleTagChange = (event) => {
         const selectedThirdTagId = event.target.value;
         setTagId(selectedThirdTagId);
     };
@@ -325,7 +332,7 @@ const CalendarInput = () => {
         else if (type === 'expenditure') {
             axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/money`,
         {
-            "third_tag_id":tagId,
+            "third_tag_id":thirdTagId,
             "user_role": role,
             "date": date,
             "amount":amount,
@@ -370,7 +377,7 @@ const CalendarInput = () => {
         else if (type === 'expenditure') {
             axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/money`,
         {
-            "third_tag_id":tagId,
+            "third_tag_id":thirdTagId,
             "user_role": role,
             "date": date,
             "amount":amount,
@@ -390,9 +397,24 @@ const CalendarInput = () => {
         };
         
         };
-    
+        const [firstTagId, setFirstTagId] = useState('');
+  const [secondTagId, setSecondTagId] = useState('');
+  const [thirdTagId, setThirdTagId] = useState('');
+
+        const handleFirstTagChange = (event) => {
+          const selectedFirstTagId = event.target.value;
+          setFirstTagId(selectedFirstTagId);
+      };
+      const handleSecondTagChange = (event) => {
+        const selectedSecondTagId = event.target.value;
+        setSecondTagId(selectedSecondTagId);
+    };
+    const handleThirdTagChange = (event) => {
+      const selectedThirdTagId = event.target.value;
+      setThirdTagId(selectedThirdTagId);
+  };
         return (
-            <Container>
+          <Container>
             <Box>
               <InputType>
               <Title>분류</Title>
@@ -432,25 +454,59 @@ const CalendarInput = () => {
         
               <InputTag>
                 <Title>태그 </Title>
-                <TagSelect onChange={handleThirdTagChange}>
+                <TagBox>
+                {!type && (
+                  <TagSelect><option value="">태그를 선택하세요</option></TagSelect>
+                )}
+                {type === 'income' && (
+                  <TagSelect onChange={handleTagChange}>
                     <option value="">태그를 선택하세요</option>
                     
-                    {type === 'income'
-                    ? incomeTags.map(tag => (
-                        <option key={tag.id} value={tag.id}>
-                            {tag.tag_name}
-                        </option>
-                        ))
-                    : expendTags.map(firstTag => (
-                        firstTag.tag_second_expenditure_dto_list.map(secondTag => (
-                        secondTag.tag_third_expenditure_dto_list.map(thirdTag => (
-                            <option key={thirdTag.third_tag_id} value={thirdTag.third_tag_id}>
-                            {thirdTag.third_tag_name}
-                            </option>
-                        ))
-                        ))
+                    {incomeTags.map(tag => (
+                      <option key={tag.id} value={tag.id}>
+                        {tag.tag_name}
+                      </option>
                     ))}
-      </TagSelect>
+                  </TagSelect>
+                )}
+                {type === 'expenditure' && (
+                  <TagSelect onChange={handleFirstTagChange}>
+                    <option value="">첫 번째 태그를 선택하세요</option>
+                    {expendTags.map(firstTag => (
+                        <option key={firstTag.first_tag_id} value={firstTag.first_tag_id}>
+                            {firstTag.first_tag_name}
+                        </option>
+                    ))}
+                </TagSelect>
+                )}
+                {type === 'expenditure' && firstTagId && (
+                  <TagSelect onChange={handleSecondTagChange}>
+                      <option value="">두 번째 태그를 선택하세요</option>
+                      {expendTags
+                          .find(tag => tag.first_tag_id === parseInt(firstTagId))
+                          .tag_second_expenditure_dto_list.map(secondTag => (
+                              <option key={secondTag.second_tag_id} value={secondTag.second_tag_id}>
+                                  {secondTag.second_tag_name}
+                              </option>
+                          ))}
+                  </TagSelect>
+                )}
+                {type === 'expenditure' && secondTagId && (
+                  <TagSelect onChange={handleThirdTagChange}>
+                      <option value="">세 번째 태그를 선택하세요</option>
+                      {expendTags
+                          .find(tag => tag.first_tag_id === parseInt(firstTagId))
+                          .tag_second_expenditure_dto_list
+                          .find(secondTag => secondTag.second_tag_id === parseInt(secondTagId))
+                          .tag_third_expenditure_dto_list.map(thirdTag => (
+                              <option key={thirdTag.third_tag_id} value={thirdTag.third_tag_id}>
+                                  {thirdTag.third_tag_name}
+                              </option>
+                          ))}
+                  </TagSelect>
+              )}
+              </TagBox>
+      
     </InputTag>
         
               <InputDate>
@@ -460,7 +516,7 @@ const CalendarInput = () => {
         
               <InputMoney>
               <Title>가격</Title>
-                <MoneyInput type="number" value={amount} onChange={handleAmount} />원
+                <MoneyInput type="number" value={amount} onChange={handleAmount} /> 원
               </InputMoney>
         
               <InputMemo>
@@ -472,7 +528,7 @@ const CalendarInput = () => {
 
               <ButtonBox>
               
-              <SaveButton onClick={()=> navigate('/calendar')}>삭제</SaveButton>
+              <SaveButton onClick={()=> navigate('/calendar')}>취소</SaveButton>
               <SaveButton onClick={handleSave}>저장</SaveButton>
               {type === 'expenditure' && (
                 <CompleteButton onClick={handleComplete}>구매완료</CompleteButton>

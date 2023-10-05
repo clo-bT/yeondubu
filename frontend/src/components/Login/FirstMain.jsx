@@ -69,6 +69,7 @@ const FirstMain = () => {
     const handleLogin = ()=>{
         // window.location.href = backendapi
         window.location.replace(backendapi)
+        window.location.reload();
     }
     return (
         <PageWrapper>
