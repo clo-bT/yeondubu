@@ -78,22 +78,21 @@ const TagBox = styled.div`
 border-radius: 10px;
 border: 1px solid #FF5A5A;
 background: rgba(255, 255, 255, 0.50);
-padding: 17px 17px;
+padding: 29px 10px;
 cursor: pointer;
 width: 90px;
 height: 90px;
-/* gap: 10px; */
+
 
 `
 const FirstTag = styled.p`
-
   color: #000;
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
   cursor: pointer;
-margin-top: 10px;
+  margin-top: 10px;
 `;
 
 
@@ -119,12 +118,16 @@ justify-content: space-between;
 /* gap:80px; */
 `
 const CheckBox = styled.input``
+
 const DeleteButton = styled.button`
   background: none;
   border: none;
-  font-size: 20px;
+  font-size: 15px;
   cursor: pointer;
-  top: 0;
+  margin-top:-15px;
+  display: flex;
+  flex-direction: column;
+
 `;
 
 const SecondContainer = styled.p`
@@ -364,6 +367,22 @@ const CheckBoxWholeContent = () => {
           console.error('태그 삭제', error);
         });
   };
+    const handleDeleteSecondTag = (event, FirstTagName, SecondTagId) => {
+      event.stopPropagation(); 
+      axios.delete(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/tags/${FirstTagName}/${SecondTagId}`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        })
+        .then((response) => {
+          console.log('두번째 태그 삭제', response);
+          window.location.reload();
+
+        })
+        .catch((error) => {
+          console.error('태그 삭제', error);
+        });
+  };
   
     return (
 <VeryBigContainer>
@@ -375,6 +394,7 @@ const CheckBoxWholeContent = () => {
         
     <BigContainer>
     <Container>
+
     {(isSelected===0 )&& data.map((firstTag) => (
       <TagBox>
       <div key={firstTag.first_tag_id} onClick={() => handleSelect(firstTag.tag_second_expenditure_dto_list, firstTag.first_tag_name,firstTag.first_tag_id)}>
@@ -410,7 +430,7 @@ const CheckBoxWholeContent = () => {
     {selectedData.map((data) => (
     <TagBox key={data.second_tag_id} onClick={() => handleClick(data.tag_third_expenditure_dto_list,data.second_tag_name,data.second_tag_id)}>
       {isEditMode && (
-    <DeleteButton onClick={(e) => handleDeleteFirstTag(e, data.second_tag_id)}>X</DeleteButton>
+    <DeleteButton onClick={(e) => handleDeleteSecondTag(e, data.first_tag_name, data.second_tag_id)}>X</DeleteButton>
   )}
       <FirstTag>{data.second_tag_name}</FirstTag>
       <Tag>
