@@ -39,9 +39,8 @@ public class PolicyServiceImpl implements PolicyService{
     public void savePoliciesFromJsonFile(String filePath) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-//            Resource resource = resourceLoader.getResource(filePath);
 
-            InputStream is = new ClassPathResource("BOOT-INF/classes/" + filePath).getInputStream();
+            InputStream is = new ClassPathResource(filePath).getInputStream();
 
             JsonNode rootNode = objectMapper.readTree(is);
             Iterator<Map.Entry<String, JsonNode>> fieldsIterator = rootNode.fields();
