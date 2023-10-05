@@ -4,13 +4,15 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yeon.dubu.stuff.domain.Stuff;
 import yeon.dubu.stuff.repository.StuffRepository;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 @Slf4j
@@ -20,15 +22,26 @@ import java.util.List;
 public class StuffServiceImpl implements StuffService {
 
     private final StuffRepository stuffRepository;
+    private final ResourceLoader resourceLoader;
+
 
     @Override
     @Transactional
     public void saveStuffsFromJsonFile(String filePath) {
         try {
+//            ObjectMapper objectMapper = new ObjectMapper();
+//            List<Stuff> stuffList = objectMapper.readValue(new File(filePath), new TypeReference<List<Stuff>>() {});
+//
+//            stuffRepository.saveAll(stuffList);
+
             ObjectMapper objectMapper = new ObjectMapper();
-            List<Stuff> stuffList = objectMapper.readValue(new File(filePath), new TypeReference<List<Stuff>>() {});
+            Resource resource = resourceLoader.getResource(filePath);
+            InputStream inputStream = resource.getInputStream();
+
+            List<Stuff> stuffList = objectMapper.readValue(inputStream, new TypeReference<List<Stuff>>() {});
 
             stuffRepository.saveAll(stuffList);
+
         } catch (IOException e) {
             e.printStackTrace();
             // 예외 처리 로직 추가
