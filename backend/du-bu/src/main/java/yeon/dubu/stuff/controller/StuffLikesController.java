@@ -14,12 +14,12 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/expenditure/marriage-stuffs")
+@RequestMapping("/api/v1/marriage-stuffs")
 @CrossOrigin(origins = {"http://localhost:3000", "https://j9a307.p.ssafy.io:3000", "https://j9a307.p.ssafy.io"})
 public class StuffLikesController {
     private final StuffLikesService stuffLikesService;
 
-    @PostMapping("/{category}/{subCategory}/{item-id}")
+    @PostMapping("/{category}/{subCategory}/{itemId}")
     public ResponseEntity<?> createStuffLikes(
             @AuthenticationPrincipal Long userId,
             @PathVariable String category,
