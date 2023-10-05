@@ -10,7 +10,7 @@ import utilities as ut
 from loan.checking_json import check_jsonfile
 
 app = Flask(__name__)
-cors = CORS(app, resources={r"/api/*": {"origins": ["https://j9a307.p.ssafy.io:3000/*", "http://localhost:3000/*", "http://localhost*"]}})
+cors = CORS(app, resources={r"/api/*": {"origins": ["https://j9a307.p.ssafy.io*", "http://localhost*"]}})
 
 @app.route('/api/v1/marriage-stuffs', methods=['GET'])
 def health_check():
@@ -66,11 +66,8 @@ def liked_items():
 @app.route('/api/v1/marriage-stuffs/catalogue', methods=['GET'])
 def item_catalogue():
     try:
-        print('where')
         category, subcategory, hprice, lprice, brand, page = ut.get_params(request)
-        print('when')
         filtered_data = ut.range_filter(category, subcategory, hprice, lprice, brand, page)
-        print('what')
         if not filtered_data:
             return jsonify({'result' : 'end of list'}), 204
         return jsonify(filtered_data), 200
@@ -101,7 +98,7 @@ def cos_sim_search():
 def loan_upload():
     if request.method == 'POST':
         try:
-            check = check_jsonfile()
+            check = check_jsonfile() # 매월 데이터 자동 갱신
             if check:
                 print('새로운 jsonfile 생성')
             else:
