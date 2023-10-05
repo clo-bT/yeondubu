@@ -32,7 +32,7 @@ const Main = () => {
   }).catch((error)=>{
   console.error('Error fetching data:', error);
 })
-})
+},[accessToken])
 
     if (!accessToken) {
       navigate('/login')
@@ -43,10 +43,8 @@ const Main = () => {
     else if (!role) {
       navigate('/weddingday')
     }
-    else {
-      navigate('/')
-
-    }
+    
+    
 
   const [isBudgetOpen, setIsBudgetOpen] = useState(true);
   const [isLoanOpen, setIsLoanOpen] = useState(false);
