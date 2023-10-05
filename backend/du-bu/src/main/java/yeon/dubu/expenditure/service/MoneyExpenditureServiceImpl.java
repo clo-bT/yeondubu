@@ -193,6 +193,7 @@ public class MoneyExpenditureServiceImpl implements MoneyExpenditureService{
         MoneyExpenditure moneyExpenditure = moneyExpenditureRepository.findByTagThirdExpenditureId(tagThirdExpenditure.getId()).orElseThrow(() -> new NoSuchExpenditureException("해당하는 지출 정보가 없습니다."));
 
         MoneyExpenditureDetailResDto moneyExpenditureDetailResDto = MoneyExpenditureDetailResDto.builder()
+                .thirdTagName(tagThirdExpenditure.getThirdTagName())
                 .expenditureId(moneyExpenditure.getId())
                 .userRole(moneyExpenditure.getUserRole())
                 .date(moneyExpenditure.getDate())
