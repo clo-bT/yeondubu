@@ -118,15 +118,16 @@ public class TagExpenditureServiceImpl implements TagExpenditureService{
     public void createFirstTags(Long coupleId) {
         Couple couple = coupleRepository.findById(coupleId).orElseThrow(() -> new NoSuchCoupleException("해당하는 커플 정보가 없습니다."));
 
-        List<String> firstTagNames = Arrays.asList("인사", "결혼식", "신혼여행", "신혼집", "혼수", "기타");
+        List<String> firstTagNames = Arrays.asList("결혼식", "스드메", "신혼 여행", "신혼집", "혼수", "인사", "기타");
 
         Map<Integer, List<String>> secondTagDict = new HashMap<>();
-        secondTagDict.put(0, Arrays.asList("상견례"));
-        secondTagDict.put(1, Arrays.asList("스튜디오", "예복", "메이크업", "예식장"));
-        secondTagDict.put(2, Arrays.asList("항공권", "숙박", "여행경비","선물 구입비"));
+        secondTagDict.put(0, Arrays.asList("예식장"));
+        secondTagDict.put(1, Arrays.asList("부부 스드메 및 스튜디오", "혼주 메이크업", "혼주 한복"));
+        secondTagDict.put(2, Arrays.asList("항공권", "숙박", "여행 경비","선물 구입비"));
         secondTagDict.put(3, Arrays.asList("신혼집", "인테리어", "부동산"));
-        secondTagDict.put(4, Arrays.asList("가구", "가전", "생활용품"));
-        secondTagDict.put(5, Arrays.asList("기타"));
+        secondTagDict.put(4, Arrays.asList("가구", "가전", "주방 용품", "침구", "생활용품"));
+        secondTagDict.put(5, Arrays.asList("상견례"));
+        secondTagDict.put(6, Arrays.asList("기타"));
 
         // firstTag
         for (int i = 0; i < firstTagNames.size(); i++) {
