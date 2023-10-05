@@ -10,6 +10,7 @@ import yeon.dubu.couple.repository.CoupleRepository;
 import yeon.dubu.income.domain.MoneyIncome;
 import yeon.dubu.income.dto.request.MoneyIncomeReqDto;
 import yeon.dubu.income.dto.request.MoneyIncomeUpdateReqDto;
+import yeon.dubu.income.dto.response.MoneyIncomeResDto;
 import yeon.dubu.income.exception.NoSuchMoneyIncomeException;
 import yeon.dubu.income.exception.NoSuchTagIncomeException;
 import yeon.dubu.income.repository.MoneyIncomeRepository;
@@ -127,6 +128,18 @@ public class MoneyIncomeServiceImpl implements MoneyIncomeService{
             () -> new NoSuchMoneyException("해당하는 자산 정보가 없습니다.")
         );
         money.setTotalCash(money.getTotalCash() - beforeMoney.getAmount());
+    }
+
+    @Override
+    public MoneyIncomeResDto searchIncome(Long userId, Long incomeId){
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new NoSuchUserException("올바른 사용자가 아닙니다.")
+        );
+        MoneyIncome moneyIncome = moneyIncomeRepository.findById(incomeId).orElseThrow(
+                () -> new NoSuchMoneyIncomeException("해당 수입이 없습니다.")
+        );
+        MoneyIncomeResDto moneyIncomeResDto = MoneyIncomeResDto.from(moneyIncome);
+        return moneyIncomeResDto;
     }
 
 
