@@ -1,5 +1,4 @@
 from flask import Flask, request, jsonify
-# from flask import Flask, request, jsonify, make_response
 from flask_cors import CORS, cross_origin
 import os
 from PIL import Image
@@ -21,7 +20,6 @@ def single_category():
     try:
         category = request.args.get('category')
         subcategory = request.args.get('subcategory')
-        print(category, subcategory)
         with open('./data/category.json', 'r', encoding='utf-8') as file:
             categories = json.load(file)
         name = categories[category][subcategory]
@@ -34,7 +32,6 @@ def category_list():
     try:
         with open('./data/categories.json', 'r', encoding='utf-8') as file:
             categories = json.load(file)
-        print(categories)
         return jsonify(categories), 200
     except Exception as err:
         return jsonify({'error' : str(err)}), 400
@@ -67,7 +64,6 @@ def liked_items():
 def item_catalogue():
     try:
         category, subcategory, hprice, lprice, brand, page = ut.get_params(request)
-        print("where?")
         filtered_data = ut.range_filter(category, subcategory, hprice, lprice, brand, page)
         if not filtered_data:
             return jsonify({'result' : 'end of list'}), 204
