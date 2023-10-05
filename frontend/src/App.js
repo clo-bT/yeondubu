@@ -38,6 +38,7 @@ import MyAccountUpdate from './pages/MyAccountUpdate';
 import CheckBoxWhole from './pages/CheckBoxWhole';
 import UserWithdraw from './pages/UserWithdraw';
 import MyPageAccountInput from './pages/MyPageAccountInput';
+import CalendarUpdateIncome from './pages/CalendarUpdateIncome';
 
 
 function App() {
@@ -60,6 +61,7 @@ function App() {
           <Route path="/budgetcheckbox" element={<BudgetCheckBox />} />
           <Route path="/calendarinput" element={<CalendarInputCreate />} />
           <Route path="/calendarupdate/:tagId" element={<CalendarInputUpdate />} />
+          <Route path="/calendarupdateincome/:tagId" element={<CalendarUpdateIncome />} />
           <Route path="/chatbot" element={<ChatBot />} />
           <Route path="/checkbox" element={<CheckBox />} />
           <Route path="/checkboxwhole" element={<CheckBoxWhole />} />
