@@ -55,7 +55,7 @@ public class DuBuApplication implements CommandLineRunner {
 
 		if (currentPolicyModifiedTime > previousPolicyModifiedTime || isPolicyDbEmpty) {
 			policyService.deleteAllPolicies(); // 이전 데이터 삭제
-			policyService.savePoliciesFromJsonFile(policyFilePath);
+			policyService.savePoliciesFromJsonFile("classpath:"+ policyFilePath);
 			System.out.println("정책 파일이 업데이트 되었습니다.");
 		} else {
 			System.out.println("파일이 업데이트되지 않았으므로 정책 파일을 실행하지 않습니다.");
@@ -63,7 +63,7 @@ public class DuBuApplication implements CommandLineRunner {
 
 		if (currentStuffModifiedTime > previousStuffModifiedTime || isStuffDbEmpty) {
 			stuffService.deleteAllStuffs(); // 이전 데이터 삭제
-			stuffService.saveStuffsFromJsonFile(stuffFilePath);
+			stuffService.saveStuffsFromJsonFile("classpath:"+ stuffFilePath);
 			System.out.println("혼수 추천 파일이 업데이트 되었습니다.");
 		} else {
 			System.out.println("파일이 업데이트되지 않았으므로 혼수 추천 파일을 실행하지 않습니다.");
