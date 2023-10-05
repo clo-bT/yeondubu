@@ -66,7 +66,6 @@ line-height: normal;
 const PriceSliderContainer = styled.div`
 padding: 20px;
 border-radius: 10px;
-
 `;
 
 const PriceRange = styled.p`
@@ -80,10 +79,9 @@ line-height: normal;
 
 const Brand = styled.p`
 display: flex;
-font-size: 10px;
-height: 5px;
-width: 10px;
-padding: 10px 18px;
+height: 30px;
+width: 55px;
+padding: 1px 1px;
 justify-content: center;
 align-items: center;
 gap: 10px;
@@ -91,6 +89,14 @@ border-radius: 10px;
 border: 1px solid #FF6565;
 margin-top: 0px;
 margin-bottom: 0px;
+overflow: hidden; /* Hide the text that overflows the container */
+white-space: nowrap; /* Prevent text from wrapping */
+text-overflow: ellipsis; /* Show ellipsis (...) when text overflows */
+transition: font-size 0.3s ease; /* Add a smooth transition for font size changes */
+/* Define a maximum font size */
+font-size: ${({ fontSize }) => (fontSize ? `${fontSize}px` : '13px')};  /* Optional: Define a maximum width for the container */
+max-width: 55px; /* Adjust this value as needed */
+
 
 /* 배경색을 brandClickStates에 따라 조절 */
 background-color: ${(props) =>
@@ -262,10 +268,39 @@ const ShoppingFilter = () => {
           style={{ display: 'none' }} 
           onChange={handleImageSelect} 
         />
+
         <Box1>
-        <Header>브랜드</Header>
+        <Header>가격대 설정</Header>
+
+        <PriceRange>
+          {currentPriceRange[0].toLocaleString()} - {currentPriceRange[1].toLocaleString()}원
+        </PriceRange>
         </Box1>
 
+        <PriceSliderContainer>
+          <Slider
+            range
+            min={priceRange[0]}
+            max={priceRange[1]}
+            step={10000}
+            defaultValue={priceRange}
+            handle={CustomSliderHandle}
+            dotStyle={{borderColor:'#c7ad92'}}
+            trackStyle={{ backgroundColor: '#FFA8A899' }}
+            handleStyle={{ backgroundColor: '#FFA8A899', borderColor:'#FFA8A899' }}
+            // marks={{
+              //   0: <span style={{ whiteSpace: 'nowrap', display: 'inline-block', textAlign: 'right' }}>0</span>,
+              //   5000000: <span style={{ whiteSpace: 'nowrap', display: 'inline-block', textAlign: 'right' }}>50만원</span>,
+              //   10000000: <span style={{ whiteSpace: 'nowrap', display: 'inline-block', textAlign: 'right' }}>무제한</span>
+              // }}
+              onChange={handleSliderChange}
+              onAfterChange={handleSliderAfterChange}
+              />
+
+        </PriceSliderContainer>
+        <Box1>
+          <Header>브랜드</Header>
+        </Box1>
         <BrandBox>
         {brands.map((brand, index) => (
           <Brand
@@ -276,36 +311,7 @@ const ShoppingFilter = () => {
         ))}
         </BrandBox>
 
-        <Box1>
-        <Header>가격대 설정</Header>
 
-        <PriceRange>
-          {currentPriceRange[0].toLocaleString()} - {currentPriceRange[1].toLocaleString()}원
-        </PriceRange>
-
-        </Box1>
-
-        <PriceSliderContainer>
-        <Slider
-          range
-          min={priceRange[0]}
-          max={priceRange[1]}
-          step={10000}
-          defaultValue={priceRange}
-          handle={CustomSliderHandle}
-          dotStyle={{borderColor:'#c7ad92'}}
-          trackStyle={{ backgroundColor: '#FFA8A899' }}
-          handleStyle={{ backgroundColor: '#FFA8A899', borderColor:'#FFA8A899' }}
-          // marks={{
-          //   0: <span style={{ whiteSpace: 'nowrap', display: 'inline-block', textAlign: 'right' }}>0</span>,
-          //   5000000: <span style={{ whiteSpace: 'nowrap', display: 'inline-block', textAlign: 'right' }}>50만원</span>,
-          //   10000000: <span style={{ whiteSpace: 'nowrap', display: 'inline-block', textAlign: 'right' }}>무제한</span>
-          // }}
-          onChange={handleSliderChange}
-          onAfterChange={handleSliderAfterChange}
-        />
-
-      </PriceSliderContainer>
       </Container>
     );
 };

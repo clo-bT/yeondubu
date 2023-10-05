@@ -70,10 +70,10 @@ const ShoppingCategoryList = () => {
             <ShoppingContainer>
               {category.items.map((subcategory, itemIndex) => (
                 <Link to={`/shoppingmall/${category.tag}/${subcategory.tag}`}>
-                  <div key={itemIndex}>
+                  <subCategoryContainer key={itemIndex}>
                     <ProductImg src={subcategory.imgURL} alt={`Image ${itemIndex}`} />
                     <ProductName>{subcategory.tagname}</ProductName>
-                  </div>
+                  </subCategoryContainer>
                 </Link>
               ))}
             </ShoppingContainer>

@@ -22,14 +22,14 @@ line-height: normal;
 
 `
 
-const ProductImg = styled.img`
-width: 90px;
-height: 90px;
-margin-left: 0;
-width: calc(33.33% - 10px);
-margin-bottom: 10px;
+// const ProductImg = styled.img`
+// width: 90px;
+// height: 90px;
+// margin-left: 0;
+// width: calc(33.33% - 10px);
+// margin-bottom: 10px;
 
-`
+// `
 
 const Recommendation = styled.div`
 display: flex;
@@ -37,14 +37,16 @@ flex-wrap: wrap;
 align-items: flex-start;
 width: 100%; 
 `
-const ImgBox = styled.div`
-display: flex;
-align-items: flex-start; 
-`
+
+// const ImgBox = styled.div`
+// display: flex;
+// align-items: flex-start; 
+// `
+
 const RecommendationImg = styled.img`
 width: 100px;
-
-
+height: 100px; /* Set a fixed height of 100px */
+object-fit: cover; /* Crop the image if it exceeds the container */
 `
 
 const ImgDetail = styled.div`
@@ -87,8 +89,8 @@ const FullHeartIcon = styled(AiFillHeart)`
   margin-top: 10px;
   margin-bottom: 10px;
   color: red;    
-  
-  `
+`
+
 const LikedContainer = styled.div`
 display: flex; 
 overflow-x: auto; 
@@ -162,7 +164,7 @@ const ShoppingList = () => {
         })
         .then((res) => {
             let rawData = res.data;
-            let likedItemArray = rawData.filter((item) => item.category === category && item.subcategory == subcategory);
+            let likedItemArray = rawData.filter((item) => item.category === category && item.subcategory === subcategory);
             setLikedArray(likedItemArray);
             let likeIndex = likedArray.map(item => item.item_id);
             setLikedIdxs(likeIndex);
