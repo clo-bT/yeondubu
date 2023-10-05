@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import axios from 'axios';
 import Swal from "sweetalert2";
+import { useNavigate } from 'react-router-dom';
 
 const GoBack = styled.a`
 text-decoration: none;
@@ -53,11 +54,16 @@ margin-right: auto;
 
 const UserWithdrawInfo = () => {
     const [accessToken, setAccessToken] = useState('');
+    const navigate = useNavigate();
   
     useEffect(() => {
       const token = localStorage.getItem("token");
       setAccessToken(token);
     }, []);
+
+    const removeTokenFromLocalStorage = () => {
+      localStorage.removeItem("token");
+    };
 
     const confirmWithdraw = () => {
     Swal.fire({
@@ -77,6 +83,8 @@ const UserWithdrawInfo = () => {
         })
         .then((response) => {
           console.log('요청 성공:', response);
+          removeTokenFromLocalStorage();
+          navigate('/login')
         })
         .catch((error) => {
           console.error('요청 실패:', error);
