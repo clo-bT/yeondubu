@@ -46,10 +46,4 @@ public class Money extends BaseTimeEntity {
     @JoinColumn(name = "USER_ID")
     private User user;
 
-    public void updateExpenditureByDelete (Long amount, Boolean payComplete) {
-        this.expectExpenditure -= amount;
-        if (payComplete) {
-            this.completeExpenditure -= amount;
-        }
-    }
 }
