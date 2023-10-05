@@ -4,10 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import yeon.dubu.policy.service.PolicyService;
 import yeon.dubu.stuff.service.StuffService;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 @SpringBootApplication
 public class DuBuApplication implements CommandLineRunner {
@@ -35,10 +39,11 @@ public class DuBuApplication implements CommandLineRunner {
 		boolean isStuffDbEmpty = stuffService.isStuffDbEmpty();
 
 		// 이전에 저장된 파일의 수정 시간 가져오기
-		Resource policyResource = resourceLoader.getResource("classpath:" + policyFilePath);
-		long previousPolicyModifiedTime = policyResource.lastModified();
-		Resource stuffResource = resourceLoader.getResource("classpath:" + stuffFilePath);
-		long previousStuffModifiedTime = stuffResource.lastModified();
+		ClassPathResource policyResource = new ClassPathResource(policyFilePath);
+		long previousPolicyModifiedTime = policyResource.getFile().lastModified();
+
+		ClassPathResource stuffResource = new ClassPathResource(stuffFilePath);
+		long previousStuffModifiedTime = stuffResource.getFile().lastModified();
 
 		// 5초 대기
 		Thread.sleep(5000);
