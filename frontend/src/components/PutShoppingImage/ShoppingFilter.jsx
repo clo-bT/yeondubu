@@ -115,15 +115,14 @@ const ShoppingFilter = () => {
     const [filterData, setFilterData] = useState(null);
     const [uploadImage, setUploadImage] = useState(null);
 
+    // 필터데이터 적용하기
     useEffect(() => {
       const defaultData = {
         lprice : 0,
         hprice : 1000000000,
         brand : ''
       };
-      // let storedData = JSON.parse(localStorage.getItem(subcategory));
       let storedData = JSON.parse(localStorage.getItem(subcategory));
-      console.log(storedData);
       if (!storedData) {
         localStorage.setItem(subcategory, JSON.stringify(defaultData));
         storedData = defaultData;
@@ -131,15 +130,13 @@ const ShoppingFilter = () => {
       setFilterData(storedData);
     }, [subcategory]);  
 
+    // 카테고리 데이터 가져오기
     useEffect(() => {
-        const baseURL = `${process.env.REACT_APP_FLASK_ROOT}`
-        // const baseURL = 'http://j9a307.p.ssafy.io:5000'
-        const URL = '/api/v1/marriage-stuffs/category_detail'
         const params = {
             category : category,
             subcategory : subcategory,
         }
-        axios.get(baseURL + URL, {params})
+        axios.get(`${process.env.REACT_APP_FLASK_ROOT}/api/v1/marriage-stuffs/category_detail`, {params})
             .then ((response) => {
                 setBrands(response.data.brands.slice(1));
                 const minPrice = parseFloat(response.data.min_price);
@@ -151,35 +148,35 @@ const ShoppingFilter = () => {
               console.error('Error fetching default values:', error);
             });
     }, [category, subcategory]);
-          
-    // 브랜드 클릭 상태를 관리하는 배열
+    
+    // 브랜드 상태 제어
     const [brandClickStates, setBrandClickStates] = useState(
         new Array(brands.length).fill(false)
     );
-      
+    
+    // 슬라이더 적용
     const handleSliderChange = (value) => {
         setCurrentPriceRange(value);
-        // setPriceRange(value);
         const scrollPosition = (value[0] / 1000) * document.documentElement.scrollHeight;
         window.scrollTo(0, scrollPosition);
     };
 
+    // 슬라이더 적용
     const handleSliderAfterChange = (value) => {
         setCurrentPriceRange(value);
         console.log('슬라이더 구간 값:', value);
     };
-            // 이미지를 선택했을 때 처리하는 함수
-      const handleImageSelect = (event) => {
-          const file = event.target.files[0]; // 선택한 파일
-          if (file) {
-              const imageUrl = URL.createObjectURL(file); // 파일의 URL 생성
-              setSelectedImage(imageUrl); // 선택한 이미지를 상태에 저장
-              setUploadImage(event.target.files[0])
-          }
+
+    const handleImageSelect = (event) => {
+        const file = event.target.files[0]; // 선택한 파일
+        if (file) {
+            const imageUrl = URL.createObjectURL(file); // 파일의 URL 생성
+            setSelectedImage(imageUrl); // 선택한 이미지를 상태에 저장
+            setUploadImage(event.target.files[0])
+        }
     };
 
     const CustomSliderHandle = Slider.Handle;
-    
 
     // 클릭한 브랜드의 클릭 상태를 토글 
     const handleBrandClick = (index) => {
@@ -233,8 +230,8 @@ const ShoppingFilter = () => {
               },
             })
             .then (res => {
-              localStorage.setItem('img_search', JSON.stringify(res.data));
-              navigate(`/shoppingrecommendation/${category}/${subcategory}`)
+                localStorage.setItem('img_search', JSON.stringify(res.data));
+                navigate(`/shoppingrecommendation/${category}/${subcategory}`)
             })
             .catch(err => {
               console.log(err)
