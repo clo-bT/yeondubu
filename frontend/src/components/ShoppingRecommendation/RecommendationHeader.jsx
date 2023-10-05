@@ -52,14 +52,15 @@ const HorizontalLine = styled.div`
 
 const RecommendationHeader = () => {
     const {category, subcategory} = useParams();
+    const name = localStorage.getItem('name') || '고객';
     return (
         <div>
             <Container>
             <Link to = {`/shoppingmall/${category}/${subcategory}`}>
                 <GetOutButton>나가기</GetOutButton>
             </Link>
-            <RecommendHeader>맞춤형 제품 추천</RecommendHeader>
-            <RecommendDetail>손예진님에게 맞춤형 가구/가전/예물을 추천해드려요</RecommendDetail>
+            <RecommendHeader>이미지로 상품 찾기</RecommendHeader>
+            <RecommendDetail>{name}님에게 맞춤형 가구/가전/예물을 추천해드려요</RecommendDetail>
             </Container>
             <HorizontalLine />
         </div>
