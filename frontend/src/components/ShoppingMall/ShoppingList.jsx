@@ -162,7 +162,7 @@ const ShoppingList = () => {
         })
         .then((res) => {
             let rawData = res.data;
-            let likedItemArray = rawData.filter((item) => {item.category === category && item.subcategory == subcategory});
+            let likedItemArray = rawData.filter((item) => item.category === category && item.subcategory == subcategory);
             setLikedArray(likedItemArray);
             let likeIndex = likedArray.map(item => item.item_id);
             setLikedIdxs(likeIndex);
