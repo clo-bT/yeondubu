@@ -1,95 +1,118 @@
 [
     {
-        "tagName": "가구",
+        "tag": "furniture",
+        "tagname" : "가구",
         "items": [
             {
-                "name": "소파",
-                "image": "sofa"
+                "tagname": "소파",
+                "tag": "sofa",
+                "imgURL": "https://shopping-phinf.pstatic.net/main_1802913/18029130472.20220629162948.jpg"
             },
             {
-                "name": "책상",
-                "image": "desk"
+                "tagname": "책상",
+                "tag": "desk",
+                "imgURL": "https://shopping-phinf.pstatic.net/main_2546218/25462188522.20210102114503.jpg"
             },
             {
-                "name": "서랍장",
-                "image": "drawer"
+                "tagname": "서랍장",
+                "tag": "drawer",
+                "imgURL": "https://shopping-phinf.pstatic.net/main_2120397/21203975351.20230713085733.jpg"
             },
             {
-                "name": "침대",
-                "image": "bed"
+                "tagname": "침대",
+                "tag": "bed",
+                "imgURL": "https://shopping-phinf.pstatic.net/main_2849117/28491171554.20210819093635.jpg"
             },
             {
-                "name": "화장대",
-                "image": "dressing_table"
+                "tagname": "화장대",
+                "tag": "dressing_table",
+                "imgURL": "https://shopping-phinf.pstatic.net/main_1027048/10270488320.20220805105950.jpg"
             },
             {
-                "name": "식탁",
-                "image": "table"
+                "tagname": "식탁",
+                "tag": "table",
+                "imgURL": "https://shopping-phinf.pstatic.net/main_3715113/37151134941.20230112122312.jpg"
             },
             {
-                "name": "장식장",
-                "image": "cabinet"
+                "tagname": "장식장",
+                "tag": "cabinet",
+                "imgURL": "https://shopping-phinf.pstatic.net/main_3754698/37546984496.jpg"
             },
             {
-                "name": "장롱",
-                "image": "wardrobe"
+                "tagname": "장롱",
+                "tag": "wardrobe",
+                "imgURL": "https://shopping-phinf.pstatic.net/main_8217762/82177626404.4.jpg"
             },
             {
-                "name": "의자",
-                "image": "chair"
+                "tagname": "의자",
+                "tag": "chair",
+                "imgURL": "https://shopping-phinf.pstatic.net/main_4137107/41371077111.20230905064417.jpg"
             }
         ]
     },
     {
-        "tagName": "가전",
+        "tag": "appliances",
+        "tagname": "가전",
         "items": [
             {
-                "name": "냉장고",
-                "image": "refrigerator"
+                "tagname": "냉장고",
+                "tag": "refrigerator",
+                "imgURL": "https://shopping-phinf.pstatic.net/main_1206188/12061885006.20200421163558.jpg"
             },
             {
-                "name": "건조기",
-                "image": "dryer"
+                "tagname": "건조기",
+                "tag": "dryer",
+                "imgURL": "https://shopping-phinf.pstatic.net/main_2356399/23563999492.20221118165641.jpg"
             },
             {
-                "name": "공기청정기",
-                "image": "air_cleaner"
+                "tagname": "공기청정기",
+                "tag": "air_cleaner",
+                "imgURL": "https://shopping-phinf.pstatic.net/main_3024236/30242361622.20211221161832.jpg"
             },
             {
-                "name": "밥솥",
-                "image": "rice_cooker"
+                "tagname": "밥솥",
+                "tag": "rice_cooker",
+                "imgURL": "https://shopping-phinf.pstatic.net/main_4179279/41792792626.20230810100247.jpg"
             },
             {
-                "name": "전자레인지",
-                "image": "microwave"
+                "tagname": "전자레인지",
+                "tag": "microwave",
+                "imgURL": "https://shopping-phinf.pstatic.net/main_2315116/23151161490.20230615112157.jpg"
             },
             {
-                "name": "에어컨",
-                "image": "air_conditioner"
+                "tagname": "에어컨",
+                "tag": "air_conditioner",
+                "imgURL": "https://shopping-phinf.pstatic.net/main_3779661/37796614619.20230208132727.jpg"
             },
             {
-                "name": "스타일러",
-                "image": "styler"
+                "tagname": "스타일러",
+                "tag": "styler",
+                "imgURL": "https://shopping-phinf.pstatic.net/main_1712595/17125955940.20211130104447.jpg"
             },
             {
-                "name": "선풍기",
-                "image": "fan"
+                "tagname": "선풍기",
+                "tag": "fan",
+                "imgURL": "https://shopping-phinf.pstatic.net/main_7602970/7602970911.20220113173333.jpg"
             },
             {
-                "name": "세탁기",
-                "image": "washing_machine"
+                "tagname": "세탁기",
+                "tag": "washing_machine",
+                "imgURL": "https://shopping-phinf.pstatic.net/main_2566153/25661530523.20210322162510.jpg"
             },
             {
-                "name": "로봇청소기",
-                "image": "robot_vacuum_cleaner"
+                "tagname": "로봇청소기",
+                "tag": "robot_vacuum_cleaner",
+                "imgURL": "https://shopping-phinf.pstatic.net/main_4025299/40252999529.jpg"
             },
             {
-                "name": "청소기",
-                "image": "vacuum_cleaner"
+                "tagname": "청소기",
+                "tag": "vacuum_cleaner",
+                "imgURL": "https://shopping-phinf.pstatic.net/main_4217358/42173589621.20230825092937.jpg"
             },
             {
-                "name": "에어프라이어",
-                "image": "air_fryer"
+                "tagname": "에어프라이어",
+                "tag": "air_fryer",
+                "imgURL": "https://shopping-phinf.pstatic.net/main_3336647/33366475618.20220720122926.jpg"
             }
         ]
     }

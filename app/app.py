@@ -13,11 +13,25 @@ cors = CORS(app, resources={r"/api/*": {"origins": ["https://j9a307.p.ssafy.io:3
 def health_check():
     return ut.rspns(data = {'success' : 'server alive'}, status_code=200)
 
+@app.route('/api/v1/marriage-stuffs/category', methods = ['GET'])
+def single_category():
+    try:
+        category = request.args.get('category')
+        subcategory = request.args.get('subcategory')
+        print(category, subcategory)
+        with open('./data/category.json', 'r', encoding='utf-8') as file:
+            categories = json.load(file)
+        name = categories[category][subcategory]
+        return jsonify({'category':name}), 200
+    except Exception as err:
+        return jsonify({'error' : str(err)}), 400
+    
 @app.route('/api/v1/marriage-stuffs/categories', methods = ['GET'])
 def category_list():
     try:
         with open('./data/categories.json', 'r', encoding='utf-8') as file:
             categories = json.load(file)
+        print(categories)
         return jsonify(categories), 200
     except Exception as err:
         return jsonify({'error' : str(err)}), 400
@@ -33,13 +47,14 @@ def category_detail():
     except Exception as err:
         return jsonify({'error' : str(err)}), 400
 
-@app.route('/api/v1/marriage-stuffs/liked_items', methods=['POST'])
+@app.route('/api/v1/marriage-stuffs/liked_items', methods=['GET'])
 def liked_items():
     try:
-        idxs = request.form.data
+        idxs = request.args.get('likes')
+        idxs = [int(index) for index in idxs.split(',')]
         category = request.args.get('category')
         subcategory = request.args.get('subcategory')
-        liked_items = ut.product_liked_items(idxs, category, subcategory)
+        liked_items = ut.liked_products(idxs, category, subcategory)
         return jsonify(liked_items), 200
     except Exception as e:
         return jsonify({'error':str(e)}), 400
@@ -48,8 +63,13 @@ def liked_items():
 @app.route('/api/v1/marriage-stuffs/catalogue', methods=['GET'])
 def item_catalogue():
     try:
+        print('where')
         category, subcategory, hprice, lprice, brand, page = ut.get_params(request)
+        print('when')
         filtered_data = ut.range_filter(category, subcategory, hprice, lprice, brand, page)
+        print('what')
+        if not filtered_data:
+            return jsonify({'result' : 'end of list'}), 204
         return jsonify(filtered_data), 200
     except Exception as err:
         return jsonify({'error' : str(err)}), 400
@@ -58,7 +78,13 @@ def item_catalogue():
 @app.route('/api/v1/marriage-stuffs/img_search', methods=['POST'])
 def cos_sim_search():
     try:
-        category, subcategory, hprice, lprice, brand, page = ut.get_params(request)
+        category = request.form.get('category')
+        subcategory = request.form.get('subcategory')
+        hprice = int(request.form.get('hprice'))
+        lprice = int(request.form.get('lprice'))
+        brand = request.form.get('brand')
+        brand = brand.split(',')
+        brand = brand if brand != [] else None
         img = request.files.get('image')
         img = img.read()
         img = Image.open(BytesIO(img))
