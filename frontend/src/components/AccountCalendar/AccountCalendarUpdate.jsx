@@ -17,7 +17,7 @@ margin-left:20px;
 
 
 `
-const Title = styled.p`
+const Title = styled.div`
 color: rgba(0, 0, 0, 0.80);
 text-align: center;
 font-size: 16px;
@@ -28,7 +28,7 @@ text-transform: uppercase;
 display:inline-flex;
 margin-right: 30px;
 `
-const InputType = styled.p`
+const InputType = styled.div`
 
   margin-right: 10px;
 
@@ -83,7 +83,7 @@ background: #FFF;
 
 `;
 
-const InputWho = styled.p`
+const InputWho = styled.div`
 
 
 `;
@@ -138,20 +138,20 @@ border-radius: 10px;
 border: 1px solid #D9D9D9;
 background: #FFF;
 `;
-const InputTag = styled.p`
+const InputTag = styled.div`
 
-
-
-`
-const InputDate = styled.p`
+width:30px;
 
 `
+const InputDate = styled.div`
 
-const InputMoney = styled.p`
+`
+
+const InputMoney = styled.div`
 align-items: left;
 
 `
-const InputMemo = styled.p`
+const InputMemo = styled.div`
 /* display:flex;
 align-items: left; */
 `
@@ -238,30 +238,32 @@ gap: 20px;
 const BoxHeader = styled.span`
 margin-right: 10px;
 `
+const Exit = styled.button`
+border: none;
+`
 
 const CalendarInput = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
     const accessToken = localStorage.getItem('token');
     //const role = localStorage.getItem('role');
-    const [incomeTags, setIncomeTags] = useState([]);
-    const [expendTags, setExpendTags] = useState([]);
     const [role, setRole] = useState('')
-    const [type, setType] = useState('expenditure')
+    // const [type, setType] = useState('')
     const [date, setDate] = useState('')
     const [amount, setAmount] = useState(0)
     const [memo, setMemo] = useState('')
-    const [TagId, setTagId] = useState(0)
+    const [tagName, setTagName] = useState('')
+    const [expenditureId, setExpenditureId] = useState(0)
     const { tagId } = useParams();
-    const [expenditureData, setExpenditureData] = useState({
-        expenditure_id: 1,
-        user_role: "BRIDE",
-        date: "2024-05-16",
-        amount: 100000,
-        memo: "구매한 침대",
-        pay_complete: true
-    });
+    // const [expenditureData, setExpenditureData] = useState({
+    //     expenditure_id: 1,
+    //     user_role: "BRIDE",
+    //     date: "2024-05-16",
+    //     amount: 100000,
+    //     memo: "구매한 침대",
+    //     pay_complete: true
+    // });
 
-    const [updatedData, setUpdatedData] = useState({ ...expenditureData }); // 초기값 설정
+    // const [updatedData, setUpdatedData] = useState({ ...expenditureData }); // 초기값 설정
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/money/${tagId}`, {
             headers: {
@@ -269,22 +271,25 @@ const CalendarInput = () => {
             }
         })
         .then(response => {
-            setExpenditureData(response.data);
+            // setExpenditureData(response.data);
             // 기본값 설정
-            setUpdatedData({
-                user_role: response.data.user_role || '',
-                date: response.data.date || '',
-                amount: response.data.amount || 0,
-                memo: response.data.memo || ''
-            });
-            setExpenditureData(response.data);
+            // setUpdatedData({
+            //     user_role: response.data.user_role || '',
+            //     date: response.data.date || '',
+            //     amount: response.data.amount || 0,
+            //     memo: response.data.memo || ''
+            // });
+            // setExpenditureData(response.data);
+            console.log(response.data);
             setRole(response.data.user_role);
+            // setType(response.data.type);
             setAmount(response.data.amount);
-            setTagId(response.data.expenditure_id);
+            setExpenditureId(response.data.expenditure_id);
             setMemo(response.data.memo);
             setDate(response.data.date);
+            setTagName(response.data.third_tag_name);
             // 기본값 설정
-            setUpdatedData(response.data);
+            // setUpdatedData(response.data);
         })
         .catch(error => {
             console.error('Error fetching data:', error);
@@ -294,9 +299,7 @@ const CalendarInput = () => {
     const handleRole = (who) => {
         setRole(who); 
     };
-    const handleType = (type) => {
-        setType(type); 
-    };
+    
     const handleDate = (event) => {
         setDate(event.target.value);
     };
@@ -306,67 +309,44 @@ const CalendarInput = () => {
     const handleMemo = (event) => {
         setMemo(event.target.value);
     };
-
-
-    useEffect(()=>{
-        axios.get(`${process.env.REACT_APP_API_ROOT}/api/v1/income/tag`,{
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            }
-            })
-        .then(response => {
-            console.log('income 태그 받기',response.data)
-          setIncomeTags(response.data); // 서버 응답에서 태그 데이터 설정
-        })
-        .catch(error => {
-          console.error('income 태그 받기', error);
-        });
-    },[accessToken])
-    useEffect(()=>{
-        axios.get(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/tags/all`,{
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            }
-            })
-        .then(response => {
-            console.log('지출 태그 받기',response.data)
-            setExpendTags(response.data); // 서버 응답에서 태그 데이터 설정
-        })
-        .catch(error => {
-          console.error('지출 태그 받기', error);
-        });
-    },[accessToken])
-    
-    const handleThirdTagChange = (event) => {
-        const selectedThirdTagId = event.target.value;
-        setTagId(selectedThirdTagId);
+    const handleDelete = () => {
+      axios.delete(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/tags/${expenditureId}`,{
+        headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                }
+      }).then((response) => {
+        console.log('여기는 삭제',response);
+        
+      }).catch((error) => {
+        console.error('여기는 삭제',error)
+      })
     };
     const handleSave = () => {
-        if (type === 'income') {
-            axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/income`,
-        {
-            "tag_id":TagId,
-            "user_role": role,
-            "date": date,
-            "amount":amount,
-            "memo": memo,
+    //     if (type === 'income') {
+    //         axios.put(`${process.env.REACT_APP_API_ROOT}/api/v1/income`,
+    //     {
+    //         "tag_id":tagId,
+    //         "user_role": role,
+    //         "date": date,
+    //         "amount":amount,
+    //         "memo": memo,
             
-    },
-        {
-          headers: {
-              Authorization: `Bearer ${accessToken}`,
-            }
-        }).then(response => {
-            console.log('여기는 캘린더에서 수입 추가하기',response)
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
-        },[]);
-        }
-        else if (type === 'expenditure') {
+    // },
+    //     {
+    //       headers: {
+    //           Authorization: `Bearer ${accessToken}`,
+    //         }
+    //     }).then(response => {
+    //         console.log('Update에서 수입 수정(저장)',response)
+    //     })
+    //     .catch(error => {
+    //         console.error('Update에서 수입 수정(저장)', error);
+    //     },[]);
+    //     }
+    //     else if (type === 'expenditure') {
             axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/money`,
         {
-            "third_tag_id":TagId,
+            "third_tag_id":expenditureId,
             "user_role": role,
             "date": date,
             "amount":amount,
@@ -378,41 +358,42 @@ const CalendarInput = () => {
               Authorization: `Bearer ${accessToken}`,
             }
         }).then(response => {
-          console.log('여기는 캘린더에서 지출 추가하기', response)
-          console.log(updatedData)
+          console.log('Update에서 지출 수정(저장)', response);
+          navigate(-1)
+          // console.log(updatedData)
         })
         .catch(error => {
-            console.error('Error fetching data:', error);
-        },[type]);
+            console.error('Update에서 지출 수정(저장)', error);
+        },);
         };
+      // }
         
-        };
     const handleComplete = () => {
-        if (type === 'income') {
-            axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/income`,
-        {
-            "tag_id": TagId,
-            "user_role": role,
-            "date": date,
-            "amount":amount,
-            "memo": memo,
+    //     if (type === 'income') {
+    //         axios.put(`${process.env.REACT_APP_API_ROOT}/api/v1/income`,
+    //     {
+    //         "tag_id": tagId,
+    //         "user_role": role,
+    //         "date": date,
+    //         "amount":amount,
+    //         "memo": memo,
 
-    },
-        {
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            }
-        }).then(response => {
-            console.log('여기는 캘린더에서 수입 추가하기',response)
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
-        },[]);
-        }
-        else if (type === 'expenditure') {
+    // },
+    //     {
+    //         headers: {
+    //             Authorization: `Bearer ${accessToken}`,
+    //         }
+    //     }).then(response => {
+    //         console.log('여기는 캘린더에서 수입 추가하기',response)
+    //     })
+    //     .catch(error => {
+    //         console.error('Error fetching data:', error);
+    //     },[]);
+    //     }
+    //     else if (type === 'expenditure') {
             axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/money`,
         {
-            "third_tag_id":TagId,
+            "third_tag_id":expenditureId,
             "user_role": role,
             "date": date,
             "amount":amount,
@@ -424,30 +405,30 @@ const CalendarInput = () => {
                 Authorization: `Bearer ${accessToken}`,
             }
         }).then(response => {
-            console.log('여기는 캘린더에서 지출 추가하기',response)
+            console.log('update에서 지출 수정(구매완료)',response);
+            navigate(-1);
         })
         .catch(error => {
-            console.error('여기는 캘린더에서 지출 추가하기', error);
-        },[type]);
+            console.error('update에서 지출 수정(구매완료)', error);
+        },[]);
         };
         
-        };
+        // };
     
         return (
             <Container>
+              <Exit onClick={()=>navigate(-1)}>X</Exit>
             <Box>
               <InputType>
               <Title>분류</Title>
                 <InputTypeIncome
-                  checked={type === 'income'}
-                  onClick={() => handleType('income')}
+                  
                 >
                   수입
                 </InputTypeIncome>
      
                 <InputTypeExpend
-                  checked={type === 'expenditure'}
-                  onClick={() => handleType('expenditure')}
+                  checked={true}
                 >
                   지출
                 </InputTypeExpend>
@@ -474,25 +455,10 @@ const CalendarInput = () => {
         
               <InputTag>
                 <Title>태그 </Title>
-                <TagSelect onChange={handleThirdTagChange}>
-                    <option value="">태그를 선택하세요</option>
+                <TagSelect>
+                <option value="">{tagName}</option>
                     
-                    {type === 'income'
-                    ? incomeTags.map(tag => (
-                        <option key={tag.id} value={tag.id}>
-                            {tag.tag_name}
-                        </option>
-                        ))
-                    : expendTags.map(firstTag => (
-                        firstTag.tag_second_expenditure_dto_list.map(secondTag => (
-                        secondTag.tag_third_expenditure_dto_list.map(thirdTag => (
-                            <option key={thirdTag.third_tag_id} value={thirdTag.third_tag_id}>
-                            {thirdTag.third_tag_name}
-                            </option>
-                        ))
-                        ))
-                    ))}
-      </TagSelect>
+                </TagSelect>
     </InputTag>
         
               <InputDate>
@@ -514,11 +480,11 @@ const CalendarInput = () => {
 
               <ButtonBox>
               
-              <SaveButton onClick={()=> navigate('/calendar')}>삭제</SaveButton>
+              <SaveButton onClick={handleDelete}>삭제</SaveButton>
               <SaveButton onClick={handleSave}>저장</SaveButton>
-              {type === 'expenditure' && (
+              {/* {type === 'expenditure' && ( */}
                 <CompleteButton onClick={handleComplete}>구매완료</CompleteButton>
-              )}
+              {/* )} */}
               </ButtonBox>
               </div>
             </Container>
