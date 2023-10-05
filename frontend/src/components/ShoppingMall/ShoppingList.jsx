@@ -125,20 +125,18 @@ margin-top : 5px;
 margin-bottom: 5px;
 `
 
-
 const ShoppingList = () => {
-    // user token
     const accessToken = localStorage.getItem("token");
-    // url category, subcategory
     const {category, subcategory} = useParams();
     const [filterData, setFilterData] = useState([]);
     
+    const [likedArray, setLikedArray] = useState([]);
+    const [likedIdxs, setLikedIdxs] = useState([]);
     const [likedItems, setLikedItems] = useState([]);
+    const [triggerUpdate, setTriggerUpdate] = useState(false);
+
     const [items, setItems] = useState([]);
     
-    // const [offset, setOffset] = useState(0);
-    // const [target, setTarget] = useState(null);
-    const [hasMore, setHasMore] = useState(true);
     const [currentPage, setCurrentPage] = useState(0);
 
     useEffect(() => {
@@ -157,15 +155,17 @@ const ShoppingList = () => {
     }, [subcategory]);  
 
     useEffect(() => {
-        // axios.get(`${process.env.REACT_APP_API_ROOT}/api/v1/marriage-stuffs/likes`, {
-        axios.get(`https://j9a307.p.ssafy.io/api/v1/marriage-stuffs/likes`, {
+        axios.get(`${process.env.REACT_APP_API_ROOT}/api/v1/marriage-stuffs/likes`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
             }
         })
         .then((res) => {
-            console.log(res.data);
-            const likeIndex = [3, 1, 15, 2];
+            let rawData = res.data;
+            let likedItemArray = rawData.filter((item) => item.category === category && item.subcategory == subcategory);
+            setLikedArray(likedItemArray);
+            let likeIndex = likedArray.map(item => item.item_id);
+            setLikedIdxs(likeIndex);
             const ArrayToString = likeIndex.join(', ');
             const params = {
                 category : category,
@@ -173,9 +173,9 @@ const ShoppingList = () => {
                 likes : ArrayToString
             };
             axios.get(`${process.env.REACT_APP_FLASK_ROOT}/api/v1/marriage-stuffs/liked_items`, {params})
-            // axios.get(`http://localhost:5000/api/v1/marriage-stuffs/liked_items`, {params})
             .then((response) => {
                 setLikedItems(response.data);
+                setTriggerUpdate(false);
             })
             .catch((error) => {
                 console.log(error);
@@ -184,7 +184,7 @@ const ShoppingList = () => {
         .catch((error) => {
             console.log(error);
         })
-    }, [category, subcategory, accessToken]);
+    }, [category, subcategory, accessToken, triggerUpdate]);
 
     useEffect(() => {
         const params = {
@@ -195,11 +195,9 @@ const ShoppingList = () => {
             brand  : filterData.brand,
             page   : currentPage
         };
-        // axios.get(`${process.env.REACT_APP_FLASK_ROOT}/api/v1/marriage-stuffs/catalogue`, {params})
-        axios.get(`http://localhost:5000/api/v1/marriage-stuffs/catalogue`, {params})
+        axios.get(`${process.env.REACT_APP_FLASK_ROOT}/api/v1/marriage-stuffs/catalogue`, {params})
         .then ((response) => {
             setItems(response.data.products);
-            // console.log(items);
             setCurrentPage(1);
         })
         .catch ((error) => {
@@ -207,29 +205,30 @@ const ShoppingList = () => {
         });
     }, [category, subcategory, filterData]);
 
-    const likeItem = (event) => {
-        axios.post(`https://j9a307.p.ssafy.io/api/v1/marriage-stuffs/likes`, {
-        // axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/marriage-stuffs/likes`, {
+    const likeItem = (itemID) => {
+        axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/marriage-stuffs/${category}/${subcategory}/${itemID}`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
             }
         })
         .then((res) => {
+            setTriggerUpdate(true);
             console.log(res);
         })
         .catch((err) => {
             console.log(err);
         })
-      };
+    };
       
-    const unlikeItem = (event) => {
-        // axios.delete(`${process.env.REACT_APP_API_ROOT}/api/v1/marriage-stuff/likes/${event.id}`, {
-        axios.delete(`https://j9a307.p.ssafy.io/api/v1/marriage-stuffs/likes/${event.id}`, {
+    const unlikeItem = (itemID) => {
+        const like = likedArray.find((item) => item.item_id === itemID);
+        axios.delete(`${process.env.REACT_APP_API_ROOT}/api/v1/marriage-stuff/likes/${like.likes_id}`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
             }
         })
         .then((res) => {
+            setTriggerUpdate(true);
             console.log(res);
         })
         .catch((err) => {
@@ -245,6 +244,11 @@ const ShoppingList = () => {
                       <RecommendationImg src={item.image} href={item.link} />
                       <ImgDetailRow>
                         <Price>{item.lprice}</Price>
+                        {likedIdxs.includes(item.item_id) ? (
+                          <FullHeartIcon onClick = {() => unlikeItem(item.item_id)} />
+                        ) : (
+                          <HeartIcon onClick={() => likeItem(item.item_id)} />
+                        )}
                       </ImgDetailRow>
                     </ImgDetail>
                 ))}
@@ -263,6 +267,11 @@ const ShoppingList = () => {
                     </a>
                     <ImgDetailRow>
                       <Price>{item.lprice}</Price>
+                      {likedIdxs.includes(item.item_id) ? (
+                        <FullHeartIcon onClick = {() => unlikeItem(item.item_id)} />
+                      ) : (
+                        <HeartIcon onClick={() => likeItem(item.item_id)} />
+                      )}
                     </ImgDetailRow>
                   </ImgDetail>
                 ))}
