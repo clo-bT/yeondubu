@@ -277,6 +277,14 @@ const CalendarInput = () => {
                 amount: response.data.amount || 0,
                 memo: response.data.memo || ''
             });
+            setExpenditureData(response.data);
+            setRole(response.data.user_role);
+            setAmount(response.data.amount);
+            setTagId(response.data.expenditure_id);
+            setMemo(response.data.memo);
+            setDate(response.data.date);
+            // 기본값 설정
+            setUpdatedData(response.data);
         })
         .catch(error => {
             console.error('Error fetching data:', error);
@@ -299,28 +307,6 @@ const CalendarInput = () => {
         setMemo(event.target.value);
     };
 
-    useEffect(() => {
-        // API 요청을 보내고 응답 데이터를 expenditureData 상태로 설정
-        axios.get(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/money/${tagId}`,{
-            headers:{
-              Authorization: `Bearer ${accessToken}`,
-            }
-        })
-            .then(response => {
-                console.log('데이터 정보',response.data)
-                setExpenditureData(response.data);
-                setRole(response.data.user_role);
-                setAmount(response.data.amount);
-                setTagId(response.data.expenditure_id);
-                setMemo(response.data.memo);
-                setDate(response.data.date);
-                // 기본값 설정
-                setUpdatedData(response.data);
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-            });
-    }, [tagId, accessToken]);
 
     useEffect(()=>{
         axios.get(`${process.env.REACT_APP_API_ROOT}/api/v1/income/tag`,{
@@ -359,7 +345,7 @@ const CalendarInput = () => {
         if (type === 'income') {
             axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/income`,
         {
-            "tag_id":tagId,
+            "tag_id":TagId,
             "user_role": role,
             "date": date,
             "amount":amount,
@@ -380,7 +366,7 @@ const CalendarInput = () => {
         else if (type === 'expenditure') {
             axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/money`,
         {
-            "third_tag_id":tagId,
+            "third_tag_id":TagId,
             "user_role": role,
             "date": date,
             "amount":amount,
@@ -392,7 +378,8 @@ const CalendarInput = () => {
               Authorization: `Bearer ${accessToken}`,
             }
         }).then(response => {
-            console.log('여기는 캘린더에서 지출 추가하기',response)
+          console.log('여기는 캘린더에서 지출 추가하기', response)
+          console.log(updatedData)
         })
         .catch(error => {
             console.error('Error fetching data:', error);
@@ -404,7 +391,7 @@ const CalendarInput = () => {
         if (type === 'income') {
             axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/income`,
         {
-            "tag_id": tagId,
+            "tag_id": TagId,
             "user_role": role,
             "date": date,
             "amount":amount,
@@ -425,7 +412,7 @@ const CalendarInput = () => {
         else if (type === 'expenditure') {
             axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/money`,
         {
-            "third_tag_id":tagId,
+            "third_tag_id":TagId,
             "user_role": role,
             "date": date,
             "amount":amount,

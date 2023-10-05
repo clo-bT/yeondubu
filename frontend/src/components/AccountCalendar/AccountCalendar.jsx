@@ -122,14 +122,14 @@ text-align: start;
 font-size: 15px;
 `
 
-const ExpenditureWho = styled.div`
-font-size: .5rem;
-margin-top: 2px;
+// const ExpenditureWho = styled.div`
+// font-size: .5rem;
+// margin-top: 2px;
 
-`;
-const ExpenditureMoney = styled.div`
-font-size: 15px;
-`;
+// `;
+// const ExpenditureMoney = styled.div`
+// font-size: 15px;
+// `;
 
 const CellClass = styled.div`
 display: flex;
@@ -244,8 +244,8 @@ const AccountCalendar = () => {
     // console.log(currentMonth)
     const requestData = format(currentMonth, 'yyyy-MM')
     const [responseData, setResponseData] = useState([]);
-    const [maxDate, setMaxDate] = useState(new Date());
-    const [minDate, setMinDate] = useState(new Date());
+    // const [maxDate, setMaxDate] = useState(new Date());
+    // const [minDate, setMinDate] = useState(new Date());
 
     useEffect(() => {
         // 백틱으로 바꾸기
@@ -258,8 +258,8 @@ const AccountCalendar = () => {
         .then(response => {
         console.log(response)
         setResponseData(response.data.money_list);
-        setMaxDate(response.data.max_date);
-        setMinDate(response.data.min_date);
+        // setMaxDate(response.data.max_date);
+        // setMinDate(response.data.min_date);
         })
         .catch(error => {
             console.error('Error fetching data:', error);
