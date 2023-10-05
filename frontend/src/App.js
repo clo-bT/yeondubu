@@ -22,7 +22,7 @@ import Mooni from './pages/Mooni';
 import PutShoppingImage from './pages/PutShoppingImage';
 import ShopingMallCategory from './pages/ShoppingMallCategory';
 import ShoppingMall from './pages/ShoppingMall';
-// import ShoppingRecommendation from './pages/ShoppingRecommendation';
+import ShoppingRecommendation from './pages/ShoppingRecommendation';
 import ShoppingFilter from './components/PutShoppingImage/ShoppingFilter';
 import ShoppingSizeInput from './pages/ShoppingSizeInput';
 import ShowInviteCode from './pages/ShowInviteCode';
@@ -72,6 +72,7 @@ function App() {
           <Route path="/shoppingmallcategory" element={<ShopingMallCategory />} />
           <Route path="/shoppingmall/:category/:subcategory" element={<ShoppingMall />} />
           <Route path="/shoppingfilter/:category/:subcategory" element={<ShoppingFilter />} />
+          <Route path="/shoppingrecommendation/:category/:subcategory" element={<ShoppingRecommendation />} />
           <Route path="/shoppingsizeinput" element={<ShoppingSizeInput />} />
           <Route path="/showinvitecode" element={<ShowInviteCode />} />
           <Route path="/taginput" element={<TagInput />} />

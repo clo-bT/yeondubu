@@ -8,10 +8,10 @@ margin-left: 10px;
 
 `
 const ShoppingContainer = styled.div`
-  display: flex; 
-  overflow-x: auto; 
-  margin-bottom: 30px;
-  margin-left: 10px
+display: flex; 
+overflow-x: auto; 
+margin-bottom: 30px;
+margin-left: 10px;
 `;
 
 const TagName = styled.div`
@@ -51,14 +51,14 @@ line-height: normal;
 const ShoppingCategoryList = () => {
     const [categories, setCategories] = useState([]);
     useEffect(() => {
-        const baseURL = 'http://localhost:5000'
-        const URL = '/api/v1/marriage-stuffs/categories'
+        const baseURL = `${process.env.REACT_APP_FLASK_ROOT}`;
+        const URL = '/api/v1/marriage-stuffs/categories';
         axios.get(baseURL + URL)
         .then((response) => {
             setCategories(response.data);
         })
         .catch((error) => {
-            console.error('Error fetching default values:', error);
+            console.log(error);
         })
     }, []);
 
