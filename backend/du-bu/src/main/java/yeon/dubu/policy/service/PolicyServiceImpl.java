@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yeon.dubu.policy.domain.Policy;
@@ -13,9 +15,11 @@ import yeon.dubu.user.domain.User;
 import yeon.dubu.user.exception.NoSuchUserException;
 import yeon.dubu.user.repository.UserRepository;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -26,16 +30,16 @@ public class PolicyServiceImpl implements PolicyService{
 
     private final UserRepository userRepository;
     private final PolicyRepository policyRepository;
-
+    private final ResourceLoader resourceLoader;
 
     @Override
     @Transactional
     public void savePoliciesFromJsonFile(String filePath) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            File file = new File(filePath);
-            JsonNode rootNode = objectMapper.readTree(file);
+            Resource resource = resourceLoader.getResource(filePath);
 
+            JsonNode rootNode = objectMapper.readTree(resource.getInputStream());
             Iterator<Map.Entry<String, JsonNode>> fieldsIterator = rootNode.fields();
             while (fieldsIterator.hasNext()) {
                 Map.Entry<String, JsonNode> entry = fieldsIterator.next();
