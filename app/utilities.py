@@ -75,7 +75,7 @@ def sim_search(query, category, subcategory, hprice, lprice, brand):
 
     
 def range_filter(category, subcategory, hprice, lprice, brand, page):
-    cnt = 30
+    cnt = 60
     with h5py.File('./data/data.h5', 'r') as db:
         product_data = db[category][subcategory]['json'][()]
         product_data = json.loads(product_data)
@@ -86,6 +86,7 @@ def range_filter(category, subcategory, hprice, lprice, brand, page):
         mx_cnt = int(len(filtered_items))
         lst = []
         if (page+1)*cnt > mx_cnt:
-            return lst
-        dct = {'products' : filtered_items[page * cnt : (page + 1) * cnt]}
-        return dct
+            if page*cnt > mx_cnt:
+                return {'product_id': []}
+            return {'products' : filtered_items[page*cnt:]}
+        return {'products' : filtered_items[page * cnt : (page + 1) * cnt]}
