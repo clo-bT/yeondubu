@@ -1,24 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const Container = styled.div`
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items:center;
-margin-left:20px;
+margin-top : 20px;
+  text-align: left;
 
 `;
 
 const Box = styled.div`
-text-align:left;
-margin-top: 80px;
-gap:20px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+margin-left:20px;
+
 
 `
-
 const Title = styled.p`
 color: rgba(0, 0, 0, 0.80);
 text-align: center;
@@ -30,7 +28,7 @@ text-transform: uppercase;
 display:inline-flex;
 margin-right: 30px;
 `
-const InputType = styled.div`
+const InputType = styled.p`
 
   margin-right: 10px;
 
@@ -85,7 +83,9 @@ background: #FFF;
 
 `;
 
-const InputWho = styled.div`
+const InputWho = styled.p`
+
+
 `;
 
 const InputWhoGroom = styled.button.attrs(props => ({
@@ -138,39 +138,36 @@ border-radius: 10px;
 border: 1px solid #D9D9D9;
 background: #FFF;
 `;
-const InputTag = styled.div`
-display:flex;
+const InputTag = styled.p`
+
+
+
 `
-const InputDate = styled.div`
+const InputDate = styled.p`
 
 `
 
-const InputMoney = styled.div`
+const InputMoney = styled.p`
 align-items: left;
 
 `
-const InputMemo = styled.div`
+const InputMemo = styled.p`
 /* display:flex;
 align-items: left; */
 `
 const DateInput = styled.input`
-  font-size:16px;
 border-radius: 10px;
 border: 1px solid #D9D9D9;
 background: #FFF;
-padding:6px 0px;
-width:222px;
+padding:6px;
 `
 const MoneyInput = styled.input`
 border-radius: 10px;
 border: 1px solid #D9D9D9;
 background: #FFF;
 padding:6px;
-font-size:16px;
 `
 const MemoInput = styled.input`
-/* height:30px; */
-font-size:16px;
 border-radius: 10px;
 border: 1px solid #D9D9D9;
 background: #FFF;
@@ -183,8 +180,8 @@ font-size: 16px;
 font-style: normal;
 font-weight: 400;
 line-height: normal;
-
 text-transform: uppercase;
+  width: 87px;
   height: 38px;
   padding: 6px 4px;
   border-radius: 10px;
@@ -192,10 +189,7 @@ text-transform: uppercase;
   cursor: pointer;
   border: 2px solid #D9D9D9;
 `;
-const TagBox = styled.div`
-  display:flex;
-  flex-direction:column;
-`
+
 const SaveButton = styled.button`
 display: flex;
 width: 80px;
@@ -240,7 +234,6 @@ display: flex;
 align-items: center;
 justify-content: center;
 gap: 20px;
-margin-top: 70px;
 `
 const BoxHeader = styled.span`
 margin-right: 10px;
@@ -253,11 +246,51 @@ const CalendarInput = () => {
     const [incomeTags, setIncomeTags] = useState([]);
     const [expendTags, setExpendTags] = useState([]);
     const [role, setRole] = useState('')
-    const [type, setType] = useState('')
+    const [type, setType] = useState('expenditure')
     const [date, setDate] = useState('')
     const [amount, setAmount] = useState(0)
     const [memo, setMemo] = useState('')
-    const [tagId, setTagId] = useState(0)
+    const [TagId, setTagId] = useState(0)
+    const { tagId } = useParams();
+    const [expenditureData, setExpenditureData] = useState({
+        expenditure_id: 1,
+        user_role: "BRIDE",
+        date: "2024-05-16",
+        amount: 100000,
+        memo: "구매한 침대",
+        pay_complete: true
+    });
+
+    const [updatedData, setUpdatedData] = useState({ ...expenditureData }); // 초기값 설정
+    useEffect(() => {
+        axios.get(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/money/${tagId}`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            }
+        })
+        .then(response => {
+            setExpenditureData(response.data);
+            // 기본값 설정
+            setUpdatedData({
+                user_role: response.data.user_role || '',
+                date: response.data.date || '',
+                amount: response.data.amount || 0,
+                memo: response.data.memo || ''
+            });
+            setExpenditureData(response.data);
+            setRole(response.data.user_role);
+            setAmount(response.data.amount);
+            setTagId(response.data.expenditure_id);
+            setMemo(response.data.memo);
+            setDate(response.data.date);
+            // 기본값 설정
+            setUpdatedData(response.data);
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+    }, [tagId, accessToken]);
+
     const handleRole = (who) => {
         setRole(who); 
     };
@@ -273,6 +306,7 @@ const CalendarInput = () => {
     const handleMemo = (event) => {
         setMemo(event.target.value);
     };
+
 
     useEffect(()=>{
         axios.get(`${process.env.REACT_APP_API_ROOT}/api/v1/income/tag`,{
@@ -303,7 +337,7 @@ const CalendarInput = () => {
         });
     },[accessToken])
     
-    const handleTagChange = (event) => {
+    const handleThirdTagChange = (event) => {
         const selectedThirdTagId = event.target.value;
         setTagId(selectedThirdTagId);
     };
@@ -311,7 +345,7 @@ const CalendarInput = () => {
         if (type === 'income') {
             axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/income`,
         {
-            "tag_id":tagId,
+            "tag_id":TagId,
             "user_role": role,
             "date": date,
             "amount":amount,
@@ -332,7 +366,7 @@ const CalendarInput = () => {
         else if (type === 'expenditure') {
             axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/money`,
         {
-            "third_tag_id":thirdTagId,
+            "third_tag_id":TagId,
             "user_role": role,
             "date": date,
             "amount":amount,
@@ -344,7 +378,8 @@ const CalendarInput = () => {
               Authorization: `Bearer ${accessToken}`,
             }
         }).then(response => {
-            console.log('여기는 캘린더에서 지출 추가하기',response)
+          console.log('여기는 캘린더에서 지출 추가하기', response)
+          console.log(updatedData)
         })
         .catch(error => {
             console.error('Error fetching data:', error);
@@ -356,7 +391,7 @@ const CalendarInput = () => {
         if (type === 'income') {
             axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/income`,
         {
-            "tag_id": tagId,
+            "tag_id": TagId,
             "user_role": role,
             "date": date,
             "amount":amount,
@@ -377,7 +412,7 @@ const CalendarInput = () => {
         else if (type === 'expenditure') {
             axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/expenditure/money`,
         {
-            "third_tag_id":thirdTagId,
+            "third_tag_id":TagId,
             "user_role": role,
             "date": date,
             "amount":amount,
@@ -397,24 +432,9 @@ const CalendarInput = () => {
         };
         
         };
-        const [firstTagId, setFirstTagId] = useState('');
-  const [secondTagId, setSecondTagId] = useState('');
-  const [thirdTagId, setThirdTagId] = useState('');
-
-        const handleFirstTagChange = (event) => {
-          const selectedFirstTagId = event.target.value;
-          setFirstTagId(selectedFirstTagId);
-      };
-      const handleSecondTagChange = (event) => {
-        const selectedSecondTagId = event.target.value;
-        setSecondTagId(selectedSecondTagId);
-    };
-    const handleThirdTagChange = (event) => {
-      const selectedThirdTagId = event.target.value;
-      setThirdTagId(selectedThirdTagId);
-  };
+    
         return (
-          <Container>
+            <Container>
             <Box>
               <InputType>
               <Title>분류</Title>
@@ -454,59 +474,25 @@ const CalendarInput = () => {
         
               <InputTag>
                 <Title>태그 </Title>
-                <TagBox>
-                {!type && (
-                  <TagSelect><option value="">태그를 선택하세요</option></TagSelect>
-                )}
-                {type === 'income' && (
-                  <TagSelect onChange={handleTagChange}>
+                <TagSelect onChange={handleThirdTagChange}>
                     <option value="">태그를 선택하세요</option>
                     
-                    {incomeTags.map(tag => (
-                      <option key={tag.id} value={tag.id}>
-                        {tag.tag_name}
-                      </option>
-                    ))}
-                  </TagSelect>
-                )}
-                {type === 'expenditure' && (
-                  <TagSelect onChange={handleFirstTagChange}>
-                    <option value="">첫 번째 태그를 선택하세요</option>
-                    {expendTags.map(firstTag => (
-                        <option key={firstTag.first_tag_id} value={firstTag.first_tag_id}>
-                            {firstTag.first_tag_name}
+                    {type === 'income'
+                    ? incomeTags.map(tag => (
+                        <option key={tag.id} value={tag.id}>
+                            {tag.tag_name}
                         </option>
+                        ))
+                    : expendTags.map(firstTag => (
+                        firstTag.tag_second_expenditure_dto_list.map(secondTag => (
+                        secondTag.tag_third_expenditure_dto_list.map(thirdTag => (
+                            <option key={thirdTag.third_tag_id} value={thirdTag.third_tag_id}>
+                            {thirdTag.third_tag_name}
+                            </option>
+                        ))
+                        ))
                     ))}
-                </TagSelect>
-                )}
-                {type === 'expenditure' && firstTagId && (
-                  <TagSelect onChange={handleSecondTagChange}>
-                      <option value="">두 번째 태그를 선택하세요</option>
-                      {expendTags
-                          .find(tag => tag.first_tag_id === parseInt(firstTagId))
-                          .tag_second_expenditure_dto_list.map(secondTag => (
-                              <option key={secondTag.second_tag_id} value={secondTag.second_tag_id}>
-                                  {secondTag.second_tag_name}
-                              </option>
-                          ))}
-                  </TagSelect>
-                )}
-                {type === 'expenditure' && secondTagId && (
-                  <TagSelect onChange={handleThirdTagChange}>
-                      <option value="">세 번째 태그를 선택하세요</option>
-                      {expendTags
-                          .find(tag => tag.first_tag_id === parseInt(firstTagId))
-                          .tag_second_expenditure_dto_list
-                          .find(secondTag => secondTag.second_tag_id === parseInt(secondTagId))
-                          .tag_third_expenditure_dto_list.map(thirdTag => (
-                              <option key={thirdTag.third_tag_id} value={thirdTag.third_tag_id}>
-                                  {thirdTag.third_tag_name}
-                              </option>
-                          ))}
-                  </TagSelect>
-              )}
-              </TagBox>
-      
+      </TagSelect>
     </InputTag>
         
               <InputDate>
@@ -516,7 +502,7 @@ const CalendarInput = () => {
         
               <InputMoney>
               <Title>가격</Title>
-                <MoneyInput type="number" value={amount} onChange={handleAmount} /> 원
+                <MoneyInput type="number" value={amount} onChange={handleAmount} />원
               </InputMoney>
         
               <InputMemo>
@@ -528,7 +514,7 @@ const CalendarInput = () => {
 
               <ButtonBox>
               
-              <SaveButton onClick={()=> navigate('/calendar')}>취소</SaveButton>
+              <SaveButton onClick={()=> navigate('/calendar')}>삭제</SaveButton>
               <SaveButton onClick={handleSave}>저장</SaveButton>
               {type === 'expenditure' && (
                 <CompleteButton onClick={handleComplete}>구매완료</CompleteButton>
