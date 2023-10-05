@@ -10,6 +10,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @ToString
 public class MoneyExpenditureDetailResDto {
+    private String thirdTagName;
     private Long expenditureId;
     private UserRole userRole;
     private LocalDate date;
@@ -18,7 +19,8 @@ public class MoneyExpenditureDetailResDto {
     private Boolean payComplete;
 
     @Builder
-    public MoneyExpenditureDetailResDto(Long expenditureId, UserRole userRole, LocalDate date, Long amount, String memo, Boolean payComplete) {
+    public MoneyExpenditureDetailResDto(String thirdTagName, Long expenditureId, UserRole userRole, LocalDate date, Long amount, String memo, Boolean payComplete) {
+        this.thirdTagName = thirdTagName;
         this.expenditureId = expenditureId;
         this.userRole = userRole;
         this.date = date;
