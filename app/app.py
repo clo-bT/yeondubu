@@ -82,9 +82,10 @@ def loan_upload():
                 print('jsonfile 이미 있음')
             json_data = request.get_json()
             try:
-                salary = int(json_data['salary']['salary'])
+                salary = json_data['salary']['salary']
+                salary = int(''.join(salary.split(',')))
                 creditScore = int(json_data['creditScore']['creditScore'])
-                surCharge = int(json_data['surCharge'])
+                surCharge = int(json_data['surCharge']) 
                 loanPeriod = int(json_data['loanPeriod']['loanPeriod'])
                 totalAssets = json_data['totalAssets']['totalAssets']
                 totalAssets = int(''.join(totalAssets.split(',')))
