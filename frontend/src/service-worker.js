@@ -69,6 +69,16 @@ self.addEventListener('message', (event) => {
   }
 });
 
+self.addEventListener('fetch', function(event) {
+  event.respondWith(
+    fetch(event.request).catch(function() {
+      return caches.match(event.request);
+    })
+  );
+});
+
+
+
 // Any other custom service worker logic can go here.
 // var CACHE_NAME = 'pwa-task-manager';
 // var urlsToCache = [
