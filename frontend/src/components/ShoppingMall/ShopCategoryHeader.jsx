@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
-import sofa from '../../assets/ShoppingMallCategory/sofa.svg';
+import { Link , useParams} from 'react-router-dom';
+import axios from 'axios';
 
 
 const Container = styled.div`
@@ -15,11 +16,11 @@ margin-top: 10px;
 `
 
 const Box = styled.div`
-  display: flex;
-  align-items: center; 
-  margin-top: 10px;
-  gap: 10px; 
-  width: 100%;
+display: flex;
+align-items: center; 
+margin-top: 10px;
+gap: 10px; 
+width: 100%;
 
 `
 const ProductInfo = styled.div`
@@ -71,17 +72,38 @@ margin-left: auto;
 `
 
 const ShopCategoryHeader = () => {
+    const {category, subcategory} = useParams();
+    const [headerTitle, setHeaderTitle] = useState(null);
+    useEffect(() => {
+        const baseURL = 'http://localhost:5000'
+        const URL = '/api/v1/marriage-stuffs/category'
+        const params = {
+            category: category,
+            subcategory: subcategory
+        };
+        axios.get(baseURL + URL, {params})
+        .then((response) => {
+            setHeaderTitle(response.data.category);
+        })
+        .catch((error) => {
+            console.error('Error fetching default values:', error);
+        })
+    }, [category, subcategory]);
     return (
         <Container>
-            <GetOutButton href="/">나가기</GetOutButton>
+            <Link to = {'/shoppingmallcategory'}>
+                <GetOutButton>나가기</GetOutButton>
+            </Link>
             <Box>
-            <ProductImg src={sofa}/>
             <ProductInfo>
-                <TagName>이불</TagName>
-                <Filter href="/">필터 설정하기</Filter>
+                <TagName>{headerTitle}</TagName>
+                <Link to = {`/shoppingfilter/${category}/${subcategory}`} >
+                    <Filter>사진으로 검색</Filter>
+                </Link>
+                <Link to = {`/shoppingfilter/${category}/${subcategory}`} >
+                    <Filter>필터 설정하기</Filter>
+                </Link>
             </ProductInfo>
-         
-
             </Box>
         </Container>
     );

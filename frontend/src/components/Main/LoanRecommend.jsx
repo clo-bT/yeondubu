@@ -14,17 +14,17 @@ const ToggleButton = styled.button`
   cursor: pointer;
 
 `
-const LoanContainer = styled.div`
-display: flex;
-align-items: center;
-border-radius: 5px;
-background: #EDEEF1;
-padding: 10px;
-margin: 10px 30px;
-height: 62px;
-flex-shrink: 0;
+// const LoanContainer = styled.div`
+// display: flex;
+// align-items: center;
+// border-radius: 5px;
+// background: #EDEEF1;
+// padding: 10px;
+// margin: 10px 30px;
+// height: 62px;
+// flex-shrink: 0;
 
-`
+// `
 const CheckIcon = styled(AiOutlineCheckSquare)`
 width: 20px;
 height: 20px;
@@ -44,12 +44,12 @@ margin-left: 30px;
 margin-bottom: 20px;
 `
 
-const BankImg = styled.img`
-// width: 40px;
-// height: 40px;
-flex-shrink: 0;
-border-radius: 5px;
-`
+// const BankImg = styled.img`
+// // width: 40px;
+// // height: 40px;
+// flex-shrink: 0;
+// border-radius: 5px;
+// `
 
 
 const InputButton = styled.button`

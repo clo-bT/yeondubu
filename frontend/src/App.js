@@ -9,6 +9,7 @@ import AirlineRecommend from './pages/AirlineRecommend';
 import AirlineRecommendFilter from './pages/AirlineRecommendFilter';
 import BudgetCheckBox from './pages/BudgetCheckBox';
 import CalendarInputCreate from './pages/CalendarInputCreate';
+import CalendarInputUpdate from './pages/CalendarInputUpdate';
 import ChatBot from './pages/ChatBot';
 import CheckBox from './pages/CheckBox';
 import CheckUser from './pages/CheckUser';
@@ -19,9 +20,10 @@ import Login from './pages/Login';
 import Main from './pages/Main';
 import Mooni from './pages/Mooni';
 import PutShoppingImage from './pages/PutShoppingImage';
-import ShopingMallCategory from './pages/ShopingMallCategory';
+import ShopingMallCategory from './pages/ShoppingMallCategory';
 import ShoppingMall from './pages/ShoppingMall';
-import ShoppingRecommendation from './pages/ShoppingRecommendation';
+// import ShoppingRecommendation from './pages/ShoppingRecommendation';
+import ShoppingFilter from './components/PutShoppingImage/ShoppingFilter';
 import ShoppingSizeInput from './pages/ShoppingSizeInput';
 import ShowInviteCode from './pages/ShowInviteCode';
 import TagInput from './pages/TagInput';
@@ -55,9 +57,11 @@ function App() {
           <Route path="/airlinerecommend" element={<AirlineRecommend />} />
           <Route path="/airlinerecommendfilter" element={<AirlineRecommendFilter />} />
           <Route path="/budgetcheckbox" element={<BudgetCheckBox />} />
-          <Route path="/calendarinputcreate" element={<CalendarInputCreate />} />
+          <Route path="/calendarinput" element={<CalendarInputCreate />} />
+          <Route path="/calendarupdate/:tagId" element={<CalendarInputUpdate />} />
           <Route path="/chatbot" element={<ChatBot />} />
           <Route path="/checkbox" element={<CheckBox />} />
+          <Route path="/checkboxwhole" element={<CheckBoxWhole />} />
           <Route path="/checkuser" element={<CheckUser />} />
           <Route path="/invite" element={<Invite />} />
           <Route path="/invitepageentercode" element={<InvitePageEnterCode />} />
@@ -65,9 +69,9 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/mooni" element={<Mooni />} />
           <Route path="/putshoppingimage" element={<PutShoppingImage />} />
-          <Route path="/shopingmallcategory" element={<ShopingMallCategory />} />
-          <Route path="/shoppingmall" element={<ShoppingMall />} />
-          <Route path="/shoppingrecommendation" element={<ShoppingRecommendation />} />
+          <Route path="/shoppingmallcategory" element={<ShopingMallCategory />} />
+          <Route path="/shoppingmall/:category/:subcategory" element={<ShoppingMall />} />
+          <Route path="/shoppingfilter/:category/:subcategory" element={<ShoppingFilter />} />
           <Route path="/shoppingsizeinput" element={<ShoppingSizeInput />} />
           <Route path="/showinvitecode" element={<ShowInviteCode />} />
           <Route path="/taginput" element={<TagInput />} />
@@ -79,13 +83,9 @@ function App() {
           <Route path="/myproduct" element={<MyProductLike />} />
           <Route path="/input" element={<CreditScoreInput />} />
           <Route path="/myproductlike" element={<MyProductLike />} />
-          <Route path="/myaccountupdate" element={<MyAccountUpdate />} />
+          <Route path="/myaccountupdate/:accountType/:accountId" element={<MyAccountUpdate />} />
           <Route path="/checkboxwhole" element={<CheckBoxWhole />} />
           <Route path="/userwithdraw" element={<UserWithdraw />} />
-
-
-  
-
         </Routes>
       </div>
     </BrowserRouter>

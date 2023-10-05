@@ -6,6 +6,7 @@ import CoupleMoney from '../components/Main/CoupleMoney';
 import LoanRecommend from '../components/Main/LoanRecommend';
 //import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import BudgetGraph from '../components/Main/BudgetGraph';
 
 
 
@@ -14,11 +15,19 @@ const Main = () => {
   useEffect(() => {
     const accessToken = localStorage.getItem("token");
     const partner_id = localStorage.getItem("partner_id");
+    const role = localStorage.getItem("role");
     if (!accessToken) {
       navigate('/login')
     }
     else if (!partner_id) {
       navigate('/invite')
+    }
+    else if (!role) {
+      navigate('/weddingday')
+    }
+    else {
+      navigate('/')
+
     }
     
   },[navigate])
@@ -35,6 +44,7 @@ const Main = () => {
         <BudgetMoney isBudgetOpen={isBudgetOpen} />
         <CoupleImage setIsBudgetOpen={setIsBudgetOpen} isBudgetOpen={isBudgetOpen}/>
         <CoupleMoney/>
+        <BudgetGraph/>
         <LoanRecommend isLoanOpen={isLoanOpen} toggleLoan={toggleLoan}/>
         <Menubar />
       </div>

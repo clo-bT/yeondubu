@@ -4,7 +4,7 @@ import ShoppingCategoryList from '../components/ShoppingMallCategory/ShoppingCat
 import Menubar from '../components/Common/Menubar';
 
 
-const ShopingMallCategory = () => {
+const ShoppingMallCategory = () => {
     return (
         <div>
             <ShoppingHeader />
@@ -14,4 +14,4 @@ const ShopingMallCategory = () => {
     );
 };
 
-export default ShopingMallCategory;
+export default ShoppingMallCategory;

@@ -57,12 +57,12 @@ const Menubar = () => {
     return (
     <Container>
         <div>
-        <a href="/main"><HomeIcon /></a>
+        <a href="/"><HomeIcon /></a>
         <IconDetail>홈</IconDetail>
         </div>
 
         <div>
-        <a href="/"><WalletIcon /></a>
+        <a href="/checkbox"><WalletIcon /></a>
         <IconDetail>예산</IconDetail>
         </div>
 

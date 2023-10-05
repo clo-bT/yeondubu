@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { BsFill1CircleFill,BsFill2CircleFill,BsFill3CircleFill,
     BsFill4CircleFill,BsFill5CircleFill,BsFill6CircleFill,BsFill7CircleFill } from "react-icons/bs";
 import axios from 'axios';
+import Swal from "sweetalert2";
 
 const Container = styled.div`
 display: flex;
@@ -103,6 +104,7 @@ border: none;
 border-radius: 10px;
 /* margin-top: 10px; */
 margin-bottom: 10px;
+margin-top: 10px;
 `
 
 const CustomCheckbox = styled.input`
@@ -210,6 +212,8 @@ const CashNowMoneyInput = styled.input`
 `
 const DepositAccountInputForm = () => {
   // const navigate = useNavigate();
+
+  const [errorMessage, setErrorMessage] = useState(''); 
   const [accessToken, setAccessToken] = useState('');
   const [accountName, setAccountName] = useState('');
   const [endDate, setEndDate] = useState('');
@@ -255,6 +259,10 @@ const handleCash = (event) => {
 
   
 const SavingAccount = () => {
+  if (!accountName || !endDate || !nowMoney || !expectMoney || !outDate || !outMoney) {
+    setErrorMessage('모든 입력란을 채워주세요.'); // 에러 메시지 설정
+    return;
+  }
   console.log(accessToken)
 
   const requestBody = {
@@ -275,13 +283,31 @@ const SavingAccount = () => {
       .then((response) => {
           console.log('요청 성공:', response);
           console.log(requestBody);
-      })
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: true,
+          })
+          
+          Toast.fire({
+            icon: 'success',
+            title: '적금계좌가 등록되었습니다!'
+          })
+   
+        
+    })
+     
       .catch((error) => {
           console.error('요청 실패:', error);
       });
+      setErrorMessage('');
 };
 
 const DepositAccount = () => {
+  if (!accountName || !endDate || !nowMoney || !expectMoney) {
+    setErrorMessage('모든 입력란을 채워주세요.'); // 에러 메시지 설정
+    return;
+  }
   console.log(accessToken)
 
   const requestBody = {
@@ -300,13 +326,30 @@ const DepositAccount = () => {
       .then((response) => {
           console.log('요청 성공:', response);
           console.log(requestBody);
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: true,
+          })
+          
+          Toast.fire({
+            icon: 'success',
+            title: '예금계좌가 등록되었습니다!'
+          })
       })
       .catch((error) => {
           console.error('요청 실패:', error);
       });
-};
-
+      
+      setErrorMessage('');
+    };
+    
 const CashAccount = () => {
+  if (!cashMoney) {
+    setErrorMessage('모든 입력란을 채워주세요.'); // 에러 메시지 설정
+    return;
+  }
+
   console.log(accessToken)
 
   const requestBody = {
@@ -322,10 +365,21 @@ const CashAccount = () => {
       .then((response) => {
           console.log('요청 성공:', response);
           console.log(requestBody);
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: true,
+          })
+          
+          Toast.fire({
+            icon: 'success',
+            title: '현금이 등록되었습니다!'
+          })
       })
       .catch((error) => {
           console.error('요청 실패:', error);
       });
+      setErrorMessage('');
 };
 
 
@@ -401,7 +455,7 @@ const CashAccount = () => {
             <CountIcon3 />
             <Text>만기일</Text>
             <EndDateInput 
-            type='text'
+            type='date'
             onChange={handleEndDate}
             value={endDate}
             />
@@ -446,6 +500,7 @@ const CashAccount = () => {
             value={outMoney}
             />
           </IconWithText>
+          {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>} {/* 에러 메시지 표시 */}
           <InputButton onClick={SavingAccount}>입력하기</InputButton>
     </Box>
       )}
@@ -462,16 +517,6 @@ const CashAccount = () => {
           </IconWithText>
 
           <IconWithText>
-            <CountIcon3 />
-            <Text>만기일</Text>
-            <DepositEndDateInput 
-            type="text"
-            onChange={handleEndDate}
-            value={endDate}
-            />
-          </IconWithText>
-
-          <IconWithText>
             <CountIcon4 />
             <Text>현재금액</Text>
             <DepositNowMoneyInput 
@@ -480,6 +525,17 @@ const CashAccount = () => {
             value={nowMoney}
             />
           </IconWithText>
+          
+          <IconWithText>
+            <CountIcon3 />
+            <Text>만기일</Text>
+            <DepositEndDateInput 
+            type="date"
+            onChange={handleEndDate}
+            value={endDate}
+            />
+          </IconWithText>
+
 
           <IconWithText>
             <CountIcon5 />
@@ -490,6 +546,7 @@ const CashAccount = () => {
             value={expectMoney}
             />
           </IconWithText>
+          {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>} {/* 에러 메시지 표시 */}
           <InputButton onClick={DepositAccount}>입력하기</InputButton>
         </Box>
       )}
@@ -505,6 +562,7 @@ const CashAccount = () => {
             value={cashMoney}
             />
           </IconWithText>
+          {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>} {/* 에러 메시지 표시 */}
           <InputButton onClick={CashAccount}>입력하기</InputButton>
 
         </Box>
