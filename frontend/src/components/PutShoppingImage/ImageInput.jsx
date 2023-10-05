@@ -6,7 +6,6 @@ import 'rc-slider/assets/index.css';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-
 const Container = styled.div`
 overflow-y: auto;
 margin-left: 20px;
@@ -106,48 +105,25 @@ flex-wrap: wrap;
 `
 
 const ShoppingFilter = () => {
-    const defaultFilter = {
-      lprice : 0,
-      hprice : 1000000000,
-      brand : ''
-    };
+    // const filter_frame = {
+    //     "category"    : "",
+    //     "subcategory" : "",
+    //     "min_price"   : 0,
+    //     "max_price"   : 1000000000,
+    //     "brand"       : [],
+    //     "page"        : 1 
+    // };
     const {category, subcategory} = useParams();
     const [brands, setBrands] = useState([]);
     const [selectedImage, setSelectedImage] = useState(null);
     const [priceRange, setPriceRange] = useState([0, 1000]);
     const [currentPriceRange, setCurrentPriceRange] = useState(priceRange); // 현재 구간 값을 저장할 상태
-    const [filterData, setFilterData] = useState(defaultFilter);
-    const [uploadImage, setUploadImage] = useState(null);    
-    // useEffect(() => {
-    //   const filterData = localStorage.getItem();
-    //   setFilter(filterData);
-    // }, []);
-
+    const [filterData, setFilter] = useState(filter_frame);
+    
     useEffect(() => {
-      const defaultData = {
-        category : category,
-        subcategory : subcategory,
-        lprice : 0,
-        hprice : 1000000000,
-        brand : ''
-      };
-      let storedData = localStorage.getItem('filterData');
-      console.log(storedData);
-      if (!storedData) {
-        localStorage.setItem('filterData', JSON.stringify([defaultData, ]));
-        storedData = [defaultData, ];
-      };
-      const parsedData = JSON.parse(storedData);
-      const categoryFilter = parsedData.filter(item => item.category === category && item.subcategory === subcategory);
-      if (categoryFilter) {
-        setFilterData(categoryFilter);
-      } else {
-        storedData.append(defaultData);
-        localStorage.setItem('filterData', JSON.stringify(storedData));
-        setFilterData(defaultData);
-      };
-      console.log(filterData);
-    }, [category, subcategory]);
+      const filterData = localStorage.getItem("filter_data");
+      setFilter(filterData);
+    }, []);
 
     useEffect(() => {
         const baseURL = 'http://localhost:5000'
@@ -186,7 +162,6 @@ const ShoppingFilter = () => {
         if (file) {
             const imageUrl = URL.createObjectURL(file); // 파일의 URL 생성
             setSelectedImage(imageUrl); // 선택한 이미지를 상태에 저장
-            setUploadImage(event.target.files[0])
         }
     };
 
@@ -215,82 +190,44 @@ const ShoppingFilter = () => {
       console.log('클릭한 브랜드들:', clickedBrands);
     };
     
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      const updatedClickStates = [...brandClickStates];
-      const clickedBrands = [];
-      updatedClickStates.forEach((clicked, index) => {
-        if (clicked) {
-          clickedBrands.push(brands[index]);
-        }
-      });
-      const ArrayToString = clickedBrands.join(', ');
-      // const updateFilter = {
-      //   category : category,
-      //   subcategory : subcategory,
-      //   brand : ArrayToString,
-      //   lprice: currentPriceRange[0],
-      //   hprice: currentPriceRange[1]
-      // }
-      // setFilterData(updateFilter);
-  
-      // const existingData = JSON.parse(localStorage.getItem('filterData'));
-      // console.log(existingData, 'where is this')
-      // const indexToUpdate = existingData.findIndex((item) => {
-      //   return item.category === category && item.subcategory === subcategory;
-      // });
-      // existingData[indexToUpdate].lprice = currentPriceRange[0];
-      // existingData[indexToUpdate].hprice = currentPriceRange[1];
-      // existingData[indexToUpdate].brand = ArrayToString;
-      // localStorage.setItem('filterData', JSON.stringify(existingData));
-
-      if (selectedImage) {
-          const formData = new FormData();
-          // const params = {
-          //     'category'    : category,
-          //     'subcategory' : subcategory,
-          //     'brand'       : filterData.brand,
-          //     'lprice'      : filterData.lprice,
-          //     'hprice'      : filterData.hprice,
-          // };
-          const data = {
-              'category'    : category,
-              'subcategory' : subcategory,
-              'brand'       : ArrayToString,
-              'lprice'      : currentPriceRange[0],
-              'hprice'      : currentPriceRange[1],
-          };
-          console.log(uploadImage);
-          formData.append('image', uploadImage);
-          for (const key in data) {
-            formData.append(key, data[key]);
-          }
-          try {
-            axios.post('http://localhost:5000/api/v1/marriage-stuffs/img_search', formData, {
-              headers: {
-                'Content-Type': 'multipart/form-data',
-              },
-            })
-            .then (res => {
-              console.log(res.data);
-            })
-            .catch(err => {
-              console.log(err)
-            })
-        } catch (error) {
-            console.error('Upload failed:', error);
-        }
-      }
-      // history.push(`/shoppingmall/${category}/${subcategory}`)
-    };
+    // const handleSubmit = async (e) => {
+    //   e.preventDefault();
+    //   if (selectedImage) {
+    //       const formData = new FormData();
+    //       const data = {
+    //           'category'    : 'furniture',
+    //           'subcategory' : 'desk',
+    //           'brand'       : '',
+    //           'lprice'      : 150000,
+    //           'hprice'      : 2000000,
+    //           'count'       : 9,
+    //       };
+    //       formData.append('image', selectedImage);
+    //       for (const key in data) {
+    //         formData.append(key, data[key]);
+    //       }
+    //       try {
+    //         const response = await axios.post('http://localhost:5000/api/v1/shopping_filter', formData, {
+    //           headers: {
+    //             'Content-Type': 'multipart/form-data',
+    //           },
+    //         });
+    //         console.log('Upload success:', response.data);
+    //     } catch (error) {
+    //         console.error('Upload failed:', error);
+    //     }
+    //   }
+    // };
 
     return (
         <Container>
             <Box>
-                <GetOutButton href="/shoppingmall/:category/:subcategory">나가기</GetOutButton>
-                <EnterButton type="submit" onClick={handleSubmit} onSubmit={handleSubmit}>적용하기</EnterButton>
+                <GetOutButton href="/">나가기</GetOutButton>
+                <EnterButton type="submit">적용하기</EnterButton>
             </Box>
-        <InputPicture
+
+
+        {/* <InputPicture
           src={selectedImage || PictureInput}
           alt="Uploaded Image"
           onClick={() => document.getElementById('imageInput').click()} 
@@ -300,8 +237,9 @@ const ShoppingFilter = () => {
           id="imageInput"
           accept="image/*" 
           style={{ display: 'none' }} 
+          
           onChange={handleImageSelect} 
-        />
+        /> */}
         <Box1>
         <Header>브랜드</Header>
         </Box1>
