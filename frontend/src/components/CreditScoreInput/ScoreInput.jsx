@@ -259,7 +259,11 @@ const ScoreInput = () => {
         }
     };
     function addcommatonumber(number){
-        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      if (number.type === 'number') {
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '원'
+      } else {
+        return number
+      }
     };
   
     const usemoney = estimatedMoney - (cashMoney.bride_total_cash+cashMoney.groom_total_cash
@@ -356,15 +360,15 @@ const ScoreInput = () => {
                                                 </LoanTableRow>
                                                 <LoanTableRow>
                                                     <LoanTableHeader>40%</LoanTableHeader>
-                                                    <LoanTableBody>{addcommatonumber(data.limit_amount[0])}(원)</LoanTableBody>
+                                                    <LoanTableBody>{addcommatonumber(data.limit_amount[0])}</LoanTableBody>
                                                 </LoanTableRow>
                                                 <LoanTableRow>
                                                     <LoanTableHeader>70%</LoanTableHeader>
-                                                    <LoanTableBody>{addcommatonumber(data.limit_amount[1])}(원)</LoanTableBody>
+                                                    <LoanTableBody>{addcommatonumber(data.limit_amount[1])}</LoanTableBody>
                                                 </LoanTableRow>
                                                 <LoanTableRow>
                                                     <LoanTableHeader>90%</LoanTableHeader>
-                                                    <LoanTableBody>{addcommatonumber(data.limit_amount[2])}(원)</LoanTableBody>
+                                                    <LoanTableBody>{addcommatonumber(data.limit_amount[2])}</LoanTableBody>
                                                 </LoanTableRow>
                                             </tbody>
                                         </table>
