@@ -12,7 +12,9 @@ import axios from 'axios';
 
 const Main = () => {
   const accessToken = localStorage.getItem('token')
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
+  const [coupleId, setCoupleId] = useState(false)  
+  const [role, setRole] = useState('')  
   useEffect(()=>{
     axios.get(`${process.env.REACT_APP_API_ROOT}/api/v1/users`, {
       headers: {
@@ -24,19 +26,18 @@ const Main = () => {
       localStorage.setItem("name", response.data.name);
       localStorage.setItem("image", response.data.image_url);
       localStorage.setItem("is_couple", response.data.is_couple);
+      setCoupleId(response.data.is_couple);
       localStorage.setItem("role", response.data.user_role);
+      setRole(response.data.user_role);
   }).catch((error)=>{
   console.error('Error fetching data:', error);
 })
 })
-  useEffect(() => {
-    const accessToken = localStorage.getItem("token");
-    const is_couple = localStorage.getItem("is_couple");
-    const role = localStorage.getItem("role");
+
     if (!accessToken) {
       navigate('/login')
     }
-    else if (!is_couple) {
+    else if (!coupleId) {
       navigate('/invite')
     }
     else if (!role) {
@@ -46,8 +47,7 @@ const Main = () => {
       navigate('/')
 
     }
-    
-  },[navigate])
+
   const [isBudgetOpen, setIsBudgetOpen] = useState(true);
   const [isLoanOpen, setIsLoanOpen] = useState(false);
   
