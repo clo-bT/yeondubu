@@ -394,7 +394,7 @@ const AccountCalendar = () => {
                 <TodayDate>{format(selectedDate, 'dd.eee요일', { locale: ko })}</TodayDate>
                 <IncomeExpenditure>
                     {income_list.map(item => (
-                        <IncomeRow key={item.income_id}>
+                        <IncomeRow key={item.income_id} onClick={()=>navigate(`/calendarupdateincome/${item.income_id}`)}>
                             <TagAndWho>
                                 <IncomeTag>{item.tag_name}</IncomeTag>
                                 <RoleIncomeTag>{item.user_role === 'BRIDE' ? '예비 신부' : '예비 신랑'} </RoleIncomeTag>
