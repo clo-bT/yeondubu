@@ -1,10 +1,13 @@
 from flask import Flask, request, jsonify
 # from flask import Flask, request, jsonify, make_response
 from flask_cors import CORS, cross_origin
-import utilities as ut
+import os
 from PIL import Image
 from io import BytesIO
 import json
+from loan.Loan_page import calculate, credit_scores
+import utilities as ut
+from loan.checking_json import check_jsonfile
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/api/*": {"origins": ["https://j9a307.p.ssafy.io:3000/*", "http://localhost:3000/*", "http://localhost*"]}})
@@ -68,26 +71,32 @@ def cos_sim_search():
     except Exception as e:
         return jsonify({'error':str(e)}), 400
 
-@app.route('/api/v1/loanupload', methods=['POST'])
+@app.route('/api/v1/loan/upload', methods=['POST'])
 def loan_upload():
     if request.method == 'POST':
         try:
+            check = check_jsonfile()
+            if check:
+                print('새로운 jsonfile 생성')
+            else:
+                print('jsonfile 이미 있음')
             json_data = request.get_json()
             try:
                 salary = int(json_data['salary']['salary'])
                 creditScore = int(json_data['creditScore']['creditScore'])
                 surCharge = int(json_data['surCharge'])
                 loanPeriod = int(json_data['loanPeriod']['loanPeriod'])
-                totalAssets = int(json_data['totalAssets']['totalAssets'])
+                totalAssets = json_data['totalAssets']['totalAssets']
+                totalAssets = int(''.join(totalAssets.split(',')))
             except:
                 raise KeyError
             rate = calculate(salary) # 속한 수입 구간의 평균 자산 대비 부채 비율
             results = credit_scores(salary, creditScore, surCharge, loanPeriod, rate, totalAssets)
             return jsonify({'result': results})
         except Exception as err:
-            return ut.rspns(data = {'result':True}, status_code=200)
+            return jsonify({'result':str(err)}), 300
     else:
-        return ut.rspns(data = {'result':False}, status_code=400)
+        return jsonify({'result':False}), 400
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000, host='0.0.0.0')

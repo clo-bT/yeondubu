@@ -1,8 +1,8 @@
 def calculate(mon): # 자산 대비 부채 비율
     import pandas as pd
     year = mon * 12
-    lia_df = pd.read_csv("preprocess_liabilities.csv", header=None) # 부채
-    ass_df = pd.read_csv("preprocess_assets.csv", header=None) # 자산
+    lia_df = pd.read_csv("./loan/csv/preprocess_liabilities.csv", header=None) # 부채
+    ass_df = pd.read_csv("./loan/csv/preprocess_assets.csv", header=None) # 자산
     if year < 10000000:
         return 100 * lia_df.iloc[0][1] / ass_df.iloc[0][1]
     elif year < 30000000:
@@ -19,11 +19,22 @@ def calculate(mon): # 자산 대비 부채 비율
 
 def credit_scores(salary, score, loan_money, period, ratio, totalAssets):
     # parameter - salary, score, loan_money, period, ratio == (월급, 신용점수, 대출금액, 상환기간, 속한 구간의 자산 대비 부채 비율)
+    import os
     import json
     import heapq
-    with open('./personal_credit_loans.json', 'r', encoding='utf-8') as f:
-        data = json.load(f)
-
+    
+    jsonfilelist = os.listdir('./loan/json')
+    data = {}
+    cnt = 0
+    
+    for jsonfile in jsonfilelist:
+        print(jsonfile)
+        with open('./loan/json/' + jsonfile, 'r', encoding='utf-8') as f:
+            data_dict = json.load(f)
+        for i in data_dict:
+            data[str(cnt)] = data_dict[i]
+            cnt += 1
+    
     num_to_en = {
         1 : 'bottom',
         2 : 'second',
