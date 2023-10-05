@@ -27,6 +27,7 @@ public class CustomStuffLikesRepositoryImpl implements CustomStuffLikesRepositor
                 .select(Projections.constructor(StuffLikesResDto.class,
                         qStuff.id,
                         qStuffLikes.id,
+                        qStuffLikes.itemId,
                         qStuff.category,
                         qStuff.subCategory
                 ))

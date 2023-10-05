@@ -21,11 +21,13 @@ public class StuffLikes extends BaseTimeEntity {
     private Couple couple;
     @ManyToOne(fetch = FetchType.LAZY)
     private Stuff stuff;
+    private Long itemId;
 
     @Builder
-    public StuffLikes(Long id, Couple couple, Stuff stuff) {
+    public StuffLikes(Long id, Couple couple, Stuff stuff, Long itemId) {
         this.id = id;
         this.couple = couple;
         this.stuff = stuff;
+        this.itemId = itemId;
     }
 }
