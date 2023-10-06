@@ -33,24 +33,24 @@ const Main = () => {
   console.error('Error fetching data:', error);
 })
 },[accessToken])
-
-    if (!accessToken) {
-      navigate('/login')
-    }
-    else if (coupleId==='false') {
-      navigate('/invite')
-    }
-    else if (role!=='BRIDE' || role !== 'GROOM') {
-      navigate('/weddingday')
-    }
+    useEffect(() => {
+    
+      if (!accessToken) {
+        navigate('/login')
+      }
+      else if (coupleId==='false') {
+        navigate('/invite')
+      }
+      else if (role!=='BRIDE' || role !== 'GROOM') {
+        navigate('/weddingday')
+      }
+    }, [accessToken, navigate,coupleId,role])
+  
     
     
 
   const [isBudgetOpen, setIsBudgetOpen] = useState(true);
   const [isLoanOpen, setIsLoanOpen] = useState(false);
-  
-
-  
 
 
   const toggleLoan = () => {
