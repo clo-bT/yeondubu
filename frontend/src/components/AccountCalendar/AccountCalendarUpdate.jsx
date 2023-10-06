@@ -336,7 +336,9 @@ const CalendarInput = () => {
         console.log('여기는 삭제',response);
         navigate(-1)
       }).catch((error) => {
-        console.error('여기는 삭제',error)
+        console.error('여기는 삭제', error)
+        navigate(-1)
+        
       })
     };
     const handleSave = () => {

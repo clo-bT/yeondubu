@@ -314,7 +314,9 @@ const CalendarIncome = () => {
 
         })
         .catch(error => {
-            console.error('Update에서 수입 수정(저장)', error);
+          console.error('Update에서 수입 수정(저장)', error);
+        navigate('/calendar')
+          
         },[]);
         }
 
