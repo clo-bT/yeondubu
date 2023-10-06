@@ -1,6 +1,9 @@
-import React from 'react';
+import {React, useState, useEffect} from 'react';
 import styled from 'styled-components';
 import { AiOutlineInfoCircle } from "react-icons/ai";
+import axios from 'axios';
+import Swal from "sweetalert2";
+import { useNavigate } from 'react-router-dom';
 
 const GoBack = styled.a`
 text-decoration: none;
@@ -50,9 +53,53 @@ margin-right: auto;
 `
 
 const UserWithdrawInfo = () => {
+    const [accessToken, setAccessToken] = useState('');
+    const navigate = useNavigate();
+  
+    useEffect(() => {
+      const token = localStorage.getItem("token");
+      setAccessToken(token);
+    }, []);
+
+    const removeTokenFromLocalStorage = () => {
+      localStorage.removeItem("token");
+    };
+
+    const confirmWithdraw = () => {
+    Swal.fire({
+      icon: "warning",
+      text: "정말 파혼 하시겠습니까?",
+      showCancelButton: true,
+      confirmButtonText: "네",
+      cancelButtonText: "취소",
+    }).then((res) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (res.isConfirmed) {
+        axios
+        .delete(`${process.env.REACT_APP_API_ROOT}/api/v1/couples`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        })
+        .then((response) => {
+          console.log('요청 성공:', response);
+          removeTokenFromLocalStorage();
+          navigate('/login')
+        })
+        .catch((error) => {
+          console.error('요청 실패:', error);
+        });
+      }
+      else{
+          //취소
+      }
+    })
+  }
+
+
     return (
         <div>
-        <GoBack href="/" >뒤로가기</GoBack> 
+        <GoBack href="/mypage" >뒤로가기</GoBack> 
         <InfoIcon />
             <p>상대방과 연결을 끊기 전에 꼭 확인해주세요!</p>
         <Content>
@@ -61,7 +108,7 @@ const UserWithdrawInfo = () => {
             <li>연결 끊기 시 부디 신중하게 선택해 주시기 바랍니다.</li>
         </Content>
 
-        <BrokeUpButton>파혼하기</BrokeUpButton>
+        <BrokeUpButton onClick={confirmWithdraw}>파혼하기</BrokeUpButton>
         </div>
     );
 };

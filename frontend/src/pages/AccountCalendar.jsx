@@ -1,20 +1,14 @@
-import React, { useState } from 'react';
-import AccountCalendar from '../components/AccountCalendar/AccountCalendar';
-import AccountCalendarModal from '../components/AccountCalendarModal/AccountCalendarDetail';
+import React from 'react';
+import Menubar from '../components/Common/Menubar';
+import AccountCalendarcomp from '../components/AccountCalendar/AccountCalendar';
 
-const CalendarPage = () => {
-    const [formatday, setFormatday] = useState(null);
-
-    const handleDateClick = (formatday) => {
-        setFormatday(formatday);
-    };
-
+const AccountCalendar = () => {
     return (
         <div>
-            <AccountCalendar onDateClick={handleDateClick} />
-            <AccountCalendarModal formatday={formatday} />
+            <AccountCalendarcomp/>
+            <Menubar />
         </div>
     );
 };
 
-export default CalendarPage;
+export default AccountCalendar;

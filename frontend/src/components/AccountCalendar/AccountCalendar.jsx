@@ -1,224 +1,303 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import { format, addMonths, subMonths } from 'date-fns';
 import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from 'date-fns';
 import { isSameMonth, isSameDay, addDays } from 'date-fns';
-import './AccountCalendar.css'
-// import React, { useEffect, useState } from 'react';
-// import axios from 'axios'; 
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { ko } from 'date-fns/locale';
 
-const responseData = [
-    
-    {
-        "date": "2023-09-01",
-        "income": 5000000,
-        "expenditure": 0
-    },
-    {
-        "date": "2023-09-02",
-        "income": 0,
-        "expenditure": 500000
-    },
-    {
-        "date": "2023-09-03",
-        "income": 0,
-        "expenditure": 700000
-    },
-    {
-        "date": "2023-09-04",
-        "income": 0,
-        "expenditure": 2000
-    },
-    {
-        "date": "2023-09-05",
-        "income": 0,
-        "expenditure": 0
-    },
-    {
-        "date": "2023-09-06",
-        "income": 0,
-        "expenditure": 0
-    },
-    {
-        "date": "2023-09-07",
-        "income": 0,
-        "expenditure": 0
-    },
-    {
-        "date": "2023-09-09",
-        "income": 0,
-        "expenditure": 700000
-    },
-    {
-        "date": "2023-09-09",
-        "income": 80000,
-        "expenditure": 0
-    },
-    {
-        "date": "2023-09-10",
-        "income": 0,
-        "expenditure": 0
-    },
-    {
-        "date": "2023-09-11",
-        "income": 270000,
-        "expenditure": 0
-    },
-    {
-        "date": "2023-09-12",
-        "income": 0,
-        "expenditure": 0
-    },
-    {
-        "date": "2023-09-13",
-        "income": 0,
-        "expenditure": 0
-    },
-    {
-        "date": "2023-09-14",
-        "income": 0,
-        "expenditure": 0
-    },
-    {
-        "date": "2023-09-15",
-        "income": 340000,
-        "expenditure": 0
-    },
-    {
-        "date": "2023-09-16",
-        "income": 0,
-        "expenditure": 34000
-    },
-    {
-        "date": "2023-09-17",
-        "income": 0,
-        "expenditure": 0
-    },
-    {
-        "date": "2023-09-18",
-        "income": 0,
-        "expenditure": 0
-    },
-    {
-        "date": "2023-09-19",
-        "income": 0,
-        "expenditure": 0
-    },
-    {
-        "date": "2023-09-20",
-        "income": 0,
-        "expenditure": 680000
-    },
-    {
-        "date": "2023-09-21",
-        "income": 0,
-        "expenditure": 0
-    },
-    {
-        "date": "2023-09-22",
-        "income": 0,
-        "expenditure": 23000
-    },
-    {
-        "date": "2023-09-23",
-        "income": 0,
-        "expenditure": 0
-    },
-    {
-        "date": "2023-09-24",
-        "income": 0,
-        "expenditure": 0
-    },
-    {
-        "date": "2023-09-25",
-        "income": 0,
-        "expenditure": 60000
-    },
-    {
-        "date": "2023-09-26",
-        "income": 0,
-        "expenditure": 0
-    },
-    {
-        "date": "2023-09-27",
-        "income": 0,
-        "expenditure": 0
-    },
-    {
-        "date": "2023-09-28",
-        "income": 1000000,
-        "expenditure": 10000
-    },
-    {
-        "date": "2023-09-29",
-        "income": 0,
-        "expenditure": 4500000
-    },
-    {
-        "date": "2023-09-30",
-        "income": 0,
-        "expenditure": 0
-    }
-    
+const Container = styled.div`
+margin-bottom: 90px;
+`
 
-];
+const Box = styled.div`
+display: flex;
+flex-direction: column;
+margin-left: 20px;
+margin-right: 20px;
+`
+const CalendarHeader = styled.div`
+/* width: 355px; */
+display: flex;
+justify-content: space-between;
+/* padding: 10px; */
+font-size: 18px;
+font-weight: bold;
+margin-top:10px;
+margin-bottom:10px;
+
+`
+const Col = styled.p`
+margin-left: 20px;
+margin-right: 20px;
+
+`
+
+// DaysClass는 요일 적힌 거
+const DaysClass = styled.div`
+display: flex;
+justify-content: space-between;
+/* margin-left: 7px; */
+/* margin-right: 7px; */
+
+`
+
+const IncomeExpenditure = styled.div`
+/* display: flex;
+flex-direction: column;
+width: 100%;
+justify-content: space-between;
+align-items: left; */
+
+`
+const IncomeRow = styled.div`
+display: flex;
+justify-content: space-between;
+margin-bottom: 9px;
+margin-right:20px;
+margin-left: 3px;
+
+&::before {
+    content: '';
+    position: absolute;
+    left: 21px;
+    width: 2px; 
+    height: 9%; 
+    background-color: #FF6565; 
+  }
+
+`;
+
+const TagAndWho = styled.div`
+/* display: flex; */
 
 
-const RenderHeader = ({ currentMonth, prevMonth, nextMonth }) => {
-    return (
-        <div className="header row">
-            <div className="col col-start">
-                <span className="text">
-                    
-                    {/* {format(currentMonth, 'yyyy')} */}
-                </span>
-            </div>
-            <div className="col">
-                <span onClick={prevMonth}>←</span>
-                <span className="text month">
-                        {format(currentMonth, 'M')}월
-                    </span>
-                <span onClick={nextMonth}>→</span>
-            </div>
-        </div>
-    );
-};
 
-const RenderDays = () => {
+`;
+const TagAndWho1 = styled.div`
+/* display: flex; */
+
+
+
+`;
+const RoleIncomeTag = styled.p`
+margin-left: 30px;
+text-align: start;
+font-size: 10px;
+/* display: flex; */
+`;
+const IncomeTag = styled.p`
+margin-left: 30px;
+text-align: start;
+font-size: 15px;
+/* display: flex; */
+
+`;
+
+const IncomeMoney = styled.p`
+font-size: 20px;
+/* display: flex; */
+`;
+const ExpenditureRow = styled.div`
+display: flex;
+justify-content: space-between;
+margin-bottom: 9px;
+margin-right:20px;
+margin-left: 3px;
+cursor: pointer;
+
+&::before {
+    content: '';
+    position: absolute;
+    left: 21px;
+    width: 2px; 
+    height: 9%; 
+    background-color: #2663FF; 
+  }
+`;
+const ExpenditureTag = styled.p`
+margin-left: 30px;
+text-align: start;
+font-size: 15px;
+`
+
+// const ExpenditureWho = styled.div`
+// font-size: .5rem;
+// margin-top: 2px;
+
+// `;
+// const ExpenditureMoney = styled.div`
+// font-size: 15px;
+// `;
+
+const CellClass = styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;
+/* width: 50.71px; */
+&.not-current-month {
+    color: rgba(0, 0, 0, 0.2); /* 전달 및 다음달 날짜의 텍스트 색상을 회색으로 지정 */
+}
+&.selected {    
+    width: 30px;
+    height: 30px;
+    background: rgba(255, 101, 101, 0.50);
+    border-radius: 50%;
+    z-index: 1;
+    /* margin: 0 auto; */
+}
+`
+const TextClass = styled.span`
+width: 35px;
+// display: flex;
+// flex-direction: row;
+// &.not-valid {
+//         color: rgba(0, 0, 0, 0.2); /* 전달 및 다음달 날짜의 텍스트 색상을 회색으로 지정 */
+//     }
+`
+const Row = styled.span`
+padding-top: .5rem;
+display: flex;
+justify-content: space-between;
+height: 3rem;
+
+`
+const IncomeText = styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;
+color: #FF6565; /* 지출 텍스트 색상 */
+
+/* font-weight: bold; */
+font-size: .1rem;
+`
+const ExpenditureText = styled.div`
+color: #2663FF; /* 수입 텍스트 색상 */
+/* font-weight: bold; */
+font-size: .1rem;
+`
+const RowsBody = styled.div`
+// display: flex;
+// flex-direction: column;
+
+`
+const AddButton = styled.p`
+color: #FF6565;
+display: flex;
+flex-direction: column;
+align-items: right;
+margin-right: 20px;
+font-size: 17px;
+`
+
+const TodayDot = styled.div`
+    width: 30px;
+    height: 30px;
+    background-color: #FF6565; /* 원하는 색상으로 설정 */
+    border-radius: 50%;
+    z-index: 1;
+    margin: 0 auto; 
+    color: white;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+`
+
+const NotTodayDot = styled.div`
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    z-index: 1;
+    margin: 0 auto; 
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+`
+const TodayDate = styled.p`
+color: #000;
+text-align: left;
+font-size: 20px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;   
+margin-left: 18px;
+`
+const Horizonline = styled.div`
+background: rgba(0, 0, 0, 0.20);
+margin-top: 20px;
+width: 100%;
+height: 1.5px;
+`
+const today = new Date();
+
+const AccountCalendar = () => {
+    const navigate = useNavigate();
+    const [currentMonth, setCurrentMonth] = useState(new Date());
+    const [selectedDate, setSelectedDate] = useState(today);
     const days = [];
-    const date = ['일', '월', '화', '수', '목', '금', '토'];
+    const date = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+    // console.log(currentMonth)
+    const requestData = format(currentMonth, 'yyyy-MM')
+    const [responseData, setResponseData] = useState([]);
+    // const [maxDate, setMaxDate] = useState(new Date());
+    // const [minDate, setMinDate] = useState(new Date());
 
+    useEffect(() => {
+        // 백틱으로 바꾸기
+        const accessToken = localStorage.getItem("token");
+        axios.get(`${process.env.REACT_APP_API_ROOT}/api/v1/money/${requestData}`,{
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+        }
+        })
+        .then(response => {
+        console.log(response)
+        setResponseData(response.data.money_list);
+        // setMaxDate(response.data.max_date);
+        // setMinDate(response.data.min_date);
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+    }, [requestData]);
+
+    
     for (let i = 0; i < 7; i++) {
         days.push(
-            <div className="col" key={i}>
+            <div key={i}>
                 {date[i]}
             </div>,
         );
     }
-
-    return <div className="days row">{days}</div>;
-};
-
-
-const today = new Date();
-
-
-const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
     const monthStart = startOfMonth(currentMonth);
     const monthEnd = endOfMonth(monthStart);
     const startDate = startOfWeek(monthStart);
     const endDate = endOfWeek(monthEnd);
-
-
+    const rows = [];
     const dataMap = responseData.reduce((map, item) => {
         map[item.date] = item;
         return map;
     }, {});
 
-    const rows = [];
-    let days = [];
+    let dates = [];
     let day = startDate;
     let formattedDate = '';
-
+    const findItemsForSelectedDate = (selectedDate) => {
+        const formattedSelectedDate = format(selectedDate, 'yyyy-MM-dd');
+        const selectedDateData = responseData.find(item => item.date === formattedSelectedDate) || {
+            income_list: [],
+            expenditure_list: []
+        };
+        return selectedDateData;
+      };
+    
+      const selectedDateData = findItemsForSelectedDate(selectedDate);
+      const { income_list, expenditure_list } = selectedDateData;
     while (day <= endDate) {
         for (let i = 0; i < 7; i++) {
             formattedDate = format(day, 'yyyy-MM-dd');
@@ -226,8 +305,8 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
             const isToday = isSameDay(day, today); 
             const income = dataMap[formattedDate]?.income || 0;
             const expenditure = dataMap[formattedDate]?.expenditure || 0;
+
             const cellClass = `
-                col cell 
                 ${!isSameMonth(day, monthStart) ? 'disabled' : ''}
                 ${isSameDay(day, selectedDate) ? 'selected' : ''}
                 ${format(currentMonth, 'M') !== format(day, 'M') ? 'not-valid' : ''}
@@ -241,49 +320,42 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
                 ${expenditure > 0 ? 'expenditure-text' : ''}
             `;
     
-            days.push(
-                <div
+            dates.push(
+                <CellClass
                     className={cellClass}
                     key={formattedDate}
                     onClick={() => onDateClick(cloneDay)}
                 >
-                    <span className={textClass}>
-                    {isToday && (
-                    <div className="todaydot">{formattedDate.split('-')[2]}</div> // 동그란 원 추가
-                        )}
-                    {!isToday && (
-                    <div>{formattedDate.split('-')[2]}</div>
-                    
-                    )}
-                    </span>
 
-                    <div className={`income-expenditure ${income > 0 ? 'income' : expenditure > 0 ? 'expenditure' : ''}`}>
-                        <div className='incometext'>{income > 0 ? `+ ${income.toLocaleString()}원` : ''}</div>
-                        <div className='expendituretext'>{expenditure > 0 ? `- ${expenditure.toLocaleString()}원` : ''}</div>
-                    </div>
+                    <TextClass className={textClass}>
+                    {isToday ? (
+                            <TodayDot>
+                                {formattedDate.split('-')[2]}
+                            </TodayDot> // 동그란 원 추가
+                        ) : 
+                            <NotTodayDot>
 
-                </div>,
+                        <div>{formattedDate.split('-')[2]}</div>
+                            </NotTodayDot>
+                        }
+
+                    <IncomeExpenditure>
+                        <IncomeText>{income > 0 ? `+${income.toLocaleString()}` : ''}</IncomeText>
+                        <ExpenditureText>{expenditure > 0 ? `-${expenditure.toLocaleString()}` : ''}</ExpenditureText>
+                    </IncomeExpenditure>
+                    </TextClass>
+
+                </CellClass>,
             );
             day = addDays(day, 1);
         }
         rows.push(
-            <div className="row" key={formattedDate}>
-                {days}
-            </div>,
+            <Row key={formattedDate}>
+                {dates}
+            </Row>,
         );
-        days = [];
+        dates = [];
     }
-    return <div className="body">{rows}</div>;
-};
-
-
-
-
-
-const AccountCalendar = ({ onDateClick : handleClick }) => {
-    const [currentMonth, setCurrentMonth] = useState(new Date());
-    const [selectedDate, setSelectedDate] = useState(new Date());
-
     const prevMonth = () => {
         setCurrentMonth(subMonths(currentMonth, 1));
     };
@@ -293,45 +365,62 @@ const AccountCalendar = ({ onDateClick : handleClick }) => {
     const onDateClick = (day) => {
         // console.log(day)
         setSelectedDate(day);
-        const formatday = format(day, 'yyyy-MM-dd');
+        // const formatday = format(day, 'yyyy-MM-dd');
         // console.log(formatday);
-        handleClick(formatday);
+        //handleClick(formatday);
     };
-        // console.log(currentMonth)
-        // const requestData = format(currentMonth, 'yyyy-MM')
-        // console.log('currentYear',requestData)
-        
-        // const [responseData, setResponseData] = useState([]);
-        // useEffect(() => {
-        //     // 백틱으로 바꾸기
-        //     axios.get($`/api/v1/cash?yearMonth={yyyy-MM}`)
-        //     .then(response => {
-        //         setResponseData(response.data);
-        //     })
-        //     .catch(error => {
-        //         console.error('Error fetching data:', error);
-        //     });
-        // }, []);
-        
+
     return (
-        <div className="calendar">
-            <RenderHeader
-                currentMonth={currentMonth}
-                prevMonth={prevMonth}
-                nextMonth={nextMonth}
-            />
-            <RenderDays />
-            <RenderCells
-                currentMonth={currentMonth}
-                selectedDate={selectedDate}
-                onDateClick={onDateClick}
-            />
-            <RenderCells
-                currentMonth={currentMonth}
-                selectedDate={selectedDate}
-                onDateClick={onDateClick}
-            />
-        </div>
+        <Container>
+            <CalendarHeader>
+                <Col>
+                    <span onClick={prevMonth}>←</span>
+                        {format(currentMonth, 'M')}월
+                    <span onClick={nextMonth}>→</span>
+                </Col>
+            <AddButton onClick={()=>navigate('/calendarinput')}>추가하기</AddButton>
+            </CalendarHeader>
+            <Box>
+            <DaysClass>
+                {days}
+            </DaysClass>
+            <RowsBody>
+                {rows}
+            </RowsBody>   
+            </Box>
+
+
+            <Horizonline />
+                <TodayDate>{format(selectedDate, 'dd.eee요일', { locale: ko })}</TodayDate>
+                <IncomeExpenditure>
+                    {income_list.map(item => (
+                        <IncomeRow key={item.income_id} onClick={()=>navigate(`/calendarupdateincome/${item.income_id}`)}>
+                            <TagAndWho>
+                                <IncomeTag>{item.tag_name}</IncomeTag>
+                                <RoleIncomeTag>{item.user_role === 'BRIDE' ? '예비 신부' : '예비 신랑'} </RoleIncomeTag>
+                            </TagAndWho>
+                            <IncomeMoney>+ {item.amount.toLocaleString()}원</IncomeMoney>
+                        </IncomeRow>
+
+
+                    ))}
+                </IncomeExpenditure>
+
+                <IncomeExpenditure>
+                    {expenditure_list.map(item => (
+                        <ExpenditureRow key={item.expenditure_id} onClick={()=>navigate(`/calendarupdate/${item.expenditure_id}`)}>
+                            <TagAndWho1>
+                                <ExpenditureTag>{item.third_tag_name} </ExpenditureTag>
+                                <RoleIncomeTag>{item.role === 'BRIDE' ? '예비 신부' : '예비 신랑'} </RoleIncomeTag>
+                            </TagAndWho1>
+                            <IncomeMoney>- {item.amount.toLocaleString()}원</IncomeMoney>
+                        </ExpenditureRow>
+
+
+                    ))}
+                </IncomeExpenditure>
+   
+        </Container>
     );
 };
 
