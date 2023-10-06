@@ -4,6 +4,10 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const Container = styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 20px; 
 margin-top : 20px;
   text-align: left;
 
@@ -14,6 +18,7 @@ display: flex;
 flex-direction: column;
 justify-content: center;
 margin-left:20px;
+gap:20px;
 
 
 `
@@ -140,7 +145,8 @@ background: #FFF;
 `;
 const InputTag = styled.div`
 
-width:30px;
+display:flex;
+
 
 `
 const InputDate = styled.div`
@@ -156,32 +162,37 @@ const InputMemo = styled.div`
 align-items: left; */
 `
 const DateInput = styled.input`
+  font-size:16px;
 border-radius: 10px;
 border: 1px solid #D9D9D9;
 background: #FFF;
-padding:6px;
+padding:6px 0px;
+width:222px;
 `
 const MoneyInput = styled.input`
 border-radius: 10px;
 border: 1px solid #D9D9D9;
 background: #FFF;
 padding:6px;
+font-size:16px;
 `
 const MemoInput = styled.input`
+font-size:16px;
 border-radius: 10px;
 border: 1px solid #D9D9D9;
 background: #FFF;
 padding:6px;
 `
 const TagSelect = styled.select`
+display: inline-flex;
 color: #000;
 text-align: center;
 font-size: 16px;
 font-style: normal;
 font-weight: 400;
 line-height: normal;
+
 text-transform: uppercase;
-  width: 87px;
   height: 38px;
   padding: 6px 4px;
   border-radius: 10px;
@@ -189,6 +200,11 @@ text-transform: uppercase;
   cursor: pointer;
   border: 2px solid #D9D9D9;
 `;
+
+const TagBox = styled.div`
+  display:flex;
+  flex-direction:column;
+`
 
 const SaveButton = styled.button`
 display: flex;
@@ -234,6 +250,7 @@ display: flex;
 align-items: center;
 justify-content: center;
 gap: 20px;
+margin-top: 70px;
 `
 const BoxHeader = styled.span`
 margin-right: 10px;
@@ -241,6 +258,7 @@ margin-right: 10px;
 const Exit = styled.button`
 border: none;
 `
+
 
 const CalendarInput = () => {
   const navigate = useNavigate();
@@ -454,13 +472,19 @@ const CalendarInput = () => {
               </InputWho>
         
               <InputTag>
-                <Title>태그 </Title>
-                <TagSelect>
+              <Title>태그 </Title>
+              <TagBox>
+              <TagSelect>
                 <option value="">{tagName}</option>
                     
                 </TagSelect>
-    </InputTag>
-        
+              </TagBox>
+              </InputTag>
+              
+                
+     
+                
+   
               <InputDate>
               <Title>날짜</Title>
                 <DateInput type="date" value={date} onChange={handleDate} />
