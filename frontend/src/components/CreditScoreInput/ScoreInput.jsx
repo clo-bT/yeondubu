@@ -281,7 +281,8 @@ const ScoreInput = () => {
             setNoInputError('모든 정보를 입력해주세요');
             return; // 정보가 누락된 경우 함수 종료
           }
-        axios.post(process.env.REACT_APP_FLASK_ROOT + ':5000/api/v1/loan/upload', {
+        // axios.post(`${process.env.REACT_APP_FLASK_ROOT}/api/v1/loan/upload`, {
+        axios.post('http://j9a307.p.ssafy.io:5000/api/v1/loan/upload', {
                 salary: salary,
                 loanPeriod: loanPeriod,
                 creditScore: creditScore,

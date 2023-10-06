@@ -51,7 +51,8 @@ line-height: normal;
 const ShoppingCategoryList = () => {
     const [categories, setCategories] = useState([]);
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_FLASK_ROOT}:5000/api/v1/marriage-stuffs/categories`)
+        // axios.get(`${process.env.REACT_APP_FLASK_ROOT}/api/v1/marriage-stuffs/categories`)
+        axios.get('http://j9a307.p.ssafy.io:5000/api/v1/marriage-stuffs/categories')
         .then((response) => {
             setCategories(response.data);
         })

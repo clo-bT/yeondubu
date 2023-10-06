@@ -68,7 +68,8 @@ const ShopCategoryHeader = () => {
             category: category,
             subcategory: subcategory
         };
-        axios.get(`${process.env.REACT_APP_FLASK_ROOT}:5000/api/v1/marriage-stuffs/category`, {params})
+        // axios.get(`${process.env.REACT_APP_FLASK_ROOT}/api/v1/marriage-stuffs/category`, {params})
+        axios.get('http://j9a307.p.ssafy.io:5000/api/v1/marriage-stuffs/category', {params})
         .then((response) => {
             setHeaderTitle(response.data.category);
         })
