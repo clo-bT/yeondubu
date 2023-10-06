@@ -43,7 +43,7 @@ const BudgetGraph = () => {
 
     return (
         // chart height이 100%이기 때문이 chart를 덮는 마크업 요소에 height 설정
-        <div style={{ width: '100%', height: '300px', margin: '20px' }}>
+        <div style={{ width: '100%', height: '300px'}}>
             <ResponsiveBar
                 /**
                  * chart에 사용될 데이터
