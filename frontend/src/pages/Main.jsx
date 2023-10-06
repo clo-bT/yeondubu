@@ -37,10 +37,10 @@ const Main = () => {
     if (!accessToken) {
       navigate('/login')
     }
-    else if (!coupleId) {
+    else if (coupleId==='false') {
       navigate('/invite')
     }
-    else if (!role) {
+    else if (role!=='BRIDE' || role !== 'GROOM') {
       navigate('/weddingday')
     }
     
