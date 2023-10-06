@@ -231,7 +231,7 @@ const ShoppingFilter = () => {
             formData.append(key, data[key]);
           }
           try {
-            axios.post(`${process.env.REACT_APP_FLASK_ROOT}/apii/v1/marriage-stuffs/img_search`, formData, {
+            axios.post(`https://j9a307.p.ssafy.io:5000/api/v1/marriage-stuffs/img_search`, formData, {
               headers: {
                 'Content-Type': 'multipart/form-data',
               },
