@@ -1,12 +1,12 @@
 import React from 'react';
-import MyAccountProfile from '../components/Common/MyAccountProfile';
 import MyAccountContent from '../components/MyAccountDetail/MyAccountContent';
 import Menubar from '../components/Common/Menubar';
+import MyAccountDetailHeader from '../components/MyAccountDetail/MyAccountDetailHeader';
 
 const MyAccountDetail = () => {
     return (
         <div>
-            <MyAccountProfile />
+            <MyAccountDetailHeader />
             <MyAccountContent/>
             <Menubar/>
 

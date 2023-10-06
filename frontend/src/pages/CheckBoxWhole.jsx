@@ -1,10 +1,14 @@
 import React from 'react';
-import CheckListOpened from '../components/CheckBoxWhole/CheckListOpened';
+import CheckBoxHeader from '../components/CheckBoxWhole/CheckBoxHeader';
+import CheckBoxWholeContent from '../components/CheckBoxWhole/CheckBoxWholeContent';
+import Menubar from '../components/Common/Menubar';
 
 const CheckBoxWhole = () => {
     return (
         <div>
-            <CheckListOpened />
+            <CheckBoxHeader/>
+            <CheckBoxWholeContent/>
+            <Menubar/>
         </div>
     );
 };

@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta name="description" content="Web site created using create-react-app" />
+  <meta name="apple-mobile-web-app-title" content="연두부" />
+     <!--  <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="연두부" /> -->
+    <!-- <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/> -->
+    <!-- <meta http-equiv="Cache-Control" content="max-age=31536000" /> -->
+    <!-- <meta http-equiv="Cache-Control" content="no-cache" /> -->
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <!--
       manifest.json provides metadata used when your web app is installed on a
@@ -14,7 +20,7 @@
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
     <!-- pwa 추가 -->
-    <link rel="manifest" href="manifest.json" />
+    <!-- <link rel="manifest" href="manifest.json" /> -->
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -27,8 +33,24 @@
     <!-- naver map -->
     <!-- <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=process.env.REACT_APP_MAP_CLIENT_ID"></script> -->
     
-    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=57h43eh70s"></script>
+    <!-- <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=57h43eh70s"></script> -->
    
+    <!-- <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+            console.log('Worker registration successful', registration.scope);
+          }, function(err) {
+            console.log('Worker registration failed', err);
+          }).catch(function(err) {
+            console.log(err);
+          });
+        });
+      } else {
+        console.log('Service Worker is not supported by browser.');
+      }
+    </script> -->
+
 
     <!-- pwa 추가 -->
     <!-- <script type="module">

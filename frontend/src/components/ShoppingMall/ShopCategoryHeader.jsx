@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
-import sofa from '../../assets/ShoppingMallCategory/sofa.svg';
+import { Link , useParams} from 'react-router-dom';
+import axios from 'axios';
 
 
 const Container = styled.div`
@@ -15,11 +16,11 @@ margin-top: 10px;
 `
 
 const Box = styled.div`
-  display: flex;
-  align-items: center; 
-  margin-top: 10px;
-  gap: 10px; 
-  width: 100%;
+display: flex;
+align-items: center; 
+margin-top: 10px;
+gap: 10px; 
+width: 100%;
 
 `
 const ProductInfo = styled.div`
@@ -27,7 +28,6 @@ display: flex;
 align-items: center;
 justify-content: space-between;
 width: 100%;
-margin-bottom: 50px;
 
 `
 const GetOutButton = styled.a`
@@ -55,33 +55,37 @@ font-size: 23px;
 font-style: normal;
 font-weight: 700;
 line-height: normal;
-margin-left: 20px;
-// margin-top: -30px;
+margin-top : 0px;
+margin-bottom: 0px;
 `
-const Filter = styled.a`
-color: #000;
-text-align: center;
-font-size: 12px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
-text-decoration: none;
-margin-left: auto;
 
-`
 
 const ShopCategoryHeader = () => {
+    const {category, subcategory} = useParams();
+    const [headerTitle, setHeaderTitle] = useState(null);
+    useEffect(() => {
+        const params = {
+            category: category,
+            subcategory: subcategory
+        };
+        // axios.get(`${process.env.REACT_APP_FLASK_ROOT}/api/v1/marriage-stuffs/category`, {params})
+        axios.get('http://j9a307.p.ssafy.io:5000/api/v1/marriage-stuffs/category', {params})
+        .then((response) => {
+            setHeaderTitle(response.data.category);
+        })
+        .catch((error) => {
+            console.error('Error fetching default values:', error);
+        })
+    }, [category, subcategory]);
     return (
         <Container>
-            <GetOutButton href="/">나가기</GetOutButton>
+            <Link to = {'/shoppingmallcategory'}>
+                <GetOutButton>나가기</GetOutButton>
+            </Link>
             <Box>
-            <ProductImg src={sofa}/>
-            <ProductInfo>
-                <TagName>이불</TagName>
-                <Filter href="/">필터 설정하기</Filter>
-            </ProductInfo>
-         
-
+                <ProductInfo>
+                    <TagName>{headerTitle}</TagName>
+                </ProductInfo>
             </Box>
         </Container>
     );

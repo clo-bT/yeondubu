@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import wife from '../../assets/Common/wife.svg';
 
 const Container = styled.div`
   display: flex;
@@ -22,6 +21,8 @@ margin: 20px;
 const MyProfile = styled.img`
 width: 57px;
 height: 57px;   
+border-radius: 50%;
+
 `
 const MyInfo = styled.div`
   display: flex;
@@ -49,14 +50,16 @@ line-height: normal;
 margin: 0;
 `
 const MyAccountHeader = () => {
+  const name = localStorage.getItem('name')
+  const image = localStorage.getItem('image')
     return (
         <>
-        <GoBack href="/" >뒤로가기</GoBack>
+        <GoBack href="/mypage" >뒤로가기</GoBack>
         <Container>
-            <MyProfile src={wife}/>
+            <MyProfile src={image}/>
             <MyInfo>
-                <MyName>손예진님</MyName>
-                <MyAccount>손예진님의 계좌 목록입니다.</MyAccount>
+                <MyName>{name}님</MyName>
+                <MyAccount>{name}님의 계좌 목록입니다.</MyAccount>
             </MyInfo>
 
         </Container>

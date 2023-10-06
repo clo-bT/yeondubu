@@ -1,21 +1,17 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import blanket from '../../assets/ShoppingMallCategory/blanket.svg';
-import chair from '../../assets/ShoppingMallCategory/chair.svg';
-import refrigerator from '../../assets/ShoppingMallCategory/refrigerator.svg';
-import sofa from '../../assets/ShoppingMallCategory/sofa.svg';
-import table from '../../assets/ShoppingMallCategory/table.svg';
-
+import axios from 'axios';
 
 const Container = styled.div`
 margin-left: 10px;
 
 `
 const ShoppingContainer = styled.div`
-  display: flex; 
-  overflow-x: auto; 
-  margin-bottom: 30px;
-  margin-left: 10px
+display: flex; 
+overflow-x: auto; 
+margin-bottom: 30px;
+margin-left: 10px;
 `;
 
 const TagName = styled.div`
@@ -53,130 +49,31 @@ line-height: normal;
 `;
 
 const ShoppingCategoryList = () => {
-    const dummyData = [
-        {
-          Tagname: '가구',
-          items: [
-            {
-              name: '소파',
-              image: sofa,
-            },
-            {
-              name: '의자',
-              image: chair,
-            },
-            {
-              name: '탁자',
-              image: table,
-            },
-            {
-              name: '이불',
-              image: blanket,
-            },
-            {
-              name: '착장',
-              image: table,
-            },
-            {
-              name: '거울',
-              image: table,
-            },
-            {
-              name: '냉장고',
-              image: refrigerator,
-            },
-            {
-              name: '화장대',
-              image: table,
-            },
-          ],
-        },
-        {
-          Tagname: '가전',
-          items: [
-            {
-                name: '소파',
-                image: sofa,
-              },
-              {
-                name: '의자',
-                image: chair,
-              },
-              {
-                name: '탁자',
-                image: table,
-              },
-              {
-                name: '이불',
-                image: blanket,
-              },
-              {
-                name: '착장',
-                image: table,
-              },
-              {
-                name: '거울',
-                image: table,
-              },
-              {
-                name: '냉장고',
-                image: refrigerator,
-              },
-              {
-                name: '화장대',
-                image: table,
-              },
-          ],
-        },
-        {
-          Tagname: '예물',
-          items: [
-            {
-                name: '소파',
-                image: sofa,
-              },
-              {
-                name: '의자',
-                image: chair,
-              },
-              {
-                name: '탁자',
-                image: table,
-              },
-              {
-                name: '이불',
-                image: blanket,
-              },
-              {
-                name: '착장',
-                image: table,
-              },
-              {
-                name: '거울',
-                image: table,
-              },
-              {
-                name: '냉장고',
-                image: refrigerator,
-              },
-              {
-                name: '화장대',
-                image: table,
-              },
-          ],
-        },
-      ];
+    const [categories, setCategories] = useState([]);
+    useEffect(() => {
+        // axios.get(`${process.env.REACT_APP_FLASK_ROOT}/api/v1/marriage-stuffs/categories`)
+        axios.get('http://j9a307.p.ssafy.io:5000/api/v1/marriage-stuffs/categories')
+        .then((response) => {
+            setCategories(response.data);
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+    }, []);
+
     return (
         <Container>
-        {dummyData.map((category, index) => (
+        {categories.map((category, index) => (
           <div key={index}>
-            <TagName>{category.Tagname}</TagName>
+            <TagName>{category.tagname}</TagName>
             <ShoppingContainer>
-              {category.items.map((item, itemIndex) => (
-                <div key={itemIndex}>
-                  <ProductImg src={item.image} alt={`Image ${itemIndex}`} />
-                  <ProductName>{item.name}</ProductName>
-                </div>
+              {category.items.map((subcategory, itemIndex) => (
+                <Link to={`/shoppingmall/${category.tag}/${subcategory.tag}`}>
+                  <subCategoryContainer key={itemIndex}>
+                    <ProductImg src={subcategory.imgURL} alt={`Image ${itemIndex}`} />
+                    <ProductName>{subcategory.tagname}</ProductName>
+                  </subCategoryContainer>
+                </Link>
               ))}
             </ShoppingContainer>
           </div>

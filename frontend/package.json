@@ -6,22 +6,28 @@
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@nivo/bar": "^0.83.0",
+    "@nivo/core": "^0.83.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.5.0",
     "date-fns": "^2.30.0",
     "dotenv": "^16.3.1",
+    "prop-types": "^15.8.1",
     "rc-slider": "^10.2.1",
     "react": "^18.2.0",
+    "react-chatbot-kit": "^2.1.2",
     "react-datepicker": "^4.17.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.11.0",
+    "react-infinite-scroll-component": "^6.1.0",
     "react-naver-maps": "^0.1.2",
     "react-range": "^1.8.14",
-    "react-router-dom": "^6.15.0",
+    "react-router-dom": "^6.16.0",
     "react-scripts": "5.0.1",
     "styled-components": "^6.0.7",
+    "sweetalert2": "^11.7.31",
     "web-vitals": "^2.1.4",
     "workbox-background-sync": "^6.6.0",
     "workbox-broadcast-update": "^6.6.0",
@@ -59,5 +65,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "sw-precache": "^5.2.1"
   }
 }

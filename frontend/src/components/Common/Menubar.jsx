@@ -62,22 +62,22 @@ const Menubar = () => {
         </div>
 
         <div>
-        <a href="/"><WalletIcon /></a>
+        <a href="/checkbox"><WalletIcon /></a>
         <IconDetail>예산</IconDetail>
         </div>
 
         <div>
-        <a href="/"><CalenderIcon/></a>
+        <a href="/calendar"><CalenderIcon/></a>
         <IconDetail>달력</IconDetail>
         </div>
 
         <div>
-        <a href="/"><ProfileIcon/></a>
+        <a href="/mypage"><ProfileIcon/></a>
         <IconDetail>MY</IconDetail>
         </div>
 
         <div>
-        <a href="/"><AllIcon/></a>
+        <a href="/wholetab"><AllIcon/></a>
         <IconDetail>전체</IconDetail>
         </div>
     </Container>
