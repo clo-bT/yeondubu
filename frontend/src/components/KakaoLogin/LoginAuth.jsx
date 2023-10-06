@@ -25,6 +25,10 @@ const LoginAuth = () => {
                     },
                 })
                     .then((response) => {
+                        localStorage.setItem("id", response.data.id);
+      localStorage.setItem("name", response.data.name);
+      localStorage.setItem("image", response.data.image_url);
+      localStorage.setItem("is_couple", response.data.is_couple);
                         if (response.data.is_couple===false) {
                             window.location.replace(`${process.env.REACT_APP_HOME_URL}/invite`);
                         }
