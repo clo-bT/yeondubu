@@ -281,6 +281,7 @@ const ScoreInput = () => {
             setNoInputError('모든 정보를 입력해주세요');
             return; // 정보가 누락된 경우 함수 종료
           }
+        console.log(`${process.env.REACT_APP_API_ROOT}/flask/v1/loan/upload`)
         axios.post(`${process.env.REACT_APP_API_ROOT}/flask/v1/loan/upload`, {
                 salary: salary,
                 loanPeriod: loanPeriod,
