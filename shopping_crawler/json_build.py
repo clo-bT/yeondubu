@@ -3,7 +3,6 @@ import json
 import h5py
 import urllib.parse
 import urllib.request
-from math import ceil
 from dotenv import load_dotenv
 
 class NaverImageCrawler():
@@ -30,13 +29,14 @@ class NaverImageCrawler():
         query = urllib.parse.quote(query)
         result = self.shopping_list(query)
         for idx, product in enumerate(result):
+            result[idx]['item_id']     = idx
+            result[idx]['title']       = product['title'].split("<b>")[0]
             result[idx]['image']       = ''.join(product['image'].split('\\'))
             result[idx]['link']        = ''.join(product['link'].split('\\'))
             result[idx]['category1']   = ''.join(product['category1'].split('\\'))
             result[idx]['category2']   = ''.join(product['category2'].split('\\'))
             result[idx]['category3']   = ''.join(product['category3'].split('\\'))
             result[idx]['category4']   = ''.join(product['category4'].split('\\'))
-            result[idx]['title'] = product['title'].split("<b>")[0]
             result[idx].pop('hprice')
             result[idx].pop('productId')
             result[idx].pop('mallName')
@@ -45,13 +45,21 @@ class NaverImageCrawler():
         return result
 
     def category_data(self, ref):
-        tmp = {"max_page" : ceil(len(ref)/9 - 1)}
-        brand_set = set()
-        max_price = ref[0]["lprice"]
+        tmp = {}
+        brand_count = {}
+        min_price = int(ref[0]["lprice"])
+        max_price = int(ref[0]["lprice"])
         for item in ref:
-            brand_set.add(item.get("brand"))
-            max_price = max(max_price, item.get("lprice"))
-        tmp["brands"] = list(brand_set)
+            min_price = min(min_price, int(item.get("lprice")))
+            max_price = max(max_price, int(item.get("lprice")))
+            brand = item["brand"]
+            if brand in brand_count:
+                brand_count[brand] += 1
+            else:
+                brand_count[brand] = 1
+        sorted_brands = sorted(brand_count.keys(), key=lambda brand: brand_count[brand], reverse=True)
+        tmp["brands"] = sorted_brands
+        tmp["min_price"] = min_price
         tmp["max_price"] = max_price
         return tmp
 
@@ -61,7 +69,6 @@ if __name__ == '__main__':
     CLIENT_SECRET = os.environ.get('NAVER_PW')
     query_file    = os.environ.get('query_file')
     target_file   = os.environ.get('target_file')
-
     with open(query_file, 'r', encoding='utf-8') as file:
         queries = json.load(file)
 
