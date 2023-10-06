@@ -25,9 +25,9 @@ const Main = () => {
       localStorage.setItem("name", response.data.name);
       localStorage.setItem("image", response.data.image_url);
       localStorage.setItem("is_couple", response.data.is_couple);
-      if (response.data.is_couple==='false') {
-        navigate('/invite')
-      }
+      // if (response.data.is_couple==='false') {
+      //   navigate('/invite')
+      // }
       if (response.data.user_role !=='BRIDE' && response.data.user_role !== 'GROOM') {
         navigate('/weddingday')
       }
