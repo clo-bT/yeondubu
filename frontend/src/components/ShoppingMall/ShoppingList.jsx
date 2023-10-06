@@ -174,7 +174,8 @@ const ShoppingList = () => {
                 subcategory : subcategory,
                 likes : ArrayToString
             };
-            axios.get(`${process.env.REACT_APP_FLASK_ROOT}:5000/api/v1/marriage-stuffs/liked_items`, {params})
+            // axios.get(`${process.env.REACT_APP_FLASK_ROOT}/api/v1/marriage-stuffs/liked_items`, {params})
+            axios.get('http://j9a307.p.ssafy.io:5000/api/v1/marriage-stuffs/liked_items', {params})
             .then((response) => {
                 setLikedItems(response.data);
                 setTriggerUpdate(false);
@@ -197,7 +198,8 @@ const ShoppingList = () => {
             brand  : filterData.brand,
             page   : currentPage
         };
-        axios.get(`${process.env.REACT_APP_FLASK_ROOT}:5000/api/v1/marriage-stuffs/catalogue`, {params})
+        // axios.get(`${process.env.REACT_APP_FLASK_ROOT}/api/v1/marriage-stuffs/catalogue`, {params})
+        axios.get('http://j9a307.p.ssafy.io:5000/api/v1/marriage-stuffs/catalogue', {params})
         .then ((response) => {
             setItems(response.data.products);
             setCurrentPage(1);

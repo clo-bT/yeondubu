@@ -142,7 +142,8 @@ const ShoppingFilter = () => {
             category : category,
             subcategory : subcategory,
         }
-        axios.get(`${process.env.REACT_APP_FLASK_ROOT}:5000/api/v1/marriage-stuffs/category_detail`, {params})
+        // axios.get(`${process.env.REACT_APP_FLASK_ROOT}/api/v1/marriage-stuffs/category_detail`, {params})
+        axios.get('http://j9a307.p.ssafy.io:5000/api/v1/marriage-stuffs/category_detail', {params})
             .then ((response) => {
                 setBrands(response.data.brands.slice(1));
                 const minPrice = parseFloat(response.data.min_price);
@@ -230,7 +231,8 @@ const ShoppingFilter = () => {
             formData.append(key, data[key]);
           }
           try {
-            axios.post(`${process.env.REACT_APP_FLASK_ROOT}:5000/api/v1/marriage-stuffs/img_search`, formData, {
+            // axios.post(`${process.env.REACT_APP_FLASK_ROOT}/api/v1/marriage-stuffs/img_search`, formData, {
+            axios.post('http://j9a307.p.ssafy.io:5000/api/v1/marriage-stuffs/img_search', formData, {
               headers: {
                 'Content-Type': 'multipart/form-data',
               },
