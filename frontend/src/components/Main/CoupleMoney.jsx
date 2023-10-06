@@ -81,14 +81,14 @@ const CoupleMoney = () => {
 
   return (
     <CoupleMoneyContainer>
-    <CashHeader>현금</CashHeader>
-    <CashHeader>현금</CashHeader>
+    <CashHeader>신부 현금</CashHeader>
+    <CashHeader>신랑 현금</CashHeader>
 
     <Cash>{cashMoney.bride_total_cash} 원</Cash>
     <Cash>{cashMoney.groom_total_cash} 원</Cash>
 
-    <CashHeader>예적금</CashHeader>
-    <CashHeader>예적금</CashHeader>
+    <CashHeader>신부 예적금</CashHeader>
+    <CashHeader>신랑 예적금</CashHeader>
     <Cash>{accountMoney.bride_total_account}원</Cash>
     <Cash>{accountMoney.groom_total_account}원</Cash>
 
