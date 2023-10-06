@@ -325,13 +325,13 @@ const CalendarIncome = () => {
               <InputType>
               <Title>분류</Title>
                 <InputTypeIncome
-                  
+                checked={true}
                 >
                   수입
                 </InputTypeIncome>
      
                 <InputTypeExpend
-                  checked={true}
+                  
                 >
                   지출
                 </InputTypeExpend>
