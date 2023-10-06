@@ -63,6 +63,14 @@ const UserWithdrawInfo = () => {
 
     const removeTokenFromLocalStorage = () => {
       localStorage.removeItem("token");
+      localStorage.removeItem("id");
+      localStorage.removeItem("name");
+      localStorage.removeItem("image");
+      localStorage.removeItem("is_couple");
+      localStorage.removeItem("role");
+      localStorage.removeItem("partner_id");
+      localStorage.removeItem("partner_img");
+      localStorage.removeItem("partner_name");
     };
 
     const confirmWithdraw = () => {
