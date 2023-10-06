@@ -64,13 +64,11 @@ const ShopCategoryHeader = () => {
     const {category, subcategory} = useParams();
     const [headerTitle, setHeaderTitle] = useState(null);
     useEffect(() => {
-        const baseURL = `${process.env.REACT_APP_FLASK_ROOT}`
-        const URL = '/api/v1/marriage-stuffs/category'
         const params = {
             category: category,
             subcategory: subcategory
         };
-        axios.get(baseURL + URL, {params})
+        axios.get(`${process.env.REACT_APP_FLASK_ROOT}:5000/api/v1/marriage-stuffs/category`, {params})
         .then((response) => {
             setHeaderTitle(response.data.category);
         })
