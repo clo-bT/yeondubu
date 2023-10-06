@@ -4,6 +4,10 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const Container = styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 20px; 
 margin-top : 20px;
   text-align: left;
 
@@ -14,7 +18,7 @@ display: flex;
 flex-direction: column;
 justify-content: center;
 margin-left:20px;
-
+gap:30px;
 
 `
 const Title = styled.div`
@@ -140,7 +144,8 @@ background: #FFF;
 `;
 const InputTag = styled.div`
 
-width:30px;
+/* width:30px; */
+display: flex;
 
 `
 const InputDate = styled.div`
@@ -190,6 +195,10 @@ text-transform: uppercase;
   border: 2px solid #D9D9D9;
 `;
 
+const TagBox = styled.div`
+  display:flex;
+  flex-direction:column;
+`
 const SaveButton = styled.button`
 display: flex;
 width: 80px;
@@ -222,6 +231,7 @@ margin-right: 10px;
 `
 const Exit = styled.button`
 border: none;
+
 `
 
 const CalendarIncome = () => {
@@ -348,11 +358,14 @@ const CalendarIncome = () => {
         
               <InputTag>
                 <Title>태그 </Title>
+                <TagBox>
                 <TagSelect>
                 <option value="">{tagName}</option>
                     
                 </TagSelect>
-    </InputTag>
+                </TagBox>
+                
+              </InputTag>
         
               <InputDate>
               <Title>날짜</Title>
