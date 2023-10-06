@@ -7,7 +7,8 @@ def update_loan():
     from urllib.request import urlopen
     from urllib.parse import urlencode, quote_plus, unquote
     from datetime import datetime
-    
+    import os
+    from dotenv import load_dotenv
     import warnings
     warnings.filterwarnings('ignore')
 
@@ -35,7 +36,8 @@ def update_loan():
         '030300',
         '060000'
     ]
-    KEY = "64e8530374d6656f19ebdbe7f7a6cc50"
+    load_dotenv()
+    KEY = os.environ.get('KEY')
     page = 1
 
     want_list = [
