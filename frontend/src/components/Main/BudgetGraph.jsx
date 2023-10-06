@@ -81,7 +81,7 @@ const BudgetGraph = () => {
                      */
                     labels: {
                         text: {
-                            fontSize: 14,
+                            fontSize: 7,
                             fill: '#000000',
                         },
                     },
@@ -109,8 +109,8 @@ const BudgetGraph = () => {
                          */
                         ticks: {
                             text: {
-                                fontSize: 16,
-                                fill: '#000000',
+                                fontSize: 0,
+                                // fill: '#000000',
                             },
                         },
                     },
