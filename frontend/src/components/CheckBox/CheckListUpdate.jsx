@@ -1,6 +1,7 @@
 import { React, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   margin-top: -25px;
@@ -53,7 +54,7 @@ const ThirdBox = styled.div`
 const CheckListUpdate = () => {
   const [accessToken, setAccessToken] = useState('');
   const [data, setData] = useState([]);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const token = localStorage.getItem("token");
     setAccessToken(token);
@@ -90,7 +91,7 @@ const CheckListUpdate = () => {
       
               <ThirdTag>
                 {secondItem.tag_third_expenditure_dto_list.map((thirdItem, thirdTagIndex) => (
-                  <ThirdBox key={thirdItem.third_tag_id}>
+                  <ThirdBox key={thirdItem.third_tag_id} onClick={()=>navigate(`/calendarupdate/${thirdItem.third_tag_id}`)}>
                     {thirdItem.third_tag_name}
                   </ThirdBox>
                 ))}
