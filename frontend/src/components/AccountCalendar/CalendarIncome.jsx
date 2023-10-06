@@ -242,6 +242,7 @@ const CalendarIncome = () => {
     // const [type, setType] = useState('')
     const [date, setDate] = useState('')
     const [amount, setAmount] = useState(0)
+    const [id, setId] = useState(0)
     const [memo, setMemo] = useState('')
     const [tagName, setTagName] = useState('')
     const { tagId } = useParams();
@@ -261,6 +262,7 @@ const CalendarIncome = () => {
             setMemo(response.data.memo);
             setDate(response.data.date);
             setTagName(response.data.tag_name);
+            setId(response.data.tag_id);
             // 기본값 설정
         })
         .catch(error => {
@@ -268,9 +270,7 @@ const CalendarIncome = () => {
         });
     }, [tagId, accessToken]);
 
-    const handleRole = (who) => {
-        setRole(who); 
-    };
+ 
     
     const handleDate = (event) => {
         setDate(event.target.value);
@@ -295,9 +295,9 @@ const CalendarIncome = () => {
     };
     const handleSave = () => {
     //     if (type === 'income') {
-            axios.put(`${process.env.REACT_APP_API_ROOT}/api/v1/income`,
+            axios.post(`${process.env.REACT_APP_API_ROOT}/api/v1/income`,
         {
-            "tag_id":tagId,
+            "tag_id":id,
             "user_role": role,
             "date": date,
             "amount":amount,
@@ -343,13 +343,11 @@ const CalendarIncome = () => {
               
                 <InputWhoGroom
                   checked={role === 'GROOM'}
-                  onClick={() => handleRole('GROOM')}
                 >
                   예비 신랑
                 </InputWhoGroom>
                 <InputWhoBride
                   checked={role === 'BRIDE'}
-                  onClick={() => handleRole('BRIDE')}
                 >
                   예비 신부
                 </InputWhoBride>
