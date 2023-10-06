@@ -28,7 +28,10 @@ const Main = () => {
       // if (response.data.is_couple==='false') {
       //   navigate('/invite')
       // }
-      if (response.data.user_role !=='BRIDE' && response.data.user_role !== 'GROOM') {
+      if (response.data.user_role ==='BRIDE' || response.data.user_role === 'GROOM') {
+        console.log('메인')
+      }
+      else {
         navigate('/weddingday')
       }
       localStorage.setItem("role", response.data.user_role);
