@@ -30,14 +30,13 @@ if __name__ == '__main__':
     query_file    = os.environ.get('query_file')
     target_file   = os.environ.get('target_file')
     fe = FeatureExtractor()
-    
     with open(query_file, 'r', encoding='utf-8') as file:
         queries = json.load(file)
-
     with h5py.File(target_file, 'a') as hdf5_file:
         for category in queries.keys():
             for subcategory, query in queries[category].items():
                 json_data = hdf5_file[category][subcategory]['json'][()]
-                features = feature_list(json_data, fe)
+                # features = feature_list(json_data, fe)
+                features = np.load('./tmp/feature/'+category+subcategory+'.npy')
                 hdf5_file[category][subcategory].create_dataset('npy', data=np.array(features))
     

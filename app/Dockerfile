@@ -11,6 +11,8 @@ RUN pip3 install rembg
 RUN pip3 install h5py
 RUN pip3 install tensorflow
 RUN pip3 install Pillow
+RUN pip3 install pandas
+RUN pip3 install numpy
 
 CMD ["uwsgi", "--ini", "uwsgi.ini"]
 # CMD uwsgi uwsgi.ini
