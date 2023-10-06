@@ -146,7 +146,6 @@ const WeddingDayInput = () => {
           }
       }).then(response => {
         console.log('여기는 웨딩데이',response)
-        localStorage.setItem("role",selectedRole)
         navigate('/')
     })
     .catch(error => {
